@@ -1,0 +1,92 @@
+{
+  "levelId": 33,
+  "themeRoom": "gameden",
+  "difficulty": "standard",
+  "timeLimit": 142,
+  "shelfCount": 7,
+  "slotsPerShelf": 3,
+  "bufferShelves": 2,
+  "initialPlacement": [
+    {
+      "itemId": "cartridge_red_006",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "cartridge_red_004",
+      "shelfId": 1,
+      "slot": 2
+    },
+    {
+      "itemId": "headset_red_008",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "headset_red_009",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "headset_red_007",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "controller_purple_002",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "cartridge_blue_013",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "cartridge_blue_015",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "controller_yellow_011",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "controller_yellow_012",
+      "shelfId": 1,
+      "slot": 1
+    },
+    {
+      "itemId": "cartridge_red_005",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "cartridge_blue_014",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "controller_purple_001",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "controller_purple_003",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "controller_yellow_010",
+      "shelfId": 1,
+      "slot": 0
+    }
+  ],
+  "optimalMoves": 15,
+  "starThresholds": {
+    "3star": 64,
+    "2star": 28,
+    "1star": 0
+  }
+}

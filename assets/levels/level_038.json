@@ -1,0 +1,92 @@
+{
+  "levelId": 38,
+  "themeRoom": "market",
+  "difficulty": "standard",
+  "timeLimit": 142,
+  "shelfCount": 7,
+  "slotsPerShelf": 3,
+  "bufferShelves": 2,
+  "initialPlacement": [
+    {
+      "itemId": "can_orange_002",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "can_pink_011",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "sauce_blue_005",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "can_pink_010",
+      "shelfId": 1,
+      "slot": 0
+    },
+    {
+      "itemId": "snack_orange_009",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "can_orange_003",
+      "shelfId": 1,
+      "slot": 2
+    },
+    {
+      "itemId": "can_pink_012",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "sauce_blue_015",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "sauce_blue_006",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "sauce_blue_014",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "snack_orange_007",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "snack_orange_008",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "sauce_blue_013",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "sauce_blue_004",
+      "shelfId": 1,
+      "slot": 1
+    },
+    {
+      "itemId": "can_orange_001",
+      "shelfId": 3,
+      "slot": 1
+    }
+  ],
+  "optimalMoves": 15,
+  "starThresholds": {
+    "3star": 64,
+    "2star": 28,
+    "1star": 0
+  }
+}

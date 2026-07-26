@@ -1,0 +1,92 @@
+{
+  "levelId": 18,
+  "themeRoom": "garden",
+  "difficulty": "standard",
+  "timeLimit": 142,
+  "shelfCount": 7,
+  "slotsPerShelf": 3,
+  "bufferShelves": 2,
+  "initialPlacement": [
+    {
+      "itemId": "pot_pink_012",
+      "shelfId": 1,
+      "slot": 2
+    },
+    {
+      "itemId": "can_red_013",
+      "shelfId": 1,
+      "slot": 1
+    },
+    {
+      "itemId": "can_red_015",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "can_blue_004",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "pot_purple_001",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "can_blue_005",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "seed_blue_007",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "pot_purple_003",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "seed_blue_009",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "seed_blue_008",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "can_red_014",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "pot_pink_010",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "pot_pink_011",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "can_blue_006",
+      "shelfId": 1,
+      "slot": 0
+    },
+    {
+      "itemId": "pot_purple_002",
+      "shelfId": 2,
+      "slot": 1
+    }
+  ],
+  "optimalMoves": 15,
+  "starThresholds": {
+    "3star": 64,
+    "2star": 28,
+    "1star": 0
+  }
+}
