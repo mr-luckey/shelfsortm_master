@@ -1,92 +1,216 @@
 {
   "levelId": 31,
-  "themeRoom": "gameden",
+  "themeRoom": "bakery",
   "difficulty": "standard",
-  "timeLimit": 142,
-  "shelfCount": 7,
+  "timeLimit": 210,
+  "shelfCount": 9,
   "slotsPerShelf": 3,
   "bufferShelves": 2,
+  "levelTint": "pink",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      0,
+      9,
+      0
+    ]
+  ],
   "initialPlacement": [
     {
-      "itemId": "controller_orange_003",
+      "itemId": "cupcake_pink_019",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "controller_purple_010",
-      "shelfId": 2,
+      "itemId": "macaron_pink_017",
+      "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "cartridge_pink_004",
-      "shelfId": 4,
+      "itemId": "cupcake_pink_022",
+      "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "controller_orange_001",
-      "shelfId": 3,
-      "slot": 2
-    },
-    {
-      "itemId": "cartridge_pink_005",
-      "shelfId": 4,
-      "slot": 1
-    },
-    {
-      "itemId": "controller_purple_012",
-      "shelfId": 3,
-      "slot": 1
-    },
-    {
-      "itemId": "cartridge_red_013",
-      "shelfId": 2,
-      "slot": 1
-    },
-    {
-      "itemId": "controller_orange_002",
-      "shelfId": 2,
-      "slot": 0
-    },
-    {
-      "itemId": "cartridge_red_015",
-      "shelfId": 3,
-      "slot": 0
-    },
-    {
-      "itemId": "headset_orange_007",
+      "itemId": "box_pink_007",
       "shelfId": 5,
-      "slot": 1
-    },
-    {
-      "itemId": "headset_orange_009",
-      "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "cartridge_red_014",
+      "itemId": "box_pink_011",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "cartridge_pink_006",
+      "itemId": "macaron_pink_018",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "cupcake_pink_024",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "cupcake_pink_006",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "box_pink_028",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "box_pink_025",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_pink_001",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "box_pink_027",
+      "shelfId": 9,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "box_pink_010",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "controller_purple_011",
+      "itemId": "box_pink_029",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "macaron_pink_013",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "box_pink_030",
+      "shelfId": 7,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "box_pink_012",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "box_pink_009",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "cupcake_pink_021",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_pink_004",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "headset_orange_008",
+      "itemId": "macaron_pink_016",
+      "shelfId": 1,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_pink_005",
       "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "macaron_pink_014",
+      "shelfId": 5,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_pink_002",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "cupcake_pink_020",
+      "shelfId": 3,
       "slot": 2
+    },
+    {
+      "itemId": "box_pink_026",
+      "shelfId": 3,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "box_pink_008",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "macaron_pink_015",
+      "shelfId": 7,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_pink_003",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "cupcake_pink_023",
+      "shelfId": 4,
+      "slot": 2,
+      "depth": 1
     }
   ],
-  "optimalMoves": 15,
+  "optimalMoves": 30,
   "starThresholds": {
-    "3star": 64,
-    "2star": 28,
-    "1star": 0
-  }
+    "3star": 30,
+    "2star": 36,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "mystery_boxes"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "mysteryBoxes": {
+      "boxes": [
+        {
+          "slot": "3:1",
+          "itemId": "box_pink_009",
+          "trigger": "shelf_complete"
+        }
+      ]
+    }
+  },
+  "seed": 245506
 }

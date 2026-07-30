@@ -1,0 +1,368 @@
+{
+  "levelId": 140,
+  "themeRoom": "beauty",
+  "difficulty": "tricky",
+  "timeLimit": 250,
+  "shelfCount": 12,
+  "slotsPerShelf": 3,
+  "bufferShelves": 3,
+  "levelTint": "yellow",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ]
+  ],
+  "initialPlacement": [
+    {
+      "itemId": "lipstick_yellow_045",
+      "shelfId": 1,
+      "slot": 2
+    },
+    {
+      "itemId": "lipstick_yellow_016",
+      "shelfId": 1,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "lipstick_yellow_018",
+      "shelfId": 1,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "cream_yellow_026",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "lipstick_yellow_040",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "cream_yellow_047",
+      "shelfId": 5,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cream_yellow_051",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "perfume_yellow_003",
+      "shelfId": 11,
+      "slot": 2
+    },
+    {
+      "itemId": "cream_yellow_019",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "lipstick_yellow_044",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "perfume_yellow_034",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "perfume_yellow_033",
+      "shelfId": 5,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "perfume_yellow_002",
+      "shelfId": 5,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "cream_yellow_046",
+      "shelfId": 12,
+      "slot": 2
+    },
+    {
+      "itemId": "cream_yellow_050",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "lipstick_yellow_041",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "perfume_yellow_036",
+      "shelfId": 9,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "perfume_yellow_006",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "perfume_yellow_032",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cream_yellow_025",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "lipstick_yellow_015",
+      "shelfId": 5,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cream_yellow_027",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "cream_yellow_048",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cream_yellow_022",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "cream_yellow_054",
+      "shelfId": 11,
+      "slot": 1
+    },
+    {
+      "itemId": "lipstick_yellow_011",
+      "shelfId": 11,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "perfume_yellow_004",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "lipstick_yellow_017",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "lipstick_yellow_010",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "perfume_yellow_031",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "perfume_yellow_005",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cream_yellow_053",
+      "shelfId": 1,
+      "slot": 0
+    },
+    {
+      "itemId": "lipstick_yellow_014",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "cream_yellow_049",
+      "shelfId": 1,
+      "slot": 1
+    },
+    {
+      "itemId": "perfume_yellow_001",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "lipstick_yellow_038",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "perfume_yellow_008",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "cream_yellow_020",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "cream_yellow_024",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "lipstick_yellow_037",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "perfume_yellow_035",
+      "shelfId": 12,
+      "slot": 0
+    },
+    {
+      "itemId": "cream_yellow_021",
+      "shelfId": 12,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cream_yellow_023",
+      "shelfId": 12,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "perfume_yellow_029",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "perfume_yellow_030",
+      "shelfId": 8,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "lipstick_yellow_012",
+      "shelfId": 12,
+      "slot": 1
+    },
+    {
+      "itemId": "perfume_yellow_009",
+      "shelfId": 12,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cream_yellow_052",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "lipstick_yellow_042",
+      "shelfId": 11,
+      "slot": 0
+    },
+    {
+      "itemId": "perfume_yellow_007",
+      "shelfId": 11,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "perfume_yellow_028",
+      "shelfId": 11,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "lipstick_yellow_039",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "lipstick_yellow_043",
+      "shelfId": 4,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "lipstick_yellow_013",
+      "shelfId": 4,
+      "slot": 2,
+      "depth": 2
+    }
+  ],
+  "optimalMoves": 54,
+  "starThresholds": {
+    "3star": 54,
+    "2star": 65,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "mystery_boxes",
+    "sliding_shelves"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "mysteryBoxes": {
+      "boxes": [
+        {
+          "slot": "12:1",
+          "itemId": "lipstick_yellow_037",
+          "trigger": "shelf_complete"
+        }
+      ]
+    },
+    "slidingShelves": {
+      "shelfIndices": [
+        0
+      ],
+      "direction": "left",
+      "trigger": "on_move",
+      "speed": 0.5
+    }
+  },
+  "seed": 1108677
+}

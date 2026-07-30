@@ -20,6 +20,8 @@ Future<void> main() async {
   final audio = AudioService();
   final ads = AdService();
   final iap = IapService();
+  await ads.init();
+  await iap.init();
   final progress = ProgressProvider(
     saveService: save,
     adService: ads,

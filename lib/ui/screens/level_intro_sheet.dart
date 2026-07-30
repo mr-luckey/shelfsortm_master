@@ -56,7 +56,7 @@ Future<void> showLevelIntro(
             ),
             const SizedBox(height: 16),
             const Text(
-              'Move mixed goods between shelves. Group 3 identical items on one shelf to clear them. Use empty BUFFER shelves as working space!',
+              'Drag emojis to empty slots. Match 3 identical emojis on one shelf — the compartment closes and new goods roll in!',
               textAlign: TextAlign.center,
               style: TextStyle(fontWeight: FontWeight.w600, height: 1.35),
             ),

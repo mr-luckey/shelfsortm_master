@@ -1,0 +1,365 @@
+{
+  "levelId": 228,
+  "themeRoom": "gift",
+  "difficulty": "standard",
+  "timeLimit": 280,
+  "shelfCount": 12,
+  "slotsPerShelf": 3,
+  "bufferShelves": 3,
+  "levelTint": "yellow",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ]
+  ],
+  "initialPlacement": [
+    {
+      "itemId": "bag_yellow_014",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "ribbon_yellow_030",
+      "shelfId": 7,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_yellow_036",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "ornament_yellow_025",
+      "shelfId": 7,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_yellow_018",
+      "shelfId": 7,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "ribbon_yellow_008",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "ornament_yellow_022",
+      "shelfId": 2,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_yellow_007",
+      "shelfId": 11,
+      "slot": 1
+    },
+    {
+      "itemId": "ribbon_yellow_029",
+      "shelfId": 11,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_yellow_050",
+      "shelfId": 1,
+      "slot": 2
+    },
+    {
+      "itemId": "ribbon_yellow_035",
+      "shelfId": 1,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_yellow_037",
+      "shelfId": 1,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "ornament_yellow_052",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "bag_yellow_015",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "ribbon_yellow_002",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_yellow_054",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "bag_yellow_016",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "bag_yellow_017",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "bag_yellow_040",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "bag_yellow_043",
+      "shelfId": 8,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_yellow_027",
+      "shelfId": 8,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "ribbon_yellow_031",
+      "shelfId": 11,
+      "slot": 2
+    },
+    {
+      "itemId": "ornament_yellow_023",
+      "shelfId": 11,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_yellow_042",
+      "shelfId": 11,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "bag_yellow_038",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "bag_yellow_013",
+      "shelfId": 11,
+      "slot": 0
+    },
+    {
+      "itemId": "ornament_yellow_024",
+      "shelfId": 11,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_yellow_033",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "ornament_yellow_053",
+      "shelfId": 5,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_yellow_046",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "ornament_yellow_026",
+      "shelfId": 5,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_yellow_041",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "bag_yellow_045",
+      "shelfId": 10,
+      "slot": 0
+    },
+    {
+      "itemId": "bag_yellow_044",
+      "shelfId": 1,
+      "slot": 0
+    },
+    {
+      "itemId": "ornament_yellow_019",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "ribbon_yellow_032",
+      "shelfId": 3,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_yellow_009",
+      "shelfId": 3,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "ribbon_yellow_005",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "ornament_yellow_049",
+      "shelfId": 10,
+      "slot": 2
+    },
+    {
+      "itemId": "ribbon_yellow_004",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "ribbon_yellow_003",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_yellow_012",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "ornament_yellow_048",
+      "shelfId": 1,
+      "slot": 1
+    },
+    {
+      "itemId": "ornament_yellow_047",
+      "shelfId": 1,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_yellow_006",
+      "shelfId": 1,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "ornament_yellow_020",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "bag_yellow_010",
+      "shelfId": 3,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_yellow_001",
+      "shelfId": 10,
+      "slot": 1
+    },
+    {
+      "itemId": "ornament_yellow_021",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_yellow_051",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "ribbon_yellow_034",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "ribbon_yellow_028",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_yellow_039",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "bag_yellow_011",
+      "shelfId": 3,
+      "slot": 1
+    }
+  ],
+  "optimalMoves": 54,
+  "starThresholds": {
+    "3star": 54,
+    "2star": 65,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "conveyor_shelf",
+    "locked_items"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "conveyorShelf": {
+      "speed": 0.3,
+      "visibleSlots": 4,
+      "queue": []
+    },
+    "lockedItems": {
+      "locks": [
+        {
+          "slot": "3:0",
+          "condition": "sequence",
+          "sequenceNeeded": 3
+        }
+      ]
+    }
+  },
+  "seed": 1805549
+}

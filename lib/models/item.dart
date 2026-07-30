@@ -4,12 +4,21 @@ class GameItem {
   final String id;
   final String type;
   final String color; // visual tint only
+  final bool isLocked;
+  final int iceLayers;
+  final bool isMystery;
 
   const GameItem({
     required this.id,
     required this.type,
     required this.color,
+    this.isLocked = false,
+    this.iceLayers = 0,
+    this.isMystery = false,
   });
+
+  bool get isFrozen => iceLayers > 0;
+  bool get isInteractable => !isLocked && !isFrozen && !isMystery;
 
   /// id format: type_color_nn
   factory GameItem.fromId(String itemId) {
@@ -24,16 +33,39 @@ class GameItem {
     );
   }
 
+  GameItem copyWith({
+    String? id,
+    String? type,
+    String? color,
+    bool? isLocked,
+    int? iceLayers,
+    bool? isMystery,
+  }) =>
+      GameItem(
+        id: id ?? this.id,
+        type: type ?? this.type,
+        color: color ?? this.color,
+        isLocked: isLocked ?? this.isLocked,
+        iceLayers: iceLayers ?? this.iceLayers,
+        isMystery: isMystery ?? this.isMystery,
+      );
+
   Map<String, dynamic> toJson() => {
         'id': id,
         'type': type,
         'color': color,
+        if (isLocked) 'isLocked': true,
+        if (iceLayers > 0) 'iceLayers': iceLayers,
+        if (isMystery) 'isMystery': true,
       };
 
   factory GameItem.fromJson(Map<String, dynamic> json) => GameItem(
         id: json['id'] as String,
         type: json['type'] as String,
         color: json['color'] as String,
+        isLocked: json['isLocked'] as bool? ?? false,
+        iceLayers: json['iceLayers'] as int? ?? 0,
+        isMystery: json['isMystery'] as bool? ?? false,
       );
 
   @override

@@ -1,107 +1,220 @@
 {
   "levelId": 42,
-  "themeRoom": "decor",
+  "themeRoom": "bakery",
   "difficulty": "standard",
-  "timeLimit": 157,
-  "shelfCount": 8,
+  "timeLimit": 210,
+  "shelfCount": 9,
   "slotsPerShelf": 3,
   "bufferShelves": 2,
+  "levelTint": "blue",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      0,
+      9,
+      0
+    ]
+  ],
   "initialPlacement": [
     {
-      "itemId": "candle_purple_008",
-      "shelfId": 1,
-      "slot": 2
-    },
-    {
-      "itemId": "vase_orange_011",
-      "shelfId": 2,
-      "slot": 0
-    },
-    {
-      "itemId": "frame_purple_014",
+      "itemId": "macaron_blue_015",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "candle_green_016",
-      "shelfId": 5,
-      "slot": 2
-    },
-    {
-      "itemId": "vase_red_002",
-      "shelfId": 4,
-      "slot": 2
-    },
-    {
-      "itemId": "candle_purple_007",
-      "shelfId": 6,
+      "itemId": "macaron_blue_016",
+      "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "frame_purple_004",
-      "shelfId": 1,
-      "slot": 1
-    },
-    {
-      "itemId": "frame_purple_006",
-      "shelfId": 6,
+      "itemId": "cupcake_blue_022",
+      "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "frame_purple_015",
+      "itemId": "box_blue_009",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "box_blue_028",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "vase_orange_010",
+      "itemId": "cupcake_blue_004",
+      "shelfId": 3,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_blue_005",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "cupcake_blue_020",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "cupcake_blue_024",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "macaron_blue_018",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "box_blue_025",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "box_blue_011",
+      "shelfId": 5,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "box_blue_010",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "cupcake_blue_021",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "box_blue_026",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_blue_023",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "candle_green_017",
+      "itemId": "cupcake_blue_019",
+      "shelfId": 2,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_blue_006",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "box_blue_029",
+      "shelfId": 7,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_blue_003",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "box_blue_027",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "box_blue_008",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "box_blue_007",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "vase_red_003",
+      "itemId": "box_blue_012",
+      "shelfId": 3,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_blue_001",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "cupcake_blue_002",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "macaron_blue_014",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "macaron_blue_017",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "candle_purple_009",
-      "shelfId": 5,
-      "slot": 0
+      "itemId": "macaron_blue_013",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 1
     },
     {
-      "itemId": "candle_green_018",
-      "shelfId": 4,
-      "slot": 1
-    },
-    {
-      "itemId": "frame_purple_013",
-      "shelfId": 1,
-      "slot": 0
-    },
-    {
-      "itemId": "vase_orange_012",
-      "shelfId": 4,
-      "slot": 0
-    },
-    {
-      "itemId": "vase_red_001",
-      "shelfId": 3,
-      "slot": 1
-    },
-    {
-      "itemId": "frame_purple_005",
-      "shelfId": 5,
+      "itemId": "box_blue_030",
+      "shelfId": 7,
       "slot": 1
     }
   ],
-  "optimalMoves": 18,
+  "optimalMoves": 30,
   "starThresholds": {
-    "3star": 71,
-    "2star": 31,
-    "1star": 0
-  }
+    "3star": 30,
+    "2star": 36,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "locked_items"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "lockedItems": {
+      "locks": [
+        {
+          "slot": "9:0",
+          "condition": "sequence",
+          "sequenceNeeded": 3
+        }
+      ]
+    }
+  },
+  "seed": 332615
 }

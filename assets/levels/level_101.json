@@ -1,0 +1,336 @@
+{
+  "levelId": 101,
+  "themeRoom": "toy",
+  "difficulty": "rest",
+  "timeLimit": 320,
+  "shelfCount": 12,
+  "slotsPerShelf": 3,
+  "bufferShelves": 3,
+  "levelTint": "purple",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ]
+  ],
+  "initialPlacement": [
+    {
+      "itemId": "teddy_purple_007",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "block_purple_015",
+      "shelfId": 4,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_purple_054",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "block_purple_039",
+      "shelfId": 7,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_purple_021",
+      "shelfId": 7,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "block_purple_045",
+      "shelfId": 12,
+      "slot": 1
+    },
+    {
+      "itemId": "teddy_purple_034",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "block_purple_011",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_purple_036",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "ball_purple_046",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "teddy_purple_002",
+      "shelfId": 4,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_purple_029",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "ball_purple_023",
+      "shelfId": 12,
+      "slot": 0
+    },
+    {
+      "itemId": "teddy_purple_008",
+      "shelfId": 12,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_purple_003",
+      "shelfId": 11,
+      "slot": 0
+    },
+    {
+      "itemId": "ball_purple_049",
+      "shelfId": 11,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "block_purple_016",
+      "shelfId": 11,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "ball_purple_050",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "block_purple_042",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "teddy_purple_009",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_purple_006",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "ball_purple_025",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "block_purple_041",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "block_purple_010",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "teddy_purple_032",
+      "shelfId": 7,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_purple_022",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "block_purple_044",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "teddy_purple_033",
+      "shelfId": 5,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_purple_027",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "block_purple_037",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "ball_purple_020",
+      "shelfId": 5,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_purple_035",
+      "shelfId": 11,
+      "slot": 2
+    },
+    {
+      "itemId": "ball_purple_026",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "ball_purple_053",
+      "shelfId": 7,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_purple_048",
+      "shelfId": 7,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "block_purple_014",
+      "shelfId": 11,
+      "slot": 1
+    },
+    {
+      "itemId": "block_purple_012",
+      "shelfId": 11,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_purple_052",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "block_purple_018",
+      "shelfId": 3,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "block_purple_017",
+      "shelfId": 3,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "teddy_purple_031",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "teddy_purple_030",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "block_purple_013",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "ball_purple_019",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_purple_004",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "block_purple_043",
+      "shelfId": 12,
+      "slot": 2
+    },
+    {
+      "itemId": "ball_purple_051",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_purple_028",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "ball_purple_047",
+      "shelfId": 3,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_purple_024",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "teddy_purple_005",
+      "shelfId": 3,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_purple_001",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "block_purple_038",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "block_purple_040",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 2
+    }
+  ],
+  "optimalMoves": 54,
+  "starThresholds": {
+    "3star": 54,
+    "2star": 65,
+    "1star": 999
+  },
+  "seed": 799836
+}

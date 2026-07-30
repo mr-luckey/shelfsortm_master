@@ -1,0 +1,368 @@
+{
+  "levelId": 166,
+  "themeRoom": "gameden",
+  "difficulty": "standard",
+  "timeLimit": 280,
+  "shelfCount": 12,
+  "slotsPerShelf": 3,
+  "bufferShelves": 3,
+  "levelTint": "orange",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ]
+  ],
+  "initialPlacement": [
+    {
+      "itemId": "cartridge_orange_045",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "headset_orange_019",
+      "shelfId": 4,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "controller_orange_036",
+      "shelfId": 4,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "headset_orange_048",
+      "shelfId": 10,
+      "slot": 0
+    },
+    {
+      "itemId": "controller_orange_004",
+      "shelfId": 11,
+      "slot": 2
+    },
+    {
+      "itemId": "headset_orange_047",
+      "shelfId": 11,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "headset_orange_049",
+      "shelfId": 12,
+      "slot": 2
+    },
+    {
+      "itemId": "controller_orange_030",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "controller_orange_029",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "cartridge_orange_043",
+      "shelfId": 12,
+      "slot": 1
+    },
+    {
+      "itemId": "headset_orange_052",
+      "shelfId": 12,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "headset_orange_050",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "cartridge_orange_041",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "controller_orange_035",
+      "shelfId": 1,
+      "slot": 0
+    },
+    {
+      "itemId": "headset_orange_051",
+      "shelfId": 1,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cartridge_orange_040",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "cartridge_orange_014",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "headset_orange_022",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "headset_orange_021",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "headset_orange_027",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "controller_orange_003",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "controller_orange_031",
+      "shelfId": 11,
+      "slot": 0
+    },
+    {
+      "itemId": "headset_orange_046",
+      "shelfId": 11,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "headset_orange_025",
+      "shelfId": 11,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "controller_orange_008",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "cartridge_orange_013",
+      "shelfId": 9,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "controller_orange_009",
+      "shelfId": 10,
+      "slot": 2
+    },
+    {
+      "itemId": "controller_orange_005",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "headset_orange_023",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "controller_orange_034",
+      "shelfId": 8,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cartridge_orange_015",
+      "shelfId": 11,
+      "slot": 1
+    },
+    {
+      "itemId": "controller_orange_033",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "cartridge_orange_016",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cartridge_orange_042",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "cartridge_orange_010",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "controller_orange_001",
+      "shelfId": 12,
+      "slot": 0
+    },
+    {
+      "itemId": "cartridge_orange_011",
+      "shelfId": 12,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "controller_orange_007",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "cartridge_orange_017",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cartridge_orange_012",
+      "shelfId": 1,
+      "slot": 2
+    },
+    {
+      "itemId": "cartridge_orange_044",
+      "shelfId": 1,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "headset_orange_026",
+      "shelfId": 1,
+      "slot": 1
+    },
+    {
+      "itemId": "headset_orange_053",
+      "shelfId": 1,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "headset_orange_024",
+      "shelfId": 10,
+      "slot": 1
+    },
+    {
+      "itemId": "controller_orange_028",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cartridge_orange_039",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "headset_orange_054",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "controller_orange_006",
+      "shelfId": 9,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cartridge_orange_018",
+      "shelfId": 9,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "headset_orange_020",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "cartridge_orange_037",
+      "shelfId": 2,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cartridge_orange_038",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "controller_orange_002",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "controller_orange_032",
+      "shelfId": 6,
+      "slot": 0
+    }
+  ],
+  "optimalMoves": 54,
+  "starThresholds": {
+    "3star": 54,
+    "2star": 65,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "locked_items",
+    "sliding_shelves"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "lockedItems": {
+      "locks": [
+        {
+          "slot": "12:0",
+          "condition": "sequence",
+          "sequenceNeeded": 3
+        }
+      ]
+    },
+    "slidingShelves": {
+      "shelfIndices": [
+        0
+      ],
+      "direction": "left",
+      "trigger": "on_move",
+      "speed": 0.5
+    }
+  },
+  "seed": 1314571
+}

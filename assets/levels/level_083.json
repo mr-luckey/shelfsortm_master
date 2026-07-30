@@ -1,0 +1,369 @@
+{
+  "levelId": 83,
+  "themeRoom": "garden",
+  "difficulty": "standard",
+  "timeLimit": 280,
+  "shelfCount": 12,
+  "slotsPerShelf": 3,
+  "bufferShelves": 3,
+  "levelTint": "green",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ]
+  ],
+  "initialPlacement": [
+    {
+      "itemId": "pot_green_005",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "can_green_045",
+      "shelfId": 9,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_green_007",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "can_green_043",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_green_006",
+      "shelfId": 11,
+      "slot": 2
+    },
+    {
+      "itemId": "seed_green_047",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "seed_green_019",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "pot_green_033",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "can_green_018",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "can_green_042",
+      "shelfId": 11,
+      "slot": 0
+    },
+    {
+      "itemId": "pot_green_036",
+      "shelfId": 11,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "seed_green_050",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "pot_green_008",
+      "shelfId": 3,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_green_003",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "can_green_016",
+      "shelfId": 12,
+      "slot": 1
+    },
+    {
+      "itemId": "pot_green_009",
+      "shelfId": 12,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_green_034",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "can_green_039",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "can_green_038",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "can_green_044",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "can_green_014",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "can_green_037",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "can_green_012",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "pot_green_028",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_green_029",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "pot_green_001",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "seed_green_024",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_green_035",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "seed_green_026",
+      "shelfId": 3,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "can_green_010",
+      "shelfId": 12,
+      "slot": 2
+    },
+    {
+      "itemId": "pot_green_030",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "seed_green_049",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "can_green_017",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "can_green_040",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "seed_green_046",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "can_green_041",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "seed_green_052",
+      "shelfId": 4,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "seed_green_023",
+      "shelfId": 4,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "seed_green_027",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "pot_green_002",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "can_green_013",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "seed_green_021",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "can_green_011",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "seed_green_054",
+      "shelfId": 12,
+      "slot": 0
+    },
+    {
+      "itemId": "seed_green_048",
+      "shelfId": 12,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_green_004",
+      "shelfId": 12,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "seed_green_025",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "pot_green_031",
+      "shelfId": 11,
+      "slot": 1
+    },
+    {
+      "itemId": "seed_green_020",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "can_green_015",
+      "shelfId": 2,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "seed_green_053",
+      "shelfId": 2,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "seed_green_051",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "seed_green_022",
+      "shelfId": 4,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_green_032",
+      "shelfId": 7,
+      "slot": 2
+    }
+  ],
+  "optimalMoves": 54,
+  "starThresholds": {
+    "3star": 54,
+    "2star": 65,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "frozen_items",
+    "locked_items"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "frozenItems": {
+      "frozen": [
+        {
+          "slot": "2:2",
+          "layers": 1,
+          "unlock": "sequence"
+        }
+      ]
+    },
+    "lockedItems": {
+      "locks": [
+        {
+          "slot": "2:0",
+          "condition": "sequence",
+          "sequenceNeeded": 3
+        }
+      ]
+    }
+  },
+  "seed": 657294
+}

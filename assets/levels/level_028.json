@@ -1,92 +1,215 @@
 {
   "levelId": 28,
-  "themeRoom": "beauty",
+  "themeRoom": "bakery",
   "difficulty": "standard",
-  "timeLimit": 142,
-  "shelfCount": 7,
+  "timeLimit": 210,
+  "shelfCount": 9,
   "slotsPerShelf": 3,
   "bufferShelves": 2,
+  "levelTint": "yellow",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      0,
+      9,
+      0
+    ]
+  ],
   "initialPlacement": [
     {
-      "itemId": "lipstick_teal_006",
-      "shelfId": 1,
+      "itemId": "box_yellow_030",
+      "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "lipstick_red_013",
-      "shelfId": 2,
-      "slot": 1
+      "itemId": "box_yellow_027",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 1
     },
     {
-      "itemId": "perfume_blue_002",
-      "shelfId": 5,
-      "slot": 0
-    },
-    {
-      "itemId": "perfume_pink_010",
-      "shelfId": 2,
-      "slot": 0
-    },
-    {
-      "itemId": "lipstick_teal_005",
-      "shelfId": 4,
-      "slot": 2
-    },
-    {
-      "itemId": "perfume_blue_003",
-      "shelfId": 3,
-      "slot": 0
-    },
-    {
-      "itemId": "cream_blue_008",
-      "shelfId": 5,
-      "slot": 2
-    },
-    {
-      "itemId": "cream_blue_007",
+      "itemId": "cupcake_yellow_004",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "lipstick_red_015",
-      "shelfId": 4,
-      "slot": 1
+      "itemId": "box_yellow_007",
+      "shelfId": 5,
+      "slot": 0
     },
     {
-      "itemId": "cream_blue_009",
-      "shelfId": 2,
-      "slot": 2
+      "itemId": "cupcake_yellow_003",
+      "shelfId": 5,
+      "slot": 0,
+      "depth": 1
     },
     {
-      "itemId": "perfume_pink_011",
-      "shelfId": 3,
-      "slot": 2
+      "itemId": "box_yellow_025",
+      "shelfId": 8,
+      "slot": 0
     },
     {
-      "itemId": "lipstick_teal_004",
+      "itemId": "box_yellow_028",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "perfume_pink_012",
-      "shelfId": 3,
+      "itemId": "box_yellow_009",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "box_yellow_010",
+      "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "lipstick_red_014",
+      "itemId": "cupcake_yellow_019",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "macaron_yellow_017",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "box_yellow_029",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "cupcake_yellow_022",
+      "shelfId": 3,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "box_yellow_012",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "perfume_blue_001",
-      "shelfId": 4,
+      "itemId": "box_yellow_008",
+      "shelfId": 1,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "macaron_yellow_016",
+      "shelfId": 3,
       "slot": 0
+    },
+    {
+      "itemId": "cupcake_yellow_024",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "macaron_yellow_013",
+      "shelfId": 3,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_yellow_005",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "cupcake_yellow_002",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "cupcake_yellow_023",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "cupcake_yellow_006",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_yellow_021",
+      "shelfId": 1,
+      "slot": 2
+    },
+    {
+      "itemId": "cupcake_yellow_020",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "cupcake_yellow_001",
+      "shelfId": 7,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "macaron_yellow_015",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "macaron_yellow_014",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "box_yellow_026",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "box_yellow_011",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "macaron_yellow_018",
+      "shelfId": 9,
+      "slot": 0,
+      "depth": 1
     }
   ],
-  "optimalMoves": 15,
+  "optimalMoves": 30,
   "starThresholds": {
-    "3star": 64,
-    "2star": 28,
-    "1star": 0
-  }
+    "3star": 30,
+    "2star": 36,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "sliding_shelves"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "slidingShelves": {
+      "shelfIndices": [
+        0
+      ],
+      "direction": "left",
+      "trigger": "on_move",
+      "speed": 0.5
+    }
+  },
+  "seed": 221749
 }

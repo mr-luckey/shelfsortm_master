@@ -1,92 +1,212 @@
 {
   "levelId": 38,
-  "themeRoom": "market",
+  "themeRoom": "bakery",
   "difficulty": "standard",
-  "timeLimit": 142,
-  "shelfCount": 7,
+  "timeLimit": 210,
+  "shelfCount": 9,
   "slotsPerShelf": 3,
   "bufferShelves": 2,
+  "levelTint": "orange",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      0,
+      9,
+      0
+    ]
+  ],
   "initialPlacement": [
     {
-      "itemId": "can_orange_002",
-      "shelfId": 5,
-      "slot": 2
-    },
-    {
-      "itemId": "can_pink_011",
+      "itemId": "box_orange_027",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "sauce_blue_005",
+      "itemId": "cupcake_orange_021",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "cupcake_orange_019",
+      "shelfId": 5,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "box_orange_009",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "can_pink_010",
-      "shelfId": 1,
-      "slot": 0
-    },
-    {
-      "itemId": "snack_orange_009",
-      "shelfId": 3,
+      "itemId": "cupcake_orange_020",
+      "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "can_orange_003",
-      "shelfId": 1,
+      "itemId": "box_orange_008",
+      "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "can_pink_012",
+      "itemId": "cupcake_orange_001",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "box_orange_012",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "box_orange_029",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "box_orange_007",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "box_orange_030",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "sauce_blue_015",
+      "itemId": "macaron_orange_016",
+      "shelfId": 3,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "box_orange_011",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "cupcake_orange_022",
+      "shelfId": 1,
+      "slot": 1
+    },
+    {
+      "itemId": "macaron_orange_018",
+      "shelfId": 1,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_orange_005",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "cupcake_orange_004",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "sauce_blue_006",
+      "itemId": "cupcake_orange_006",
+      "shelfId": 1,
+      "slot": 0
+    },
+    {
+      "itemId": "cupcake_orange_023",
+      "shelfId": 1,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "macaron_orange_013",
+      "shelfId": 1,
+      "slot": 2
+    },
+    {
+      "itemId": "box_orange_026",
+      "shelfId": 1,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_orange_002",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "box_orange_010",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "macaron_orange_015",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "box_orange_025",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "sauce_blue_014",
+      "itemId": "cupcake_orange_003",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "box_orange_028",
+      "shelfId": 3,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_orange_024",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "macaron_orange_017",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "snack_orange_007",
+      "itemId": "macaron_orange_014",
       "shelfId": 4,
-      "slot": 1
-    },
-    {
-      "itemId": "snack_orange_008",
-      "shelfId": 2,
-      "slot": 1
-    },
-    {
-      "itemId": "sauce_blue_013",
-      "shelfId": 2,
-      "slot": 2
-    },
-    {
-      "itemId": "sauce_blue_004",
-      "shelfId": 1,
-      "slot": 1
-    },
-    {
-      "itemId": "can_orange_001",
-      "shelfId": 3,
-      "slot": 1
+      "slot": 0,
+      "depth": 1
     }
   ],
-  "optimalMoves": 15,
+  "optimalMoves": 30,
   "starThresholds": {
-    "3star": 64,
-    "2star": 28,
-    "1star": 0
-  }
+    "3star": 30,
+    "2star": 36,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "conveyor_shelf"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "conveyorShelf": {
+      "speed": 0.4,
+      "visibleSlots": 4,
+      "queue": []
+    }
+  },
+  "seed": 300939
 }

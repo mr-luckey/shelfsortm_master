@@ -1,0 +1,364 @@
+{
+  "levelId": 111,
+  "themeRoom": "toy",
+  "difficulty": "standard",
+  "timeLimit": 280,
+  "shelfCount": 12,
+  "slotsPerShelf": 3,
+  "bufferShelves": 3,
+  "levelTint": "pink",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ]
+  ],
+  "initialPlacement": [
+    {
+      "itemId": "ball_pink_054",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "ball_pink_026",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_pink_032",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "ball_pink_049",
+      "shelfId": 10,
+      "slot": 2
+    },
+    {
+      "itemId": "teddy_pink_003",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_pink_020",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "ball_pink_019",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "ball_pink_051",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "block_pink_013",
+      "shelfId": 5,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_pink_027",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "teddy_pink_004",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "block_pink_039",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "ball_pink_022",
+      "shelfId": 1,
+      "slot": 2
+    },
+    {
+      "itemId": "teddy_pink_009",
+      "shelfId": 1,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "block_pink_015",
+      "shelfId": 10,
+      "slot": 1
+    },
+    {
+      "itemId": "ball_pink_052",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_pink_025",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "teddy_pink_002",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "ball_pink_023",
+      "shelfId": 3,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "block_pink_010",
+      "shelfId": 12,
+      "slot": 1
+    },
+    {
+      "itemId": "block_pink_041",
+      "shelfId": 12,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_pink_021",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "ball_pink_046",
+      "shelfId": 10,
+      "slot": 0
+    },
+    {
+      "itemId": "teddy_pink_007",
+      "shelfId": 1,
+      "slot": 1
+    },
+    {
+      "itemId": "ball_pink_024",
+      "shelfId": 1,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_pink_053",
+      "shelfId": 1,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "block_pink_038",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "block_pink_043",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "block_pink_037",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "block_pink_042",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "teddy_pink_028",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "block_pink_044",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_pink_036",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "block_pink_017",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "teddy_pink_034",
+      "shelfId": 12,
+      "slot": 2
+    },
+    {
+      "itemId": "block_pink_018",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "block_pink_012",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "teddy_pink_035",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "ball_pink_048",
+      "shelfId": 12,
+      "slot": 0
+    },
+    {
+      "itemId": "teddy_pink_031",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "block_pink_045",
+      "shelfId": 7,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_pink_047",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "teddy_pink_029",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_pink_030",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "ball_pink_050",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "teddy_pink_006",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "block_pink_011",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "teddy_pink_005",
+      "shelfId": 9,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_pink_001",
+      "shelfId": 1,
+      "slot": 0
+    },
+    {
+      "itemId": "block_pink_016",
+      "shelfId": 1,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_pink_033",
+      "shelfId": 1,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "block_pink_014",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "teddy_pink_008",
+      "shelfId": 5,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "block_pink_040",
+      "shelfId": 5,
+      "slot": 1,
+      "depth": 2
+    }
+  ],
+  "optimalMoves": 54,
+  "starThresholds": {
+    "3star": 54,
+    "2star": 65,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "conveyor_shelf",
+    "sliding_shelves"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "conveyorShelf": {
+      "speed": 0.45,
+      "visibleSlots": 4,
+      "queue": []
+    },
+    "slidingShelves": {
+      "shelfIndices": [
+        0
+      ],
+      "direction": "right",
+      "trigger": "on_move",
+      "speed": 0.5
+    }
+  },
+  "seed": 879026
+}

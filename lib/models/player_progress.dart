@@ -89,16 +89,34 @@ class PlayerProgress {
     this.achievements = const {},
   });
 
+  static const int totalLevels = 250;
+
   static PlayerProgress initial() {
-    return PlayerProgress(
+    return const PlayerProgress(
+      currentLevel: 1,
       levels: {
-        1: const LevelProgress(levelId: 1, unlocked: true),
+        1: LevelProgress(levelId: 1, unlocked: true),
       },
     );
   }
 
+  /// All campaign levels unlocked (dev / open map).
+  PlayerProgress withAllLevelsUnlocked({int count = totalLevels}) {
+    final next = Map<int, LevelProgress>.from(levels);
+    for (var i = 1; i <= count; i++) {
+      final existing = next[i];
+      next[i] = existing != null
+          ? existing.copyWith(unlocked: true)
+          : LevelProgress(levelId: i, unlocked: true);
+    }
+    return copyWith(
+      levels: next,
+      currentLevel: currentLevel < count ? count : currentLevel,
+    );
+  }
+
   LevelProgress levelOf(int id) =>
-      levels[id] ?? LevelProgress(levelId: id, unlocked: id == 1);
+      levels[id] ?? LevelProgress(levelId: id, unlocked: false);
 
   PlayerProgress copyWith({
     String? playerName,

@@ -1,0 +1,369 @@
+{
+  "levelId": 122,
+  "themeRoom": "toy",
+  "difficulty": "standard",
+  "timeLimit": 280,
+  "shelfCount": 12,
+  "slotsPerShelf": 3,
+  "bufferShelves": 3,
+  "levelTint": "blue",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ]
+  ],
+  "initialPlacement": [
+    {
+      "itemId": "block_blue_040",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "teddy_blue_036",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_blue_020",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "ball_blue_024",
+      "shelfId": 12,
+      "slot": 2
+    },
+    {
+      "itemId": "block_blue_013",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_blue_047",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "ball_blue_026",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_blue_004",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "teddy_blue_029",
+      "shelfId": 11,
+      "slot": 0
+    },
+    {
+      "itemId": "ball_blue_051",
+      "shelfId": 11,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_blue_033",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "ball_blue_048",
+      "shelfId": 12,
+      "slot": 1
+    },
+    {
+      "itemId": "teddy_blue_035",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "ball_blue_050",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_blue_001",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "block_blue_039",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "teddy_blue_034",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "ball_blue_046",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "block_blue_038",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_blue_019",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "block_blue_037",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "block_blue_016",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_blue_021",
+      "shelfId": 11,
+      "slot": 2
+    },
+    {
+      "itemId": "teddy_blue_003",
+      "shelfId": 11,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "block_blue_042",
+      "shelfId": 11,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "block_blue_041",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "teddy_blue_032",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "block_blue_045",
+      "shelfId": 3,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_blue_030",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "ball_blue_049",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "teddy_blue_009",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "ball_blue_025",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_blue_027",
+      "shelfId": 10,
+      "slot": 2
+    },
+    {
+      "itemId": "block_blue_043",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_blue_008",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "teddy_blue_002",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "ball_blue_022",
+      "shelfId": 4,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_blue_054",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "ball_blue_052",
+      "shelfId": 3,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "block_blue_010",
+      "shelfId": 12,
+      "slot": 0
+    },
+    {
+      "itemId": "block_blue_017",
+      "shelfId": 12,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_blue_005",
+      "shelfId": 12,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "teddy_blue_007",
+      "shelfId": 10,
+      "slot": 1
+    },
+    {
+      "itemId": "block_blue_018",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "block_blue_014",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "ball_blue_023",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "teddy_blue_031",
+      "shelfId": 7,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "teddy_blue_028",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "block_blue_015",
+      "shelfId": 10,
+      "slot": 0
+    },
+    {
+      "itemId": "block_blue_011",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "teddy_blue_006",
+      "shelfId": 4,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "block_blue_044",
+      "shelfId": 11,
+      "slot": 1
+    },
+    {
+      "itemId": "block_blue_012",
+      "shelfId": 11,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ball_blue_053",
+      "shelfId": 11,
+      "slot": 1,
+      "depth": 2
+    }
+  ],
+  "optimalMoves": 54,
+  "starThresholds": {
+    "3star": 54,
+    "2star": 65,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "mystery_boxes",
+    "locked_items"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "mysteryBoxes": {
+      "boxes": [
+        {
+          "slot": "4:1",
+          "itemId": "ball_blue_053",
+          "trigger": "shelf_complete"
+        }
+      ]
+    },
+    "lockedItems": {
+      "locks": [
+        {
+          "slot": "12:0",
+          "condition": "sequence",
+          "sequenceNeeded": 3
+        }
+      ]
+    }
+  },
+  "seed": 966135
+}

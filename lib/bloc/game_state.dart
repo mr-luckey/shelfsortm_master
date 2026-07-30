@@ -19,8 +19,15 @@ class GameState extends Equatable {
   final MatchClear? lastClear;
   final String? banner;
   final int clearingShelf;
+  final int openingShelf;
+  final bool inputLocked;
+  final Set<int> finishedShelves;
   final bool ready;
   final BoardPos? selected;
+  final List<String> activeMechanics;
+  final String? objectiveHint;
+  final int maxCombo;
+  final Map<String, dynamic> mechanicVisual;
 
   const GameState({
     this.level,
@@ -36,8 +43,15 @@ class GameState extends Equatable {
     this.lastClear,
     this.banner,
     this.clearingShelf = -1,
+    this.openingShelf = -1,
+    this.inputLocked = false,
+    this.finishedShelves = const {},
     this.ready = false,
     this.selected,
+    this.activeMechanics = const [],
+    this.objectiveHint,
+    this.maxCombo = 0,
+    this.mechanicVisual = const {},
   });
 
   int get itemCount {
@@ -51,8 +65,11 @@ class GameState extends Equatable {
     return n;
   }
 
-  int get stars =>
-      level?.starThresholds.starsForTimeLeft(timeLeft, level!.timeLimit) ?? 1;
+  int get stars {
+    if (level == null) return 1;
+    if (level!.optimalMoves > 0) return level!.starsForMoves(moves);
+    return level!.starThresholds.starsForTimeLeft(timeLeft, level!.timeLimit);
+  }
 
   bool get isTerminal =>
       status == GameStatus.won ||
@@ -73,10 +90,18 @@ class GameState extends Equatable {
     MatchClear? lastClear,
     String? banner,
     int? clearingShelf,
+    int? openingShelf,
+    bool? inputLocked,
+    Set<int>? finishedShelves,
     bool? ready,
     BoardPos? selected,
+    List<String>? activeMechanics,
+    String? objectiveHint,
+    int? maxCombo,
+    Map<String, dynamic>? mechanicVisual,
     bool clearBanner = false,
     bool clearSelected = false,
+    bool clearObjective = false,
   }) {
     return GameState(
       level: level ?? this.level,
@@ -92,8 +117,16 @@ class GameState extends Equatable {
       lastClear: lastClear ?? this.lastClear,
       banner: clearBanner ? null : (banner ?? this.banner),
       clearingShelf: clearingShelf ?? this.clearingShelf,
+      openingShelf: openingShelf ?? this.openingShelf,
+      inputLocked: inputLocked ?? this.inputLocked,
+      finishedShelves: finishedShelves ?? this.finishedShelves,
       ready: ready ?? this.ready,
       selected: clearSelected ? null : (selected ?? this.selected),
+      activeMechanics: activeMechanics ?? this.activeMechanics,
+      objectiveHint:
+          clearObjective ? null : (objectiveHint ?? this.objectiveHint),
+      maxCombo: maxCombo ?? this.maxCombo,
+      mechanicVisual: mechanicVisual ?? this.mechanicVisual,
     );
   }
 
@@ -112,7 +145,14 @@ class GameState extends Equatable {
         lastClear,
         banner,
         clearingShelf,
+        openingShelf,
+        inputLocked,
+        finishedShelves,
         ready,
         selected,
+        activeMechanics,
+        objectiveHint,
+        maxCombo,
+        mechanicVisual,
       ];
 }

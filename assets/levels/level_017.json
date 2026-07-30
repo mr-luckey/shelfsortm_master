@@ -1,92 +1,215 @@
 {
   "levelId": 17,
-  "themeRoom": "garden",
+  "themeRoom": "kitchen",
   "difficulty": "standard",
-  "timeLimit": 142,
-  "shelfCount": 7,
+  "timeLimit": 210,
+  "shelfCount": 8,
   "slotsPerShelf": 3,
   "bufferShelves": 2,
+  "levelTint": "red",
+  "layout": [
+    [
+      1,
+      2,
+      3
+    ],
+    [
+      4,
+      5,
+      6
+    ],
+    [
+      0,
+      7,
+      8,
+      0
+    ]
+  ],
   "initialPlacement": [
     {
-      "itemId": "can_purple_005",
-      "shelfId": 4,
-      "slot": 1
+      "itemId": "cup_red_025",
+      "shelfId": 8,
+      "slot": 2
     },
     {
-      "itemId": "can_orange_013",
+      "itemId": "cup_red_026",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "mug_red_005",
+      "shelfId": 7,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "mug_red_024",
       "shelfId": 2,
-      "slot": 2
-    },
-    {
-      "itemId": "pot_yellow_001",
-      "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "pot_pink_011",
-      "shelfId": 5,
-      "slot": 0
-    },
-    {
-      "itemId": "pot_yellow_003",
-      "shelfId": 3,
-      "slot": 1
-    },
-    {
-      "itemId": "pot_yellow_002",
-      "shelfId": 3,
-      "slot": 0
-    },
-    {
-      "itemId": "pot_pink_010",
-      "shelfId": 5,
-      "slot": 2
-    },
-    {
-      "itemId": "can_orange_015",
-      "shelfId": 3,
-      "slot": 2
-    },
-    {
-      "itemId": "pot_pink_012",
-      "shelfId": 4,
-      "slot": 0
-    },
-    {
-      "itemId": "seed_purple_008",
+      "itemId": "jar_red_014",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "can_purple_004",
-      "shelfId": 1,
-      "slot": 1
-    },
-    {
-      "itemId": "seed_purple_007",
-      "shelfId": 5,
-      "slot": 1
-    },
-    {
-      "itemId": "can_purple_006",
-      "shelfId": 1,
+      "itemId": "mug_red_020",
+      "shelfId": 7,
       "slot": 2
     },
     {
-      "itemId": "seed_purple_009",
+      "itemId": "mug_red_002",
+      "shelfId": 7,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "mug_red_022",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "cup_red_011",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "mug_red_004",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "jar_red_015",
+      "shelfId": 3,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "mug_red_006",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "cup_red_030",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cup_red_027",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "cup_red_010",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "jar_red_018",
+      "shelfId": 4,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cup_red_008",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "can_orange_014",
-      "shelfId": 1,
+      "itemId": "cup_red_012",
+      "shelfId": 4,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cup_red_009",
+      "shelfId": 6,
       "slot": 0
+    },
+    {
+      "itemId": "jar_red_017",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "jar_red_016",
+      "shelfId": 3,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cup_red_007",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "mug_red_019",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "mug_red_003",
+      "shelfId": 3,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cup_red_029",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "mug_red_023",
+      "shelfId": 8,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "jar_red_013",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "mug_red_021",
+      "shelfId": 7,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "mug_red_001",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "cup_red_028",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 1
     }
   ],
-  "optimalMoves": 15,
+  "optimalMoves": 30,
   "starThresholds": {
-    "3star": 64,
-    "2star": 28,
-    "1star": 0
-  }
+    "3star": 30,
+    "2star": 36,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "moving_bottom_tray"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "movingBottomTray": {
+      "slotCount": 4,
+      "movementMode": "ping_pong",
+      "speed": 0.65,
+      "pauseAtEnds": 0.4
+    }
+  },
+  "seed": 134640
 }

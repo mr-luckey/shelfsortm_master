@@ -2,76 +2,74 @@
   "levelId": 4,
   "themeRoom": "kitchen",
   "difficulty": "easy",
-  "timeLimit": 156,
-  "shelfCount": 6,
+  "timeLimit": 135,
+  "shelfCount": 5,
   "slotsPerShelf": 3,
   "bufferShelves": 2,
+  "levelTint": "yellow",
+  "layout": [
+    [
+      1,
+      2,
+      3
+    ],
+    [
+      4,
+      5
+    ]
+  ],
   "initialPlacement": [
     {
-      "itemId": "jar_yellow_007",
-      "shelfId": 4,
-      "slot": 0
-    },
-    {
-      "itemId": "mug_red_011",
-      "shelfId": 3,
-      "slot": 0
-    },
-    {
-      "itemId": "mug_red_010",
-      "shelfId": 3,
-      "slot": 2
-    },
-    {
-      "itemId": "cup_pink_005",
-      "shelfId": 2,
-      "slot": 0
-    },
-    {
-      "itemId": "mug_purple_002",
-      "shelfId": 2,
-      "slot": 2
-    },
-    {
       "itemId": "jar_yellow_009",
-      "shelfId": 1,
-      "slot": 0
-    },
-    {
-      "itemId": "mug_purple_003",
-      "shelfId": 4,
+      "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "cup_pink_004",
-      "shelfId": 1,
-      "slot": 1
+      "itemId": "cup_yellow_005",
+      "shelfId": 3,
+      "slot": 0
     },
     {
-      "itemId": "mug_red_012",
-      "shelfId": 3,
-      "slot": 1
+      "itemId": "cup_yellow_006",
+      "shelfId": 2,
+      "slot": 0
     },
     {
       "itemId": "jar_yellow_008",
-      "shelfId": 4,
+      "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "cup_pink_006",
+      "itemId": "mug_yellow_003",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "cup_yellow_004",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "mug_purple_001",
-      "shelfId": 1,
+      "itemId": "mug_yellow_002",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "mug_yellow_001",
+      "shelfId": 5,
       "slot": 2
+    },
+    {
+      "itemId": "jar_yellow_007",
+      "shelfId": 5,
+      "slot": 0
     }
   ],
-  "optimalMoves": 12,
+  "optimalMoves": 9,
   "starThresholds": {
-    "3star": 70,
-    "2star": 31,
-    "1star": 0
-  }
+    "3star": 9,
+    "2star": 11,
+    "1star": 999
+  },
+  "seed": 31693
 }

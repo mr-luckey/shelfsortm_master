@@ -1,0 +1,368 @@
+{
+  "levelId": 167,
+  "themeRoom": "gameden",
+  "difficulty": "standard",
+  "timeLimit": 280,
+  "shelfCount": 12,
+  "slotsPerShelf": 3,
+  "bufferShelves": 3,
+  "levelTint": "pink",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ]
+  ],
+  "initialPlacement": [
+    {
+      "itemId": "controller_pink_035",
+      "shelfId": 12,
+      "slot": 1
+    },
+    {
+      "itemId": "cartridge_pink_011",
+      "shelfId": 12,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "headset_pink_024",
+      "shelfId": 12,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "controller_pink_001",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "headset_pink_027",
+      "shelfId": 9,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "controller_pink_028",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "controller_pink_031",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "headset_pink_022",
+      "shelfId": 3,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "controller_pink_034",
+      "shelfId": 3,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "headset_pink_019",
+      "shelfId": 10,
+      "slot": 0
+    },
+    {
+      "itemId": "headset_pink_047",
+      "shelfId": 10,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "controller_pink_009",
+      "shelfId": 12,
+      "slot": 2
+    },
+    {
+      "itemId": "headset_pink_049",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cartridge_pink_018",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "cartridge_pink_017",
+      "shelfId": 1,
+      "slot": 2
+    },
+    {
+      "itemId": "controller_pink_003",
+      "shelfId": 1,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cartridge_pink_013",
+      "shelfId": 10,
+      "slot": 2
+    },
+    {
+      "itemId": "controller_pink_032",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "headset_pink_051",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "cartridge_pink_044",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "headset_pink_050",
+      "shelfId": 12,
+      "slot": 0
+    },
+    {
+      "itemId": "cartridge_pink_014",
+      "shelfId": 12,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cartridge_pink_045",
+      "shelfId": 12,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "headset_pink_023",
+      "shelfId": 1,
+      "slot": 1
+    },
+    {
+      "itemId": "controller_pink_005",
+      "shelfId": 1,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cartridge_pink_010",
+      "shelfId": 1,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "cartridge_pink_039",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "headset_pink_025",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "controller_pink_004",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "controller_pink_036",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "controller_pink_008",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "headset_pink_053",
+      "shelfId": 7,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "headset_pink_052",
+      "shelfId": 7,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "cartridge_pink_038",
+      "shelfId": 1,
+      "slot": 0
+    },
+    {
+      "itemId": "controller_pink_033",
+      "shelfId": 1,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "headset_pink_054",
+      "shelfId": 1,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "headset_pink_046",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "cartridge_pink_016",
+      "shelfId": 7,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "headset_pink_021",
+      "shelfId": 7,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "headset_pink_026",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "cartridge_pink_012",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "cartridge_pink_042",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cartridge_pink_043",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "controller_pink_030",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "controller_pink_007",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "controller_pink_006",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "headset_pink_020",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "controller_pink_002",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "cartridge_pink_037",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "cartridge_pink_015",
+      "shelfId": 10,
+      "slot": 1
+    },
+    {
+      "itemId": "headset_pink_048",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "cartridge_pink_040",
+      "shelfId": 9,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "controller_pink_029",
+      "shelfId": 9,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "cartridge_pink_041",
+      "shelfId": 6,
+      "slot": 1
+    }
+  ],
+  "optimalMoves": 54,
+  "starThresholds": {
+    "3star": 54,
+    "2star": 65,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "mystery_boxes",
+    "sliding_shelves"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "mysteryBoxes": {
+      "boxes": [
+        {
+          "slot": "10:1",
+          "itemId": "cartridge_pink_038",
+          "trigger": "shelf_complete"
+        }
+      ]
+    },
+    "slidingShelves": {
+      "shelfIndices": [
+        0
+      ],
+      "direction": "right",
+      "trigger": "on_move",
+      "speed": 0.5
+    }
+  },
+  "seed": 1322490
+}

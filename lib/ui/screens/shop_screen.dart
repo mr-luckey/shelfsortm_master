@@ -48,6 +48,21 @@ class ShopScreen extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+                const SizedBox(height: 8),
+                OutlinedButton.icon(
+                  onPressed: () async {
+                    await progress.restorePurchases();
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Purchases restored'),
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.restore),
+                  label: const Text('Restore Purchases'),
+                ),
                 const SizedBox(height: 16),
                 ...IapService.products.map((product) {
                   final owned = product.removeAds && p.removeAds;

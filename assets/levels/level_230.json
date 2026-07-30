@@ -1,0 +1,369 @@
+{
+  "levelId": 230,
+  "themeRoom": "gift",
+  "difficulty": "tricky",
+  "timeLimit": 250,
+  "shelfCount": 12,
+  "slotsPerShelf": 3,
+  "bufferShelves": 3,
+  "levelTint": "orange",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ]
+  ],
+  "initialPlacement": [
+    {
+      "itemId": "ornament_orange_027",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "ribbon_orange_034",
+      "shelfId": 5,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_orange_019",
+      "shelfId": 5,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "ribbon_orange_005",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "ornament_orange_049",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "bag_orange_014",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "ornament_orange_026",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "ornament_orange_046",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_orange_007",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "bag_orange_043",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "bag_orange_038",
+      "shelfId": 4,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_orange_006",
+      "shelfId": 10,
+      "slot": 2
+    },
+    {
+      "itemId": "bag_orange_017",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_orange_015",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "ribbon_orange_030",
+      "shelfId": 2,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_orange_040",
+      "shelfId": 2,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "ornament_orange_022",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "bag_orange_018",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_orange_044",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "ornament_orange_021",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_orange_039",
+      "shelfId": 10,
+      "slot": 1
+    },
+    {
+      "itemId": "ribbon_orange_032",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_orange_013",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "ribbon_orange_001",
+      "shelfId": 8,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_orange_012",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "bag_orange_016",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_orange_025",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "ornament_orange_054",
+      "shelfId": 11,
+      "slot": 0
+    },
+    {
+      "itemId": "ornament_orange_050",
+      "shelfId": 11,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_orange_052",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "bag_orange_045",
+      "shelfId": 9,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_orange_028",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "ribbon_orange_008",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_orange_011",
+      "shelfId": 11,
+      "slot": 2
+    },
+    {
+      "itemId": "ribbon_orange_003",
+      "shelfId": 11,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_orange_029",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "ornament_orange_047",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "ribbon_orange_035",
+      "shelfId": 7,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_orange_033",
+      "shelfId": 7,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "ornament_orange_023",
+      "shelfId": 10,
+      "slot": 0
+    },
+    {
+      "itemId": "bag_orange_041",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "bag_orange_010",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "ornament_orange_053",
+      "shelfId": 5,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_orange_036",
+      "shelfId": 5,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "ornament_orange_048",
+      "shelfId": 11,
+      "slot": 1
+    },
+    {
+      "itemId": "ornament_orange_020",
+      "shelfId": 11,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_orange_037",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "ornament_orange_024",
+      "shelfId": 9,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_orange_031",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "ribbon_orange_002",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_orange_051",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "bag_orange_042",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "ribbon_orange_009",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "ribbon_orange_004",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 1
+    }
+  ],
+  "optimalMoves": 54,
+  "starThresholds": {
+    "3star": 54,
+    "2star": 65,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "mystery_boxes",
+    "locked_items"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "mysteryBoxes": {
+      "boxes": [
+        {
+          "slot": "5:1",
+          "itemId": "ornament_orange_022",
+          "trigger": "shelf_complete"
+        }
+      ]
+    },
+    "lockedItems": {
+      "locks": [
+        {
+          "slot": "4:0",
+          "condition": "sequence",
+          "sequenceNeeded": 3
+        }
+      ]
+    }
+  },
+  "seed": 1821387
+}

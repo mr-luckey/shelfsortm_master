@@ -25,7 +25,7 @@ class ThemeRoom {
       itemTypes: ['mug', 'cup', 'jar'],
       shelfStyle: 'oak',
       startLevel: 1,
-      endLevel: 5,
+      endLevel: 25,
     ),
     ThemeRoom(
       id: 'bakery',
@@ -33,8 +33,8 @@ class ThemeRoom {
       emoji: '🍰',
       itemTypes: ['cupcake', 'box', 'macaron'],
       shelfStyle: 'marble',
-      startLevel: 6,
-      endLevel: 10,
+      startLevel: 26,
+      endLevel: 50,
     ),
     ThemeRoom(
       id: 'library',
@@ -42,8 +42,8 @@ class ThemeRoom {
       emoji: '📚',
       itemTypes: ['book', 'candle', 'globe'],
       shelfStyle: 'walnut',
-      startLevel: 11,
-      endLevel: 15,
+      startLevel: 51,
+      endLevel: 75,
     ),
     ThemeRoom(
       id: 'garden',
@@ -51,8 +51,8 @@ class ThemeRoom {
       emoji: '🌿',
       itemTypes: ['pot', 'can', 'seed'],
       shelfStyle: 'bamboo',
-      startLevel: 16,
-      endLevel: 20,
+      startLevel: 76,
+      endLevel: 100,
     ),
     ThemeRoom(
       id: 'toy',
@@ -60,8 +60,8 @@ class ThemeRoom {
       emoji: '🧸',
       itemTypes: ['teddy', 'block', 'ball'],
       shelfStyle: 'plastic',
-      startLevel: 21,
-      endLevel: 25,
+      startLevel: 101,
+      endLevel: 125,
     ),
     ThemeRoom(
       id: 'beauty',
@@ -69,8 +69,8 @@ class ThemeRoom {
       emoji: '💄',
       itemTypes: ['perfume', 'lipstick', 'cream'],
       shelfStyle: 'acrylic',
-      startLevel: 26,
-      endLevel: 30,
+      startLevel: 126,
+      endLevel: 150,
     ),
     ThemeRoom(
       id: 'gameden',
@@ -78,8 +78,8 @@ class ThemeRoom {
       emoji: '🎮',
       itemTypes: ['controller', 'cartridge', 'headset'],
       shelfStyle: 'metal',
-      startLevel: 31,
-      endLevel: 35,
+      startLevel: 151,
+      endLevel: 175,
     ),
     ThemeRoom(
       id: 'market',
@@ -87,8 +87,8 @@ class ThemeRoom {
       emoji: '🍕',
       itemTypes: ['can', 'sauce', 'snack'],
       shelfStyle: 'stall',
-      startLevel: 36,
-      endLevel: 40,
+      startLevel: 176,
+      endLevel: 200,
     ),
     ThemeRoom(
       id: 'decor',
@@ -96,8 +96,8 @@ class ThemeRoom {
       emoji: '🏡',
       itemTypes: ['vase', 'frame', 'candle'],
       shelfStyle: 'minimal',
-      startLevel: 41,
-      endLevel: 45,
+      startLevel: 201,
+      endLevel: 225,
     ),
     ThemeRoom(
       id: 'gift',
@@ -105,8 +105,8 @@ class ThemeRoom {
       emoji: '🎁',
       itemTypes: ['ribbon', 'bag', 'ornament'],
       shelfStyle: 'festive',
-      startLevel: 46,
-      endLevel: 50,
+      startLevel: 226,
+      endLevel: 250,
     ),
   ];
 
@@ -143,7 +143,7 @@ extension LevelDifficultyX on LevelDifficulty {
   }
 
   static LevelDifficulty forLevel(int levelId) {
-    if (levelId == 1 || levelId == 26) return LevelDifficulty.rest;
+    if ((levelId - 1) % 25 == 0) return LevelDifficulty.rest;
     if (levelId % 25 == 0) return LevelDifficulty.boss;
     if (levelId % 10 == 0) return LevelDifficulty.tricky;
     if (levelId % 5 == 0) return LevelDifficulty.hard;

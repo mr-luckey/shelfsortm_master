@@ -19,23 +19,23 @@ class _TutorialOverlayState extends State<TutorialOverlay> {
   static const steps = [
     (
       'Sort Challenge!',
-      'Shelves are filled with mixed goods. Your job: group 3 identical items.'
+      'Cabinets hold goods in DEPTH — front items hide what\'s behind them.'
     ),
     (
-      'Move goods',
-      'Tap a good, then tap an empty slot — or drag it. Use BUFFER shelves as space.'
+      'Move to empty slots',
+      'Tap a front good, then tap an EMPTY slot. You can\'t drop onto a filled slot.'
     ),
     (
-      'Match 3 to clear',
-      'When one shelf holds 3 identical goods, they clear automatically!'
+      'Match 3 fronts',
+      'When one shelf shows 3 identical fronts, they clear and hidden goods slide forward!'
+    ),
+    (
+      'Don\'t lock the board',
+      'If every slot is filled you lose. Keep empty shelves as working space.'
     ),
     (
       'Beat the clock',
-      'Clear every good before time runs out. Freeze / Refresh help when stuck.'
-    ),
-    (
-      'Think ahead',
-      'Empty buffer shelves are your working space — never fill them randomly.'
+      'Clear every layer before time runs out. Freeze / Refresh / Hammer help.'
     ),
   ];
 

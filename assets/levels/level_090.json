@@ -1,0 +1,362 @@
+{
+  "levelId": 90,
+  "themeRoom": "garden",
+  "difficulty": "tricky",
+  "timeLimit": 250,
+  "shelfCount": 12,
+  "slotsPerShelf": 3,
+  "bufferShelves": 3,
+  "levelTint": "blue",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ]
+  ],
+  "initialPlacement": [
+    {
+      "itemId": "can_blue_018",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "can_blue_041",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "seed_blue_047",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "seed_blue_025",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "can_blue_017",
+      "shelfId": 8,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_blue_009",
+      "shelfId": 8,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "pot_blue_004",
+      "shelfId": 11,
+      "slot": 1
+    },
+    {
+      "itemId": "seed_blue_024",
+      "shelfId": 11,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_blue_006",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "can_blue_012",
+      "shelfId": 11,
+      "slot": 2
+    },
+    {
+      "itemId": "can_blue_015",
+      "shelfId": 11,
+      "slot": 0
+    },
+    {
+      "itemId": "pot_blue_028",
+      "shelfId": 11,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_blue_033",
+      "shelfId": 11,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "seed_blue_026",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "can_blue_040",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "can_blue_037",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "pot_blue_003",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "can_blue_014",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_blue_032",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "can_blue_039",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "seed_blue_053",
+      "shelfId": 5,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "seed_blue_022",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "pot_blue_034",
+      "shelfId": 7,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_blue_002",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "can_blue_044",
+      "shelfId": 7,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_blue_029",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "pot_blue_008",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_blue_001",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "can_blue_011",
+      "shelfId": 5,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_blue_007",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "seed_blue_054",
+      "shelfId": 2,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "seed_blue_052",
+      "shelfId": 12,
+      "slot": 1
+    },
+    {
+      "itemId": "can_blue_013",
+      "shelfId": 12,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "seed_blue_027",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "can_blue_042",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_blue_036",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "seed_blue_019",
+      "shelfId": 7,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "seed_blue_049",
+      "shelfId": 10,
+      "slot": 0
+    },
+    {
+      "itemId": "seed_blue_021",
+      "shelfId": 10,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "seed_blue_050",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "can_blue_010",
+      "shelfId": 12,
+      "slot": 2
+    },
+    {
+      "itemId": "can_blue_016",
+      "shelfId": 10,
+      "slot": 2
+    },
+    {
+      "itemId": "can_blue_038",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "seed_blue_023",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "seed_blue_051",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "seed_blue_046",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "can_blue_043",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "pot_blue_030",
+      "shelfId": 10,
+      "slot": 1
+    },
+    {
+      "itemId": "can_blue_045",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_blue_005",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "seed_blue_020",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "pot_blue_035",
+      "shelfId": 5,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "pot_blue_031",
+      "shelfId": 5,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "seed_blue_048",
+      "shelfId": 12,
+      "slot": 0
+    }
+  ],
+  "optimalMoves": 54,
+  "starThresholds": {
+    "3star": 54,
+    "2star": 65,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "conveyor_shelf",
+    "moving_bottom_tray"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "conveyorShelf": {
+      "speed": 0.4,
+      "visibleSlots": 4,
+      "queue": []
+    },
+    "movingBottomTray": {
+      "slotCount": 4,
+      "movementMode": "ping_pong",
+      "speed": 0.55,
+      "pauseAtEnds": 0.4
+    }
+  },
+  "seed": 712727
+}

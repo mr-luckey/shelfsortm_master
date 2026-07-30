@@ -1,17 +1,18 @@
 # ShelfSort Master
 
-Replica of [Goods Puzzle: Sort Challenge™](https://play.google.com/store/apps/details?id=com.fc.goods.sort.matching.puzzle.triplemaster&hl=en) (Falcon-style shelf sorting).
+Replica of [Goods Puzzle: Sort Challenge™](https://play.google.com/store/apps/details?id=com.fc.goods.sort.matching.puzzle.triplemaster&hl=en).
 
-## Exact gameplay
+## Deep-analyzed rules (exact)
 
-1. Cabinet of **3-slot shelves** filled with mixed goods  
-2. **2 empty BUFFER shelves** = working space  
-3. **Tap** a good → tap empty slot (or **drag**) to move  
-4. **3 identical on one shelf** → auto clear  
-5. Clear all before **timer** ends  
-6. Boosters: Undo / Freeze / Refresh / Magnet / Extra Shelf  
+1. **Depth stacks** — each shelf column has a front good + hidden goods behind  
+2. **Only fronts are playable** — tap/drag front → **empty column only**  
+3. **Match 3 fronts** on one shelf → clear; behind goods **slide forward**  
+4. **Empty columns** = working space; fill every front → **lose (locked)**  
+5. **Timer** + Freeze / Refresh / Hammer / Extra shelf  
+6. **Irregular cabinet layout** + mono color theme per level  
+7. Gameplay = **BLoC** (no `setState`)
 
-Emoji goods for now. Gameplay uses **BLoC** (no `setState`).
+Emoji goods stand in for 3D bottles.
 
 ## Run
 
@@ -20,4 +21,4 @@ flutter pub get
 flutter run
 ```
 
-Hot restart (`R`) required after this rewrite.
+Hot restart (`R`) after this rewrite. Play **level 3+** to see hidden-behind peeks.

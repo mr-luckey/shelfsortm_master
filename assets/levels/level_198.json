@@ -1,0 +1,362 @@
+{
+  "levelId": 198,
+  "themeRoom": "market",
+  "difficulty": "standard",
+  "timeLimit": 280,
+  "shelfCount": 12,
+  "slotsPerShelf": 3,
+  "bufferShelves": 3,
+  "levelTint": "orange",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ]
+  ],
+  "initialPlacement": [
+    {
+      "itemId": "can_orange_031",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "snack_orange_026",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "sauce_orange_016",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "can_orange_032",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "can_orange_003",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "snack_orange_020",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "can_orange_006",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "snack_orange_046",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "sauce_orange_045",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "snack_orange_022",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "snack_orange_047",
+      "shelfId": 8,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "can_orange_035",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "sauce_orange_010",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "sauce_orange_014",
+      "shelfId": 2,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "can_orange_002",
+      "shelfId": 10,
+      "slot": 0
+    },
+    {
+      "itemId": "snack_orange_027",
+      "shelfId": 10,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "can_orange_030",
+      "shelfId": 10,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "snack_orange_048",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "sauce_orange_038",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "can_orange_009",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "sauce_orange_039",
+      "shelfId": 11,
+      "slot": 2
+    },
+    {
+      "itemId": "can_orange_004",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "snack_orange_023",
+      "shelfId": 5,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "can_orange_034",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "snack_orange_053",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "sauce_orange_037",
+      "shelfId": 3,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "snack_orange_024",
+      "shelfId": 11,
+      "slot": 0
+    },
+    {
+      "itemId": "snack_orange_051",
+      "shelfId": 11,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "can_orange_007",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "snack_orange_052",
+      "shelfId": 5,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "sauce_orange_042",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "snack_orange_025",
+      "shelfId": 10,
+      "slot": 2
+    },
+    {
+      "itemId": "sauce_orange_040",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "sauce_orange_012",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "sauce_orange_018",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "can_orange_029",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "can_orange_028",
+      "shelfId": 11,
+      "slot": 1
+    },
+    {
+      "itemId": "snack_orange_049",
+      "shelfId": 11,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "can_orange_036",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "snack_orange_050",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "sauce_orange_015",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "sauce_orange_017",
+      "shelfId": 5,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "sauce_orange_011",
+      "shelfId": 5,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "sauce_orange_044",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "sauce_orange_043",
+      "shelfId": 9,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "can_orange_001",
+      "shelfId": 9,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "can_orange_033",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "snack_orange_019",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "can_orange_008",
+      "shelfId": 10,
+      "slot": 1
+    },
+    {
+      "itemId": "can_orange_005",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "sauce_orange_041",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "snack_orange_054",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "snack_orange_021",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "sauce_orange_013",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 2
+    }
+  ],
+  "optimalMoves": 54,
+  "starThresholds": {
+    "3star": 54,
+    "2star": 65,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "moving_bottom_tray",
+    "conveyor_shelf"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "movingBottomTray": {
+      "slotCount": 4,
+      "movementMode": "ping_pong",
+      "speed": 0.7000000000000001,
+      "pauseAtEnds": 0.4
+    },
+    "conveyorShelf": {
+      "speed": 0.4,
+      "visibleSlots": 4,
+      "queue": []
+    }
+  },
+  "seed": 1567979
+}

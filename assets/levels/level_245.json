@@ -1,0 +1,363 @@
+{
+  "levelId": 245,
+  "themeRoom": "gift",
+  "difficulty": "hard",
+  "timeLimit": 260,
+  "shelfCount": 12,
+  "slotsPerShelf": 3,
+  "bufferShelves": 3,
+  "levelTint": "purple",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ]
+  ],
+  "initialPlacement": [
+    {
+      "itemId": "bag_purple_013",
+      "shelfId": 10,
+      "slot": 2
+    },
+    {
+      "itemId": "bag_purple_038",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "ornament_purple_052",
+      "shelfId": 9,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_purple_037",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "bag_purple_041",
+      "shelfId": 3,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_purple_018",
+      "shelfId": 3,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "bag_purple_011",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "ornament_purple_025",
+      "shelfId": 1,
+      "slot": 1
+    },
+    {
+      "itemId": "ornament_purple_023",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "ribbon_purple_004",
+      "shelfId": 10,
+      "slot": 1
+    },
+    {
+      "itemId": "bag_purple_040",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_purple_033",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "ribbon_purple_034",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_purple_024",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "ribbon_purple_005",
+      "shelfId": 12,
+      "slot": 1
+    },
+    {
+      "itemId": "ornament_purple_019",
+      "shelfId": 12,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_purple_020",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "ribbon_purple_001",
+      "shelfId": 5,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_purple_042",
+      "shelfId": 1,
+      "slot": 0
+    },
+    {
+      "itemId": "ribbon_purple_036",
+      "shelfId": 1,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_purple_054",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "bag_purple_045",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "bag_purple_016",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "ornament_purple_051",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_purple_008",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "bag_purple_012",
+      "shelfId": 5,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_purple_044",
+      "shelfId": 5,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "bag_purple_017",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "ornament_purple_022",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_purple_006",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "bag_purple_043",
+      "shelfId": 3,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_purple_050",
+      "shelfId": 3,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "ribbon_purple_031",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "ribbon_purple_030",
+      "shelfId": 12,
+      "slot": 2
+    },
+    {
+      "itemId": "bag_purple_015",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_purple_010",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "ornament_purple_021",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "ribbon_purple_009",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_purple_053",
+      "shelfId": 1,
+      "slot": 2
+    },
+    {
+      "itemId": "ribbon_purple_007",
+      "shelfId": 1,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ornament_purple_048",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "ribbon_purple_032",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_purple_029",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "ornament_purple_047",
+      "shelfId": 10,
+      "slot": 0
+    },
+    {
+      "itemId": "bag_purple_039",
+      "shelfId": 12,
+      "slot": 0
+    },
+    {
+      "itemId": "ornament_purple_026",
+      "shelfId": 12,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "bag_purple_014",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "ribbon_purple_028",
+      "shelfId": 2,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_purple_002",
+      "shelfId": 2,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "ornament_purple_027",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "ornament_purple_046",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_purple_035",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "ornament_purple_049",
+      "shelfId": 3,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "ribbon_purple_003",
+      "shelfId": 3,
+      "slot": 2,
+      "depth": 2
+    }
+  ],
+  "optimalMoves": 54,
+  "starThresholds": {
+    "3star": 54,
+    "2star": 65,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "rotating_tray",
+    "moving_bottom_tray"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "rotatingTray": {
+      "slotCount": 4,
+      "speed": 0.4,
+      "rotateMode": "on_move",
+      "clockwise": true
+    },
+    "movingBottomTray": {
+      "slotCount": 4,
+      "movementMode": "ping_pong",
+      "speed": 0.55,
+      "pauseAtEnds": 0.4
+    }
+  },
+  "seed": 1940172
+}

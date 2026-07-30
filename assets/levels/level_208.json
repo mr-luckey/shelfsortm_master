@@ -1,0 +1,368 @@
+{
+  "levelId": 208,
+  "themeRoom": "decor",
+  "difficulty": "standard",
+  "timeLimit": 280,
+  "shelfCount": 12,
+  "slotsPerShelf": 3,
+  "bufferShelves": 3,
+  "levelTint": "teal",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ]
+  ],
+  "initialPlacement": [
+    {
+      "itemId": "candle_teal_048",
+      "shelfId": 11,
+      "slot": 1
+    },
+    {
+      "itemId": "frame_teal_037",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "vase_teal_006",
+      "shelfId": 12,
+      "slot": 1
+    },
+    {
+      "itemId": "vase_teal_036",
+      "shelfId": 12,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "frame_teal_015",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "frame_teal_039",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "candle_teal_019",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "vase_teal_004",
+      "shelfId": 5,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "candle_teal_026",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "frame_teal_045",
+      "shelfId": 7,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "vase_teal_029",
+      "shelfId": 11,
+      "slot": 2
+    },
+    {
+      "itemId": "frame_teal_043",
+      "shelfId": 11,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "frame_teal_016",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "frame_teal_014",
+      "shelfId": 11,
+      "slot": 0
+    },
+    {
+      "itemId": "candle_teal_025",
+      "shelfId": 11,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "candle_teal_020",
+      "shelfId": 12,
+      "slot": 0
+    },
+    {
+      "itemId": "candle_teal_051",
+      "shelfId": 12,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "vase_teal_005",
+      "shelfId": 12,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "frame_teal_040",
+      "shelfId": 10,
+      "slot": 0
+    },
+    {
+      "itemId": "frame_teal_041",
+      "shelfId": 10,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "candle_teal_052",
+      "shelfId": 10,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "frame_teal_018",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "candle_teal_046",
+      "shelfId": 7,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "candle_teal_047",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "vase_teal_034",
+      "shelfId": 9,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "vase_teal_001",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "vase_teal_009",
+      "shelfId": 8,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "vase_teal_030",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "vase_teal_031",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "vase_teal_007",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "frame_teal_013",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "candle_teal_024",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "frame_teal_011",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "candle_teal_053",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "candle_teal_021",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "vase_teal_028",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "vase_teal_035",
+      "shelfId": 9,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "candle_teal_022",
+      "shelfId": 10,
+      "slot": 1
+    },
+    {
+      "itemId": "candle_teal_023",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "candle_teal_050",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "frame_teal_042",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "frame_teal_017",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "frame_teal_044",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "vase_teal_003",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "vase_teal_008",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "candle_teal_054",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "frame_teal_012",
+      "shelfId": 10,
+      "slot": 2
+    },
+    {
+      "itemId": "candle_teal_049",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "frame_teal_010",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "candle_teal_027",
+      "shelfId": 5,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "frame_teal_038",
+      "shelfId": 5,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "vase_teal_033",
+      "shelfId": 12,
+      "slot": 2
+    },
+    {
+      "itemId": "vase_teal_002",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "vase_teal_032",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 2
+    }
+  ],
+  "optimalMoves": 54,
+  "starThresholds": {
+    "3star": 54,
+    "2star": 65,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "sliding_shelves",
+    "frozen_items"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "slidingShelves": {
+      "shelfIndices": [
+        0
+      ],
+      "direction": "left",
+      "trigger": "on_move",
+      "speed": 0.5
+    },
+    "frozenItems": {
+      "frozen": [
+        {
+          "slot": "6:2",
+          "layers": 1,
+          "unlock": "sequence"
+        }
+      ]
+    }
+  },
+  "seed": 1647169
+}

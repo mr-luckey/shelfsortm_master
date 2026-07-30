@@ -60,3 +60,24 @@ class GameRestarted extends GameEvent {
 class BannerCleared extends GameEvent {
   const BannerCleared();
 }
+
+class MechanicTick extends GameEvent {
+  final double dt;
+  const MechanicTick(this.dt);
+  @override
+  List<Object?> get props => [dt];
+}
+
+class ShelfWaveOpened extends GameEvent {
+  final int shelfIndex;
+  const ShelfWaveOpened(this.shelfIndex);
+  @override
+  List<Object?> get props => [shelfIndex];
+}
+
+class ContinueAfterAd extends GameEvent {
+  final bool extraTime;
+  const ContinueAfterAd({this.extraTime = true});
+  @override
+  List<Object?> get props => [extraTime];
+}

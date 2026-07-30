@@ -63,7 +63,7 @@ class ProgressProvider extends ChangeNotifier {
   }) async {
     final levels = Map<int, LevelProgress>.from(progress.levels);
     final existing = levels[levelId] ??
-        LevelProgress(levelId: levelId, unlocked: true);
+        LevelProgress(levelId: levelId, unlocked: levelId == 1);
     final bestStars =
         stars > existing.bestStars ? stars : existing.bestStars;
     final bestMoves =
@@ -252,6 +252,12 @@ class ProgressProvider extends ChangeNotifier {
     );
     await _persist();
     notifyListeners();
+  }
+
+  Future<bool> restorePurchases() async {
+    await iapService.restorePurchases();
+    notifyListeners();
+    return true;
   }
 
   Future<bool> purchase(IapProduct product) async {

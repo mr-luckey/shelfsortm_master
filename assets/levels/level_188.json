@@ -1,0 +1,362 @@
+{
+  "levelId": 188,
+  "themeRoom": "market",
+  "difficulty": "standard",
+  "timeLimit": 280,
+  "shelfCount": 12,
+  "slotsPerShelf": 3,
+  "bufferShelves": 3,
+  "levelTint": "yellow",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ]
+  ],
+  "initialPlacement": [
+    {
+      "itemId": "can_yellow_008",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "sauce_yellow_010",
+      "shelfId": 3,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "sauce_yellow_015",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "can_yellow_032",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "sauce_yellow_045",
+      "shelfId": 6,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "sauce_yellow_038",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "can_yellow_001",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "can_yellow_035",
+      "shelfId": 7,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "sauce_yellow_012",
+      "shelfId": 7,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "sauce_yellow_018",
+      "shelfId": 12,
+      "slot": 1
+    },
+    {
+      "itemId": "sauce_yellow_044",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "snack_yellow_025",
+      "shelfId": 3,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "sauce_yellow_016",
+      "shelfId": 3,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "sauce_yellow_011",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "sauce_yellow_039",
+      "shelfId": 4,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "can_yellow_029",
+      "shelfId": 1,
+      "slot": 1
+    },
+    {
+      "itemId": "can_yellow_036",
+      "shelfId": 1,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "can_yellow_006",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "snack_yellow_024",
+      "shelfId": 7,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "snack_yellow_048",
+      "shelfId": 7,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "can_yellow_034",
+      "shelfId": 12,
+      "slot": 2
+    },
+    {
+      "itemId": "sauce_yellow_040",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "snack_yellow_027",
+      "shelfId": 12,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "can_yellow_028",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "snack_yellow_046",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "can_yellow_030",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "sauce_yellow_042",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "can_yellow_004",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "snack_yellow_052",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "snack_yellow_049",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "sauce_yellow_043",
+      "shelfId": 10,
+      "slot": 0
+    },
+    {
+      "itemId": "snack_yellow_053",
+      "shelfId": 10,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "can_yellow_005",
+      "shelfId": 10,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "snack_yellow_022",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "can_yellow_002",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "snack_yellow_021",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "snack_yellow_020",
+      "shelfId": 1,
+      "slot": 2
+    },
+    {
+      "itemId": "sauce_yellow_017",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "sauce_yellow_013",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "can_yellow_007",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "snack_yellow_054",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "can_yellow_003",
+      "shelfId": 12,
+      "slot": 0
+    },
+    {
+      "itemId": "snack_yellow_019",
+      "shelfId": 10,
+      "slot": 2
+    },
+    {
+      "itemId": "can_yellow_031",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "sauce_yellow_014",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "can_yellow_033",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "snack_yellow_051",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "snack_yellow_047",
+      "shelfId": 6,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "can_yellow_009",
+      "shelfId": 10,
+      "slot": 1
+    },
+    {
+      "itemId": "sauce_yellow_037",
+      "shelfId": 1,
+      "slot": 0
+    },
+    {
+      "itemId": "snack_yellow_026",
+      "shelfId": 1,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "sauce_yellow_041",
+      "shelfId": 1,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "snack_yellow_023",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "snack_yellow_050",
+      "shelfId": 7,
+      "slot": 2
+    }
+  ],
+  "optimalMoves": 54,
+  "starThresholds": {
+    "3star": 54,
+    "2star": 65,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "chain_release"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "chainRelease": {
+      "events": [
+        {
+          "trigger": "type_clear",
+          "steps": [
+            {
+              "action": "reveal_hidden"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "seed": 1488789
+}

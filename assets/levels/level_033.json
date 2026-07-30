@@ -1,92 +1,219 @@
 {
   "levelId": 33,
-  "themeRoom": "gameden",
+  "themeRoom": "bakery",
   "difficulty": "standard",
-  "timeLimit": 142,
-  "shelfCount": 7,
+  "timeLimit": 210,
+  "shelfCount": 9,
   "slotsPerShelf": 3,
   "bufferShelves": 2,
+  "levelTint": "red",
+  "layout": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      0,
+      9,
+      0
+    ]
+  ],
   "initialPlacement": [
     {
-      "itemId": "cartridge_red_006",
-      "shelfId": 4,
+      "itemId": "cupcake_red_003",
+      "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "cartridge_red_004",
-      "shelfId": 1,
-      "slot": 2
-    },
-    {
-      "itemId": "headset_red_008",
-      "shelfId": 4,
-      "slot": 1
-    },
-    {
-      "itemId": "headset_red_009",
-      "shelfId": 5,
-      "slot": 2
-    },
-    {
-      "itemId": "headset_red_007",
-      "shelfId": 5,
-      "slot": 0
-    },
-    {
-      "itemId": "controller_purple_002",
-      "shelfId": 2,
-      "slot": 0
-    },
-    {
-      "itemId": "cartridge_blue_013",
-      "shelfId": 2,
-      "slot": 2
-    },
-    {
-      "itemId": "cartridge_blue_015",
-      "shelfId": 3,
-      "slot": 0
-    },
-    {
-      "itemId": "controller_yellow_011",
+      "itemId": "box_red_012",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "controller_yellow_012",
+      "itemId": "box_red_010",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "macaron_red_018",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "cupcake_red_022",
+      "shelfId": 1,
+      "slot": 0
+    },
+    {
+      "itemId": "cupcake_red_020",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "cartridge_red_005",
+      "itemId": "box_red_028",
       "shelfId": 5,
-      "slot": 1
+      "slot": 0
     },
     {
-      "itemId": "cartridge_blue_014",
-      "shelfId": 3,
-      "slot": 1
+      "itemId": "cupcake_red_001",
+      "shelfId": 5,
+      "slot": 0,
+      "depth": 1
     },
     {
-      "itemId": "controller_purple_001",
-      "shelfId": 3,
+      "itemId": "macaron_red_017",
+      "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "controller_purple_003",
+      "itemId": "cupcake_red_024",
+      "shelfId": 1,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "macaron_red_016",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "controller_yellow_010",
-      "shelfId": 1,
+      "itemId": "box_red_007",
+      "shelfId": 4,
       "slot": 0
+    },
+    {
+      "itemId": "cupcake_red_005",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "cupcake_red_006",
+      "shelfId": 4,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "box_red_030",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "box_red_008",
+      "shelfId": 5,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_red_004",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "cupcake_red_002",
+      "shelfId": 3,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "box_red_011",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "box_red_029",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "cupcake_red_021",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "box_red_027",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "macaron_red_013",
+      "shelfId": 7,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "macaron_red_014",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "box_red_026",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "box_red_025",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_red_023",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "box_red_009",
+      "shelfId": 2,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_red_019",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "macaron_red_015",
+      "shelfId": 5,
+      "slot": 2
     }
   ],
-  "optimalMoves": 15,
+  "optimalMoves": 30,
   "starThresholds": {
-    "3star": 64,
-    "2star": 28,
-    "1star": 0
-  }
+    "3star": 30,
+    "2star": 36,
+    "1star": 999
+  },
+  "mechanics": [
+    "hidden_back_row",
+    "stacked_items",
+    "sliding_shelves"
+  ],
+  "mechanicConfig": {
+    "hiddenBackRow": {
+      "rows": 1,
+      "revealMode": "front_clear"
+    },
+    "stackedItems": {
+      "maxDepth": 3
+    },
+    "slidingShelves": {
+      "shelfIndices": [
+        0
+      ],
+      "direction": "right",
+      "trigger": "on_move",
+      "speed": 0.5
+    }
+  },
+  "seed": 261344
 }
