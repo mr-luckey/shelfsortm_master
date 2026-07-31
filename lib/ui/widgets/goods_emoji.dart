@@ -129,11 +129,7 @@ class EmojiImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      EmojiAssets.pathFor(type),
-      width: size,
-      height: size,
-    );
+    return Image.asset(EmojiAssets.pathFor(type), width: size, height: size);
   }
 }
 

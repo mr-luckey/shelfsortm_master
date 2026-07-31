@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -301,6 +303,20 @@ class _Slot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, box) => _build(_fitSize(box)),
+    );
+  }
+
+  /// An on-shelf [GoodsEmoji] draws a tile of `size * 0.88`, so grow the size
+  /// until that tile fills the slot instead of staying at a fixed 44.
+  double _fitSize(BoxConstraints box) {
+    final available = math.min(box.maxWidth - 4 * scale, box.maxHeight);
+    if (!available.isFinite) return 44 * scale;
+    return math.max(44 * scale, available / 0.88);
+  }
+
+  Widget _build(double emojiSize) {
     return DragTarget<DragData>(
       onWillAcceptWithDetails: (d) {
         if (hidden || d.data.from == pos) return false;
@@ -350,7 +366,7 @@ class _Slot extends StatelessWidget {
                       child: blocked
                           ? GoodsEmoji(
                               item: front!,
-                              size: 44 * scale,
+                              size: emojiSize,
                               dimmed: true,
                               onShelf: true,
                             )
@@ -360,20 +376,20 @@ class _Slot extends StatelessWidget {
                                 color: Colors.transparent,
                                 child: GoodsEmoji(
                                   item: front!,
-                                  size: 52 * scale,
+                                  size: emojiSize * 1.18,
                                   lifting: true,
                                   onShelf: true,
                                 ),
                               ),
                               childWhenDragging: GoodsEmoji(
                                 item: front!,
-                                size: 36 * scale,
+                                size: emojiSize * 0.82,
                                 dimmed: true,
                                 onShelf: true,
                               ),
                               child: GoodsEmoji(
                                 item: front!,
-                                size: 44 * scale,
+                                size: emojiSize,
                                 lifting: selected,
                                 onShelf: true,
                               ),

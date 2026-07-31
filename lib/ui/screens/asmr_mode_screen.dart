@@ -92,7 +92,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   static const double _slowMoFactor = 0.35;
   static const double _baseSpeed = 32.0;
   static const double _sellDuration = 0.9;
-  static const _cubbyAsset = 'assets/images/premium/cupboards/cubby_unit.png';
+  static const _cubbyAsset = 'assets/images/premium/cupboards/shelf_cell.png';
 
   @override
   void initState() {

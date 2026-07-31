@@ -103,13 +103,19 @@ List<({int slot, double cx})> _centeredFilledLayout(
   ];
 }
 
-/// Same insets as [_paintWoodCell] cavity.
-({double left, double width, double floorY}) _cavityMetrics(Rect rect) {
+/// Same insets as [_paintWoodCell] cavity. Sides shared with a neighbour use
+/// half the frame so the joint reads as one divider.
+({double left, double width, double floorY}) _cavityMetrics(
+  Rect rect, {
+  bool edgeL = true,
+  bool edgeR = true,
+  bool edgeB = true,
+}) {
   final w = rect.width;
   final h = rect.height;
-  final insetL = w * 0.109;
-  final insetR = w * 0.109;
-  final insetB = h * 0.146;
+  final insetL = w * 0.109 * (edgeL ? 1 : 0.5);
+  final insetR = w * 0.109 * (edgeR ? 1 : 0.5);
+  final insetB = h * 0.146 * (edgeB ? 1 : 0.5);
   return (
     left: insetL,
     width: w - insetL - insetR,
@@ -125,6 +131,10 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
   final Map<String, ui.Image> _faceImages = {};
   final Set<String> _requested = {};
 
+  static const String _cellBgAsset =
+      'assets/images/premium/cupboards/shelf_cell.png';
+  ui.Image? _cellBg;
+
   double _colWidth = 0;
   int _rows = 0;
   _HeldFace? _held;
@@ -138,6 +148,22 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
   void initState() {
     super.initState();
     _ticker = createTicker(_onTick)..start();
+    _loadCellBg();
+  }
+
+  Future<void> _loadCellBg() async {
+    try {
+      final data = await rootBundle.load(_cellBgAsset);
+      final codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
+      final frame = await codec.getNextFrame();
+      if (!mounted) {
+        frame.image.dispose();
+        return;
+      }
+      setState(() => _cellBg = frame.image);
+    } catch (_) {
+      // Missing art — the painted wood cell stays as the background.
+    }
   }
 
   @override
@@ -194,6 +220,9 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
     final cellLeft = col * _colWidth;
     final cavity = _cavityMetrics(
       Rect.fromLTWH(0, 0, _colWidth, PremiumShelfGrid.cellHeight),
+      edgeL: col == 0,
+      edgeR: col == PremiumShelfGrid.colsPerRow - 1,
+      edgeB: row == _rows - 1,
     );
     final localInCavity = local.dx - cellLeft - cavity.left;
     final layout = _centeredFilledLayout(slots, cavity.width);
@@ -328,6 +357,7 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
                     cells: cells,
                     shadows: shadows,
                     faceImages: _faceImages,
+                    cellBg: _cellBg,
                     sellingCell: widget.clearingShelf < 0
                         ? null
                         : _CellKey(
@@ -374,17 +404,33 @@ abstract final class _WoodCellColors {
   static const innerShade = Color(0xFF9C8A66);
 }
 
-void _paintWoodCell(Canvas canvas, Rect rect) {
+void _paintWoodCell(
+  Canvas canvas,
+  Rect rect, {
+  Rect? board,
+  bool edgeL = true,
+  bool edgeT = true,
+  bool edgeR = true,
+  bool edgeB = true,
+}) {
+  // Frame shading spans the whole board so neighbours share one continuous
+  // divider instead of two frame edges meeting.
+  final panel = board ?? rect;
   final w = rect.width;
   final h = rect.height;
   final r = 0.0;
 
-  // Proportions from reference frame (~644×425).
-  final insetL = w * 0.109;
-  final insetR = w * 0.109;
-  final insetT = h * 0.129;
-  final insetB = h * 0.146;
+  // Proportions from reference frame (~644×425). Shared sides use half the
+  // frame so two neighbours together form a single divider.
+  final insetL = w * 0.109 * (edgeL ? 1 : 0.5);
+  final insetR = w * 0.109 * (edgeR ? 1 : 0.5);
+  final insetT = h * 0.129 * (edgeT ? 1 : 0.5);
+  final insetB = h * 0.146 * (edgeB ? 1 : 0.5);
   final rim = math.min(w, h) * 0.055;
+  final rimL = edgeL ? rim : rim * 0.5;
+  final rimT = edgeT ? rim : rim * 0.5;
+  final rimR = edgeR ? rim : rim * 0.5;
+  final rimB = edgeB ? rim : rim * 0.5;
 
   final outer = RRect.fromRectAndRadius(rect, Radius.circular(r));
   final cavity = Rect.fromLTRB(
@@ -402,8 +448,8 @@ void _paintWoodCell(Canvas canvas, Rect rect) {
     outer,
     Paint()
       ..shader = ui.Gradient.linear(
-        rect.topCenter,
-        rect.bottomRight,
+        panel.topCenter,
+        panel.bottomRight,
         const [
           _WoodCellColors.frameHi,
           _WoodCellColors.frameMid,
@@ -419,8 +465,11 @@ void _paintWoodCell(Canvas canvas, Rect rect) {
     outer,
     Paint()
       ..shader = ui.Gradient.linear(
-        rect.topLeft,
-        Offset(rect.left + w * 0.35, rect.top + h * 0.45),
+        panel.topLeft,
+        Offset(
+          panel.left + panel.width * 0.35,
+          panel.top + panel.height * 0.45,
+        ),
         [
           _WoodCellColors.bevelHi.withValues(alpha: 0.55),
           _WoodCellColors.bevelHi.withValues(alpha: 0.0),
@@ -428,30 +477,38 @@ void _paintWoodCell(Canvas canvas, Rect rect) {
       ),
   );
 
-  // Inner bevel ring (lighter lip before the recess).
-  final lip = RRect.fromRectAndRadius(
-    rect.deflate(rim * 0.85),
-    Radius.circular(math.max(1.0, r - rim * 0.85)),
-  );
-  canvas.drawRRect(
-    lip,
-    Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = math.max(1.0, rim * 0.55)
-      ..color = _WoodCellColors.bevelHi.withValues(alpha: 0.7),
-  );
+  // Inner bevel lip — only on the board's outer sides, so shared joints don't
+  // show two parallel highlights.
+  final lipPaint = Paint()
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = math.max(1.0, rim * 0.55)
+    ..color = _WoodCellColors.bevelHi.withValues(alpha: 0.7);
+  final lipInset = rim * 0.85;
+  final lipRect = rect.deflate(lipInset);
+  if (edgeL) {
+    canvas.drawLine(lipRect.topLeft, lipRect.bottomLeft, lipPaint);
+  }
+  if (edgeT) {
+    canvas.drawLine(lipRect.topLeft, lipRect.topRight, lipPaint);
+  }
+  if (edgeR) {
+    canvas.drawLine(lipRect.topRight, lipRect.bottomRight, lipPaint);
+  }
+  if (edgeB) {
+    canvas.drawLine(lipRect.bottomLeft, lipRect.bottomRight, lipPaint);
+  }
 
   // Depth walls (trapezoids from outer rim to cavity).
   final wallPaint = Paint()..style = PaintingStyle.fill;
 
   final topWall = Path()
-    ..moveTo(rect.left + rim, rect.top + rim)
-    ..lineTo(rect.right - rim, rect.top + rim)
+    ..moveTo(rect.left + rimL, rect.top + rimT)
+    ..lineTo(rect.right - rimR, rect.top + rimT)
     ..lineTo(cavity.right, cavity.top)
     ..lineTo(cavity.left, cavity.top)
     ..close();
   wallPaint.shader = ui.Gradient.linear(
-    Offset(rect.center.dx, rect.top + rim),
+    Offset(rect.center.dx, rect.top + rimT),
     Offset(rect.center.dx, cavity.top),
     const [_WoodCellColors.recess, _WoodCellColors.wallTop, _WoodCellColors.backEdge],
     const [0.0, 0.45, 1.0],
@@ -459,13 +516,13 @@ void _paintWoodCell(Canvas canvas, Rect rect) {
   canvas.drawPath(topWall, wallPaint);
 
   final leftWall = Path()
-    ..moveTo(rect.left + rim, rect.top + rim)
+    ..moveTo(rect.left + rimL, rect.top + rimT)
     ..lineTo(cavity.left, cavity.top)
     ..lineTo(cavity.left, cavity.bottom)
-    ..lineTo(rect.left + rim, rect.bottom - rim)
+    ..lineTo(rect.left + rimL, rect.bottom - rimB)
     ..close();
   wallPaint.shader = ui.Gradient.linear(
-    Offset(rect.left + rim, rect.center.dy),
+    Offset(rect.left + rimL, rect.center.dy),
     Offset(cavity.left, rect.center.dy),
     const [_WoodCellColors.recess, _WoodCellColors.wallSide, _WoodCellColors.backEdge],
     const [0.0, 0.5, 1.0],
@@ -473,13 +530,13 @@ void _paintWoodCell(Canvas canvas, Rect rect) {
   canvas.drawPath(leftWall, wallPaint);
 
   final rightWall = Path()
-    ..moveTo(rect.right - rim, rect.top + rim)
+    ..moveTo(rect.right - rimR, rect.top + rimT)
     ..lineTo(cavity.right, cavity.top)
     ..lineTo(cavity.right, cavity.bottom)
-    ..lineTo(rect.right - rim, rect.bottom - rim)
+    ..lineTo(rect.right - rimR, rect.bottom - rimB)
     ..close();
   wallPaint.shader = ui.Gradient.linear(
-    Offset(rect.right - rim, rect.center.dy),
+    Offset(rect.right - rimR, rect.center.dy),
     Offset(cavity.right, rect.center.dy),
     const [_WoodCellColors.frameDeep, _WoodCellColors.wallRight, _WoodCellColors.backDark],
     const [0.0, 0.45, 1.0],
@@ -487,14 +544,14 @@ void _paintWoodCell(Canvas canvas, Rect rect) {
   canvas.drawPath(rightWall, wallPaint);
 
   final botWall = Path()
-    ..moveTo(rect.left + rim, rect.bottom - rim)
+    ..moveTo(rect.left + rimL, rect.bottom - rimB)
     ..lineTo(cavity.left, cavity.bottom)
     ..lineTo(cavity.right, cavity.bottom)
-    ..lineTo(rect.right - rim, rect.bottom - rim)
+    ..lineTo(rect.right - rimR, rect.bottom - rimB)
     ..close();
   wallPaint.shader = ui.Gradient.linear(
     Offset(rect.center.dx, cavity.bottom),
-    Offset(rect.center.dx, rect.bottom - rim),
+    Offset(rect.center.dx, rect.bottom - rimB),
     const [_WoodCellColors.floor, _WoodCellColors.frameAmber],
     const [0.0, 1.0],
   );
@@ -562,14 +619,23 @@ void _paintWoodCell(Canvas canvas, Rect rect) {
 
   canvas.restore();
 
-  // Outer rim edge.
-  canvas.drawRRect(
-    outer,
-    Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = math.max(0.8, rim * 0.22)
-      ..color = _WoodCellColors.rimEdge,
-  );
+  // Rim edge — only around the board, never on a shared side.
+  final rimPaint = Paint()
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = math.max(0.8, rim * 0.22)
+    ..color = _WoodCellColors.rimEdge;
+  if (edgeL) {
+    canvas.drawLine(rect.topLeft, rect.bottomLeft, rimPaint);
+  }
+  if (edgeT) {
+    canvas.drawLine(rect.topLeft, rect.topRight, rimPaint);
+  }
+  if (edgeR) {
+    canvas.drawLine(rect.topRight, rect.bottomRight, rimPaint);
+  }
+  if (edgeB) {
+    canvas.drawLine(rect.bottomLeft, rect.bottomRight, rimPaint);
+  }
 }
 
 class _ShelfGridPainter extends CustomPainter {
@@ -580,6 +646,7 @@ class _ShelfGridPainter extends CustomPainter {
   final Map<_CellKey, List<GameItem?>> cells;
   final Map<_CellKey, List<GameItem?>> shadows;
   final Map<String, ui.Image> faceImages;
+  final ui.Image? cellBg;
   final _CellKey? sellingCell;
   final double sellT;
   final ({String type, Offset finger})? held;
@@ -592,6 +659,7 @@ class _ShelfGridPainter extends CustomPainter {
     required this.line,
     required this.cells,
     required this.faceImages,
+    this.cellBg,
     this.shadows = const {},
     this.sellingCell,
     this.sellT = 0,
@@ -611,7 +679,23 @@ class _ShelfGridPainter extends CustomPainter {
           colWidth,
           cellHeight,
         );
-        _paintWoodCell(canvas, rect);
+        final edgeL = c == 0;
+        final edgeR = c == cols - 1;
+        final edgeB = r == rows - 1;
+        final bg = cellBg;
+        if (bg != null) {
+          _drawImage(canvas, bg, rect, null);
+        } else {
+          _paintWoodCell(
+            canvas,
+            rect,
+            board: Offset.zero & size,
+            edgeL: edgeL,
+            edgeT: r == 0,
+            edgeR: edgeR,
+            edgeB: edgeB,
+          );
+        }
 
         final key = _CellKey(r, c);
         final slots = cells[key];
@@ -629,8 +713,24 @@ class _ShelfGridPainter extends CustomPainter {
         }
 
         final behind = shadows[key];
-        if (behind != null) _paintShadow(canvas, rect, behind);
-        _paintSlots(canvas, rect, slots);
+        if (behind != null) {
+          _paintShadow(
+            canvas,
+            rect,
+            behind,
+            edgeL: edgeL,
+            edgeR: edgeR,
+            edgeB: edgeB,
+          );
+        }
+        _paintSlots(
+          canvas,
+          rect,
+          slots,
+          edgeL: edgeL,
+          edgeR: edgeR,
+          edgeB: edgeB,
+        );
         if (key == sellingCell) _paintSoldStamp(canvas, rect);
       }
     }
@@ -651,10 +751,11 @@ class _ShelfGridPainter extends CustomPainter {
     }
   }
 
-  /// Sized off one slot so neighbours always keep a clear gap between them.
+  /// Fills the shelf cavity height; the slot cap keeps neighbours from
+  /// colliding on wide boards.
   double _faceSize(Rect rect, double cavityWidth) {
     final slotW = cavityWidth / PremiumShelfGrid.spotsPerCell;
-    return math.min(slotW * 0.82, rect.height * 0.52);
+    return math.min(slotW * 1.3, rect.height * 0.62);
   }
 
   void _drawImage(
@@ -679,8 +780,15 @@ class _ShelfGridPainter extends CustomPainter {
     );
   }
 
-  void _paintSlots(Canvas canvas, Rect rect, List<GameItem?> slots) {
-    final cavity = _cavityMetrics(rect);
+  void _paintSlots(
+    Canvas canvas,
+    Rect rect,
+    List<GameItem?> slots, {
+    bool edgeL = true,
+    bool edgeR = true,
+    bool edgeB = true,
+  }) {
+    final cavity = _cavityMetrics(rect, edgeL: edgeL, edgeR: edgeR, edgeB: edgeB);
     final size = _faceSize(rect, cavity.width);
     final layout = _centeredFilledLayout(slots, cavity.width);
     final floorY = rect.top + cavity.floorY;
@@ -718,8 +826,15 @@ class _ShelfGridPainter extends CustomPainter {
   }
 
   /// Only the layer directly behind the front is ever drawn.
-  void _paintShadow(Canvas canvas, Rect rect, List<GameItem?> behind) {
-    final cavity = _cavityMetrics(rect);
+  void _paintShadow(
+    Canvas canvas,
+    Rect rect,
+    List<GameItem?> behind, {
+    bool edgeL = true,
+    bool edgeR = true,
+    bool edgeB = true,
+  }) {
+    final cavity = _cavityMetrics(rect, edgeL: edgeL, edgeR: edgeR, edgeB: edgeB);
     final size = _faceSize(rect, cavity.width) * 0.78;
     final layout = _centeredFilledLayout(behind, cavity.width);
     final floorY = rect.top + cavity.floorY - size * 0.34;
@@ -803,6 +918,7 @@ class _ShelfGridPainter extends CustomPainter {
     if (old.held?.type != held?.type || old.held?.finger != held?.finger) {
       return true;
     }
+    if (old.cellBg != cellBg) return true;
     if (old.faceImages.length != faceImages.length) return true;
     if (_cellsDiffer(old.cells, cells)) return true;
     if (_cellsDiffer(old.shadows, shadows)) return true;
