@@ -27,163 +27,163 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "cup_yellow_010",
+      "itemId": "buddletea_yellow_010",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "jar_yellow_014",
+      "itemId": "coffee_yellow_014",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "mug_yellow_019",
+      "itemId": "orangejuice_yellow_019",
       "shelfId": 8,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cup_yellow_012",
+      "itemId": "buddletea_yellow_012",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "mug_yellow_020",
+      "itemId": "orangejuice_yellow_020",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "jar_yellow_013",
+      "itemId": "coffee_yellow_013",
       "shelfId": 1,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "mug_yellow_005",
+      "itemId": "orangejuice_yellow_005",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "cup_yellow_027",
+      "itemId": "buddletea_yellow_027",
       "shelfId": 4,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "mug_yellow_004",
+      "itemId": "orangejuice_yellow_004",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "jar_yellow_017",
+      "itemId": "coffee_yellow_017",
       "shelfId": 4,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cup_yellow_009",
+      "itemId": "buddletea_yellow_009",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "cup_yellow_026",
+      "itemId": "buddletea_yellow_026",
       "shelfId": 5,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "mug_yellow_024",
+      "itemId": "orangejuice_yellow_024",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "jar_yellow_016",
+      "itemId": "coffee_yellow_016",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "mug_yellow_001",
+      "itemId": "orangejuice_yellow_001",
       "shelfId": 6,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "jar_yellow_018",
+      "itemId": "coffee_yellow_018",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "cup_yellow_011",
+      "itemId": "buddletea_yellow_011",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "jar_yellow_015",
+      "itemId": "coffee_yellow_015",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "mug_yellow_022",
+      "itemId": "orangejuice_yellow_022",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "mug_yellow_023",
+      "itemId": "orangejuice_yellow_023",
       "shelfId": 6,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "mug_yellow_006",
+      "itemId": "orangejuice_yellow_006",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "cup_yellow_008",
+      "itemId": "buddletea_yellow_008",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "cup_yellow_007",
+      "itemId": "buddletea_yellow_007",
       "shelfId": 1,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cup_yellow_029",
+      "itemId": "buddletea_yellow_029",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "cup_yellow_028",
+      "itemId": "buddletea_yellow_028",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "mug_yellow_021",
+      "itemId": "orangejuice_yellow_021",
       "shelfId": 2,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "mug_yellow_002",
+      "itemId": "orangejuice_yellow_002",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "cup_yellow_030",
+      "itemId": "buddletea_yellow_030",
       "shelfId": 5,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "mug_yellow_003",
+      "itemId": "orangejuice_yellow_003",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "cup_yellow_025",
+      "itemId": "buddletea_yellow_025",
       "shelfId": 6,
       "slot": 2,
       "depth": 1

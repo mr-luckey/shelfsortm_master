@@ -95,6 +95,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       objectiveHint: hints.isEmpty ? null : hints.first,
       maxCombo: e.maxCombo,
       mechanicVisual: _visuals(e),
+      nextLayers: e.nextLayers,
     );
   }
 

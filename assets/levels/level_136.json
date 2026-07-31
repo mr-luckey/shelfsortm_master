@@ -29,298 +29,298 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "perfume_teal_028",
+      "itemId": "pika16_teal_028",
       "shelfId": 11,
       "slot": 1
     },
     {
-      "itemId": "perfume_teal_031",
+      "itemId": "pika16_teal_031",
       "shelfId": 11,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "perfume_teal_032",
+      "itemId": "pika16_teal_032",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "lipstick_teal_039",
+      "itemId": "pika38_teal_039",
       "shelfId": 7,
       "slot": 2
     },
     {
-      "itemId": "cream_teal_053",
+      "itemId": "pika54_teal_053",
       "shelfId": 7,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "lipstick_teal_038",
+      "itemId": "pika38_teal_038",
       "shelfId": 7,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "perfume_teal_006",
+      "itemId": "pika16_teal_006",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "perfume_teal_004",
+      "itemId": "pika16_teal_004",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "cream_teal_025",
+      "itemId": "pika54_teal_025",
       "shelfId": 9,
       "slot": 1
     },
     {
-      "itemId": "lipstick_teal_016",
+      "itemId": "pika38_teal_016",
       "shelfId": 9,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "lipstick_teal_037",
+      "itemId": "pika38_teal_037",
       "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "lipstick_teal_014",
+      "itemId": "pika38_teal_014",
       "shelfId": 9,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cream_teal_054",
+      "itemId": "pika54_teal_054",
       "shelfId": 9,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "cream_teal_026",
+      "itemId": "pika54_teal_026",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "cream_teal_022",
+      "itemId": "pika54_teal_022",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "cream_teal_024",
+      "itemId": "pika54_teal_024",
       "shelfId": 3,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cream_teal_052",
+      "itemId": "pika54_teal_052",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "lipstick_teal_043",
+      "itemId": "pika38_teal_043",
       "shelfId": 6,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "lipstick_teal_015",
+      "itemId": "pika38_teal_015",
       "shelfId": 6,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "lipstick_teal_018",
+      "itemId": "pika38_teal_018",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "perfume_teal_002",
+      "itemId": "pika16_teal_002",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "lipstick_teal_045",
+      "itemId": "pika38_teal_045",
       "shelfId": 6,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "perfume_teal_033",
+      "itemId": "pika16_teal_033",
       "shelfId": 6,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "lipstick_teal_017",
+      "itemId": "pika38_teal_017",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "cream_teal_051",
+      "itemId": "pika54_teal_051",
       "shelfId": 3,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "perfume_teal_035",
+      "itemId": "pika16_teal_035",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "cream_teal_020",
+      "itemId": "pika54_teal_020",
       "shelfId": 5,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cream_teal_048",
+      "itemId": "pika54_teal_048",
       "shelfId": 5,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "cream_teal_047",
+      "itemId": "pika54_teal_047",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "cream_teal_049",
+      "itemId": "pika54_teal_049",
       "shelfId": 7,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cream_teal_023",
+      "itemId": "pika54_teal_023",
       "shelfId": 7,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "lipstick_teal_044",
+      "itemId": "pika38_teal_044",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "cream_teal_019",
+      "itemId": "pika54_teal_019",
       "shelfId": 2,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "lipstick_teal_042",
+      "itemId": "pika38_teal_042",
       "shelfId": 2,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "lipstick_teal_041",
+      "itemId": "pika38_teal_041",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "cream_teal_050",
+      "itemId": "pika54_teal_050",
       "shelfId": 6,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "lipstick_teal_012",
+      "itemId": "pika38_teal_012",
       "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "lipstick_teal_011",
+      "itemId": "pika38_teal_011",
       "shelfId": 9,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "lipstick_teal_013",
+      "itemId": "pika38_teal_013",
       "shelfId": 9,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "perfume_teal_030",
+      "itemId": "pika16_teal_030",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "lipstick_teal_010",
+      "itemId": "pika38_teal_010",
       "shelfId": 8,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cream_teal_046",
+      "itemId": "pika54_teal_046",
       "shelfId": 11,
       "slot": 0
     },
     {
-      "itemId": "perfume_teal_029",
+      "itemId": "pika16_teal_029",
       "shelfId": 11,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "perfume_teal_005",
+      "itemId": "pika16_teal_005",
       "shelfId": 11,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "perfume_teal_007",
+      "itemId": "pika16_teal_007",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "cream_teal_021",
+      "itemId": "pika54_teal_021",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "perfume_teal_036",
+      "itemId": "pika16_teal_036",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "perfume_teal_009",
+      "itemId": "pika16_teal_009",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "perfume_teal_008",
+      "itemId": "pika16_teal_008",
       "shelfId": 4,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "cream_teal_027",
+      "itemId": "pika54_teal_027",
       "shelfId": 11,
       "slot": 2
     },
     {
-      "itemId": "perfume_teal_034",
+      "itemId": "pika16_teal_034",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "perfume_teal_001",
+      "itemId": "pika16_teal_001",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "lipstick_teal_040",
+      "itemId": "pika38_teal_040",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "perfume_teal_003",
+      "itemId": "pika16_teal_003",
       "shelfId": 8,
       "slot": 1,
       "depth": 1

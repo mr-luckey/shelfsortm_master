@@ -29,299 +29,299 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "can_yellow_008",
+      "itemId": "caffelatte_yellow_008",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "sauce_yellow_010",
+      "itemId": "cuteteacup_yellow_010",
       "shelfId": 3,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "sauce_yellow_015",
+      "itemId": "cuteteacup_yellow_015",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "can_yellow_032",
+      "itemId": "caffelatte_yellow_032",
       "shelfId": 6,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "sauce_yellow_045",
+      "itemId": "cuteteacup_yellow_045",
       "shelfId": 6,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "sauce_yellow_038",
+      "itemId": "cuteteacup_yellow_038",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "can_yellow_001",
+      "itemId": "caffelatte_yellow_001",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "can_yellow_035",
+      "itemId": "caffelatte_yellow_035",
       "shelfId": 7,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "sauce_yellow_012",
+      "itemId": "cuteteacup_yellow_012",
       "shelfId": 7,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "sauce_yellow_018",
+      "itemId": "cuteteacup_yellow_018",
       "shelfId": 12,
       "slot": 1
     },
     {
-      "itemId": "sauce_yellow_044",
+      "itemId": "cuteteacup_yellow_044",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "snack_yellow_025",
+      "itemId": "cocacola_yellow_025",
       "shelfId": 3,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "sauce_yellow_016",
+      "itemId": "cuteteacup_yellow_016",
       "shelfId": 3,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "sauce_yellow_011",
+      "itemId": "cuteteacup_yellow_011",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "sauce_yellow_039",
+      "itemId": "cuteteacup_yellow_039",
       "shelfId": 4,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "can_yellow_029",
+      "itemId": "caffelatte_yellow_029",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "can_yellow_036",
+      "itemId": "caffelatte_yellow_036",
       "shelfId": 1,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "can_yellow_006",
+      "itemId": "caffelatte_yellow_006",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "snack_yellow_024",
+      "itemId": "cocacola_yellow_024",
       "shelfId": 7,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "snack_yellow_048",
+      "itemId": "cocacola_yellow_048",
       "shelfId": 7,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "can_yellow_034",
+      "itemId": "caffelatte_yellow_034",
       "shelfId": 12,
       "slot": 2
     },
     {
-      "itemId": "sauce_yellow_040",
+      "itemId": "cuteteacup_yellow_040",
       "shelfId": 12,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "snack_yellow_027",
+      "itemId": "cocacola_yellow_027",
       "shelfId": 12,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "can_yellow_028",
+      "itemId": "caffelatte_yellow_028",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "snack_yellow_046",
+      "itemId": "cocacola_yellow_046",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "can_yellow_030",
+      "itemId": "caffelatte_yellow_030",
       "shelfId": 4,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "sauce_yellow_042",
+      "itemId": "cuteteacup_yellow_042",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "can_yellow_004",
+      "itemId": "caffelatte_yellow_004",
       "shelfId": 8,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "snack_yellow_052",
+      "itemId": "cocacola_yellow_052",
       "shelfId": 8,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "snack_yellow_049",
+      "itemId": "cocacola_yellow_049",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "sauce_yellow_043",
+      "itemId": "cuteteacup_yellow_043",
       "shelfId": 10,
       "slot": 0
     },
     {
-      "itemId": "snack_yellow_053",
+      "itemId": "cocacola_yellow_053",
       "shelfId": 10,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "can_yellow_005",
+      "itemId": "caffelatte_yellow_005",
       "shelfId": 10,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "snack_yellow_022",
+      "itemId": "cocacola_yellow_022",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "can_yellow_002",
+      "itemId": "caffelatte_yellow_002",
       "shelfId": 8,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "snack_yellow_021",
+      "itemId": "cocacola_yellow_021",
       "shelfId": 8,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "snack_yellow_020",
+      "itemId": "cocacola_yellow_020",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "sauce_yellow_017",
+      "itemId": "cuteteacup_yellow_017",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "sauce_yellow_013",
+      "itemId": "cuteteacup_yellow_013",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "can_yellow_007",
+      "itemId": "caffelatte_yellow_007",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "snack_yellow_054",
+      "itemId": "cocacola_yellow_054",
       "shelfId": 2,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "can_yellow_003",
+      "itemId": "caffelatte_yellow_003",
       "shelfId": 12,
       "slot": 0
     },
     {
-      "itemId": "snack_yellow_019",
+      "itemId": "cocacola_yellow_019",
       "shelfId": 10,
       "slot": 2
     },
     {
-      "itemId": "can_yellow_031",
+      "itemId": "caffelatte_yellow_031",
       "shelfId": 10,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "sauce_yellow_014",
+      "itemId": "cuteteacup_yellow_014",
       "shelfId": 10,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "can_yellow_033",
+      "itemId": "caffelatte_yellow_033",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "snack_yellow_051",
+      "itemId": "cocacola_yellow_051",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "snack_yellow_047",
+      "itemId": "cocacola_yellow_047",
       "shelfId": 6,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "can_yellow_009",
+      "itemId": "caffelatte_yellow_009",
       "shelfId": 10,
       "slot": 1
     },
     {
-      "itemId": "sauce_yellow_037",
+      "itemId": "cuteteacup_yellow_037",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "snack_yellow_026",
+      "itemId": "cocacola_yellow_026",
       "shelfId": 1,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "sauce_yellow_041",
+      "itemId": "cuteteacup_yellow_041",
       "shelfId": 1,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "snack_yellow_023",
+      "itemId": "cocacola_yellow_023",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "snack_yellow_050",
+      "itemId": "cocacola_yellow_050",
       "shelfId": 7,
       "slot": 2
     }

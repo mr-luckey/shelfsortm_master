@@ -28,161 +28,161 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "cupcake_red_022",
+      "itemId": "pancakestack_red_022",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "box_red_027",
+      "itemId": "strawberrypudding_red_027",
       "shelfId": 1,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "box_red_026",
+      "itemId": "strawberrypudding_red_026",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "cupcake_red_003",
+      "itemId": "pancakestack_red_003",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "cupcake_red_004",
+      "itemId": "pancakestack_red_004",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "macaron_red_018",
+      "itemId": "chocobanana_red_018",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "macaron_red_017",
+      "itemId": "chocobanana_red_017",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "cupcake_red_024",
+      "itemId": "pancakestack_red_024",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "box_red_030",
+      "itemId": "strawberrypudding_red_030",
       "shelfId": 3,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cupcake_red_005",
+      "itemId": "pancakestack_red_005",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "box_red_010",
+      "itemId": "strawberrypudding_red_010",
       "shelfId": 8,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "box_red_025",
+      "itemId": "strawberrypudding_red_025",
       "shelfId": 7,
       "slot": 2
     },
     {
-      "itemId": "cupcake_red_002",
+      "itemId": "pancakestack_red_002",
       "shelfId": 7,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cupcake_red_023",
+      "itemId": "pancakestack_red_023",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "box_red_029",
+      "itemId": "strawberrypudding_red_029",
       "shelfId": 6,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "box_red_028",
+      "itemId": "strawberrypudding_red_028",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "box_red_009",
+      "itemId": "strawberrypudding_red_009",
       "shelfId": 6,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cupcake_red_020",
+      "itemId": "pancakestack_red_020",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "cupcake_red_019",
+      "itemId": "pancakestack_red_019",
       "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "box_red_008",
+      "itemId": "strawberrypudding_red_008",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "box_red_007",
+      "itemId": "strawberrypudding_red_007",
       "shelfId": 5,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "macaron_red_015",
+      "itemId": "chocobanana_red_015",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "macaron_red_013",
+      "itemId": "chocobanana_red_013",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "box_red_012",
+      "itemId": "strawberrypudding_red_012",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "box_red_011",
+      "itemId": "strawberrypudding_red_011",
       "shelfId": 9,
       "slot": 1
     },
     {
-      "itemId": "macaron_red_016",
+      "itemId": "chocobanana_red_016",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "cupcake_red_001",
+      "itemId": "pancakestack_red_001",
       "shelfId": 5,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cupcake_red_021",
+      "itemId": "pancakestack_red_021",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "macaron_red_014",
+      "itemId": "chocobanana_red_014",
       "shelfId": 3,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cupcake_red_006",
+      "itemId": "pancakestack_red_006",
       "shelfId": 9,
       "slot": 2
     }
@@ -219,7 +219,7 @@
       "boxes": [
         {
           "slot": "5:1",
-          "itemId": "macaron_red_015",
+          "itemId": "chocobanana_red_015",
           "trigger": "shelf_complete"
         }
       ]

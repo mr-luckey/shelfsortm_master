@@ -29,299 +29,299 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "bag_purple_042",
+      "itemId": "legendaryegg_purple_042",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "bag_purple_043",
+      "itemId": "legendaryegg_purple_043",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ribbon_purple_031",
+      "itemId": "normalegg_purple_031",
       "shelfId": 4,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "bag_purple_044",
+      "itemId": "legendaryegg_purple_044",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "ornament_purple_024",
+      "itemId": "luckyegg_purple_024",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "ornament_purple_049",
+      "itemId": "luckyegg_purple_049",
       "shelfId": 1,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ornament_purple_052",
+      "itemId": "luckyegg_purple_052",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "bag_purple_013",
+      "itemId": "legendaryegg_purple_013",
       "shelfId": 7,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ribbon_purple_005",
+      "itemId": "normalegg_purple_005",
       "shelfId": 7,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "bag_purple_016",
+      "itemId": "legendaryegg_purple_016",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "bag_purple_040",
+      "itemId": "legendaryegg_purple_040",
       "shelfId": 10,
       "slot": 0
     },
     {
-      "itemId": "ornament_purple_047",
+      "itemId": "luckyegg_purple_047",
       "shelfId": 10,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ribbon_purple_001",
+      "itemId": "normalegg_purple_001",
       "shelfId": 10,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "bag_purple_045",
+      "itemId": "legendaryegg_purple_045",
       "shelfId": 12,
       "slot": 2
     },
     {
-      "itemId": "ribbon_purple_029",
+      "itemId": "normalegg_purple_029",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "bag_purple_017",
+      "itemId": "legendaryegg_purple_017",
       "shelfId": 1,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "ribbon_purple_004",
+      "itemId": "normalegg_purple_004",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "ornament_purple_023",
+      "itemId": "luckyegg_purple_023",
       "shelfId": 2,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "ornament_purple_026",
+      "itemId": "luckyegg_purple_026",
       "shelfId": 2,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "bag_purple_014",
+      "itemId": "legendaryegg_purple_014",
       "shelfId": 7,
       "slot": 2
     },
     {
-      "itemId": "ribbon_purple_006",
+      "itemId": "normalegg_purple_006",
       "shelfId": 7,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "bag_purple_012",
+      "itemId": "legendaryegg_purple_012",
       "shelfId": 7,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "ribbon_purple_032",
+      "itemId": "normalegg_purple_032",
       "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "ornament_purple_046",
+      "itemId": "luckyegg_purple_046",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "ribbon_purple_034",
+      "itemId": "normalegg_purple_034",
       "shelfId": 7,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "ornament_purple_025",
+      "itemId": "luckyegg_purple_025",
       "shelfId": 7,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "ornament_purple_020",
+      "itemId": "luckyegg_purple_020",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "bag_purple_037",
+      "itemId": "legendaryegg_purple_037",
       "shelfId": 2,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ornament_purple_019",
+      "itemId": "luckyegg_purple_019",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "ribbon_purple_009",
+      "itemId": "normalegg_purple_009",
       "shelfId": 5,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ornament_purple_051",
+      "itemId": "luckyegg_purple_051",
       "shelfId": 5,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "bag_purple_011",
+      "itemId": "legendaryegg_purple_011",
       "shelfId": 12,
       "slot": 0
     },
     {
-      "itemId": "bag_purple_010",
+      "itemId": "legendaryegg_purple_010",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "ribbon_purple_028",
+      "itemId": "normalegg_purple_028",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "ribbon_purple_008",
+      "itemId": "normalegg_purple_008",
       "shelfId": 10,
       "slot": 1
     },
     {
-      "itemId": "ribbon_purple_030",
+      "itemId": "normalegg_purple_030",
       "shelfId": 10,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "ornament_purple_050",
+      "itemId": "luckyegg_purple_050",
       "shelfId": 10,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "ribbon_purple_007",
+      "itemId": "normalegg_purple_007",
       "shelfId": 9,
       "slot": 1
     },
     {
-      "itemId": "ribbon_purple_035",
+      "itemId": "normalegg_purple_035",
       "shelfId": 9,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "bag_purple_018",
+      "itemId": "legendaryegg_purple_018",
       "shelfId": 9,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "ornament_purple_053",
+      "itemId": "luckyegg_purple_053",
       "shelfId": 12,
       "slot": 1
     },
     {
-      "itemId": "ribbon_purple_033",
+      "itemId": "normalegg_purple_033",
       "shelfId": 12,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "ornament_purple_021",
+      "itemId": "luckyegg_purple_021",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "ribbon_purple_002",
+      "itemId": "normalegg_purple_002",
       "shelfId": 2,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "ribbon_purple_036",
+      "itemId": "normalegg_purple_036",
       "shelfId": 10,
       "slot": 2
     },
     {
-      "itemId": "ornament_purple_027",
+      "itemId": "luckyegg_purple_027",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "ribbon_purple_003",
+      "itemId": "normalegg_purple_003",
       "shelfId": 6,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "bag_purple_015",
+      "itemId": "legendaryegg_purple_015",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "ornament_purple_054",
+      "itemId": "luckyegg_purple_054",
       "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "bag_purple_038",
+      "itemId": "legendaryegg_purple_038",
       "shelfId": 9,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ornament_purple_022",
+      "itemId": "luckyegg_purple_022",
       "shelfId": 9,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "bag_purple_039",
+      "itemId": "legendaryegg_purple_039",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "bag_purple_041",
+      "itemId": "legendaryegg_purple_041",
       "shelfId": 4,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "ornament_purple_048",
+      "itemId": "luckyegg_purple_048",
       "shelfId": 5,
       "slot": 2
     }

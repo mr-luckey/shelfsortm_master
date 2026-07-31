@@ -54,63 +54,69 @@ class AppColors {
 
   static LinearGradient themeGradient(String themeId) {
     switch (themeId) {
-      case 'kitchen':
+      case 'activities':
         return const LinearGradient(
           colors: [Color(0xFFFFF3E0), Color(0xFFFFE0B2)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         );
-      case 'bakery':
-        return const LinearGradient(
-          colors: [Color(0xFFFFF8E7), Color(0xFFFFE4EC)],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        );
-      case 'library':
-        return const LinearGradient(
-          colors: [Color(0xFFEFEBE9), Color(0xFFD7CCC8)],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        );
-      case 'garden':
+      case 'animals':
         return const LinearGradient(
           colors: [Color(0xFFE8F5E9), Color(0xFFC8E6C9)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         );
-      case 'toy':
+      case 'food':
         return const LinearGradient(
-          colors: [Color(0xFFE3F2FD), Color(0xFFFFF9C4)],
+          colors: [Color(0xFFFFF8E7), Color(0xFFFFE4EC)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         );
-      case 'beauty':
+      case 'hands':
         return const LinearGradient(
           colors: [Color(0xFFF3E5F5), Color(0xFFFCE4EC)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         );
-      case 'gameden':
+      case 'objects':
+        return const LinearGradient(
+          colors: [Color(0xFFEFEBE9), Color(0xFFD7CCC8)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        );
+      case 'people':
+        return const LinearGradient(
+          colors: [Color(0xFFE3F2FD), Color(0xFFFFF9C4)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        );
+      case 'people_activities':
         return const LinearGradient(
           colors: [Color(0xFFE8EAF6), Color(0xFFC5CAE9)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         );
-      case 'market':
+      case 'people_professions':
         return const LinearGradient(
           colors: [Color(0xFFFFF3E0), Color(0xFFFFCCBC)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         );
-      case 'decor':
+      case 'smilies':
         return const LinearGradient(
           colors: [Color(0xFFFAFAFA), Color(0xFFECEFF1)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         );
-      case 'gift':
+      case 'symbols':
         return const LinearGradient(
           colors: [Color(0xFFFFEBEE), Color(0xFFFFF8E1)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        );
+      case 'travel':
+        return const LinearGradient(
+          colors: [Color(0xFFE1F5FE), Color(0xFFB3E5FC)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         );

@@ -14,40 +14,32 @@ import 'package:shelfsortm_master/models/shelf.dart';
 
 void main() {
   group('mechanic progression', () {
-    test('levels 1-10 have no dynamic mechanics', () {
-      for (var i = 1; i <= 10; i++) {
-        final level = LevelGenerator.generate(i);
-        expect(level.mechanics, isEmpty, reason: 'Level $i');
+    test('campaign levels run on the layer progression alone', () {
+      for (final i in [1, 5, 10, 26, 51, 100, 101, 550, 1100]) {
+        expect(LevelGenerator.generate(i).mechanics, isEmpty, reason: 'Level $i');
       }
-    });
-
-    test('levels 11-15 introduce hidden_back_row', () {
-      for (var i = 11; i <= 15; i++) {
-        final level = LevelGenerator.generate(i);
-        expect(level.mechanics, contains(MechanicIds.hiddenBackRow));
-      }
-    });
-
-    test('level 25 boss combines 3 mechanics', () {
-      final level = LevelGenerator.generate(25);
-      expect(level.mechanics.length, greaterThanOrEqualTo(3));
-      expect(level.mechanics, contains(MechanicIds.hiddenBackRow));
-      expect(level.mechanics, contains(MechanicIds.movingBottomTray));
-      expect(level.mechanics, contains(MechanicIds.lockedItems));
-    });
-
-    test('level 26 rest has no mechanics', () {
-      expect(LevelGenerator.generate(26).mechanics, isEmpty);
-    });
-
-    test('level 51 rest has no mechanics', () {
-      expect(LevelGenerator.generate(51).mechanics, isEmpty);
     });
   });
 
   group('MechanicManager', () {
     test('initializes from level JSON and save/load roundtrip', () {
-      final level = LevelGenerator.generate(15);
+      final level = LevelData(
+        levelId: 15,
+        themeRoom: 'food',
+        difficulty: 'standard',
+        timeLimit: 120,
+        shelfCount: 4,
+        slotsPerShelf: 3,
+        initialPlacement: const [
+          InitialPlacement(itemId: 'mug_red_001', shelfId: 1, slot: 0),
+          InitialPlacement(itemId: 'cup_red_002', shelfId: 1, slot: 1),
+        ],
+        starThresholds: const StarThresholds(threeStar: 10, twoStar: 20),
+        mechanics: const [MechanicIds.hiddenBackRow],
+        mechanicConfig: const {
+          'hiddenBackRow': {'rows': 1},
+        },
+      );
       final engine = MatchEngine(level: level);
       expect(engine.mechanics.has(MechanicIds.hiddenBackRow), isTrue);
       expect(engine.mechanics.ofType<HiddenBackRowMechanic>(), isNotNull);
@@ -140,7 +132,7 @@ void main() {
     test('inaccessible slots reject placement', () {
       final level = LevelData(
         levelId: 27,
-        themeRoom: 'bakery',
+        themeRoom: 'food',
         difficulty: 'standard',
         timeLimit: 120,
         shelfCount: 3,

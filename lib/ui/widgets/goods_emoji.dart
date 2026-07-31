@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-import '../../app/theme/app_colors.dart';
+import '../../app/theme/goods_sort_theme.dart';
 import '../../models/item.dart';
+import 'emoji_assets.dart';
 
-/// Large emoji on a product plate — Goods Sort™ style (no image assets).
+/// High-contrast emoji tile — distinct ring + white core (avoids "blend together").
 class GoodsEmoji extends StatelessWidget {
   final GameItem item;
   final double size;
@@ -23,144 +24,119 @@ class GoodsEmoji extends StatelessWidget {
     this.celebrating = false,
   });
 
-  static String emojiFor(String type) {
-    const map = {
-      'mug': '☕',
-      'cup': '🥤',
-      'jar': '🍯',
-      'cupcake': '🧁',
-      'box': '📦',
-      'macaron': '🍪',
-      'book': '📚',
-      'candle': '🕯️',
-      'globe': '🌍',
-      'pot': '🪴',
-      'can': '🥫',
-      'seed': '🌱',
-      'teddy': '🧸',
-      'block': '🧱',
-      'ball': '⚽',
-      'perfume': '🧴',
-      'lipstick': '💄',
-      'cream': '🫧',
-      'controller': '🎮',
-      'cartridge': '💾',
-      'headset': '🎧',
-      'sauce': '🍾',
-      'snack': '🍿',
-      'vase': '🏺',
-      'frame': '🖼️',
-      'ribbon': '🎀',
-      'bag': '🛍️',
-      'ornament': '🎁',
-      'apple': '🍎',
-      'banana': '🍌',
-      'grape': '🍇',
-      'bread': '🍞',
-      'pizza': '🍕',
-      'burger': '🍔',
-      'fries': '🍟',
-      'donut': '🍩',
-      'icecream': '🍦',
-      'water': '💧',
-      'milk': '🥛',
-      'tea': '🍵',
-      'wine': '🍷',
-      'beer': '🍺',
-      'plant': '🌿',
-      'flower': '🌸',
-      'soap': '🧼',
-      'tooth': '🪥',
-    };
-    return map[type] ?? '✨';
+  static String _typeGlyph(String type) {
+    const glyphs = ['B', '□', '●', '◆'];
+    return glyphs[type.hashCode.abs() % glyphs.length];
   }
 
   @override
   Widget build(BuildContext context) {
-    final emojiSize = onShelf ? size * 0.72 : size * 0.82;
-    final plate = size * (onShelf ? 0.92 : 1.0);
+    final ring = GoodsSortTheme.itemRing(item.color);
+    final plateFill = GoodsSortTheme.itemPlateFill(item.color);
+    final emojiSize = size * (onShelf ? 0.78 : 0.92);
+    final tile = size * (onShelf ? 0.88 : 1.05);
+    final showBadge = !onShelf;
 
     Widget body = SizedBox(
-      width: plate,
-      height: plate,
+      width: tile,
+      height: tile,
       child: Stack(
         alignment: Alignment.center,
         clipBehavior: Clip.none,
         children: [
-          // Contact shadow on shelf
-          if (onShelf)
-            Positioned(
-              bottom: 2,
-              left: plate * 0.12,
-              right: plate * 0.12,
-              child: Container(
-                height: 5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(99),
-                  color: Colors.black.withValues(alpha: 0.22),
-                ),
-              ),
-            ),
-          // White product plate (Goods Sort item pedestal)
           Container(
-            width: plate * 0.88,
-            height: plate * 0.88,
+            width: tile * 0.92,
+            height: tile * 0.92,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              gradient: RadialGradient(
-                colors: [
-                  Colors.white,
-                  Color.lerp(
-                    AppColors.forItemColor(item.color),
-                    Colors.white,
-                    0.75,
-                  )!,
-                ],
-              ),
-              border: Border.all(color: Colors.white, width: 2),
+              color: Colors.white,
+              border: Border.all(color: ring, width: onShelf ? 2.5 : 3.6),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: lifting ? 0.35 : 0.18),
+                  color: ring.withValues(alpha: 0.35),
                   blurRadius: lifting ? 10 : 4,
-                  offset: Offset(0, lifting ? 8 : 3),
+                  offset: Offset(0, lifting ? 5 : 2),
                 ),
               ],
             ),
-            child: Center(
-              child: Text(
-                emojiFor(item.type),
-                style: TextStyle(fontSize: emojiSize, height: 1),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: plateFill,
+              ),
+              child: Center(
+                child: EmojiImage(type: item.type, size: emojiSize),
               ),
             ),
           ),
+          if (showBadge)
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: Container(
+                width: tile * 0.24,
+                height: tile * 0.24,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: ring,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 1.2),
+                ),
+                child: Text(
+                  _typeGlyph(item.type),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: tile * 0.12,
+                    fontWeight: FontWeight.w900,
+                    height: 1,
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );
 
-    if (lifting) {
+    if (lifting && !onShelf) {
       body = body
           .animate(onPlay: (c) => c.repeat(reverse: true))
-          .moveY(begin: 0, end: -8, duration: 380.ms, curve: Curves.easeOut);
+          .moveY(begin: 0, end: -8, duration: 360.ms, curve: Curves.easeOut);
     }
     if (celebrating) {
       body = body
           .animate()
           .scale(
             begin: const Offset(1, 1),
-            end: const Offset(1.2, 1.2),
+            end: const Offset(1.18, 1.18),
             duration: 200.ms,
           )
           .then()
-          .fadeOut(duration: 250.ms);
+          .fadeOut(duration: 240.ms);
     }
     if (dimmed) {
-      body = Opacity(opacity: 0.25, child: body);
+      body = Opacity(opacity: 0.28, child: body);
     }
     return body;
   }
 }
 
-/// Sparkle burst when a shelf compartment closes.
+/// Bare emoji artwork, no tile behind it.
+class EmojiImage extends StatelessWidget {
+  final String type;
+  final double size;
+
+  const EmojiImage({super.key, required this.type, required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      EmojiAssets.pathFor(type),
+      width: size,
+      height: size,
+    );
+  }
+}
+
 class MatchBurst extends StatelessWidget {
   final Color color;
   final double size;
@@ -175,7 +151,7 @@ class MatchBurst extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: List.generate(5, (i) {
-          return Text('✨', style: TextStyle(fontSize: 14 + (i % 2) * 6))
+          return EmojiImage(type: 'sparkles', size: 14 + (i % 2) * 6)
               .animate()
               .move(
                 begin: Offset.zero,
@@ -186,6 +162,28 @@ class MatchBurst extends StatelessWidget {
               .fadeOut(duration: 500.ms);
         }),
       ),
+    );
+  }
+}
+
+class PreviewEmoji extends StatelessWidget {
+  final String type;
+  final String color;
+  final double size;
+
+  const PreviewEmoji({
+    super.key,
+    required this.type,
+    required this.color,
+    this.size = 40,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GoodsEmoji(
+      item: GameItem(type: type, color: color, id: '${type}_${color}_preview'),
+      size: size,
+      onShelf: true,
     );
   }
 }

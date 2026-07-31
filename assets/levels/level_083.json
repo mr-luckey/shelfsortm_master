@@ -29,299 +29,299 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "pot_green_005",
+      "itemId": "apple_green_005",
       "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "can_green_045",
+      "itemId": "happycutelemon_green_045",
       "shelfId": 9,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "pot_green_007",
+      "itemId": "apple_green_007",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "can_green_043",
+      "itemId": "happycutelemon_green_043",
       "shelfId": 8,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "pot_green_006",
+      "itemId": "apple_green_006",
       "shelfId": 11,
       "slot": 2
     },
     {
-      "itemId": "seed_green_047",
+      "itemId": "sparklingwatermelonslice_green_047",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "seed_green_019",
+      "itemId": "sparklingwatermelonslice_green_019",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "pot_green_033",
+      "itemId": "apple_green_033",
       "shelfId": 8,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "can_green_018",
+      "itemId": "happycutelemon_green_018",
       "shelfId": 8,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "can_green_042",
+      "itemId": "happycutelemon_green_042",
       "shelfId": 11,
       "slot": 0
     },
     {
-      "itemId": "pot_green_036",
+      "itemId": "apple_green_036",
       "shelfId": 11,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "seed_green_050",
+      "itemId": "sparklingwatermelonslice_green_050",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "pot_green_008",
+      "itemId": "apple_green_008",
       "shelfId": 3,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "pot_green_003",
+      "itemId": "apple_green_003",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "can_green_016",
+      "itemId": "happycutelemon_green_016",
       "shelfId": 12,
       "slot": 1
     },
     {
-      "itemId": "pot_green_009",
+      "itemId": "apple_green_009",
       "shelfId": 12,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "pot_green_034",
+      "itemId": "apple_green_034",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "can_green_039",
+      "itemId": "happycutelemon_green_039",
       "shelfId": 6,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "can_green_038",
+      "itemId": "happycutelemon_green_038",
       "shelfId": 6,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "can_green_044",
+      "itemId": "happycutelemon_green_044",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "can_green_014",
+      "itemId": "happycutelemon_green_014",
       "shelfId": 2,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "can_green_037",
+      "itemId": "happycutelemon_green_037",
       "shelfId": 2,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "can_green_012",
+      "itemId": "happycutelemon_green_012",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "pot_green_028",
+      "itemId": "apple_green_028",
       "shelfId": 6,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "pot_green_029",
+      "itemId": "apple_green_029",
       "shelfId": 6,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "pot_green_001",
+      "itemId": "apple_green_001",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "seed_green_024",
+      "itemId": "sparklingwatermelonslice_green_024",
       "shelfId": 2,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "pot_green_035",
+      "itemId": "apple_green_035",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "seed_green_026",
+      "itemId": "sparklingwatermelonslice_green_026",
       "shelfId": 3,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "can_green_010",
+      "itemId": "happycutelemon_green_010",
       "shelfId": 12,
       "slot": 2
     },
     {
-      "itemId": "pot_green_030",
+      "itemId": "apple_green_030",
       "shelfId": 12,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "seed_green_049",
+      "itemId": "sparklingwatermelonslice_green_049",
       "shelfId": 12,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "can_green_017",
+      "itemId": "happycutelemon_green_017",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "can_green_040",
+      "itemId": "happycutelemon_green_040",
       "shelfId": 9,
       "slot": 1
     },
     {
-      "itemId": "seed_green_046",
+      "itemId": "sparklingwatermelonslice_green_046",
       "shelfId": 9,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "can_green_041",
+      "itemId": "happycutelemon_green_041",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "seed_green_052",
+      "itemId": "sparklingwatermelonslice_green_052",
       "shelfId": 4,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "seed_green_023",
+      "itemId": "sparklingwatermelonslice_green_023",
       "shelfId": 4,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "seed_green_027",
+      "itemId": "sparklingwatermelonslice_green_027",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "pot_green_002",
+      "itemId": "apple_green_002",
       "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "can_green_013",
+      "itemId": "happycutelemon_green_013",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "seed_green_021",
+      "itemId": "sparklingwatermelonslice_green_021",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "can_green_011",
+      "itemId": "happycutelemon_green_011",
       "shelfId": 4,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "seed_green_054",
+      "itemId": "sparklingwatermelonslice_green_054",
       "shelfId": 12,
       "slot": 0
     },
     {
-      "itemId": "seed_green_048",
+      "itemId": "sparklingwatermelonslice_green_048",
       "shelfId": 12,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "pot_green_004",
+      "itemId": "apple_green_004",
       "shelfId": 12,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "seed_green_025",
+      "itemId": "sparklingwatermelonslice_green_025",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "pot_green_031",
+      "itemId": "apple_green_031",
       "shelfId": 11,
       "slot": 1
     },
     {
-      "itemId": "seed_green_020",
+      "itemId": "sparklingwatermelonslice_green_020",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "can_green_015",
+      "itemId": "happycutelemon_green_015",
       "shelfId": 2,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "seed_green_053",
+      "itemId": "sparklingwatermelonslice_green_053",
       "shelfId": 2,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "seed_green_051",
+      "itemId": "sparklingwatermelonslice_green_051",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "seed_green_022",
+      "itemId": "sparklingwatermelonslice_green_022",
       "shelfId": 4,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "pot_green_032",
+      "itemId": "apple_green_032",
       "shelfId": 7,
       "slot": 2
     }

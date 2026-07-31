@@ -29,299 +29,299 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "vase_teal_008",
+      "itemId": "japanesecrepe_teal_008",
       "shelfId": 9,
       "slot": 1
     },
     {
-      "itemId": "frame_teal_011",
+      "itemId": "semla_teal_011",
       "shelfId": 7,
       "slot": 2
     },
     {
-      "itemId": "candle_teal_046",
+      "itemId": "cinnamonroll_teal_046",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "frame_teal_012",
+      "itemId": "semla_teal_012",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "frame_teal_018",
+      "itemId": "semla_teal_018",
       "shelfId": 5,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "frame_teal_040",
+      "itemId": "semla_teal_040",
       "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "frame_teal_042",
+      "itemId": "semla_teal_042",
       "shelfId": 9,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "vase_teal_032",
+      "itemId": "japanesecrepe_teal_032",
       "shelfId": 9,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "vase_teal_029",
+      "itemId": "japanesecrepe_teal_029",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "candle_teal_048",
+      "itemId": "cinnamonroll_teal_048",
       "shelfId": 5,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "vase_teal_009",
+      "itemId": "japanesecrepe_teal_009",
       "shelfId": 10,
       "slot": 0
     },
     {
-      "itemId": "candle_teal_049",
+      "itemId": "cinnamonroll_teal_049",
       "shelfId": 10,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "frame_teal_014",
+      "itemId": "semla_teal_014",
       "shelfId": 11,
       "slot": 0
     },
     {
-      "itemId": "frame_teal_043",
+      "itemId": "semla_teal_043",
       "shelfId": 11,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "vase_teal_002",
+      "itemId": "japanesecrepe_teal_002",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "candle_teal_024",
+      "itemId": "cinnamonroll_teal_024",
       "shelfId": 8,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "candle_teal_021",
+      "itemId": "cinnamonroll_teal_021",
       "shelfId": 8,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "frame_teal_041",
+      "itemId": "semla_teal_041",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "candle_teal_051",
+      "itemId": "cinnamonroll_teal_051",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "vase_teal_003",
+      "itemId": "japanesecrepe_teal_003",
       "shelfId": 7,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "candle_teal_052",
+      "itemId": "cinnamonroll_teal_052",
       "shelfId": 7,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "vase_teal_005",
+      "itemId": "japanesecrepe_teal_005",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "vase_teal_033",
+      "itemId": "japanesecrepe_teal_033",
       "shelfId": 5,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "frame_teal_015",
+      "itemId": "semla_teal_015",
       "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "vase_teal_034",
+      "itemId": "japanesecrepe_teal_034",
       "shelfId": 9,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "candle_teal_053",
+      "itemId": "cinnamonroll_teal_053",
       "shelfId": 9,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "vase_teal_006",
+      "itemId": "japanesecrepe_teal_006",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "vase_teal_001",
+      "itemId": "japanesecrepe_teal_001",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "candle_teal_050",
+      "itemId": "cinnamonroll_teal_050",
       "shelfId": 6,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "candle_teal_027",
+      "itemId": "cinnamonroll_teal_027",
       "shelfId": 6,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "frame_teal_039",
+      "itemId": "semla_teal_039",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "vase_teal_035",
+      "itemId": "japanesecrepe_teal_035",
       "shelfId": 3,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "candle_teal_023",
+      "itemId": "cinnamonroll_teal_023",
       "shelfId": 3,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "candle_teal_025",
+      "itemId": "cinnamonroll_teal_025",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "vase_teal_031",
+      "itemId": "japanesecrepe_teal_031",
       "shelfId": 10,
       "slot": 2
     },
     {
-      "itemId": "vase_teal_004",
+      "itemId": "japanesecrepe_teal_004",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "candle_teal_020",
+      "itemId": "cinnamonroll_teal_020",
       "shelfId": 8,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "frame_teal_045",
+      "itemId": "semla_teal_045",
       "shelfId": 8,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "vase_teal_007",
+      "itemId": "japanesecrepe_teal_007",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "candle_teal_026",
+      "itemId": "cinnamonroll_teal_026",
       "shelfId": 6,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "vase_teal_030",
+      "itemId": "japanesecrepe_teal_030",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "frame_teal_016",
+      "itemId": "semla_teal_016",
       "shelfId": 7,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "candle_teal_019",
+      "itemId": "cinnamonroll_teal_019",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "frame_teal_037",
+      "itemId": "semla_teal_037",
       "shelfId": 3,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "frame_teal_010",
+      "itemId": "semla_teal_010",
       "shelfId": 3,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "candle_teal_054",
+      "itemId": "cinnamonroll_teal_054",
       "shelfId": 11,
       "slot": 1
     },
     {
-      "itemId": "candle_teal_047",
+      "itemId": "cinnamonroll_teal_047",
       "shelfId": 11,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "frame_teal_017",
+      "itemId": "semla_teal_017",
       "shelfId": 11,
       "slot": 2
     },
     {
-      "itemId": "vase_teal_036",
+      "itemId": "japanesecrepe_teal_036",
       "shelfId": 11,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "frame_teal_044",
+      "itemId": "semla_teal_044",
       "shelfId": 10,
       "slot": 1
     },
     {
-      "itemId": "candle_teal_022",
+      "itemId": "cinnamonroll_teal_022",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "frame_teal_038",
+      "itemId": "semla_teal_038",
       "shelfId": 2,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "vase_teal_028",
+      "itemId": "japanesecrepe_teal_028",
       "shelfId": 2,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "frame_teal_013",
+      "itemId": "semla_teal_013",
       "shelfId": 3,
       "slot": 0
     }

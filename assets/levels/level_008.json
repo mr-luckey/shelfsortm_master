@@ -21,62 +21,62 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "cup_teal_007",
+      "itemId": "buddletea_teal_007",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "jar_teal_018",
+      "itemId": "coffee_teal_018",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "mug_teal_005",
+      "itemId": "orangejuice_teal_005",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "mug_teal_004",
+      "itemId": "orangejuice_teal_004",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "jar_teal_014",
+      "itemId": "coffee_teal_014",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "cup_teal_010",
+      "itemId": "buddletea_teal_010",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "jar_teal_013",
+      "itemId": "coffee_teal_013",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "jar_teal_016",
+      "itemId": "coffee_teal_016",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "mug_teal_006",
+      "itemId": "orangejuice_teal_006",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "jar_teal_017",
+      "itemId": "coffee_teal_017",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "mug_teal_002",
+      "itemId": "orangejuice_teal_002",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "cup_teal_012",
+      "itemId": "buddletea_teal_012",
       "shelfId": 6,
       "slot": 2
     }

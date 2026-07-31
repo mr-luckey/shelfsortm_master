@@ -27,163 +27,163 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "mug_purple_023",
+      "itemId": "orangejuice_purple_023",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "jar_purple_014",
+      "itemId": "coffee_purple_014",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "jar_purple_018",
+      "itemId": "coffee_purple_018",
       "shelfId": 7,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "mug_purple_020",
+      "itemId": "orangejuice_purple_020",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "cup_purple_026",
+      "itemId": "buddletea_purple_026",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "cup_purple_030",
+      "itemId": "buddletea_purple_030",
       "shelfId": 8,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "mug_purple_021",
+      "itemId": "orangejuice_purple_021",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "cup_purple_007",
+      "itemId": "buddletea_purple_007",
       "shelfId": 8,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cup_purple_027",
+      "itemId": "buddletea_purple_027",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "cup_purple_012",
+      "itemId": "buddletea_purple_012",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "cup_purple_025",
+      "itemId": "buddletea_purple_025",
       "shelfId": 7,
       "slot": 2
     },
     {
-      "itemId": "mug_purple_022",
+      "itemId": "orangejuice_purple_022",
       "shelfId": 7,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "jar_purple_015",
+      "itemId": "coffee_purple_015",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "mug_purple_004",
+      "itemId": "orangejuice_purple_004",
       "shelfId": 4,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cup_purple_028",
+      "itemId": "buddletea_purple_028",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "mug_purple_003",
+      "itemId": "orangejuice_purple_003",
       "shelfId": 2,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "mug_purple_005",
+      "itemId": "orangejuice_purple_005",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "cup_purple_010",
+      "itemId": "buddletea_purple_010",
       "shelfId": 2,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "jar_purple_016",
+      "itemId": "coffee_purple_016",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "mug_purple_024",
+      "itemId": "orangejuice_purple_024",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "mug_purple_001",
+      "itemId": "orangejuice_purple_001",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "cup_purple_029",
+      "itemId": "buddletea_purple_029",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "mug_purple_002",
+      "itemId": "orangejuice_purple_002",
       "shelfId": 7,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cup_purple_009",
+      "itemId": "buddletea_purple_009",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "mug_purple_019",
+      "itemId": "orangejuice_purple_019",
       "shelfId": 1,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cup_purple_011",
+      "itemId": "buddletea_purple_011",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "jar_purple_017",
+      "itemId": "coffee_purple_017",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "jar_purple_013",
+      "itemId": "coffee_purple_013",
       "shelfId": 1,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cup_purple_008",
+      "itemId": "buddletea_purple_008",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "mug_purple_006",
+      "itemId": "orangejuice_purple_006",
       "shelfId": 3,
       "slot": 1,
       "depth": 1

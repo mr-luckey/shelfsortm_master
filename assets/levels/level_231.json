@@ -29,298 +29,298 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "ribbon_pink_029",
+      "itemId": "normalegg_pink_029",
       "shelfId": 12,
       "slot": 2
     },
     {
-      "itemId": "bag_pink_041",
+      "itemId": "legendaryegg_pink_041",
       "shelfId": 12,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "bag_pink_016",
+      "itemId": "legendaryegg_pink_016",
       "shelfId": 12,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "ornament_pink_020",
+      "itemId": "luckyegg_pink_020",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "ornament_pink_051",
+      "itemId": "luckyegg_pink_051",
       "shelfId": 3,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "ribbon_pink_035",
+      "itemId": "normalegg_pink_035",
       "shelfId": 3,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "bag_pink_044",
+      "itemId": "legendaryegg_pink_044",
       "shelfId": 11,
       "slot": 0
     },
     {
-      "itemId": "ribbon_pink_036",
+      "itemId": "normalegg_pink_036",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "ornament_pink_049",
+      "itemId": "luckyegg_pink_049",
       "shelfId": 2,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "ornament_pink_053",
+      "itemId": "luckyegg_pink_053",
       "shelfId": 2,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "bag_pink_037",
+      "itemId": "legendaryegg_pink_037",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "bag_pink_013",
+      "itemId": "legendaryegg_pink_013",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "ornament_pink_047",
+      "itemId": "luckyegg_pink_047",
       "shelfId": 3,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ornament_pink_022",
+      "itemId": "luckyegg_pink_022",
       "shelfId": 11,
       "slot": 1
     },
     {
-      "itemId": "ornament_pink_024",
+      "itemId": "luckyegg_pink_024",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "bag_pink_039",
+      "itemId": "legendaryegg_pink_039",
       "shelfId": 7,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "bag_pink_011",
+      "itemId": "legendaryegg_pink_011",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "bag_pink_042",
+      "itemId": "legendaryegg_pink_042",
       "shelfId": 7,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "bag_pink_018",
+      "itemId": "legendaryegg_pink_018",
       "shelfId": 7,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "ribbon_pink_008",
+      "itemId": "normalegg_pink_008",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "ornament_pink_021",
+      "itemId": "luckyegg_pink_021",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ornament_pink_052",
+      "itemId": "luckyegg_pink_052",
       "shelfId": 12,
       "slot": 0
     },
     {
-      "itemId": "ribbon_pink_006",
+      "itemId": "normalegg_pink_006",
       "shelfId": 12,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ribbon_pink_005",
+      "itemId": "normalegg_pink_005",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "ribbon_pink_032",
+      "itemId": "normalegg_pink_032",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "bag_pink_040",
+      "itemId": "legendaryegg_pink_040",
       "shelfId": 8,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "ornament_pink_054",
+      "itemId": "luckyegg_pink_054",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "ornament_pink_025",
+      "itemId": "luckyegg_pink_025",
       "shelfId": 2,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "bag_pink_043",
+      "itemId": "legendaryegg_pink_043",
       "shelfId": 2,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "ribbon_pink_003",
+      "itemId": "normalegg_pink_003",
       "shelfId": 12,
       "slot": 1
     },
     {
-      "itemId": "ornament_pink_026",
+      "itemId": "luckyegg_pink_026",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "ornament_pink_023",
+      "itemId": "luckyegg_pink_023",
       "shelfId": 6,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "ribbon_pink_001",
+      "itemId": "normalegg_pink_001",
       "shelfId": 6,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "ribbon_pink_004",
+      "itemId": "normalegg_pink_004",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "bag_pink_014",
+      "itemId": "legendaryegg_pink_014",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "ribbon_pink_030",
+      "itemId": "normalegg_pink_030",
       "shelfId": 5,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "ornament_pink_048",
+      "itemId": "luckyegg_pink_048",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "bag_pink_017",
+      "itemId": "legendaryegg_pink_017",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "ribbon_pink_028",
+      "itemId": "normalegg_pink_028",
       "shelfId": 11,
       "slot": 2
     },
     {
-      "itemId": "ribbon_pink_031",
+      "itemId": "normalegg_pink_031",
       "shelfId": 11,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "bag_pink_038",
+      "itemId": "legendaryegg_pink_038",
       "shelfId": 11,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "ribbon_pink_007",
+      "itemId": "normalegg_pink_007",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "ornament_pink_050",
+      "itemId": "luckyegg_pink_050",
       "shelfId": 5,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ribbon_pink_009",
+      "itemId": "normalegg_pink_009",
       "shelfId": 5,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "ribbon_pink_002",
+      "itemId": "normalegg_pink_002",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "bag_pink_012",
+      "itemId": "legendaryegg_pink_012",
       "shelfId": 7,
       "slot": 2
     },
     {
-      "itemId": "ornament_pink_019",
+      "itemId": "luckyegg_pink_019",
       "shelfId": 7,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "ribbon_pink_033",
+      "itemId": "normalegg_pink_033",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "ornament_pink_046",
+      "itemId": "luckyegg_pink_046",
       "shelfId": 8,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ornament_pink_027",
+      "itemId": "luckyegg_pink_027",
       "shelfId": 8,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "bag_pink_010",
+      "itemId": "legendaryegg_pink_010",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "ribbon_pink_034",
+      "itemId": "normalegg_pink_034",
       "shelfId": 2,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "bag_pink_045",
+      "itemId": "legendaryegg_pink_045",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "bag_pink_015",
+      "itemId": "legendaryegg_pink_015",
       "shelfId": 6,
       "slot": 0,
       "depth": 1
@@ -359,7 +359,7 @@
       "boxes": [
         {
           "slot": "4:1",
-          "itemId": "bag_pink_013",
+          "itemId": "legendaryegg_pink_013",
           "trigger": "shelf_complete"
         }
       ]

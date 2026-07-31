@@ -89,7 +89,7 @@ class PlayerProgress {
     this.achievements = const {},
   });
 
-  static const int totalLevels = 250;
+  static const int totalLevels = 1100;
 
   static PlayerProgress initial() {
     return const PlayerProgress(
@@ -109,10 +109,7 @@ class PlayerProgress {
           ? existing.copyWith(unlocked: true)
           : LevelProgress(levelId: i, unlocked: true);
     }
-    return copyWith(
-      levels: next,
-      currentLevel: currentLevel < count ? count : currentLevel,
-    );
+    return copyWith(levels: next);
   }
 
   LevelProgress levelOf(int id) =>

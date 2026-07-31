@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'goods_emoji.dart';
+
 /// Supermarket aisle backdrop — depth shelves + warm lighting (Goods Sort vibe).
 class StoreBackground extends StatelessWidget {
   final List<Color> colors;
-  final String moodEmoji;
+  final String moodType;
 
   const StoreBackground({
     super.key,
     required this.colors,
-    this.moodEmoji = '🛒',
+    this.moodType = 'hamburger',
   });
 
   @override
@@ -72,12 +74,9 @@ class StoreBackground extends StatelessWidget {
         Positioned(
           top: 48,
           right: 20,
-          child: Text(
-            moodEmoji,
-            style: TextStyle(
-              fontSize: 64,
-              color: Colors.white.withValues(alpha: 0.12),
-            ),
+          child: Opacity(
+            opacity: 0.12,
+            child: EmojiImage(type: moodType, size: 64),
           ),
         ),
       ],
@@ -120,9 +119,14 @@ class _BackShelf extends StatelessWidget {
           3,
           (i) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 2),
-            child: Text(
-              ['🥫', '🍿', '🧴', '🍪'][(tone + i) % 4],
-              style: const TextStyle(fontSize: 16),
+            child: EmojiImage(
+              type: const [
+                'hamburger',
+                'catface',
+                'grinningface',
+                'airplane',
+              ][(tone + i) % 4],
+              size: 16,
             ),
           ),
         ),

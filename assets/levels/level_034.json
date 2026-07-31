@@ -28,161 +28,161 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "cupcake_blue_023",
+      "itemId": "pancakestack_blue_023",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "cupcake_blue_024",
+      "itemId": "pancakestack_blue_024",
       "shelfId": 5,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cupcake_blue_019",
+      "itemId": "pancakestack_blue_019",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "cupcake_blue_002",
+      "itemId": "pancakestack_blue_002",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "box_blue_025",
+      "itemId": "strawberrypudding_blue_025",
       "shelfId": 8,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "box_blue_010",
+      "itemId": "strawberrypudding_blue_010",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "box_blue_028",
+      "itemId": "strawberrypudding_blue_028",
       "shelfId": 1,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cupcake_blue_005",
+      "itemId": "pancakestack_blue_005",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "cupcake_blue_004",
+      "itemId": "pancakestack_blue_004",
       "shelfId": 4,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "macaron_blue_018",
+      "itemId": "chocobanana_blue_018",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "macaron_blue_016",
+      "itemId": "chocobanana_blue_016",
       "shelfId": 7,
       "slot": 2
     },
     {
-      "itemId": "macaron_blue_014",
+      "itemId": "chocobanana_blue_014",
       "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "cupcake_blue_003",
+      "itemId": "pancakestack_blue_003",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "box_blue_012",
+      "itemId": "strawberrypudding_blue_012",
       "shelfId": 8,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "macaron_blue_013",
+      "itemId": "chocobanana_blue_013",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "box_blue_030",
+      "itemId": "strawberrypudding_blue_030",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "box_blue_011",
+      "itemId": "strawberrypudding_blue_011",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "cupcake_blue_022",
+      "itemId": "pancakestack_blue_022",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "box_blue_026",
+      "itemId": "strawberrypudding_blue_026",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "box_blue_008",
+      "itemId": "strawberrypudding_blue_008",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "box_blue_009",
+      "itemId": "strawberrypudding_blue_009",
       "shelfId": 9,
       "slot": 1
     },
     {
-      "itemId": "box_blue_029",
+      "itemId": "strawberrypudding_blue_029",
       "shelfId": 9,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cupcake_blue_020",
+      "itemId": "pancakestack_blue_020",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "macaron_blue_017",
+      "itemId": "chocobanana_blue_017",
       "shelfId": 3,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cupcake_blue_001",
+      "itemId": "pancakestack_blue_001",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "box_blue_027",
+      "itemId": "strawberrypudding_blue_027",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "cupcake_blue_006",
+      "itemId": "pancakestack_blue_006",
       "shelfId": 3,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "box_blue_007",
+      "itemId": "strawberrypudding_blue_007",
       "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "cupcake_blue_021",
+      "itemId": "pancakestack_blue_021",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "macaron_blue_015",
+      "itemId": "chocobanana_blue_015",
       "shelfId": 8,
       "slot": 1
     }

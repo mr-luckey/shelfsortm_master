@@ -24,9 +24,18 @@ class ProgressProvider extends ChangeNotifier {
   Future<void> init() async {
     await saveService.init();
     progress = await saveService.loadProgress();
+    // Testing: unlock entire campaign map.
+    progress = progress.withAllLevelsUnlocked();
     _resetToolsIfNeeded();
     _syncDailyChallengeDate();
     ready = true;
+    notifyListeners();
+    await _persist();
+  }
+
+  /// Unlock every campaign level and persist (testing helper).
+  Future<void> unlockAllLevelsForTesting() async {
+    progress = progress.withAllLevelsUnlocked();
     notifyListeners();
     await _persist();
   }

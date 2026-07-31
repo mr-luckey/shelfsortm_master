@@ -7,8 +7,8 @@ import '../../app/theme/app_colors.dart';
 import '../../data/level_repository.dart';
 import '../../providers/progress_provider.dart';
 import '../../services/ad_service.dart';
+import '../premium/premium_gameplay_screen.dart';
 import '../widgets/common_widgets.dart';
-import 'gameplay_screen.dart';
 
 class LevelCompleteScreen extends StatefulWidget {
   final int levelId;
@@ -218,7 +218,7 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                 builder: (_) =>
-                                    GameplayScreen(levelId: next),
+                                    PremiumGameplayScreen(levelId: next),
                               ),
                             );
                           },
@@ -233,7 +233,7 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (_) => GameplayScreen(
+                              builder: (_) => PremiumGameplayScreen(
                                 levelId: widget.levelId,
                                 daily: widget.daily,
                               ),

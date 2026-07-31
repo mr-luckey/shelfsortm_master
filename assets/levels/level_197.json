@@ -29,299 +29,299 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "can_purple_034",
+      "itemId": "caffelatte_purple_034",
       "shelfId": 12,
       "slot": 0
     },
     {
-      "itemId": "can_purple_004",
+      "itemId": "caffelatte_purple_004",
       "shelfId": 12,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "snack_purple_052",
+      "itemId": "cocacola_purple_052",
       "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "can_purple_006",
+      "itemId": "caffelatte_purple_006",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "sauce_purple_038",
+      "itemId": "cuteteacup_purple_038",
       "shelfId": 5,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "can_purple_031",
+      "itemId": "caffelatte_purple_031",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "snack_purple_025",
+      "itemId": "cocacola_purple_025",
       "shelfId": 2,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "snack_purple_020",
+      "itemId": "cocacola_purple_020",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "sauce_purple_041",
+      "itemId": "cuteteacup_purple_041",
       "shelfId": 6,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "sauce_purple_017",
+      "itemId": "cuteteacup_purple_017",
       "shelfId": 6,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "snack_purple_050",
+      "itemId": "cocacola_purple_050",
       "shelfId": 12,
       "slot": 1
     },
     {
-      "itemId": "can_purple_036",
+      "itemId": "caffelatte_purple_036",
       "shelfId": 12,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "sauce_purple_043",
+      "itemId": "cuteteacup_purple_043",
       "shelfId": 12,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "sauce_purple_013",
+      "itemId": "cuteteacup_purple_013",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "snack_purple_054",
+      "itemId": "cocacola_purple_054",
       "shelfId": 2,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "can_purple_003",
+      "itemId": "caffelatte_purple_003",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "sauce_purple_037",
+      "itemId": "cuteteacup_purple_037",
       "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "can_purple_002",
+      "itemId": "caffelatte_purple_002",
       "shelfId": 10,
       "slot": 1
     },
     {
-      "itemId": "sauce_purple_045",
+      "itemId": "cuteteacup_purple_045",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "sauce_purple_012",
+      "itemId": "cuteteacup_purple_012",
       "shelfId": 3,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "sauce_purple_039",
+      "itemId": "cuteteacup_purple_039",
       "shelfId": 3,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "sauce_purple_018",
+      "itemId": "cuteteacup_purple_018",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "can_purple_032",
+      "itemId": "caffelatte_purple_032",
       "shelfId": 4,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "can_purple_035",
+      "itemId": "caffelatte_purple_035",
       "shelfId": 4,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "can_purple_029",
+      "itemId": "caffelatte_purple_029",
       "shelfId": 12,
       "slot": 2
     },
     {
-      "itemId": "snack_purple_024",
+      "itemId": "cocacola_purple_024",
       "shelfId": 12,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "snack_purple_023",
+      "itemId": "cocacola_purple_023",
       "shelfId": 12,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "can_purple_008",
+      "itemId": "caffelatte_purple_008",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "sauce_purple_016",
+      "itemId": "cuteteacup_purple_016",
       "shelfId": 6,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "snack_purple_027",
+      "itemId": "cocacola_purple_027",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "sauce_purple_011",
+      "itemId": "cuteteacup_purple_011",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "can_purple_028",
+      "itemId": "caffelatte_purple_028",
       "shelfId": 5,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "sauce_purple_042",
+      "itemId": "cuteteacup_purple_042",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "can_purple_007",
+      "itemId": "caffelatte_purple_007",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "can_purple_033",
+      "itemId": "caffelatte_purple_033",
       "shelfId": 9,
       "slot": 1
     },
     {
-      "itemId": "snack_purple_048",
+      "itemId": "cocacola_purple_048",
       "shelfId": 9,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "snack_purple_026",
+      "itemId": "cocacola_purple_026",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "sauce_purple_015",
+      "itemId": "cuteteacup_purple_015",
       "shelfId": 2,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "snack_purple_046",
+      "itemId": "cocacola_purple_046",
       "shelfId": 2,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "snack_purple_051",
+      "itemId": "cocacola_purple_051",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "sauce_purple_040",
+      "itemId": "cuteteacup_purple_040",
       "shelfId": 4,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "can_purple_005",
+      "itemId": "caffelatte_purple_005",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "snack_purple_019",
+      "itemId": "cocacola_purple_019",
       "shelfId": 5,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "sauce_purple_044",
+      "itemId": "cuteteacup_purple_044",
       "shelfId": 10,
       "slot": 2
     },
     {
-      "itemId": "sauce_purple_010",
+      "itemId": "cuteteacup_purple_010",
       "shelfId": 10,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "snack_purple_049",
+      "itemId": "cocacola_purple_049",
       "shelfId": 10,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "snack_purple_053",
+      "itemId": "cocacola_purple_053",
       "shelfId": 10,
       "slot": 0
     },
     {
-      "itemId": "can_purple_001",
+      "itemId": "caffelatte_purple_001",
       "shelfId": 10,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "can_purple_030",
+      "itemId": "caffelatte_purple_030",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "snack_purple_021",
+      "itemId": "cocacola_purple_021",
       "shelfId": 3,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "snack_purple_022",
+      "itemId": "cocacola_purple_022",
       "shelfId": 3,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "snack_purple_047",
+      "itemId": "cocacola_purple_047",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "sauce_purple_014",
+      "itemId": "cuteteacup_purple_014",
       "shelfId": 3,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "can_purple_009",
+      "itemId": "caffelatte_purple_009",
       "shelfId": 7,
       "slot": 2
     }

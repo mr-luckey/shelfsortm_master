@@ -28,194 +28,194 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "book_red_020",
+      "itemId": "mcdouble_red_020",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "candle_red_011",
+      "itemId": "mcdonaldsfries_red_011",
       "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "book_red_022",
+      "itemId": "mcdouble_red_022",
       "shelfId": 9,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "globe_red_015",
+      "itemId": "chickenmcnuggets_red_015",
       "shelfId": 9,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "globe_red_034",
+      "itemId": "chickenmcnuggets_red_034",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "globe_red_014",
+      "itemId": "chickenmcnuggets_red_014",
       "shelfId": 1,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "book_red_019",
+      "itemId": "mcdouble_red_019",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "book_red_023",
+      "itemId": "mcdouble_red_023",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "candle_red_027",
+      "itemId": "mcdonaldsfries_red_027",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "globe_red_016",
+      "itemId": "chickenmcnuggets_red_016",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "candle_red_025",
+      "itemId": "mcdonaldsfries_red_025",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "book_red_005",
+      "itemId": "mcdouble_red_005",
       "shelfId": 7,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "candle_red_028",
+      "itemId": "mcdonaldsfries_red_028",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "book_red_001",
+      "itemId": "mcdouble_red_001",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "candle_red_010",
+      "itemId": "mcdonaldsfries_red_010",
       "shelfId": 2,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "book_red_003",
+      "itemId": "mcdouble_red_003",
       "shelfId": 2,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "book_red_002",
+      "itemId": "mcdouble_red_002",
       "shelfId": 10,
       "slot": 1
     },
     {
-      "itemId": "book_red_006",
+      "itemId": "mcdouble_red_006",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "globe_red_035",
+      "itemId": "chickenmcnuggets_red_035",
       "shelfId": 4,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "candle_red_026",
+      "itemId": "mcdonaldsfries_red_026",
       "shelfId": 4,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "book_red_021",
+      "itemId": "mcdouble_red_021",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "candle_red_029",
+      "itemId": "mcdonaldsfries_red_029",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "globe_red_013",
+      "itemId": "chickenmcnuggets_red_013",
       "shelfId": 7,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "candle_red_012",
+      "itemId": "mcdonaldsfries_red_012",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "book_red_024",
+      "itemId": "mcdouble_red_024",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "globe_red_036",
+      "itemId": "chickenmcnuggets_red_036",
       "shelfId": 6,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "globe_red_017",
+      "itemId": "chickenmcnuggets_red_017",
       "shelfId": 7,
       "slot": 2
     },
     {
-      "itemId": "globe_red_018",
+      "itemId": "chickenmcnuggets_red_018",
       "shelfId": 10,
       "slot": 2
     },
     {
-      "itemId": "candle_red_030",
+      "itemId": "mcdonaldsfries_red_030",
       "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "candle_red_008",
+      "itemId": "mcdonaldsfries_red_008",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "globe_red_031",
+      "itemId": "chickenmcnuggets_red_031",
       "shelfId": 10,
       "slot": 0
     },
     {
-      "itemId": "candle_red_007",
+      "itemId": "mcdonaldsfries_red_007",
       "shelfId": 10,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "globe_red_032",
+      "itemId": "chickenmcnuggets_red_032",
       "shelfId": 9,
       "slot": 1
     },
     {
-      "itemId": "candle_red_009",
+      "itemId": "mcdonaldsfries_red_009",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "globe_red_033",
+      "itemId": "chickenmcnuggets_red_033",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "book_red_004",
+      "itemId": "mcdouble_red_004",
       "shelfId": 3,
       "slot": 0
     }

@@ -29,298 +29,298 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "lipstick_purple_043",
+      "itemId": "pika38_purple_043",
       "shelfId": 11,
       "slot": 1
     },
     {
-      "itemId": "lipstick_purple_016",
+      "itemId": "pika38_purple_016",
       "shelfId": 11,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "perfume_purple_006",
+      "itemId": "pika16_purple_006",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "cream_purple_053",
+      "itemId": "pika54_purple_053",
       "shelfId": 3,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "perfume_purple_008",
+      "itemId": "pika16_purple_008",
       "shelfId": 3,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "lipstick_purple_044",
+      "itemId": "pika38_purple_044",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "cream_purple_052",
+      "itemId": "pika54_purple_052",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "lipstick_purple_038",
+      "itemId": "pika38_purple_038",
       "shelfId": 11,
       "slot": 0
     },
     {
-      "itemId": "lipstick_purple_011",
+      "itemId": "pika38_purple_011",
       "shelfId": 11,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cream_purple_024",
+      "itemId": "pika54_purple_024",
       "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "lipstick_purple_037",
+      "itemId": "pika38_purple_037",
       "shelfId": 9,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cream_purple_022",
+      "itemId": "pika54_purple_022",
       "shelfId": 9,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "perfume_purple_005",
+      "itemId": "pika16_purple_005",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "lipstick_purple_014",
+      "itemId": "pika38_purple_014",
       "shelfId": 6,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cream_purple_046",
+      "itemId": "pika54_purple_046",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "perfume_purple_032",
+      "itemId": "pika16_purple_032",
       "shelfId": 2,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "perfume_purple_034",
+      "itemId": "pika16_purple_034",
       "shelfId": 7,
       "slot": 2
     },
     {
-      "itemId": "perfume_purple_002",
+      "itemId": "pika16_purple_002",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "cream_purple_049",
+      "itemId": "pika54_purple_049",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "cream_purple_027",
+      "itemId": "pika54_purple_027",
       "shelfId": 6,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "perfume_purple_001",
+      "itemId": "pika16_purple_001",
       "shelfId": 6,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "lipstick_purple_015",
+      "itemId": "pika38_purple_015",
       "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "cream_purple_020",
+      "itemId": "pika54_purple_020",
       "shelfId": 9,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cream_purple_047",
+      "itemId": "pika54_purple_047",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "perfume_purple_033",
+      "itemId": "pika16_purple_033",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "perfume_purple_031",
+      "itemId": "pika16_purple_031",
       "shelfId": 1,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "perfume_purple_004",
+      "itemId": "pika16_purple_004",
       "shelfId": 1,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "perfume_purple_009",
+      "itemId": "pika16_purple_009",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "perfume_purple_028",
+      "itemId": "pika16_purple_028",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "lipstick_purple_018",
+      "itemId": "pika38_purple_018",
       "shelfId": 7,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cream_purple_023",
+      "itemId": "pika54_purple_023",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "lipstick_purple_040",
+      "itemId": "pika38_purple_040",
       "shelfId": 4,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "lipstick_purple_013",
+      "itemId": "pika38_purple_013",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "perfume_purple_003",
+      "itemId": "pika16_purple_003",
       "shelfId": 2,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cream_purple_025",
+      "itemId": "pika54_purple_025",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "cream_purple_019",
+      "itemId": "pika54_purple_019",
       "shelfId": 2,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "lipstick_purple_012",
+      "itemId": "pika38_purple_012",
       "shelfId": 2,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "lipstick_purple_042",
+      "itemId": "pika38_purple_042",
       "shelfId": 9,
       "slot": 1
     },
     {
-      "itemId": "cream_purple_021",
+      "itemId": "pika54_purple_021",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "lipstick_purple_039",
+      "itemId": "pika38_purple_039",
       "shelfId": 5,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "lipstick_purple_041",
+      "itemId": "pika38_purple_041",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "lipstick_purple_045",
+      "itemId": "pika38_purple_045",
       "shelfId": 1,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "lipstick_purple_017",
+      "itemId": "pika38_purple_017",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "cream_purple_050",
+      "itemId": "pika54_purple_050",
       "shelfId": 5,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "perfume_purple_029",
+      "itemId": "pika16_purple_029",
       "shelfId": 5,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "perfume_purple_035",
+      "itemId": "pika16_purple_035",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "cream_purple_026",
+      "itemId": "pika54_purple_026",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cream_purple_048",
+      "itemId": "pika54_purple_048",
       "shelfId": 11,
       "slot": 2
     },
     {
-      "itemId": "perfume_purple_030",
+      "itemId": "pika16_purple_030",
       "shelfId": 11,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "perfume_purple_036",
+      "itemId": "pika16_purple_036",
       "shelfId": 11,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "cream_purple_054",
+      "itemId": "pika54_purple_054",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "cream_purple_051",
+      "itemId": "pika54_purple_051",
       "shelfId": 1,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "perfume_purple_007",
+      "itemId": "pika16_purple_007",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "lipstick_purple_010",
+      "itemId": "pika38_purple_010",
       "shelfId": 6,
       "slot": 1,
       "depth": 1

@@ -31,3 +31,18 @@ flutter:
   uses-material-design: true
   assets:
     - assets/levels/
+    - assets/images/premium/toys/
+    - assets/images/premium/ui/
+    - assets/images/premium/cupboards/
+    - assets/images/emojis/activities/
+    - assets/images/emojis/animals/
+    - assets/images/emojis/food/
+    - assets/images/emojis/hands/
+    - assets/images/emojis/objects/
+    - assets/images/emojis/people/
+    - assets/images/emojis/people_activities/
+    - assets/images/emojis/people_professions/
+    - assets/images/emojis/smilies/
+    - assets/images/emojis/symbols/
+    - assets/images/emojis/travel/
+    - assets/images/rooms/

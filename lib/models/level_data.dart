@@ -213,8 +213,8 @@ class LevelData {
     );
   }
 
-  /// Build board with depth stacks. Placements sorted by depth so front is last-pushed...
-  /// Actually: depth 0 = front. We build stacks by appending behind first then front.
+  /// Board at level start: only layer 0 (depth 0) is on the shelves. Deeper
+  /// layers are held by [ShelfWaveManager] and slide forward when a box empties.
   List<Shelf> buildSortedChallengeBoard() {
     final board = List.generate(
       shelfCount,
@@ -225,25 +225,15 @@ class LevelData {
       ),
     );
 
-    // Group by shelf+slot, sort by depth descending (back first), then push so front ends at index 0
-    final grouped = <String, List<InitialPlacement>>{};
     for (final p in initialPlacement) {
-      final key = '${p.shelfId}_${p.slot}';
-      grouped.putIfAbsent(key, () => []).add(p);
-    }
-
-    for (final entry in grouped.entries) {
-      final list = entry.value..sort((a, b) => b.depth.compareTo(a.depth));
-      // After sort: highest depth (back) first. Build stack as [front, ..., back]
-      // We want index 0 = front = lowest depth.
-      list.sort((a, b) => a.depth.compareTo(b.depth));
-      final stack = list.map((p) => GameItem.fromId(p.itemId)).toList();
-      final shelfId = list.first.shelfId;
-      final slot = list.first.slot;
-      final idx = board.indexWhere((s) => s.shelfId == shelfId);
+      if (p.depth != 0) continue;
+      final idx = board.indexWhere((s) => s.shelfId == p.shelfId);
       if (idx < 0) continue;
-      if (slot < 0 || slot >= board[idx].slots.length) continue;
-      board[idx] = board[idx].withSlot(slot, ShelfSlot(stack: stack));
+      if (p.slot < 0 || p.slot >= board[idx].slots.length) continue;
+      board[idx] = board[idx].withSlot(
+        p.slot,
+        ShelfSlot.front(GameItem.fromId(p.itemId)),
+      );
     }
     return board;
   }
@@ -259,43 +249,37 @@ class LevelData {
 
   static List<List<int>> defaultLayout(int n) {
     if (n <= 0) return [];
-    if (n <= 5) {
-      // 2+3 or 3+2
-      final a = (n / 2).ceil();
-      final b = n - a;
+    if (n <= 4) {
+      var id = 1;
+      final first = List.generate(n >= 2 ? 2 : n, (_) => id++);
+      final rest = <int>[];
+      while (id <= n) {
+        rest.add(id++);
+      }
+      return rest.isEmpty ? [first] : [first, rest];
+    }
+    if (n <= 6) {
       var id = 1;
       return [
-        List.generate(a, (_) => id++),
-        List.generate(b, (_) => id++),
+        List.generate(2, (_) => id++),
+        List.generate(2, (_) => id++),
+        List.generate(n - 4, (_) => id++),
       ];
     }
-    if (n <= 8) {
-      // 3, 3, rest — with center gap feel on last if odd
-      var id = 1;
-      final rows = <List<int>>[];
-      while (id <= n) {
-        final take = (n - id + 1) >= 3 ? 3 : (n - id + 1);
-        if (take == 2 && rows.isNotEmpty) {
-          rows.add([0, id++, id++, 0]);
-        } else {
-          rows.add(List.generate(take, (_) => id++));
-        }
-      }
-      return rows;
-    }
-    // Dense: rows of 4, last row maybe 2 centered
+    // Pick column width by board size
+    final cols = n <= 9
+        ? 3
+        : n <= 12
+            ? 3
+            : n <= 20
+                ? 4
+                : 5;
     var id = 1;
     final rows = <List<int>>[];
     while (id <= n) {
       final left = n - id + 1;
-      if (left == 2) {
-        rows.add([0, id++, id++, 0]);
-      } else if (left == 1) {
-        rows.add([0, id++, 0]);
-      } else {
-        final take = left >= 4 ? 4 : left;
-        rows.add(List.generate(take, (_) => id++));
-      }
+      final take = left >= cols ? cols : left;
+      rows.add(List.generate(take, (_) => id++));
     }
     return rows;
   }

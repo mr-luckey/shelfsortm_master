@@ -28,161 +28,161 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "cupcake_pink_004",
+      "itemId": "pancakestack_pink_004",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "box_pink_030",
+      "itemId": "strawberrypudding_pink_030",
       "shelfId": 3,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cupcake_pink_002",
+      "itemId": "pancakestack_pink_002",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "box_pink_025",
+      "itemId": "strawberrypudding_pink_025",
       "shelfId": 3,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "macaron_pink_013",
+      "itemId": "chocobanana_pink_013",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "cupcake_pink_006",
+      "itemId": "pancakestack_pink_006",
       "shelfId": 5,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "box_pink_010",
+      "itemId": "strawberrypudding_pink_010",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "macaron_pink_016",
+      "itemId": "chocobanana_pink_016",
       "shelfId": 7,
       "slot": 2
     },
     {
-      "itemId": "box_pink_009",
+      "itemId": "strawberrypudding_pink_009",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "box_pink_008",
+      "itemId": "strawberrypudding_pink_008",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cupcake_pink_001",
+      "itemId": "pancakestack_pink_001",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "box_pink_011",
+      "itemId": "strawberrypudding_pink_011",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "macaron_pink_015",
+      "itemId": "chocobanana_pink_015",
       "shelfId": 2,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cupcake_pink_019",
+      "itemId": "pancakestack_pink_019",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "cupcake_pink_003",
+      "itemId": "pancakestack_pink_003",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "cupcake_pink_023",
+      "itemId": "pancakestack_pink_023",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "macaron_pink_014",
+      "itemId": "chocobanana_pink_014",
       "shelfId": 1,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "box_pink_026",
+      "itemId": "strawberrypudding_pink_026",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "cupcake_pink_005",
+      "itemId": "pancakestack_pink_005",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "box_pink_007",
+      "itemId": "strawberrypudding_pink_007",
       "shelfId": 2,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cupcake_pink_020",
+      "itemId": "pancakestack_pink_020",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "box_pink_028",
+      "itemId": "strawberrypudding_pink_028",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "macaron_pink_018",
+      "itemId": "chocobanana_pink_018",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "box_pink_027",
+      "itemId": "strawberrypudding_pink_027",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "cupcake_pink_021",
+      "itemId": "pancakestack_pink_021",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "cupcake_pink_024",
+      "itemId": "pancakestack_pink_024",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "cupcake_pink_022",
+      "itemId": "pancakestack_pink_022",
       "shelfId": 7,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "box_pink_012",
+      "itemId": "strawberrypudding_pink_012",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "macaron_pink_017",
+      "itemId": "chocobanana_pink_017",
       "shelfId": 1,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "box_pink_029",
+      "itemId": "strawberrypudding_pink_029",
       "shelfId": 5,
       "slot": 1
     }

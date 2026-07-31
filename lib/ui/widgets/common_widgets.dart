@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../app/theme/app_colors.dart';
+import '../../app/theme/goods_sort_theme.dart';
+import 'goods_emoji.dart';
 
 class CurrencyHud extends StatelessWidget {
   final int coins;
@@ -105,11 +107,11 @@ class GlowPlayButton extends StatelessWidget {
         width: 200,
         height: 64,
         decoration: BoxDecoration(
-          gradient: AppColors.primaryGradient,
+          gradient: GoodsSortTheme.playGradient,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primary.withValues(alpha: 0.5),
+              color: GoodsSortTheme.playGreen.withValues(alpha: 0.5),
               blurRadius: 20,
               offset: const Offset(0, 8),
             ),
@@ -150,10 +152,10 @@ class MiaAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final face = switch (mood) {
-      'excited' => '🤩',
-      'thinking' => '🤔',
-      'celebrating' => '🥳',
-      _ => '😊',
+      'excited' => 'starstruck',
+      'thinking' => 'thinkingface',
+      'celebrating' => 'partyingface',
+      _ => 'grinningface',
     };
 
     return Container(
@@ -177,8 +179,8 @@ class MiaAvatar extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('👧', style: TextStyle(fontSize: size * 0.45)),
-          Text(face, style: TextStyle(fontSize: size * 0.18)),
+          EmojiImage(type: 'grinningface', size: size * 0.45),
+          EmojiImage(type: face, size: size * 0.18),
         ],
       ),
     ).animate().fadeIn(duration: 400.ms).scale(begin: const Offset(0.8, 0.8));

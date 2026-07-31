@@ -29,299 +29,299 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "headset_orange_053",
+      "itemId": "ttcry_orange_053",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "controller_orange_031",
+      "itemId": "ragetiktok_orange_031",
       "shelfId": 4,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "controller_orange_033",
+      "itemId": "ragetiktok_orange_033",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "cartridge_orange_040",
+      "itemId": "eviltiktok_orange_040",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "controller_orange_032",
+      "itemId": "ragetiktok_orange_032",
       "shelfId": 8,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "headset_orange_021",
+      "itemId": "ttcry_orange_021",
       "shelfId": 11,
       "slot": 2
     },
     {
-      "itemId": "cartridge_orange_044",
+      "itemId": "eviltiktok_orange_044",
       "shelfId": 11,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "headset_orange_046",
+      "itemId": "ttcry_orange_046",
       "shelfId": 11,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "controller_orange_009",
+      "itemId": "ragetiktok_orange_009",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "controller_orange_029",
+      "itemId": "ragetiktok_orange_029",
       "shelfId": 5,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "headset_orange_026",
+      "itemId": "ttcry_orange_026",
       "shelfId": 5,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "headset_orange_022",
+      "itemId": "ttcry_orange_022",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "headset_orange_048",
+      "itemId": "ttcry_orange_048",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "cartridge_orange_043",
+      "itemId": "eviltiktok_orange_043",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cartridge_orange_037",
+      "itemId": "eviltiktok_orange_037",
       "shelfId": 4,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "controller_orange_001",
+      "itemId": "ragetiktok_orange_001",
       "shelfId": 11,
       "slot": 1
     },
     {
-      "itemId": "headset_orange_024",
+      "itemId": "ttcry_orange_024",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "cartridge_orange_038",
+      "itemId": "eviltiktok_orange_038",
       "shelfId": 6,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cartridge_orange_039",
+      "itemId": "eviltiktok_orange_039",
       "shelfId": 6,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "controller_orange_035",
+      "itemId": "ragetiktok_orange_035",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "headset_orange_025",
+      "itemId": "ttcry_orange_025",
       "shelfId": 8,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "controller_orange_007",
+      "itemId": "ragetiktok_orange_007",
       "shelfId": 8,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "cartridge_orange_012",
+      "itemId": "eviltiktok_orange_012",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "headset_orange_050",
+      "itemId": "ttcry_orange_050",
       "shelfId": 1,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cartridge_orange_016",
+      "itemId": "eviltiktok_orange_016",
       "shelfId": 1,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "headset_orange_054",
+      "itemId": "ttcry_orange_054",
       "shelfId": 10,
       "slot": 2
     },
     {
-      "itemId": "cartridge_orange_011",
+      "itemId": "eviltiktok_orange_011",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "headset_orange_052",
+      "itemId": "ttcry_orange_052",
       "shelfId": 11,
       "slot": 0
     },
     {
-      "itemId": "headset_orange_051",
+      "itemId": "ttcry_orange_051",
       "shelfId": 11,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "headset_orange_023",
+      "itemId": "ttcry_orange_023",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "controller_orange_005",
+      "itemId": "ragetiktok_orange_005",
       "shelfId": 5,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cartridge_orange_015",
+      "itemId": "eviltiktok_orange_015",
       "shelfId": 12,
       "slot": 0
     },
     {
-      "itemId": "headset_orange_047",
+      "itemId": "ttcry_orange_047",
       "shelfId": 12,
       "slot": 1
     },
     {
-      "itemId": "cartridge_orange_045",
+      "itemId": "eviltiktok_orange_045",
       "shelfId": 12,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "controller_orange_003",
+      "itemId": "ragetiktok_orange_003",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "cartridge_orange_014",
+      "itemId": "eviltiktok_orange_014",
       "shelfId": 1,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cartridge_orange_018",
+      "itemId": "eviltiktok_orange_018",
       "shelfId": 10,
       "slot": 1
     },
     {
-      "itemId": "cartridge_orange_041",
+      "itemId": "eviltiktok_orange_041",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "headset_orange_019",
+      "itemId": "ttcry_orange_019",
       "shelfId": 3,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "headset_orange_049",
+      "itemId": "ttcry_orange_049",
       "shelfId": 3,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "headset_orange_027",
+      "itemId": "ttcry_orange_027",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "cartridge_orange_017",
+      "itemId": "eviltiktok_orange_017",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "controller_orange_030",
+      "itemId": "ragetiktok_orange_030",
       "shelfId": 1,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "controller_orange_008",
+      "itemId": "ragetiktok_orange_008",
       "shelfId": 1,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "controller_orange_006",
+      "itemId": "ragetiktok_orange_006",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "cartridge_orange_013",
+      "itemId": "eviltiktok_orange_013",
       "shelfId": 6,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "controller_orange_002",
+      "itemId": "ragetiktok_orange_002",
       "shelfId": 6,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "cartridge_orange_042",
+      "itemId": "eviltiktok_orange_042",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "headset_orange_020",
+      "itemId": "ttcry_orange_020",
       "shelfId": 3,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "controller_orange_036",
+      "itemId": "ragetiktok_orange_036",
       "shelfId": 3,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "cartridge_orange_010",
+      "itemId": "eviltiktok_orange_010",
       "shelfId": 12,
       "slot": 2
     },
     {
-      "itemId": "controller_orange_034",
+      "itemId": "ragetiktok_orange_034",
       "shelfId": 10,
       "slot": 0
     },
     {
-      "itemId": "controller_orange_028",
+      "itemId": "ragetiktok_orange_028",
       "shelfId": 10,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "controller_orange_004",
+      "itemId": "ragetiktok_orange_004",
       "shelfId": 4,
       "slot": 1
     }
@@ -350,7 +350,7 @@
       "boxes": [
         {
           "slot": "3:1",
-          "itemId": "cartridge_orange_011",
+          "itemId": "eviltiktok_orange_011",
           "trigger": "shelf_complete"
         }
       ]

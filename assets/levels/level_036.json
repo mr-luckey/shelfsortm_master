@@ -28,161 +28,161 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "box_yellow_012",
+      "itemId": "strawberrypudding_yellow_012",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "box_yellow_026",
+      "itemId": "strawberrypudding_yellow_026",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "cupcake_yellow_024",
+      "itemId": "pancakestack_yellow_024",
       "shelfId": 8,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cupcake_yellow_019",
+      "itemId": "pancakestack_yellow_019",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "macaron_yellow_018",
+      "itemId": "chocobanana_yellow_018",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "cupcake_yellow_020",
+      "itemId": "pancakestack_yellow_020",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "box_yellow_011",
+      "itemId": "strawberrypudding_yellow_011",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "macaron_yellow_013",
+      "itemId": "chocobanana_yellow_013",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "cupcake_yellow_023",
+      "itemId": "pancakestack_yellow_023",
       "shelfId": 5,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "macaron_yellow_015",
+      "itemId": "chocobanana_yellow_015",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "box_yellow_008",
+      "itemId": "strawberrypudding_yellow_008",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "cupcake_yellow_001",
+      "itemId": "pancakestack_yellow_001",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "box_yellow_027",
+      "itemId": "strawberrypudding_yellow_027",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "cupcake_yellow_002",
+      "itemId": "pancakestack_yellow_002",
       "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "box_yellow_028",
+      "itemId": "strawberrypudding_yellow_028",
       "shelfId": 9,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "box_yellow_030",
+      "itemId": "strawberrypudding_yellow_030",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "cupcake_yellow_003",
+      "itemId": "pancakestack_yellow_003",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "macaron_yellow_017",
+      "itemId": "chocobanana_yellow_017",
       "shelfId": 1,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cupcake_yellow_022",
+      "itemId": "pancakestack_yellow_022",
       "shelfId": 7,
       "slot": 2
     },
     {
-      "itemId": "box_yellow_025",
+      "itemId": "strawberrypudding_yellow_025",
       "shelfId": 7,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "box_yellow_007",
+      "itemId": "strawberrypudding_yellow_007",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "box_yellow_009",
+      "itemId": "strawberrypudding_yellow_009",
       "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "macaron_yellow_014",
+      "itemId": "chocobanana_yellow_014",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "cupcake_yellow_006",
+      "itemId": "pancakestack_yellow_006",
       "shelfId": 9,
       "slot": 1
     },
     {
-      "itemId": "box_yellow_010",
+      "itemId": "strawberrypudding_yellow_010",
       "shelfId": 9,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cupcake_yellow_004",
+      "itemId": "pancakestack_yellow_004",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "cupcake_yellow_021",
+      "itemId": "pancakestack_yellow_021",
       "shelfId": 8,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cupcake_yellow_005",
+      "itemId": "pancakestack_yellow_005",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "macaron_yellow_016",
+      "itemId": "chocobanana_yellow_016",
       "shelfId": 8,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "box_yellow_029",
+      "itemId": "strawberrypudding_yellow_029",
       "shelfId": 7,
       "slot": 1
     }

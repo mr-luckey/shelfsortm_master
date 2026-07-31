@@ -29,298 +29,298 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "ball_yellow_049",
+      "itemId": "gopokeball_yellow_049",
       "shelfId": 11,
       "slot": 0
     },
     {
-      "itemId": "ball_yellow_051",
+      "itemId": "gopokeball_yellow_051",
       "shelfId": 11,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ball_yellow_054",
+      "itemId": "gopokeball_yellow_054",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "ball_yellow_027",
+      "itemId": "gopokeball_yellow_027",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "block_yellow_017",
+      "itemId": "pinapberry_yellow_017",
       "shelfId": 3,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "ball_yellow_019",
+      "itemId": "gopokeball_yellow_019",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "teddy_yellow_028",
+      "itemId": "razzberry_yellow_028",
       "shelfId": 4,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "teddy_yellow_009",
+      "itemId": "razzberry_yellow_009",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "block_yellow_039",
+      "itemId": "pinapberry_yellow_039",
       "shelfId": 6,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "ball_yellow_021",
+      "itemId": "gopokeball_yellow_021",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "block_yellow_044",
+      "itemId": "pinapberry_yellow_044",
       "shelfId": 5,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "ball_yellow_052",
+      "itemId": "gopokeball_yellow_052",
       "shelfId": 5,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "block_yellow_014",
+      "itemId": "pinapberry_yellow_014",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "teddy_yellow_002",
+      "itemId": "razzberry_yellow_002",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "ball_yellow_053",
+      "itemId": "gopokeball_yellow_053",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "teddy_yellow_008",
+      "itemId": "razzberry_yellow_008",
       "shelfId": 1,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "ball_yellow_022",
+      "itemId": "gopokeball_yellow_022",
       "shelfId": 1,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "ball_yellow_048",
+      "itemId": "gopokeball_yellow_048",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "block_yellow_042",
+      "itemId": "pinapberry_yellow_042",
       "shelfId": 2,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ball_yellow_023",
+      "itemId": "gopokeball_yellow_023",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "teddy_yellow_030",
+      "itemId": "razzberry_yellow_030",
       "shelfId": 1,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "teddy_yellow_005",
+      "itemId": "razzberry_yellow_005",
       "shelfId": 1,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "block_yellow_016",
+      "itemId": "pinapberry_yellow_016",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "block_yellow_045",
+      "itemId": "pinapberry_yellow_045",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "block_yellow_012",
+      "itemId": "pinapberry_yellow_012",
       "shelfId": 6,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "block_yellow_010",
+      "itemId": "pinapberry_yellow_010",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "ball_yellow_025",
+      "itemId": "gopokeball_yellow_025",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "teddy_yellow_003",
+      "itemId": "razzberry_yellow_003",
       "shelfId": 6,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "teddy_yellow_001",
+      "itemId": "razzberry_yellow_001",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "ball_yellow_046",
+      "itemId": "gopokeball_yellow_046",
       "shelfId": 1,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ball_yellow_047",
+      "itemId": "gopokeball_yellow_047",
       "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "block_yellow_043",
+      "itemId": "pinapberry_yellow_043",
       "shelfId": 9,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "block_yellow_037",
+      "itemId": "pinapberry_yellow_037",
       "shelfId": 9,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "block_yellow_013",
+      "itemId": "pinapberry_yellow_013",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "block_yellow_041",
+      "itemId": "pinapberry_yellow_041",
       "shelfId": 3,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "block_yellow_038",
+      "itemId": "pinapberry_yellow_038",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "ball_yellow_020",
+      "itemId": "gopokeball_yellow_020",
       "shelfId": 8,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "teddy_yellow_034",
+      "itemId": "razzberry_yellow_034",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "teddy_yellow_035",
+      "itemId": "razzberry_yellow_035",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "ball_yellow_024",
+      "itemId": "gopokeball_yellow_024",
       "shelfId": 8,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "block_yellow_018",
+      "itemId": "pinapberry_yellow_018",
       "shelfId": 11,
       "slot": 2
     },
     {
-      "itemId": "teddy_yellow_006",
+      "itemId": "razzberry_yellow_006",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "teddy_yellow_031",
+      "itemId": "razzberry_yellow_031",
       "shelfId": 5,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ball_yellow_026",
+      "itemId": "gopokeball_yellow_026",
       "shelfId": 5,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "teddy_yellow_033",
+      "itemId": "razzberry_yellow_033",
       "shelfId": 9,
       "slot": 1
     },
     {
-      "itemId": "teddy_yellow_036",
+      "itemId": "razzberry_yellow_036",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "teddy_yellow_032",
+      "itemId": "razzberry_yellow_032",
       "shelfId": 8,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "block_yellow_015",
+      "itemId": "pinapberry_yellow_015",
       "shelfId": 8,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "teddy_yellow_029",
+      "itemId": "razzberry_yellow_029",
       "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "ball_yellow_050",
+      "itemId": "gopokeball_yellow_050",
       "shelfId": 9,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "block_yellow_011",
+      "itemId": "pinapberry_yellow_011",
       "shelfId": 9,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "block_yellow_040",
+      "itemId": "pinapberry_yellow_040",
       "shelfId": 11,
       "slot": 1
     },
     {
-      "itemId": "teddy_yellow_007",
+      "itemId": "razzberry_yellow_007",
       "shelfId": 11,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "teddy_yellow_004",
+      "itemId": "razzberry_yellow_004",
       "shelfId": 11,
       "slot": 1,
       "depth": 2
@@ -359,7 +359,7 @@
       "boxes": [
         {
           "slot": "1:1",
-          "itemId": "teddy_yellow_035",
+          "itemId": "razzberry_yellow_035",
           "trigger": "shelf_complete"
         }
       ]

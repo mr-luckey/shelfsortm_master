@@ -29,299 +29,299 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "candle_purple_049",
+      "itemId": "cinnamonroll_purple_049",
       "shelfId": 11,
       "slot": 2
     },
     {
-      "itemId": "candle_purple_026",
+      "itemId": "cinnamonroll_purple_026",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "frame_purple_018",
+      "itemId": "semla_purple_018",
       "shelfId": 5,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "candle_purple_046",
+      "itemId": "cinnamonroll_purple_046",
       "shelfId": 5,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "frame_purple_040",
+      "itemId": "semla_purple_040",
       "shelfId": 11,
       "slot": 1
     },
     {
-      "itemId": "frame_purple_043",
+      "itemId": "semla_purple_043",
       "shelfId": 10,
       "slot": 1
     },
     {
-      "itemId": "frame_purple_015",
+      "itemId": "semla_purple_015",
       "shelfId": 10,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "candle_purple_020",
+      "itemId": "cinnamonroll_purple_020",
       "shelfId": 10,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "candle_purple_025",
+      "itemId": "cinnamonroll_purple_025",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "candle_purple_024",
+      "itemId": "cinnamonroll_purple_024",
       "shelfId": 5,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "vase_purple_008",
+      "itemId": "japanesecrepe_purple_008",
       "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "candle_purple_052",
+      "itemId": "cinnamonroll_purple_052",
       "shelfId": 9,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "candle_purple_023",
+      "itemId": "cinnamonroll_purple_023",
       "shelfId": 9,
       "slot": 1
     },
     {
-      "itemId": "vase_purple_003",
+      "itemId": "japanesecrepe_purple_003",
       "shelfId": 9,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "frame_purple_012",
+      "itemId": "semla_purple_012",
       "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "frame_purple_038",
+      "itemId": "semla_purple_038",
       "shelfId": 9,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "candle_purple_051",
+      "itemId": "cinnamonroll_purple_051",
       "shelfId": 10,
       "slot": 0
     },
     {
-      "itemId": "frame_purple_011",
+      "itemId": "semla_purple_011",
       "shelfId": 10,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "vase_purple_009",
+      "itemId": "japanesecrepe_purple_009",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "candle_purple_048",
+      "itemId": "cinnamonroll_purple_048",
       "shelfId": 2,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "candle_purple_022",
+      "itemId": "cinnamonroll_purple_022",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "candle_purple_053",
+      "itemId": "cinnamonroll_purple_053",
       "shelfId": 3,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "vase_purple_002",
+      "itemId": "japanesecrepe_purple_002",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "candle_purple_021",
+      "itemId": "cinnamonroll_purple_021",
       "shelfId": 5,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "frame_purple_045",
+      "itemId": "semla_purple_045",
       "shelfId": 5,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "frame_purple_010",
+      "itemId": "semla_purple_010",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "frame_purple_013",
+      "itemId": "semla_purple_013",
       "shelfId": 2,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "frame_purple_016",
+      "itemId": "semla_purple_016",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "candle_purple_050",
+      "itemId": "cinnamonroll_purple_050",
       "shelfId": 3,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "candle_purple_027",
+      "itemId": "cinnamonroll_purple_027",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "vase_purple_035",
+      "itemId": "japanesecrepe_purple_035",
       "shelfId": 12,
       "slot": 0
     },
     {
-      "itemId": "vase_purple_006",
+      "itemId": "japanesecrepe_purple_006",
       "shelfId": 12,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "frame_purple_017",
+      "itemId": "semla_purple_017",
       "shelfId": 11,
       "slot": 0
     },
     {
-      "itemId": "frame_purple_014",
+      "itemId": "semla_purple_014",
       "shelfId": 11,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "vase_purple_004",
+      "itemId": "japanesecrepe_purple_004",
       "shelfId": 11,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "vase_purple_029",
+      "itemId": "japanesecrepe_purple_029",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "vase_purple_001",
+      "itemId": "japanesecrepe_purple_001",
       "shelfId": 1,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "candle_purple_054",
+      "itemId": "cinnamonroll_purple_054",
       "shelfId": 1,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "vase_purple_033",
+      "itemId": "japanesecrepe_purple_033",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "vase_purple_030",
+      "itemId": "japanesecrepe_purple_030",
       "shelfId": 3,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "vase_purple_031",
+      "itemId": "japanesecrepe_purple_031",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "frame_purple_042",
+      "itemId": "semla_purple_042",
       "shelfId": 2,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "frame_purple_041",
+      "itemId": "semla_purple_041",
       "shelfId": 12,
       "slot": 2
     },
     {
-      "itemId": "vase_purple_007",
+      "itemId": "japanesecrepe_purple_007",
       "shelfId": 12,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "candle_purple_019",
+      "itemId": "cinnamonroll_purple_019",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "frame_purple_044",
+      "itemId": "semla_purple_044",
       "shelfId": 1,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "candle_purple_047",
+      "itemId": "cinnamonroll_purple_047",
       "shelfId": 1,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "vase_purple_034",
+      "itemId": "japanesecrepe_purple_034",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "frame_purple_037",
+      "itemId": "semla_purple_037",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "vase_purple_032",
+      "itemId": "japanesecrepe_purple_032",
       "shelfId": 4,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "vase_purple_005",
+      "itemId": "japanesecrepe_purple_005",
       "shelfId": 10,
       "slot": 2
     },
     {
-      "itemId": "frame_purple_039",
+      "itemId": "semla_purple_039",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "vase_purple_036",
+      "itemId": "japanesecrepe_purple_036",
       "shelfId": 1,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "vase_purple_028",
+      "itemId": "japanesecrepe_purple_028",
       "shelfId": 12,
       "slot": 1
     }
@@ -359,7 +359,7 @@
       "boxes": [
         {
           "slot": "5:1",
-          "itemId": "vase_purple_032",
+          "itemId": "japanesecrepe_purple_032",
           "trigger": "shelf_complete"
         }
       ]

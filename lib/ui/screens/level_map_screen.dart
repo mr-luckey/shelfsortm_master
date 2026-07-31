@@ -1,80 +1,154 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 
-import '../../app/theme/app_colors.dart';
+import '../../app/theme/goods_sort_theme.dart';
 import '../../models/player_progress.dart';
 import '../../models/theme_room.dart';
 import '../../providers/progress_provider.dart';
 import '../widgets/ad_banner_widget.dart';
+import '../widgets/goods_emoji.dart';
+import '../widgets/map_background.dart';
 import 'level_intro_sheet.dart';
 
-class LevelMapScreen extends StatelessWidget {
+class LevelMapScreen extends StatefulWidget {
   const LevelMapScreen({super.key});
+
+  @override
+  State<LevelMapScreen> createState() => _LevelMapScreenState();
+}
+
+class _LevelMapScreenState extends State<LevelMapScreen> {
+  final _scroll = ScrollController();
+  bool _scrolledToCurrent = false;
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  void _scrollToCurrent(int currentLevel) {
+    if (_scrolledToCurrent) return;
+    _scrolledToCurrent = true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_scroll.hasClients) return;
+      // Rough offset: each level ~78px within its zone + zone headers
+      final per = ThemeRoom.levelsPerFlavor;
+      final zoneIndex = ((currentLevel - 1) / per).floor();
+      final indexInZone = (currentLevel - 1) % per;
+      final offset = zoneIndex * 220.0 + indexInZone * 78.0;
+      _scroll.animateTo(
+        offset.clamp(0, _scroll.position.maxScrollExtent),
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeOutCubic,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ProgressProvider>(
       builder: (context, progress, _) {
         final p = progress.progress;
-        return Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.background, Color(0xFFFFE8D6)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
-          child: SafeArea(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        child: Text(
-                          'Store Blueprint',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w900,
+        _scrollToCurrent(p.currentLevel);
+
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            const MapBackground(),
+            SafeArea(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 6),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.92),
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.1),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: const Row(
+                            children: [
+                              EmojiImage(type: 'trophy', size: 20),
+                              SizedBox(width: 8),
+                              Text(
+                                'World Tour',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 18,
+                                  color: Color(0xFF2E7D32),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      Text(
-                        '${p.totalStars} ★',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.textLight,
+                        const Spacer(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.9),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.star_rounded,
+                                color: Color(0xFFFFB300),
+                                size: 18,
+                              ),
+                              Text(
+                                ' ${p.totalStars}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                if (!p.removeAds)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                    child: Center(child: AdBannerWidget()),
+                  if (!p.removeAds)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+                      child: Center(child: AdBannerWidget()),
+                    ),
+                  Expanded(
+                    child: ListView.builder(
+                      controller: _scroll,
+                      padding: const EdgeInsets.fromLTRB(8, 4, 8, 28),
+                      itemCount: ThemeRoom.all.length,
+                      itemBuilder: (context, section) {
+                        final theme = ThemeRoom.all[section];
+                        return _ZoneSection(
+                          theme: theme,
+                          progress: p,
+                          onLevelTap: (id) => _openLevel(context, p, id),
+                        );
+                      },
+                    ),
                   ),
-                Expanded(
-                  child: ListView.builder(
-                    padding: const EdgeInsets.fromLTRB(8, 8, 8, 24),
-                    itemCount: ThemeRoom.all.length,
-                    itemBuilder: (context, section) {
-                      final theme = ThemeRoom.all[section];
-                      return _ZoneSection(
-                        theme: theme,
-                        progress: p,
-                        onLevelTap: (id) => _openLevel(context, p, id),
-                      );
-                    },
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+          ],
         );
       },
     );
@@ -91,7 +165,7 @@ class LevelMapScreen extends StatelessWidget {
       );
       return;
     }
-    showLevelIntro(context, levelId: id);
+    launchLevel(context, levelId: id);
   }
 }
 
@@ -110,40 +184,35 @@ class _ZoneSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final count = theme.endLevel - theme.startLevel + 1;
     final pathWidth = MediaQuery.sizeOf(context).width - 32;
-    const nodeSize = 56.0;
-    const rowGap = 76.0;
+    const nodeSize = 58.0;
+    const rowGap = 78.0;
 
-    final nodes = <Widget>[];
-    Offset? prevCenter;
+    final centers = computeMapCenters(
+      count: count,
+      pathWidth: pathWidth,
+      startLevel: theme.startLevel.toDouble(),
+      nodeSize: nodeSize,
+      rowGap: rowGap,
+    );
+
+    final nodes = <Widget>[
+      Positioned.fill(
+        child: CustomPaint(
+          painter: MapPathPainter(
+            centers: centers,
+            color: GoodsSortTheme.pathBrown,
+          ),
+        ),
+      ),
+    ];
 
     for (var i = 0; i < count; i++) {
       final levelId = theme.startLevel + i;
-      final t = i / math.max(1, count - 1);
-      final x = pathWidth / 2 +
-          math.sin(t * math.pi * 2.4 + sectionPhase(theme.startLevel)) *
-              (pathWidth * 0.32);
-      final y = i * rowGap + nodeSize / 2;
-      final center = Offset(x, y);
-
-      if (prevCenter != null) {
-        nodes.add(
-          Positioned.fill(
-            child: CustomPaint(
-              painter: _PathConnector(
-                from: prevCenter,
-                to: center,
-                color: AppColors.primary.withValues(alpha: 0.35),
-              ),
-            ),
-          ),
-        );
-      }
-      prevCenter = center;
-
+      final c = centers[i];
       nodes.add(
         Positioned(
-          left: x - nodeSize / 2,
-          top: y - nodeSize / 2,
+          left: c.dx - nodeSize / 2,
+          top: c.dy - nodeSize / 2,
           child: _LevelNode(
             levelId: levelId,
             progress: progress.levelOf(levelId),
@@ -160,24 +229,30 @@ class _ZoneSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+          padding: const EdgeInsets.fromLTRB(12, 14, 12, 6),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.85),
-              borderRadius: BorderRadius.circular(14),
+              gradient: LinearGradient(
+                colors: [
+                  GoodsSortTheme.playGreen.withValues(alpha: 0.92),
+                  GoodsSortTheme.playGreenDark.withValues(alpha: 0.92),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(18),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.06),
-                  blurRadius: 8,
-                  offset: const Offset(0, 3),
+                  color: GoodsSortTheme.playGreen.withValues(alpha: 0.35),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
                 ),
               ],
             ),
             child: Row(
               children: [
-                Text(theme.emoji, style: const TextStyle(fontSize: 22)),
-                const SizedBox(width: 10),
+                EmojiImage(type: theme.iconType, size: 26),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,13 +261,14 @@ class _ZoneSection extends StatelessWidget {
                         theme.name,
                         style: const TextStyle(
                           fontWeight: FontWeight.w900,
-                          fontSize: 16,
+                          fontSize: 17,
+                          color: Colors.white,
                         ),
                       ),
                       Text(
                         'Levels ${theme.startLevel}–${theme.endLevel}',
-                        style: const TextStyle(
-                          color: AppColors.textLight,
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.85),
                           fontWeight: FontWeight.w600,
                           fontSize: 12,
                         ),
@@ -200,55 +276,24 @@ class _ZoneSection extends StatelessWidget {
                     ],
                   ),
                 ),
+                const Icon(Icons.flag_rounded, color: Colors.white70),
               ],
             ),
           ),
         ),
-        SizedBox(
-          height: height,
-          width: pathWidth,
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: nodes,
+        Center(
+          child: SizedBox(
+            height: height,
+            width: pathWidth,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: nodes,
+            ),
           ),
         ),
       ],
     );
   }
-
-  double sectionPhase(int startLevel) => (startLevel / 25) * 0.8;
-}
-
-class _PathConnector extends CustomPainter {
-  final Offset from;
-  final Offset to;
-  final Color color;
-
-  _PathConnector({
-    required this.from,
-    required this.to,
-    required this.color,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = 4
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
-
-    final mid = Offset((from.dx + to.dx) / 2, (from.dy + to.dy) / 2);
-    final path = Path()
-      ..moveTo(from.dx, from.dy)
-      ..quadraticBezierTo(mid.dx, from.dy, mid.dx, mid.dy)
-      ..quadraticBezierTo(mid.dx, to.dy, to.dx, to.dy);
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant _PathConnector old) =>
-      old.from != from || old.to != to || old.color != color;
 }
 
 class _LevelNode extends StatelessWidget {
@@ -268,64 +313,65 @@ class _LevelNode extends StatelessWidget {
   Widget build(BuildContext context) {
     final unlocked = progress.unlocked;
     final stars = progress.bestStars;
-    final isBoss = levelId % 25 == 0;
-    final isRest = (levelId - 1) % 25 == 0;
+    final per = ThemeRoom.levelsPerFlavor;
+    final isBoss = levelId % per == 0;
+    final isRest = (levelId - 1) % per == 0;
 
-    Color bg;
+    Color face;
+    Color ring;
     if (!unlocked) {
-      bg = Colors.grey.shade400;
-    } else if (stars >= 3) {
-      bg = const Color(0xFFFFD700);
-    } else if (stars == 2) {
-      bg = const Color(0xFFC0C0C0);
-    } else if (stars == 1) {
-      bg = const Color(0xFFCD7F32);
+      face = const Color(0xFFBDBDBD);
+      ring = const Color(0xFF9E9E9E);
+    } else if (isCurrent) {
+      face = const Color(0xFFFFB300);
+      ring = const Color(0xFFFF8F00);
     } else if (isBoss) {
-      bg = const Color(0xFFE53935);
+      face = const Color(0xFFE53935);
+      ring = const Color(0xFFB71C1C);
     } else if (isRest) {
-      bg = const Color(0xFF66BB6A);
+      face = GoodsSortTheme.playGreenLight;
+      ring = GoodsSortTheme.playGreen;
+    } else if (stars >= 3) {
+      face = const Color(0xFFFFD54F);
+      ring = const Color(0xFFFFA000);
     } else {
-      bg = AppColors.primary;
+      face = Colors.white;
+      ring = GoodsSortTheme.playGreen;
     }
 
     Widget node = GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 56,
-        height: 56,
+        width: 58,
+        height: 58,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          gradient: LinearGradient(
-            colors: [bg, Color.lerp(bg, Colors.black, 0.18)!],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          color: face,
+          border: Border.all(color: ring, width: isCurrent ? 4 : 3),
           boxShadow: [
             BoxShadow(
-              color: bg.withValues(alpha: 0.45),
-              blurRadius: 8,
+              color: ring.withValues(alpha: 0.45),
+              blurRadius: isCurrent ? 14 : 6,
               offset: const Offset(0, 4),
             ),
           ],
-          border: Border.all(
-            color: isCurrent ? Colors.amber : Colors.white,
-            width: isCurrent ? 3.5 : 2.5,
-          ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (!unlocked)
-              const Icon(Icons.lock_rounded, color: Colors.white70, size: 20)
+              Icon(Icons.lock_rounded, color: ring.withValues(alpha: 0.7), size: 22)
             else if (isBoss)
-              const Icon(Icons.whatshot, color: Colors.white, size: 22)
+              const EmojiImage(type: '1stplacemedal', size: 22)
             else ...[
               Text(
                 '$levelId',
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: unlocked && face == Colors.white
+                      ? GoodsSortTheme.playGreenDark
+                      : Colors.white,
                   fontWeight: FontWeight.w900,
-                  fontSize: 15,
+                  fontSize: 16,
                 ),
               ),
               if (stars > 0)
@@ -333,8 +379,11 @@ class _LevelNode extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
                     stars.clamp(0, 3),
-                    (_) =>
-                        const Icon(Icons.star, size: 9, color: Colors.white),
+                    (_) => Icon(
+                      Icons.star,
+                      size: 8,
+                      color: ring.withValues(alpha: 0.9),
+                    ),
                   ),
                 ),
             ],
@@ -348,7 +397,7 @@ class _LevelNode extends StatelessWidget {
           .animate(onPlay: (c) => c.repeat(reverse: true))
           .scale(
             begin: const Offset(1, 1),
-            end: const Offset(1.1, 1.1),
+            end: const Offset(1.12, 1.12),
             duration: 900.ms,
           );
     }

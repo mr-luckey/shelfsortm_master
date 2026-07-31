@@ -29,298 +29,298 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "teddy_teal_032",
+      "itemId": "razzberry_teal_032",
       "shelfId": 12,
       "slot": 2
     },
     {
-      "itemId": "block_teal_014",
+      "itemId": "pinapberry_teal_014",
       "shelfId": 12,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "ball_teal_027",
+      "itemId": "gopokeball_teal_027",
       "shelfId": 12,
       "slot": 1
     },
     {
-      "itemId": "ball_teal_047",
+      "itemId": "gopokeball_teal_047",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "block_teal_043",
+      "itemId": "pinapberry_teal_043",
       "shelfId": 12,
       "slot": 0
     },
     {
-      "itemId": "ball_teal_054",
+      "itemId": "gopokeball_teal_054",
       "shelfId": 12,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ball_teal_051",
+      "itemId": "gopokeball_teal_051",
       "shelfId": 12,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "ball_teal_024",
+      "itemId": "gopokeball_teal_024",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "teddy_teal_028",
+      "itemId": "razzberry_teal_028",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "block_teal_037",
+      "itemId": "pinapberry_teal_037",
       "shelfId": 2,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "ball_teal_020",
+      "itemId": "gopokeball_teal_020",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "block_teal_010",
+      "itemId": "pinapberry_teal_010",
       "shelfId": 6,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "block_teal_041",
+      "itemId": "pinapberry_teal_041",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "teddy_teal_005",
+      "itemId": "razzberry_teal_005",
       "shelfId": 9,
       "slot": 1
     },
     {
-      "itemId": "teddy_teal_001",
+      "itemId": "razzberry_teal_001",
       "shelfId": 9,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "ball_teal_021",
+      "itemId": "gopokeball_teal_021",
       "shelfId": 10,
       "slot": 1
     },
     {
-      "itemId": "teddy_teal_003",
+      "itemId": "razzberry_teal_003",
       "shelfId": 10,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "block_teal_038",
+      "itemId": "pinapberry_teal_038",
       "shelfId": 10,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "ball_teal_053",
+      "itemId": "gopokeball_teal_053",
       "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "teddy_teal_034",
+      "itemId": "razzberry_teal_034",
       "shelfId": 9,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "block_teal_013",
+      "itemId": "pinapberry_teal_013",
       "shelfId": 9,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "teddy_teal_006",
+      "itemId": "razzberry_teal_006",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "teddy_teal_030",
+      "itemId": "razzberry_teal_030",
       "shelfId": 6,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "teddy_teal_036",
+      "itemId": "razzberry_teal_036",
       "shelfId": 6,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "ball_teal_025",
+      "itemId": "gopokeball_teal_025",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "block_teal_017",
+      "itemId": "pinapberry_teal_017",
       "shelfId": 2,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "ball_teal_026",
+      "itemId": "gopokeball_teal_026",
       "shelfId": 2,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "teddy_teal_029",
+      "itemId": "razzberry_teal_029",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "ball_teal_050",
+      "itemId": "gopokeball_teal_050",
       "shelfId": 3,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "block_teal_045",
+      "itemId": "pinapberry_teal_045",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "ball_teal_019",
+      "itemId": "gopokeball_teal_019",
       "shelfId": 5,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "ball_teal_023",
+      "itemId": "gopokeball_teal_023",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "block_teal_040",
+      "itemId": "pinapberry_teal_040",
       "shelfId": 5,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "teddy_teal_002",
+      "itemId": "razzberry_teal_002",
       "shelfId": 5,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "teddy_teal_033",
+      "itemId": "razzberry_teal_033",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "block_teal_012",
+      "itemId": "pinapberry_teal_012",
       "shelfId": 8,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "teddy_teal_035",
+      "itemId": "razzberry_teal_035",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "ball_teal_049",
+      "itemId": "gopokeball_teal_049",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "teddy_teal_009",
+      "itemId": "razzberry_teal_009",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "block_teal_016",
+      "itemId": "pinapberry_teal_016",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "teddy_teal_007",
+      "itemId": "razzberry_teal_007",
       "shelfId": 8,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "block_teal_044",
+      "itemId": "pinapberry_teal_044",
       "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "ball_teal_048",
+      "itemId": "gopokeball_teal_048",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "ball_teal_046",
+      "itemId": "gopokeball_teal_046",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "block_teal_011",
+      "itemId": "pinapberry_teal_011",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "teddy_teal_004",
+      "itemId": "razzberry_teal_004",
       "shelfId": 6,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "block_teal_015",
+      "itemId": "pinapberry_teal_015",
       "shelfId": 6,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "block_teal_018",
+      "itemId": "pinapberry_teal_018",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "block_teal_042",
+      "itemId": "pinapberry_teal_042",
       "shelfId": 3,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "block_teal_039",
+      "itemId": "pinapberry_teal_039",
       "shelfId": 3,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "teddy_teal_008",
+      "itemId": "razzberry_teal_008",
       "shelfId": 10,
       "slot": 2
     },
     {
-      "itemId": "teddy_teal_031",
+      "itemId": "razzberry_teal_031",
       "shelfId": 10,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "ball_teal_022",
+      "itemId": "gopokeball_teal_022",
       "shelfId": 10,
       "slot": 0
     },
     {
-      "itemId": "ball_teal_052",
+      "itemId": "gopokeball_teal_052",
       "shelfId": 10,
       "slot": 0,
       "depth": 1
@@ -350,7 +350,7 @@
       "boxes": [
         {
           "slot": "9:1",
-          "itemId": "ball_teal_026",
+          "itemId": "gopokeball_teal_026",
           "trigger": "shelf_complete"
         }
       ]

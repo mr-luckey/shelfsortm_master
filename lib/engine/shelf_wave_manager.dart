@@ -2,7 +2,10 @@ import '../models/item.dart';
 import '../models/level_data.dart';
 import '../models/shelf.dart';
 
-/// Builds per-shelf item waves for Goods Sort close-and-replenish flow.
+/// Holds the layers stacked behind each box.
+///
+/// Layer 0 is placed on the board at level start; every deeper layer waits here
+/// and only slides forward once its box is emptied.
 class ShelfWaveManager {
   final Map<int, List<List<GameItem?>>> _wavesByShelfId = {};
   final Map<int, int> _cursorByShelfId = {};
@@ -35,33 +38,51 @@ class ShelfWaveManager {
     }
 
     for (final shelf in shelves) {
-      final placements = byShelf[shelf.shelfId] ?? [];
-      placements.sort((a, b) {
-        final d = a.depth.compareTo(b.depth);
-        return d != 0 ? d : a.slot.compareTo(b.slot);
-      });
+      final placements = byShelf[shelf.shelfId] ?? const [];
 
-      final items =
-          placements.map((p) => GameItem.fromId(p.itemId)).toList();
-      final waves = <List<GameItem?>>[];
-      var i = 0;
-      while (i < items.length) {
-        final wave = List<GameItem?>.filled(shelf.slotCount, null);
-        for (var s = 0; s < shelf.slotCount && i < items.length; s++) {
-          wave[s] = items[i++];
-        }
-        waves.add(wave);
+      // One wave per depth — a layer keeps its slot positions.
+      final byDepth = <int, List<GameItem?>>{};
+      for (final p in placements) {
+        if (p.slot < 0 || p.slot >= shelf.slotCount) continue;
+        final wave = byDepth.putIfAbsent(
+          p.depth,
+          () => List<GameItem?>.filled(shelf.slotCount, null),
+        );
+        wave[p.slot] = GameItem.fromId(p.itemId);
       }
+
+      final depths = byDepth.keys.toList()..sort();
+      final waves = <List<GameItem?>>[
+        for (final d in depths)
+          if (byDepth[d]!.any((e) => e != null)) byDepth[d]!,
+      ];
       if (waves.isEmpty) {
         waves.add(List<GameItem?>.filled(shelf.slotCount, null));
       }
 
       _wavesByShelfId[shelf.shelfId] = waves;
-      _cursorByShelfId[shelf.shelfId] = 1; // wave 0 already on board
+      _cursorByShelfId[shelf.shelfId] = 1; // layer 0 already on the board
     }
   }
 
-  /// After triple match: queue the next wave (not applied until animation).
+  /// The layer waiting directly behind [shelfId], if any (used for the shadow).
+  List<GameItem?>? nextWaveFor(int shelfId) {
+    final waves = _wavesByShelfId[shelfId];
+    if (waves == null) return null;
+    final cursor = _cursorByShelfId[shelfId] ?? 1;
+    if (cursor >= waves.length) return null;
+    return waves[cursor];
+  }
+
+  /// Layers still stacked behind [shelfId].
+  int layersLeftFor(int shelfId) {
+    final waves = _wavesByShelfId[shelfId];
+    if (waves == null) return 0;
+    final cursor = _cursorByShelfId[shelfId] ?? 1;
+    return (waves.length - cursor).clamp(0, waves.length);
+  }
+
+  /// Box emptied: queue the layer behind it (not applied until animation).
   bool queueNextWave(int shelfIndex, Shelf shelf) {
     final shelfId = shelf.shelfId;
     final waves = _wavesByShelfId[shelfId] ?? [];
@@ -72,8 +93,7 @@ class ShelfWaveManager {
       return false;
     }
 
-    _pendingByShelfIndex[shelfIndex] =
-        List<GameItem?>.from(waves[cursor]);
+    _pendingByShelfIndex[shelfIndex] = List<GameItem?>.from(waves[cursor]);
     _cursorByShelfId[shelfId] = cursor + 1;
     return true;
   }
@@ -86,8 +106,8 @@ class ShelfWaveManager {
       _pendingByShelfIndex.containsKey(shelfIndex);
 
   Shelf applyWave(Shelf shelf, List<GameItem?> wave) {
-    final slots = List<ShelfSlot>.generate(wave.length, (i) {
-      final item = wave[i];
+    final slots = List<ShelfSlot>.generate(shelf.slotCount, (i) {
+      final item = i < wave.length ? wave[i] : null;
       return item == null ? const ShelfSlot() : ShelfSlot.front(item);
     });
     return shelf.copyWith(slots: slots);

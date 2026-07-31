@@ -1,0 +1,12 @@
+---
+description: Never add UI extras, styling, or features without explicit user instruction
+alwaysApply: true
+---
+
+# Follow instructions only — no extras
+
+- Do **exactly** what the user asks. Nothing more.
+- Do **not** add borders, shadows, radii, gradients, animations, padding, labels, icons, comments, refactors, or “nice-to-have” polish unless the user explicitly requests it.
+- If something is ambiguous, ask — do not invent defaults that change look or behavior beyond the request.
+- Prefer the smallest possible change that satisfies the instruction.
+- When fixing something (e.g. “add wood color border”), match the existing thin/simple style; do not thicken, decorate, or redesign around it.

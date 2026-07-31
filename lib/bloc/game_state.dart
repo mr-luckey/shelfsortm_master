@@ -29,6 +29,9 @@ class GameState extends Equatable {
   final int maxCombo;
   final Map<String, dynamic> mechanicVisual;
 
+  /// Layer waiting behind each box, drawn as a shadow. Null = nothing behind.
+  final List<List<GameItem?>?> nextLayers;
+
   const GameState({
     this.level,
     this.shelves = const [],
@@ -52,6 +55,7 @@ class GameState extends Equatable {
     this.objectiveHint,
     this.maxCombo = 0,
     this.mechanicVisual = const {},
+    this.nextLayers = const [],
   });
 
   int get itemCount {
@@ -99,6 +103,7 @@ class GameState extends Equatable {
     String? objectiveHint,
     int? maxCombo,
     Map<String, dynamic>? mechanicVisual,
+    List<List<GameItem?>?>? nextLayers,
     bool clearBanner = false,
     bool clearSelected = false,
     bool clearObjective = false,
@@ -127,6 +132,7 @@ class GameState extends Equatable {
           clearObjective ? null : (objectiveHint ?? this.objectiveHint),
       maxCombo: maxCombo ?? this.maxCombo,
       mechanicVisual: mechanicVisual ?? this.mechanicVisual,
+      nextLayers: nextLayers ?? this.nextLayers,
     );
   }
 
@@ -154,5 +160,6 @@ class GameState extends Equatable {
         objectiveHint,
         maxCombo,
         mechanicVisual,
+        nextLayers,
       ];
 }

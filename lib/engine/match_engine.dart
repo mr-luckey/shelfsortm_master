@@ -70,6 +70,11 @@ class MatchEngine {
 
   int get setsLeft => waves.wavesRemaining + (itemCount / 3).ceil();
 
+  /// Layer waiting behind each box, for the shadow preview.
+  List<List<GameItem?>?> get nextLayers => [
+        for (final s in shelves) waves.nextWaveFor(s.shelfId),
+      ];
+
   int get stars {
     if (level.optimalMoves > 0) {
       return level.starsForMoves(moves);
@@ -206,8 +211,23 @@ class MatchEngine {
     }
 
     mechanics.onMoveCompleted(from, to);
+    _refillEmptiedShelves();
     _checkEnd();
     return true;
+  }
+
+  /// A layer only slides forward once its box is empty — whether it emptied by
+  /// a sale or because the player carried everything out of it.
+  void _refillEmptiedShelves() {
+    for (var i = 0; i < shelves.length; i++) {
+      if (i == _closingShelfIndex) continue; // sale animation owns this box
+      if (waves.hasPendingWave(i)) continue;
+      final shelf = shelves[i];
+      if (shelf.isTemporary || !shelf.isEmpty) continue;
+      if (!waves.queueNextWave(i, shelf)) continue;
+      final wave = waves.takePendingWave(i);
+      if (wave != null) shelves[i] = waves.applyWave(shelf, wave);
+    }
   }
 
   bool swap(BoardPos a, BoardPos b) => false;
@@ -239,6 +259,7 @@ class MatchEngine {
     );
     if (!waves.hasPendingWave(shelfIndex)) {
       inputLocked = false;
+      _refillEmptiedShelves();
       _checkEnd();
     }
   }
@@ -267,10 +288,9 @@ class MatchEngine {
       status = GameStatus.won;
       return;
     }
-    // Only count shelves that still have items or pending waves
+    // Emptied boxes stay usable as buffer space, so count every free spot.
     var playableEmpty = 0;
     for (var i = 0; i < shelves.length; i++) {
-      if (waves.finishedShelfIndices.contains(i)) continue;
       playableEmpty += shelves[i].emptyFrontCount;
     }
     if (playableEmpty == 0 && itemCount > 0) {
@@ -351,6 +371,7 @@ class MatchEngine {
     );
     selected = null;
     _resolveMatches(pos.shelfIndex);
+    _refillEmptiedShelves();
     _checkEnd();
     return 1;
   }
@@ -375,6 +396,7 @@ class MatchEngine {
       for (var i = 0; i < shelves.length; i++) {
         _resolveMatches(i);
       }
+      _refillEmptiedShelves();
       _checkEnd();
     }
     return removed;

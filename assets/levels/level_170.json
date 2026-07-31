@@ -29,298 +29,298 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "cartridge_blue_018",
+      "itemId": "eviltiktok_blue_018",
       "shelfId": 12,
       "slot": 0
     },
     {
-      "itemId": "headset_blue_022",
+      "itemId": "ttcry_blue_022",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "cartridge_blue_041",
+      "itemId": "eviltiktok_blue_041",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "headset_blue_047",
+      "itemId": "ttcry_blue_047",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "cartridge_blue_011",
+      "itemId": "eviltiktok_blue_011",
       "shelfId": 8,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "controller_blue_003",
+      "itemId": "ragetiktok_blue_003",
       "shelfId": 8,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "headset_blue_046",
+      "itemId": "ttcry_blue_046",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "headset_blue_026",
+      "itemId": "ttcry_blue_026",
       "shelfId": 7,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "controller_blue_030",
+      "itemId": "ragetiktok_blue_030",
       "shelfId": 9,
       "slot": 0
     },
     {
-      "itemId": "cartridge_blue_016",
+      "itemId": "eviltiktok_blue_016",
       "shelfId": 10,
       "slot": 2
     },
     {
-      "itemId": "headset_blue_053",
+      "itemId": "ttcry_blue_053",
       "shelfId": 10,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cartridge_blue_014",
+      "itemId": "eviltiktok_blue_014",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "controller_blue_031",
+      "itemId": "ragetiktok_blue_031",
       "shelfId": 5,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cartridge_blue_045",
+      "itemId": "eviltiktok_blue_045",
       "shelfId": 5,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "controller_blue_035",
+      "itemId": "ragetiktok_blue_035",
       "shelfId": 10,
       "slot": 0
     },
     {
-      "itemId": "cartridge_blue_038",
+      "itemId": "eviltiktok_blue_038",
       "shelfId": 10,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "headset_blue_019",
+      "itemId": "ttcry_blue_019",
       "shelfId": 10,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "controller_blue_006",
+      "itemId": "ragetiktok_blue_006",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "controller_blue_028",
+      "itemId": "ragetiktok_blue_028",
       "shelfId": 8,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cartridge_blue_012",
+      "itemId": "eviltiktok_blue_012",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "cartridge_blue_042",
+      "itemId": "eviltiktok_blue_042",
       "shelfId": 2,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "controller_blue_009",
+      "itemId": "ragetiktok_blue_009",
       "shelfId": 12,
       "slot": 2
     },
     {
-      "itemId": "headset_blue_020",
+      "itemId": "ttcry_blue_020",
       "shelfId": 12,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "controller_blue_008",
+      "itemId": "ragetiktok_blue_008",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "headset_blue_021",
+      "itemId": "ttcry_blue_021",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "cartridge_blue_040",
+      "itemId": "eviltiktok_blue_040",
       "shelfId": 7,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "controller_blue_004",
+      "itemId": "ragetiktok_blue_004",
       "shelfId": 9,
       "slot": 1
     },
     {
-      "itemId": "controller_blue_032",
+      "itemId": "ragetiktok_blue_032",
       "shelfId": 9,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "controller_blue_033",
+      "itemId": "ragetiktok_blue_033",
       "shelfId": 9,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "cartridge_blue_039",
+      "itemId": "eviltiktok_blue_039",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "cartridge_blue_017",
+      "itemId": "eviltiktok_blue_017",
       "shelfId": 1,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "headset_blue_052",
+      "itemId": "ttcry_blue_052",
       "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "cartridge_blue_015",
+      "itemId": "eviltiktok_blue_015",
       "shelfId": 9,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "headset_blue_048",
+      "itemId": "ttcry_blue_048",
       "shelfId": 9,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "controller_blue_036",
+      "itemId": "ragetiktok_blue_036",
       "shelfId": 10,
       "slot": 1
     },
     {
-      "itemId": "cartridge_blue_044",
+      "itemId": "eviltiktok_blue_044",
       "shelfId": 10,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "controller_blue_001",
+      "itemId": "ragetiktok_blue_001",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "headset_blue_024",
+      "itemId": "ttcry_blue_024",
       "shelfId": 1,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "headset_blue_050",
+      "itemId": "ttcry_blue_050",
       "shelfId": 1,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "headset_blue_049",
+      "itemId": "ttcry_blue_049",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "headset_blue_027",
+      "itemId": "ttcry_blue_027",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "cartridge_blue_010",
+      "itemId": "eviltiktok_blue_010",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "cartridge_blue_013",
+      "itemId": "eviltiktok_blue_013",
       "shelfId": 6,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "controller_blue_029",
+      "itemId": "ragetiktok_blue_029",
       "shelfId": 6,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "controller_blue_002",
+      "itemId": "ragetiktok_blue_002",
       "shelfId": 12,
       "slot": 1
     },
     {
-      "itemId": "controller_blue_034",
+      "itemId": "ragetiktok_blue_034",
       "shelfId": 7,
       "slot": 2
     },
     {
-      "itemId": "controller_blue_005",
+      "itemId": "ragetiktok_blue_005",
       "shelfId": 7,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "cartridge_blue_043",
+      "itemId": "eviltiktok_blue_043",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "controller_blue_007",
+      "itemId": "ragetiktok_blue_007",
       "shelfId": 6,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "headset_blue_025",
+      "itemId": "ttcry_blue_025",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "cartridge_blue_037",
+      "itemId": "eviltiktok_blue_037",
       "shelfId": 6,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "headset_blue_054",
+      "itemId": "ttcry_blue_054",
       "shelfId": 2,
       "slot": 0
     },
     {
-      "itemId": "headset_blue_023",
+      "itemId": "ttcry_blue_023",
       "shelfId": 2,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "headset_blue_051",
+      "itemId": "ttcry_blue_051",
       "shelfId": 2,
       "slot": 0,
       "depth": 2

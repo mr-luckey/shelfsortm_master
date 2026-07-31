@@ -1,139 +1,60 @@
-import 'dart:convert';
-
-
-
-import 'package:flutter/services.dart';
-
-
-
 import '../engine/level_generator.dart';
-
 import '../models/level_data.dart';
-
 import '../models/player_progress.dart';
 
-
-
 class LevelRepository {
-
   LevelRepository._();
-
   static final LevelRepository instance = LevelRepository._();
 
+  /// Levels are pure functions of their id, so they are built on demand and
+  /// only the few most recently played are kept around.
+  static const int _cacheLimit = 8;
 
-
-  final Map<int, LevelData> _cache = {};
-
-  bool _generated = false;
-
-
+  final Map<String, LevelData> _cache = {};
 
   int get totalLevels => PlayerProgress.totalLevels;
 
+  /// Nothing to load up front — generation happens lazily in [getLevel].
+  Future<void> preload() async {}
 
-
-  Future<void> preload() async {
-
-    if (_generated) return;
-
-    for (var i = 1; i <= totalLevels; i++) {
-
-      final path =
-
-          'assets/levels/level_${i.toString().padLeft(3, '0')}.json';
-
-      try {
-
-        final raw = await rootBundle.loadString(path);
-
-        final json = jsonDecode(raw) as Map<String, dynamic>;
-
-        if (json['initialPlacement'] is List &&
-
-            (json['initialPlacement'] as List).isNotEmpty &&
-
-            (json['slotsPerShelf'] as int? ?? 0) == 3 &&
-
-            json['layout'] is List) {
-
-          _cache[i] = LevelData.fromJson(json);
-
-        } else {
-
-          _cache[i] = LevelGenerator.generate(i);
-
-        }
-
-      } catch (_) {
-
-        _cache[i] = LevelGenerator.generate(i);
-
-      }
-
+  /// [boxes] is how many cubbies the board fits on this screen.
+  LevelData getLevel(int levelId, {int boxes = LevelGenerator.defaultBoxes}) {
+    final key = '$levelId:$boxes';
+    final cached = _cache.remove(key);
+    if (cached != null) {
+      _cache[key] = cached; // refresh recency
+      return cached;
     }
-
-    _generated = true;
-
-  }
-
-
-
-  LevelData getLevel(int levelId) {
-
-    if (_cache.containsKey(levelId)) return _cache[levelId]!;
-
-    final level = LevelGenerator.generate(levelId);
-
-    _cache[levelId] = level;
-
+    final level = LevelGenerator.generate(levelId, boxes: boxes);
+    _cache[key] = level;
+    while (_cache.length > _cacheLimit) {
+      _cache.remove(_cache.keys.first);
+    }
     return level;
-
   }
 
-
-
-  LevelData dailyChallenge(DateTime date) {
-
+  LevelData dailyChallenge(
+    DateTime date, {
+    int boxes = LevelGenerator.defaultBoxes,
+  }) {
     final seed = date.year * 10000 + date.month * 100 + date.day;
-
-    final base = LevelGenerator.generate((seed % 200) + 8);
-
+    final base = LevelGenerator.generate((seed % 200) + 8, boxes: boxes);
     return LevelData(
-
       levelId: 9000 + (seed % 1000),
-
-      themeRoom: 'kitchen',
-
+      themeRoom: base.themeRoom,
       difficulty: 'hard',
-
       timeLimit: (base.timeLimit * 0.9).round(),
-
       shelfCount: base.shelfCount,
-
       slotsPerShelf: 3,
-
       bufferShelves: base.bufferShelves,
-
       initialPlacement: base.initialPlacement,
-
-      starThresholds: base.starThresholds,
-
       optimalMoves: base.optimalMoves,
-
       levelTint: base.levelTint,
-
       layout: base.layout,
-
       mechanics: base.mechanics,
-
       mechanicConfig: base.mechanicConfig,
-
       seed: seed,
-
+      starThresholds: base.starThresholds,
     );
-
   }
-
 }
-
-

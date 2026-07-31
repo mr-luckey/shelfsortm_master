@@ -29,298 +29,298 @@
   ],
   "initialPlacement": [
     {
-      "itemId": "block_green_014",
+      "itemId": "pinapberry_green_014",
       "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "ball_green_047",
+      "itemId": "gopokeball_green_047",
       "shelfId": 8,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "ball_green_025",
+      "itemId": "gopokeball_green_025",
       "shelfId": 8,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "block_green_012",
+      "itemId": "pinapberry_green_012",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "block_green_015",
+      "itemId": "pinapberry_green_015",
       "shelfId": 10,
       "slot": 0
     },
     {
-      "itemId": "ball_green_050",
+      "itemId": "gopokeball_green_050",
       "shelfId": 8,
       "slot": 1
     },
     {
-      "itemId": "teddy_green_008",
+      "itemId": "razzberry_green_008",
       "shelfId": 7,
       "slot": 2
     },
     {
-      "itemId": "teddy_green_006",
+      "itemId": "razzberry_green_006",
       "shelfId": 7,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "block_green_044",
+      "itemId": "pinapberry_green_044",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "teddy_green_004",
+      "itemId": "razzberry_green_004",
       "shelfId": 12,
       "slot": 0
     },
     {
-      "itemId": "ball_green_048",
+      "itemId": "gopokeball_green_048",
       "shelfId": 12,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "block_green_041",
+      "itemId": "pinapberry_green_041",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "ball_green_052",
+      "itemId": "gopokeball_green_052",
       "shelfId": 6,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "block_green_013",
+      "itemId": "pinapberry_green_013",
       "shelfId": 11,
       "slot": 2
     },
     {
-      "itemId": "block_green_016",
+      "itemId": "pinapberry_green_016",
       "shelfId": 11,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "ball_green_049",
+      "itemId": "gopokeball_green_049",
       "shelfId": 11,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "teddy_green_009",
+      "itemId": "razzberry_green_009",
       "shelfId": 6,
       "slot": 1
     },
     {
-      "itemId": "ball_green_020",
+      "itemId": "gopokeball_green_020",
       "shelfId": 5,
       "slot": 2
     },
     {
-      "itemId": "teddy_green_029",
+      "itemId": "razzberry_green_029",
       "shelfId": 10,
       "slot": 2
     },
     {
-      "itemId": "teddy_green_007",
+      "itemId": "razzberry_green_007",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "ball_green_019",
+      "itemId": "gopokeball_green_019",
       "shelfId": 8,
       "slot": 0
     },
     {
-      "itemId": "ball_green_021",
+      "itemId": "gopokeball_green_021",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "block_green_018",
+      "itemId": "pinapberry_green_018",
       "shelfId": 4,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "teddy_green_031",
+      "itemId": "razzberry_green_031",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "block_green_010",
+      "itemId": "pinapberry_green_010",
       "shelfId": 3,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "block_green_040",
+      "itemId": "pinapberry_green_040",
       "shelfId": 3,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "teddy_green_028",
+      "itemId": "razzberry_green_028",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "ball_green_051",
+      "itemId": "gopokeball_green_051",
       "shelfId": 5,
       "slot": 0
     },
     {
-      "itemId": "teddy_green_030",
+      "itemId": "razzberry_green_030",
       "shelfId": 5,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "teddy_green_036",
+      "itemId": "razzberry_green_036",
       "shelfId": 5,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "teddy_green_001",
+      "itemId": "razzberry_green_001",
       "shelfId": 6,
       "slot": 2
     },
     {
-      "itemId": "block_green_017",
+      "itemId": "pinapberry_green_017",
       "shelfId": 6,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "block_green_045",
+      "itemId": "pinapberry_green_045",
       "shelfId": 6,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "teddy_green_034",
+      "itemId": "razzberry_green_034",
       "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "teddy_green_003",
+      "itemId": "razzberry_green_003",
       "shelfId": 7,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "block_green_011",
+      "itemId": "pinapberry_green_011",
       "shelfId": 7,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "block_green_037",
+      "itemId": "pinapberry_green_037",
       "shelfId": 12,
       "slot": 2
     },
     {
-      "itemId": "teddy_green_005",
+      "itemId": "razzberry_green_005",
       "shelfId": 12,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "teddy_green_002",
+      "itemId": "razzberry_green_002",
       "shelfId": 12,
       "slot": 2,
       "depth": 2
     },
     {
-      "itemId": "teddy_green_033",
+      "itemId": "razzberry_green_033",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "block_green_039",
+      "itemId": "pinapberry_green_039",
       "shelfId": 4,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "teddy_green_035",
+      "itemId": "razzberry_green_035",
       "shelfId": 11,
       "slot": 0
     },
     {
-      "itemId": "teddy_green_032",
+      "itemId": "razzberry_green_032",
       "shelfId": 11,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "block_green_042",
+      "itemId": "pinapberry_green_042",
       "shelfId": 12,
       "slot": 1
     },
     {
-      "itemId": "ball_green_053",
+      "itemId": "gopokeball_green_053",
       "shelfId": 12,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "block_green_038",
+      "itemId": "pinapberry_green_038",
       "shelfId": 12,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "ball_green_024",
+      "itemId": "gopokeball_green_024",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "ball_green_054",
+      "itemId": "gopokeball_green_054",
       "shelfId": 7,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "block_green_043",
+      "itemId": "pinapberry_green_043",
       "shelfId": 7,
       "slot": 0,
       "depth": 2
     },
     {
-      "itemId": "ball_green_023",
+      "itemId": "gopokeball_green_023",
       "shelfId": 11,
       "slot": 1
     },
     {
-      "itemId": "ball_green_046",
+      "itemId": "gopokeball_green_046",
       "shelfId": 11,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "ball_green_027",
+      "itemId": "gopokeball_green_027",
       "shelfId": 11,
       "slot": 1,
       "depth": 2
     },
     {
-      "itemId": "ball_green_026",
+      "itemId": "gopokeball_green_026",
       "shelfId": 10,
       "slot": 1
     },
     {
-      "itemId": "ball_green_022",
+      "itemId": "gopokeball_green_022",
       "shelfId": 10,
       "slot": 1,
       "depth": 1
