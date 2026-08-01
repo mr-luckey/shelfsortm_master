@@ -26,6 +26,46 @@ class LevelGenerator {
     'teal',
   ];
 
+  /// Goods every level stocks right now — bottles, drinks, cakes and ice
+  /// creams, so one screen reads like a single shop aisle.
+  static const productTypes = [
+    'babybottle',
+    'beveragebox',
+    'bubbletea',
+    'cupwithstraw',
+    'glassofmilk',
+    'hotbeverage',
+    'teacupwithouthandle',
+    'teapot',
+    'tropicaldrink',
+    'mate',
+    'cannedfood',
+    'honeypot',
+    'jar',
+    'amphora',
+    'birthdaycake',
+    'shortcake',
+    'cupcake',
+    'mooncake',
+    'pie',
+    'custard',
+    'pancakes',
+    'waffle',
+    'croissant',
+    'icecream',
+    'softicecream',
+    'shavedice',
+    'cookie',
+    'fortunecookie',
+    'candy',
+    'lollipop',
+    'chocolatebar',
+    'doughnut',
+    'dango',
+    'pretzel',
+    'popcorn',
+  ];
+
   /// Slots in one box. Exactly one of them stays empty per layer.
   static const int slotsPerShelf = 3;
 
@@ -50,22 +90,6 @@ class LevelGenerator {
     return pow(t, 0.62).toDouble();
   }
 
-  /// Window-limited shuffle: an item can only drift [hardness] * length places,
-  /// so 0 keeps every set of three together and 1 is a full shuffle.
-  static void _scramble(List<String> items, double hardness, Random rng) {
-    final n = items.length;
-    if (n < 2) return;
-    final h = hardness.clamp(0.0, 1.0);
-    final window = (h * n).round();
-    if (window < 1) return;
-    for (var i = 0; i < n; i++) {
-      final j = i + rng.nextInt(min(window, n - i));
-      final tmp = items[i];
-      items[i] = items[j];
-      items[j] = tmp;
-    }
-  }
-
   /// Columns the board is laid out in — fixed for every level.
   static const int columns = 4;
 
@@ -75,60 +99,72 @@ class LevelGenerator {
   static LevelData generate(int levelId, {int boxes = defaultBoxes}) {
     final theme = ThemeRoom.forLevel(levelId);
     final difficulty = LevelDifficultyX.forLevel(levelId);
-    final n = flavorLevel(levelId);
     final rng = Random(levelId * 7919 + 17);
 
     final layers = layersFor(levelId);
     final tint = tintColors[(levelId - 1) % tintColors.length];
 
-    // One free spot per box per layer keeps the board from ever deadlocking.
-    final capacity = boxes * layers * (slotsPerShelf - 1);
-    final itemCount = (capacity ~/ 3) * 3;
-    final triples = itemCount ~/ 3;
-
-    final typeCap = min(triples, theme.itemTypes.length);
-    final int typeCount = max(1, min(_typeCountFor(n), typeCap));
-    final types = List<String>.from(theme.itemTypes)..shuffle(rng);
-    final usedTypes = types.take(typeCount).toList();
-
-    final triplesPerType = List<int>.filled(typeCount, 0);
-    for (var i = 0; i < triples; i++) {
-      triplesPerType[i % typeCount] += 1;
-    }
-
-    // Built grouped: every set of three sits together, so an untouched board
-    // is one move from a match. Scrambling below pulls those sets apart.
-    final items = <String>[];
-    var counter = 0;
-    for (var t = 0; t < typeCount; t++) {
-      for (var k = 0; k < triplesPerType[t] * 3; k++) {
-        counter += 1;
-        items.add('${usedTypes[t]}_${tint}_${counter.toString().padLeft(3, '0')}');
-      }
-    }
-    _scramble(items, hardnessFor(levelId), rng);
-
     // Front layer first so any shortfall falls off the deepest layer instead.
-    final spots = <({int shelfId, int slot, int depth})>[];
+    final cells = <({int shelfId, int depth})>[];
     for (var d = 0; d < layers; d++) {
       for (var b = 1; b <= boxes; b++) {
-        final free = rng.nextInt(slotsPerShelf);
-        for (var s = 0; s < slotsPerShelf; s++) {
-          if (s == free) continue;
-          spots.add((shelfId: b, slot: s, depth: d));
-        }
+        cells.add((shelfId: b, depth: d));
       }
     }
 
-    final placements = <InitialPlacement>[
-      for (var i = 0; i < items.length && i < spots.length; i++)
-        InitialPlacement(
-          itemId: items[i],
-          shelfId: spots[i].shelfId,
-          slot: spots[i].slot,
-          depth: spots[i].depth,
-        ),
-    ];
+    // A box keeps one spot free per layer, so a cell holds two goods. Exactly
+    // three of a kind exist per screen, which is what caps the type count.
+    final typeCount = min(
+      (cells.length * (slotsPerShelf - 1)) ~/ 3,
+      productTypes.length,
+    );
+    final types = List<String>.from(productTypes)..shuffle(rng);
+    final usedTypes = types.take(typeCount).toList();
+
+    // Stocked like a real shelf: two of a kind stand side by side and the
+    // third waits in another box. Later levels split all three apart.
+    final hardness = hardnessFor(levelId);
+    final pairs = <String>[];
+    final singles = <String>[];
+    for (final type in usedTypes) {
+      if (rng.nextDouble() < hardness) {
+        singles.addAll([type, type, type]);
+      } else {
+        pairs.add(type);
+        singles.add(type);
+      }
+    }
+    singles.shuffle(rng);
+
+    final cellPlans = <List<String>>[
+      for (final type in pairs) [type, type],
+      for (var i = 0; i < singles.length; i += 2)
+        singles.sublist(i, min(i + 2, singles.length)),
+    ]..shuffle(rng);
+
+    var counter = 0;
+    final placements = <InitialPlacement>[];
+    for (var i = 0; i < cellPlans.length && i < cells.length; i++) {
+      final cell = cells[i];
+      final free = rng.nextInt(slotsPerShelf);
+      var slot = 0;
+      for (final type in cellPlans[i]) {
+        if (slot == free) slot += 1;
+        counter += 1;
+        placements.add(
+          InitialPlacement(
+            itemId: '${type}_${tint}_${counter.toString().padLeft(3, '0')}',
+            shelfId: cell.shelfId,
+            slot: slot,
+            depth: cell.depth,
+          ),
+        );
+        slot += 1;
+      }
+    }
+
+    final itemCount = placements.length;
+    final triples = typeCount;
 
     final optimal = (triples * 2.2).round() + boxes;
     final twoStar = (optimal * 1.35).round();
@@ -162,17 +198,6 @@ class LevelGenerator {
       grid.add([for (var c = i; c < min(i + columns, boxes); c++) c + 1]);
     }
     return grid;
-  }
-
-  /// Distinct emoji types on the board — more variety as the flavor advances.
-  static int _typeCountFor(int flavorLevel) {
-    if (flavorLevel <= 2) return 2;
-    if (flavorLevel <= 5) return 3;
-    if (flavorLevel <= 12) return 4;
-    if (flavorLevel <= 25) return 5;
-    if (flavorLevel <= 45) return 6;
-    if (flavorLevel <= 70) return 7;
-    return 8;
   }
 
   static int _timeFor(LevelDifficulty d, int itemCount, int layers) {

@@ -93,9 +93,11 @@ void main() {
     final engine = MatchEngine(level: level);
     expect(engine.waves.nextWaveFor(engine.shelves.first.shelfId), isNotNull);
 
-    // Carry every item out of box 0 into free spots elsewhere.
+    // Carry the front layer of box 0 out into free spots elsewhere.
+    final shelfId = engine.shelves.first.shelfId;
+    final layersBefore = engine.waves.layersLeftFor(shelfId);
     var guard = 0;
-    while (!engine.shelves[0].isEmpty && guard < 20) {
+    while (engine.waves.layersLeftFor(shelfId) == layersBefore && guard < 20) {
       guard++;
       final from = BoardPos(0, engine.shelves[0].slots.indexWhere((s) => !s.isEmpty));
       BoardPos? to;

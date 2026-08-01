@@ -191,6 +191,10 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
             body: Stack(
               fit: StackFit.expand,
               children: [
+                Image.asset(
+                  'assets/images/rooms/premium_room_bg.png',
+                  fit: BoxFit.cover,
+                ),
                 SafeArea(
                   child: Column(
                     children: [
