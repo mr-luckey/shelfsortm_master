@@ -18,7 +18,7 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   void setMusic(bool v) {
-    audio.musicEnabled = v;
+    audio.setMusicEnabled(v);
     notifyListeners();
   }
 

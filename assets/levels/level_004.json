@@ -2,107 +2,155 @@
   "levelId": 4,
   "themeRoom": "activities",
   "difficulty": "easy",
-  "timeLimit": 155,
-  "shelfCount": 7,
+  "timeLimit": 130,
+  "shelfCount": 8,
   "slotsPerShelf": 3,
-  "bufferShelves": 7,
+  "bufferShelves": 8,
   "levelTint": "yellow",
   "layout": [
     [
       1,
       2,
       3,
-      0
+      4
     ],
     [
-      4,
       5,
       6,
-      7
+      7,
+      8
     ]
   ],
   "initialPlacement": [
     {
-      "itemId": "hamburger_yellow_001",
+      "itemId": "hotbeverage_yellow_001",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "hamburger_yellow_002",
+      "itemId": "popcorn_yellow_002",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "oden_yellow_003",
+      "itemId": "popcorn_yellow_003",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "fondue_yellow_004",
+      "itemId": "cupwithstraw_yellow_004",
       "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "cupwithstraw_yellow_005",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "honeypot_yellow_006",
+      "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "cupcake_yellow_005",
-      "shelfId": 2,
-      "slot": 1
-    },
-    {
-      "itemId": "cupcake_yellow_006",
-      "shelfId": 2,
-      "slot": 2
-    },
-    {
-      "itemId": "icecream_yellow_007",
+      "itemId": "honeypot_yellow_007",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "icecream_yellow_008",
+      "itemId": "bubbletea_yellow_008",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "fondue_yellow_009",
+      "itemId": "cannedfood_yellow_009",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "icecream_yellow_010",
+      "itemId": "shortcake_yellow_010",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "fondue_yellow_011",
+      "itemId": "shortcake_yellow_011",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "oden_yellow_012",
+      "itemId": "hotbeverage_yellow_012",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "hotbeverage_yellow_013",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "oden_yellow_013",
-      "shelfId": 5,
-      "slot": 2
-    },
-    {
-      "itemId": "cupcake_yellow_014",
+      "itemId": "bubbletea_yellow_014",
       "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "hamburger_yellow_015",
+      "itemId": "cupwithstraw_yellow_015",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "bubbletea_yellow_016",
       "shelfId": 6,
       "slot": 2
+    },
+    {
+      "itemId": "cupcake_yellow_017",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "cupcake_yellow_018",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "cannedfood_yellow_019",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "popcorn_yellow_020",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "cannedfood_yellow_021",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "cupcake_yellow_022",
+      "shelfId": 3,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "shortcake_yellow_023",
+      "shelfId": 4,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "honeypot_yellow_024",
+      "shelfId": 8,
+      "slot": 1,
+      "depth": 1
     }
   ],
-  "optimalMoves": 18,
+  "optimalMoves": 26,
   "starThresholds": {
-    "3star": 18,
-    "2star": 24,
-    "1star": 32
+    "3star": 26,
+    "2star": 35,
+    "1star": 47
   },
   "seed": 31693
 }

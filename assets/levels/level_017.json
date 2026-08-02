@@ -2,164 +2,1015 @@
   "levelId": 17,
   "themeRoom": "activities",
   "difficulty": "standard",
-  "timeLimit": 140,
-  "shelfCount": 4,
+  "timeLimit": 480,
+  "shelfCount": 28,
   "slotsPerShelf": 3,
-  "bufferShelves": 4,
+  "bufferShelves": 28,
   "levelTint": "red",
   "layout": [
     [
-      0,
       1,
-      2
+      2,
+      3,
+      4
     ],
     [
-      3,
-      4,
-      0
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12
+    ],
+    [
+      13,
+      14,
+      15,
+      16
+    ],
+    [
+      17,
+      18,
+      19,
+      20
+    ],
+    [
+      21,
+      22,
+      23,
+      24
+    ],
+    [
+      25,
+      26,
+      27,
+      28
     ]
   ],
-  "trayCount": 5,
+  "trayCount": 8,
   "initialPlacement": [
     {
-      "itemId": "cupwithstraw_red_001",
-      "shelfId": 5,
-      "slot": 0
-    },
-    {
-      "itemId": "cupwithstraw_red_002",
-      "shelfId": 5,
-      "slot": 2
-    },
-    {
-      "itemId": "shavedice_red_003",
-      "shelfId": 6,
-      "slot": 0
-    },
-    {
-      "itemId": "shavedice_red_004",
-      "shelfId": 6,
-      "slot": 2
-    },
-    {
-      "itemId": "mooncake_red_005",
-      "shelfId": 7,
-      "slot": 0
-    },
-    {
-      "itemId": "mooncake_red_006",
-      "shelfId": 7,
-      "slot": 2
-    },
-    {
-      "itemId": "teacupwithouthandle_red_007",
-      "shelfId": 8,
-      "slot": 0
-    },
-    {
-      "itemId": "teacupwithouthandle_red_008",
-      "shelfId": 8,
-      "slot": 2
-    },
-    {
-      "itemId": "shortcake_red_009",
-      "shelfId": 9,
-      "slot": 0
-    },
-    {
-      "itemId": "shortcake_red_010",
-      "shelfId": 9,
-      "slot": 2
-    },
-    {
-      "itemId": "birthdaycake_red_011",
+      "itemId": "sandwich_red_001",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "cannedfood_red_012",
+      "itemId": "bowlwithspoon_red_002",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "cannedfood_red_013",
+      "itemId": "dumpling_red_003",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "birthdaycake_red_014",
+      "itemId": "custard_red_004",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "shortcake_red_005",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "birthdaycake_red_015",
+      "itemId": "shortcake_red_006",
       "shelfId": 2,
       "slot": 2
     },
     {
-      "itemId": "teacupwithouthandle_red_016",
+      "itemId": "shavedice_red_007",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "bentobox_red_017",
+      "itemId": "cupwithstraw_red_008",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "shavedice_red_009",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "shavedice_red_018",
+      "itemId": "sushi_red_010",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "shortcake_red_019",
+      "itemId": "potoffood_red_011",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "mooncake_red_020",
+      "itemId": "riceball_red_012",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "cannedfood_red_021",
+      "itemId": "sushi_red_013",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "cookedrice_red_014",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "sushi_red_015",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "custard_red_016",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "custard_red_017",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "honeypot_red_018",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "curryrice_red_019",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "butter_red_020",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "cupcake_red_021",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "babybottle_red_022",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "glassofmilk_red_023",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "cheesewedge_red_024",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "glassofmilk_red_025",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "icecream_red_026",
+      "shelfId": 10,
+      "slot": 0
+    },
+    {
+      "itemId": "icecream_red_027",
+      "shelfId": 10,
+      "slot": 1
+    },
+    {
+      "itemId": "riceball_red_028",
+      "shelfId": 10,
+      "slot": 2
+    },
+    {
+      "itemId": "takeoutbox_red_029",
+      "shelfId": 11,
+      "slot": 0
+    },
+    {
+      "itemId": "cupcake_red_030",
+      "shelfId": 11,
+      "slot": 1
+    },
+    {
+      "itemId": "curryrice_red_031",
+      "shelfId": 11,
+      "slot": 2
+    },
+    {
+      "itemId": "riceball_red_032",
+      "shelfId": 12,
+      "slot": 0
+    },
+    {
+      "itemId": "pie_red_033",
+      "shelfId": 12,
+      "slot": 1
+    },
+    {
+      "itemId": "dumpling_red_034",
+      "shelfId": 12,
+      "slot": 2
+    },
+    {
+      "itemId": "beveragebox_red_035",
+      "shelfId": 13,
+      "slot": 0
+    },
+    {
+      "itemId": "cupwithstraw_red_036",
+      "shelfId": 13,
+      "slot": 1
+    },
+    {
+      "itemId": "butter_red_037",
+      "shelfId": 13,
+      "slot": 2
+    },
+    {
+      "itemId": "jar_red_038",
+      "shelfId": 14,
+      "slot": 0
+    },
+    {
+      "itemId": "hotbeverage_red_039",
+      "shelfId": 14,
+      "slot": 1
+    },
+    {
+      "itemId": "babybottle_red_040",
+      "shelfId": 14,
+      "slot": 2
+    },
+    {
+      "itemId": "fondue_red_041",
+      "shelfId": 15,
+      "slot": 0
+    },
+    {
+      "itemId": "fondue_red_042",
+      "shelfId": 15,
+      "slot": 1
+    },
+    {
+      "itemId": "teacupwithouthandle_red_043",
+      "shelfId": 15,
+      "slot": 2
+    },
+    {
+      "itemId": "cupcake_red_044",
+      "shelfId": 16,
+      "slot": 0
+    },
+    {
+      "itemId": "steamingbowl_red_045",
+      "shelfId": 16,
+      "slot": 1
+    },
+    {
+      "itemId": "steamingbowl_red_046",
+      "shelfId": 16,
+      "slot": 2
+    },
+    {
+      "itemId": "beveragebox_red_047",
+      "shelfId": 17,
+      "slot": 0
+    },
+    {
+      "itemId": "greensalad_red_048",
+      "shelfId": 17,
+      "slot": 1
+    },
+    {
+      "itemId": "greensalad_red_049",
+      "shelfId": 17,
+      "slot": 2
+    },
+    {
+      "itemId": "curryrice_red_050",
+      "shelfId": 18,
+      "slot": 0
+    },
+    {
+      "itemId": "teacupwithouthandle_red_051",
+      "shelfId": 18,
+      "slot": 1
+    },
+    {
+      "itemId": "sandwich_red_052",
+      "shelfId": 18,
+      "slot": 2
+    },
+    {
+      "itemId": "glassofmilk_red_053",
+      "shelfId": 19,
+      "slot": 1
+    },
+    {
+      "itemId": "glassofmilk_red_054",
+      "shelfId": 19,
+      "slot": 2
+    },
+    {
+      "itemId": "sandwich_red_055",
+      "shelfId": 20,
+      "slot": 0
+    },
+    {
+      "itemId": "mooncake_red_056",
+      "shelfId": 20,
+      "slot": 2
+    },
+    {
+      "itemId": "riceball_red_057",
+      "shelfId": 21,
+      "slot": 0
+    },
+    {
+      "itemId": "sushi_red_058",
+      "shelfId": 21,
+      "slot": 1
+    },
+    {
+      "itemId": "sushi_red_059",
+      "shelfId": 21,
+      "slot": 2
+    },
+    {
+      "itemId": "takeoutbox_red_060",
+      "shelfId": 22,
+      "slot": 0
+    },
+    {
+      "itemId": "frenchfries_red_061",
+      "shelfId": 22,
+      "slot": 1
+    },
+    {
+      "itemId": "teapot_red_062",
+      "shelfId": 22,
+      "slot": 2
+    },
+    {
+      "itemId": "potoffood_red_063",
+      "shelfId": 23,
+      "slot": 0
+    },
+    {
+      "itemId": "birthdaycake_red_064",
+      "shelfId": 23,
+      "slot": 1
+    },
+    {
+      "itemId": "cupcake_red_065",
+      "shelfId": 23,
+      "slot": 2
+    },
+    {
+      "itemId": "sushi_red_066",
+      "shelfId": 24,
+      "slot": 0
+    },
+    {
+      "itemId": "oden_red_067",
+      "shelfId": 24,
+      "slot": 1
+    },
+    {
+      "itemId": "dumpling_red_068",
+      "shelfId": 24,
+      "slot": 2
+    },
+    {
+      "itemId": "dumpling_red_069",
+      "shelfId": 25,
+      "slot": 0
+    },
+    {
+      "itemId": "cannedfood_red_070",
+      "shelfId": 25,
+      "slot": 1
+    },
+    {
+      "itemId": "cannedfood_red_071",
+      "shelfId": 25,
+      "slot": 2
+    },
+    {
+      "itemId": "honeypot_red_072",
+      "shelfId": 26,
+      "slot": 0
+    },
+    {
+      "itemId": "honeypot_red_073",
+      "shelfId": 26,
+      "slot": 1
+    },
+    {
+      "itemId": "cookedrice_red_074",
+      "shelfId": 26,
+      "slot": 2
+    },
+    {
+      "itemId": "salt_red_075",
+      "shelfId": 27,
+      "slot": 0
+    },
+    {
+      "itemId": "mooncake_red_076",
+      "shelfId": 27,
+      "slot": 1
+    },
+    {
+      "itemId": "riceball_red_077",
+      "shelfId": 27,
+      "slot": 2
+    },
+    {
+      "itemId": "glassofmilk_red_078",
+      "shelfId": 28,
+      "slot": 0
+    },
+    {
+      "itemId": "butter_red_079",
+      "shelfId": 28,
+      "slot": 1
+    },
+    {
+      "itemId": "pie_red_080",
+      "shelfId": 28,
+      "slot": 2
+    },
+    {
+      "itemId": "pancakes_red_081",
+      "shelfId": 29,
+      "slot": 0
+    },
+    {
+      "itemId": "pancakes_red_082",
+      "shelfId": 29,
+      "slot": 1
+    },
+    {
+      "itemId": "amphora_red_083",
+      "shelfId": 29,
+      "slot": 2
+    },
+    {
+      "itemId": "pie_red_084",
+      "shelfId": 30,
+      "slot": 1
+    },
+    {
+      "itemId": "pie_red_085",
+      "shelfId": 30,
+      "slot": 2
+    },
+    {
+      "itemId": "pie_red_086",
+      "shelfId": 31,
+      "slot": 0
+    },
+    {
+      "itemId": "bowlwithspoon_red_087",
+      "shelfId": 31,
+      "slot": 1
+    },
+    {
+      "itemId": "tropicaldrink_red_088",
+      "shelfId": 31,
+      "slot": 2
+    },
+    {
+      "itemId": "softicecream_red_089",
+      "shelfId": 32,
+      "slot": 0
+    },
+    {
+      "itemId": "softicecream_red_090",
+      "shelfId": 32,
+      "slot": 1
+    },
+    {
+      "itemId": "bentobox_red_091",
+      "shelfId": 33,
+      "slot": 0
+    },
+    {
+      "itemId": "bentobox_red_092",
+      "shelfId": 33,
+      "slot": 1
+    },
+    {
+      "itemId": "cupcake_red_093",
+      "shelfId": 33,
+      "slot": 2
+    },
+    {
+      "itemId": "teacupwithouthandle_red_094",
+      "shelfId": 34,
+      "slot": 0
+    },
+    {
+      "itemId": "tropicaldrink_red_095",
+      "shelfId": 34,
+      "slot": 2
+    },
+    {
+      "itemId": "shavedice_red_096",
+      "shelfId": 35,
+      "slot": 0
+    },
+    {
+      "itemId": "oden_red_097",
+      "shelfId": 35,
+      "slot": 1
+    },
+    {
+      "itemId": "oden_red_098",
+      "shelfId": 35,
+      "slot": 2
+    },
+    {
+      "itemId": "steamingbowl_red_099",
+      "shelfId": 36,
+      "slot": 0
+    },
+    {
+      "itemId": "dumpling_red_100",
+      "shelfId": 36,
+      "slot": 1
+    },
+    {
+      "itemId": "jar_red_101",
       "shelfId": 1,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "bentobox_red_022",
+      "itemId": "oden_red_102",
       "shelfId": 1,
+      "slot": 0,
+      "depth": 3
+    },
+    {
+      "itemId": "hamburger_red_103",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "babybottle_red_104",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "pancakes_red_105",
+      "shelfId": 2,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "sandwich_red_106",
+      "shelfId": 2,
+      "slot": 1,
+      "depth": 3
+    },
+    {
+      "itemId": "pie_red_107",
+      "shelfId": 4,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cannedfood_red_108",
+      "shelfId": 5,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cheesewedge_red_109",
+      "shelfId": 5,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "cupwithstraw_red_023",
-      "shelfId": 1,
+      "itemId": "riceball_red_110",
+      "shelfId": 7,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "bubbletea_red_111",
+      "shelfId": 7,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "bentobox_red_112",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "teapot_red_113",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "popcorn_red_114",
+      "shelfId": 8,
+      "slot": 2,
+      "depth": 3
+    },
+    {
+      "itemId": "butter_red_115",
+      "shelfId": 8,
+      "slot": 1,
+      "depth": 4
+    },
+    {
+      "itemId": "jar_red_116",
+      "shelfId": 9,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cheesewedge_red_117",
+      "shelfId": 9,
+      "slot": 0,
+      "depth": 4
+    },
+    {
+      "itemId": "hamburger_red_118",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "jar_red_119",
+      "shelfId": 10,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "jar_red_120",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "beveragebox_red_121",
+      "shelfId": 10,
+      "slot": 0,
+      "depth": 3
+    },
+    {
+      "itemId": "teacupwithouthandle_red_122",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 3
+    },
+    {
+      "itemId": "cookedrice_red_123",
+      "shelfId": 11,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "frenchfries_red_124",
+      "shelfId": 12,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cupcake_red_125",
+      "shelfId": 14,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "salt_red_126",
+      "shelfId": 15,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "salt_red_127",
+      "shelfId": 15,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "potoffood_red_128",
+      "shelfId": 15,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "babybottle_red_129",
+      "shelfId": 15,
+      "slot": 1,
+      "depth": 4
+    },
+    {
+      "itemId": "amphora_red_130",
+      "shelfId": 16,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "mate_red_131",
+      "shelfId": 17,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "bowlwithspoon_red_132",
+      "shelfId": 17,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "bentobox_red_024",
-      "shelfId": 2,
+      "itemId": "bubbletea_red_133",
+      "shelfId": 18,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "bubbletea_red_134",
+      "shelfId": 18,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "babybottle_red_135",
+      "shelfId": 19,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "birthdaycake_red_136",
+      "shelfId": 19,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "sandwich_red_137",
+      "shelfId": 20,
       "slot": 0,
       "depth": 1
+    },
+    {
+      "itemId": "teacupwithouthandle_red_138",
+      "shelfId": 21,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cannedfood_red_139",
+      "shelfId": 22,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "teapot_red_140",
+      "shelfId": 22,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "fondue_red_141",
+      "shelfId": 23,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "cannedfood_red_142",
+      "shelfId": 23,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cannedfood_red_143",
+      "shelfId": 24,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "mate_red_144",
+      "shelfId": 25,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "amphora_red_145",
+      "shelfId": 25,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "mate_red_146",
+      "shelfId": 25,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "cupwithstraw_red_147",
+      "shelfId": 25,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "mooncake_red_148",
+      "shelfId": 25,
+      "slot": 2,
+      "depth": 4
+    },
+    {
+      "itemId": "birthdaycake_red_149",
+      "shelfId": 26,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "salt_red_150",
+      "shelfId": 26,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "icecream_red_151",
+      "shelfId": 26,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "butter_red_152",
+      "shelfId": 26,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "oden_red_153",
+      "shelfId": 26,
+      "slot": 0,
+      "depth": 3
+    },
+    {
+      "itemId": "jar_red_154",
+      "shelfId": 27,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "hamburger_red_155",
+      "shelfId": 27,
+      "slot": 0,
+      "depth": 3
+    },
+    {
+      "itemId": "sandwich_red_156",
+      "shelfId": 27,
+      "slot": 2,
+      "depth": 3
+    },
+    {
+      "itemId": "frenchfries_red_157",
+      "shelfId": 28,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "salt_red_158",
+      "shelfId": 28,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "dumpling_red_159",
+      "shelfId": 29,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "tropicaldrink_red_160",
+      "shelfId": 29,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "salt_red_161",
+      "shelfId": 30,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "greensalad_red_162",
+      "shelfId": 30,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "hotbeverage_red_163",
+      "shelfId": 31,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "hotbeverage_red_164",
+      "shelfId": 31,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "softicecream_red_165",
+      "shelfId": 31,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "shortcake_red_166",
+      "shelfId": 32,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "glassofmilk_red_167",
+      "shelfId": 32,
+      "slot": 1,
+      "depth": 2
+    },
+    {
+      "itemId": "butter_red_168",
+      "shelfId": 32,
+      "slot": 2,
+      "depth": 2
+    },
+    {
+      "itemId": "oden_red_169",
+      "shelfId": 33,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "popcorn_red_170",
+      "shelfId": 35,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "popcorn_red_171",
+      "shelfId": 35,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "takeoutbox_red_172",
+      "shelfId": 36,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "teacupwithouthandle_red_173",
+      "shelfId": 36,
+      "slot": 0,
+      "depth": 2
+    },
+    {
+      "itemId": "babybottle_red_174",
+      "shelfId": 36,
+      "slot": 1,
+      "depth": 2
     }
   ],
-  "optimalMoves": 22,
+  "optimalMoves": 156,
   "starThresholds": {
-    "3star": 22,
-    "2star": 30,
-    "1star": 40
+    "3star": 156,
+    "2star": 211,
+    "1star": 281
   },
   "mechanics": [
     "conveyor_tray"
   ],
   "mechanicConfig": {
     "conveyorTray": {
-      "trayCount": 5,
-      "speed": 0.3,
-      "direction": 1
+      "trayCount": 8,
+      "speed": 0.29
     }
   },
   "seed": 134640

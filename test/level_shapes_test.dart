@@ -30,22 +30,44 @@ void main() {
   });
 
   test('early campaign layouts match the progression examples', () {
-    expect(LevelPlan.forLevel(1).boxes, 2);
-    expect(LevelPlan.forLevel(2).boxes, 3);
+    expect(LevelPlan.forLevel(1).boxes, 3);
+    expect(LevelPlan.forLevel(2).boxes, 4);
     expect(LevelPlan.forLevel(3).boxes, 6);
-    expect(LevelPlan.forLevel(4).boxes, 7);
+    expect(LevelPlan.forLevel(4).boxes, 8);
+    expect(LevelPlan.forLevel(5).boxes, 9);
+    expect(LevelPlan.forLevel(6).boxes, 12);
 
     final generated = [
-      for (var id = 1; id <= 4; id++) LevelGenerator.generate(id),
+      for (var id = 1; id <= 6; id++) LevelGenerator.generate(id),
     ];
-    expect(generated[0].shelfCount, 2);
-    expect(generated[1].shelfCount, 3);
-    expect(generated[2].shelfCount, 6);
-    expect(generated[3].shelfCount, 7);
+    expect(generated.map((l) => l.shelfCount).toList(), [3, 4, 6, 8, 9, 12]);
+  });
+
+  test('the cupboard never shrinks while the campaign is still growing', () {
+    for (var id = 2; id <= 20; id++) {
+      expect(
+        LevelPlan.forLevel(id).boxes,
+        greaterThanOrEqualTo(LevelPlan.forLevel(id - 1).boxes),
+        reason: 'level $id has a smaller cupboard than ${id - 1}',
+      );
+    }
+  });
+
+  test('cabinets grow through the campaign without repeating a size', () {
+    for (var id = 3; id <= 30; id++) {
+      final a = LevelPlan.forLevel(id - 2);
+      final b = LevelPlan.forLevel(id - 1);
+      final c = LevelPlan.forLevel(id);
+      final same = a.shapeId == b.shapeId &&
+          b.shapeId == c.shapeId &&
+          a.layers == b.layers &&
+          b.layers == c.layers;
+      expect(same, isFalse, reason: 'levels ${id - 2}-$id feel alike');
+    }
   });
 
   test('holes are allowed and normalize pads short rows', () {
-    final layout = LevelShapes.byId('lShape');
+    final layout = LevelShapes.byId('podium4x5');
     expect(layout.any((row) => row.contains(0)), isTrue);
     final normalized = LevelShapes.normalize(layout);
     final cols = LevelShapes.colCount(normalized);

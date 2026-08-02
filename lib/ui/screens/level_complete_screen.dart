@@ -1,13 +1,16 @@
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../app/theme/app_colors.dart';
 import '../../data/level_repository.dart';
 import '../../providers/progress_provider.dart';
 import '../../services/ad_service.dart';
+import '../../services/audio_service.dart';
+import '../meta/meta_chrome.dart';
 import '../premium/premium_gameplay_screen.dart';
+import '../premium/premium_tokens.dart';
 import '../widgets/common_widgets.dart';
 
 class LevelCompleteScreen extends StatefulWidget {
@@ -45,9 +48,15 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
     super.initState();
     _confetti = ConfettiController(duration: const Duration(seconds: 2));
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final audio = context.read<AudioService>();
+      audio.startMusic();
       if (widget.won) {
+        audio.playWhoosh();
         _confetti.play();
         _animateCoins();
+      } else {
+        audio.playInvalid();
       }
     });
   }
@@ -75,16 +84,7 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
         next <= LevelRepository.instance.totalLevels;
 
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: widget.won
-                ? const [Color(0xFFFFF8F0), Color(0xFFFFE0B2)]
-                : const [Color(0xFFFFEBEE), Color(0xFFFFCDD2)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+      body: MetaBackdrop(
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
@@ -94,10 +94,10 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                 blastDirectionality: BlastDirectionality.explosive,
                 shouldLoop: false,
                 colors: const [
-                  AppColors.primary,
-                  AppColors.secondary,
-                  AppColors.accent,
-                  AppColors.success,
+                  MetaChrome.gold,
+                  Color(0xFF81C784),
+                  Color(0xFFFFB74D),
+                  Colors.white,
                 ],
               ),
             SafeArea(
@@ -105,35 +105,32 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                 padding: const EdgeInsets.all(24),
                 child: Column(
                   children: [
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 12),
                     MiaAvatar(
                       size: 96,
                       mood: widget.won ? 'celebrating' : 'thinking',
                     ),
-                    const SizedBox(height: 16),
-                    Text(
+                    const SizedBox(height: 14),
+                    MetaTitle(
                       widget.won
                           ? (widget.daily
                               ? 'Challenge Cleared!'
                               : 'Level Complete!')
                           : 'Almost!',
-                      style: const TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ).animate().fadeIn().slideY(begin: 0.2),
+                      size: 28,
+                    ).animate().fadeIn().slideY(begin: 0.15),
                     if (!widget.won && widget.loseReason != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 8),
                         child: Text(
                           widget.loseReason!,
-                          style: const TextStyle(
-                            color: AppColors.error,
+                          style: GoogleFonts.nunito(
+                            color: const Color(0xFFFF8A80),
                             fontWeight: FontWeight.w800,
                           ),
                         ),
                       ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
                     if (widget.won)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -141,52 +138,75 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                           final earned = i < widget.stars;
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 6),
-                            child: Icon(
-                              earned
-                                  ? Icons.star_rounded
-                                  : Icons.star_outline_rounded,
-                              size: 56,
-                              color: earned
-                                  ? AppColors.secondary
-                                  : AppColors.textLight,
-                            )
-                                .animate(delay: (200 * i).ms)
-                                .scale(begin: const Offset(0.2, 0.2))
-                                .fadeIn(),
-                          );
+                            child: earned
+                                ? Image.asset(
+                                    MetaChrome.starBadgeAsset,
+                                    width: 52,
+                                    height: 52,
+                                    errorBuilder: (context, error, stack) =>
+                                        const Icon(
+                                      Icons.star_rounded,
+                                      size: 52,
+                                      color: MetaChrome.gold,
+                                    ),
+                                  )
+                                : Icon(
+                                    Icons.star_outline_rounded,
+                                    size: 52,
+                                    color: MetaChrome.cream.withValues(
+                                      alpha: 0.35,
+                                    ),
+                                  ),
+                          )
+                              .animate(delay: (180 * i).ms)
+                              .scale(begin: const Offset(0.2, 0.2))
+                              .fadeIn();
                         }),
                       ),
                     const SizedBox(height: 12),
-                    Text(
-                      widget.won
-                          ? 'Time left: ${widget.timeLeft}s • Moves: ${widget.moves}'
-                          : 'Try again — match 3 identical goods to clear space!',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textLight,
-                      ),
-                    ),
-                    if (widget.won) ...[
-                      const SizedBox(height: 12),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    MetaWoodCard(
+                      child: Column(
                         children: [
-                          const Icon(
-                            Icons.monetization_on,
-                            color: AppColors.secondary,
-                          ),
-                          const SizedBox(width: 6),
                           Text(
-                            '+$_shownCoins',
-                            style: const TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.w900,
+                            widget.won
+                                ? 'Time left: ${widget.timeLeft}s  •  Moves: ${widget.moves}'
+                                : 'Match 3 identical goods to clear space!',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.nunito(
+                              fontWeight: FontWeight.w700,
+                              color: MetaChrome.cream.withValues(alpha: 0.85),
                             ),
                           ),
+                          if (widget.won) ...[
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  '${PremiumTokens.uiRoot}/coin.png',
+                                  width: 26,
+                                  height: 26,
+                                  errorBuilder: (context, error, stack) =>
+                                      const Icon(
+                                    Icons.monetization_on,
+                                    color: MetaChrome.gold,
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
+                                Text(
+                                  '+$_shownCoins',
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w900,
+                                    color: MetaChrome.gold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ],
                       ),
-                    ],
+                    ),
                     const Spacer(),
                     if (widget.won)
                       TextButton(
@@ -207,46 +227,52 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                             );
                           }
                         },
-                        child: const Text('Watch ad for 2x coins'),
-                      ),
-                    if (hasNext)
-                      SizedBox(
-                        width: double.infinity,
-                        height: 56,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                    PremiumGameplayScreen(levelId: next),
-                              ),
-                            );
-                          },
-                          child: const Text('Next Level'),
+                        child: Text(
+                          'Watch ad for 2x coins',
+                          style: GoogleFonts.nunito(
+                            fontWeight: FontWeight.w800,
+                            color: MetaChrome.gold,
+                          ),
                         ),
                       ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 48,
-                      child: OutlinedButton(
+                    if (hasNext)
+                      MetaPrimaryButton(
+                        label: 'Next Level',
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (_) => PremiumGameplayScreen(
-                                levelId: widget.levelId,
-                                daily: widget.daily,
-                              ),
+                              builder: (_) =>
+                                  PremiumGameplayScreen(levelId: next),
                             ),
                           );
                         },
-                        child: Text(widget.won ? 'Replay' : 'Try Again'),
                       ),
+                    const SizedBox(height: 10),
+                    MetaSecondaryButton(
+                      label: widget.won ? 'Replay' : 'Try Again',
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (_) => PremiumGameplayScreen(
+                              levelId: widget.levelId,
+                              daily: widget.daily,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     TextButton(
-                      onPressed: () =>
-                          Navigator.of(context).popUntil((r) => r.isFirst),
-                      child: const Text('Map'),
+                      onPressed: () {
+                        context.read<AudioService>().playButton();
+                        Navigator.of(context).popUntil((r) => r.isFirst);
+                      },
+                      child: Text(
+                        'Home',
+                        style: GoogleFonts.nunito(
+                          fontWeight: FontWeight.w800,
+                          color: MetaChrome.cream,
+                        ),
+                      ),
                     ),
                   ],
                 ),

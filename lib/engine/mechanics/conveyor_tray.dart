@@ -15,16 +15,18 @@ class ConveyorTrayMechanic extends LevelMechanic {
   /// How quickly the belt returns to full speed after a pickup.
   static const double _accel = 3.0;
 
-  MatchEngine? _engine;
-
   int trayCount = 0;
   int slotsPerTray = 3;
 
   /// Trays per second at full speed.
   double speed = 0.28;
 
-  /// +1 rides to the right, -1 to the left.
-  int direction = 1;
+  /// Trays always ride right to left; -1 keeps that reading in the maths.
+  static const int direction = -1;
+
+  /// Engine indices of the tray shelves, pinned when the level starts so a
+  /// booster shelf can never be mistaken for a tray.
+  List<int> _trayShelves = const [];
 
   /// Trays visible in the belt window at once.
   double viewportTrays = 3.2;
@@ -46,29 +48,24 @@ class ConveyorTrayMechanic extends LevelMechanic {
 
   @override
   void initialize(MatchEngine engine, Map<String, dynamic> config) {
-    _engine = engine;
     trayCount = (config['trayCount'] as int? ?? engine.level.trayCount)
         .clamp(0, maxTrays);
     slotsPerTray = config['slotsPerTray'] as int? ?? engine.level.slotsPerShelf;
     speed = (config['speed'] as num?)?.toDouble() ?? 0.28;
-    direction = (config['direction'] as int? ?? 1) >= 0 ? 1 : -1;
     viewportTrays = (config['viewportTrays'] as num?)?.toDouble() ?? 3.2;
     slowFactor = ((config['slowFactor'] as num?)?.toDouble() ?? 0.5)
         .clamp(0.2, 1.0);
     offset = 0;
     speedFactor = 1;
     _carrying = false;
+    _trayShelves = [
+      for (var i = 0; i < engine.shelves.length; i++)
+        if (engine.shelves[i].isDock) i,
+    ].take(trayCount).toList(growable: false);
   }
 
   /// Engine indices of the tray shelves, in belt order.
-  List<int> get trayShelfIndices {
-    final e = _engine;
-    if (e == null) return const [];
-    return [
-      for (var i = 0; i < e.shelves.length; i++)
-        if (e.shelves[i].isDock) i,
-    ];
-  }
+  List<int> get trayShelfIndices => _trayShelves;
 
   bool get carrying => _carrying;
 
@@ -79,10 +76,10 @@ class ConveyorTrayMechanic extends LevelMechanic {
     _carrying = value;
   }
 
-  /// Length of the loop in tray widths. Always longer than the window so a
-  /// tray never jumps position while the player can see it.
+  /// Length of the loop in tray widths. Always longer than the window plus one
+  /// tray, so a tray only ever jumps back while it is fully out of sight.
   double get beltLength {
-    final window = viewportTrays + 1;
+    final window = viewportTrays + 1.2;
     return trayCount > window ? trayCount.toDouble() : window;
   }
 
@@ -105,14 +102,14 @@ class ConveyorTrayMechanic extends LevelMechanic {
 
   /// Where tray [ordinal] sits, in tray widths from the window's left edge.
   ///
-  /// A tray that rides out of view comes back around with its goods intact.
+  /// Trays travel toward the left. Positions run from -1 (just slid out past
+  /// the left edge) up to `beltLength - 1`, so a tray only jumps back to the
+  /// right once it is fully out of sight.
   double positionOf(int ordinal) {
     if (trayCount <= 0) return 0;
-    final raw = direction >= 0
-        ? ordinal * spacing + offset
-        : ordinal * spacing - offset;
+    final raw = ordinal * spacing + direction * offset + 1;
     final wrapped = raw % beltLength;
-    return wrapped < 0 ? wrapped + beltLength : wrapped;
+    return (wrapped < 0 ? wrapped + beltLength : wrapped) - 1;
   }
 
   @override

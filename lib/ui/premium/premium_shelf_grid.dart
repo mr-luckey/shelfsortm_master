@@ -8,8 +8,9 @@ import 'package:flutter/services.dart';
 import '../../engine/match_engine.dart';
 import '../../models/item.dart';
 import '../../models/shelf.dart';
-import '../widgets/emoji_assets.dart';
 import 'board_drag.dart';
+import 'face_images.dart';
+import 'premium_goods_fx.dart';
 import 'premium_wood_cell.dart';
 
 /// Layout-driven shelf grid with ASMR match-3 sorting (no row movement).
@@ -24,17 +25,22 @@ class PremiumShelfGrid extends StatefulWidget {
 
   /// Target cell height / width used for responsive sizing.
   static const double cellAspect = 56 / 90;
-  static const double maxCellWidth = 110;
+  static const double maxCellWidth = 130;
   static const double minCellWidth = 56;
+
+  /// A tall board squashes its rows rather than narrowing the cupboard.
+  static const double minCellAspect = 0.42;
 
   static const EdgeInsets boardPadding = EdgeInsets.fromLTRB(8, 8, 8, 4);
 
   final List<List<int>> layout;
   final List<Shelf> shelves;
-  final int clearingShelf;
+
+  /// Boxes playing their sale right now.
+  final Set<int> clearingShelves;
   final bool inputLocked;
 
-  /// Layer waiting behind each box, drawn as a single shadow.
+  /// Layer standing behind the front row of each box.
   final List<List<GameItem?>?> nextLayers;
   final void Function(BoardPos from, BoardPos to) onMove;
 
@@ -46,27 +52,32 @@ class PremiumShelfGrid extends StatefulWidget {
     super.key,
     required this.layout,
     required this.shelves,
-    required this.clearingShelf,
     required this.inputLocked,
     required this.onMove,
+    this.clearingShelves = const {},
     this.nextLayers = const [],
     this.drag,
   });
 
-  /// Cell width the board settles on inside [available] space (padding already
+  /// Cell size the board settles on inside [available] space (padding already
   /// taken off). Shared with the board area so a carried good keeps its size.
-  static double cellWidthFor(Size available, int rows, int cols) {
+  ///
+  /// The cupboard always spans the width it is given; a ten row board loses
+  /// height per row instead of shrinking into a narrow column.
+  static Size cellSizeFor(Size available, int rows, int cols) {
     final r = math.max(1, rows);
     final c = math.max(1, cols);
-    var cellW = math.min(available.width / c, available.height / (r * cellAspect));
-    cellW = cellW.clamp(minCellWidth, maxCellWidth);
-    if (cellW * cellAspect * r > available.height && available.height > 0) {
-      cellW = available.height / (r * cellAspect);
+    var cellW = available.width > 0
+        ? math.min(available.width / c, maxCellWidth)
+        : minCellWidth;
+    var cellH = cellW * cellAspect;
+    if (available.height > 0 && cellH * r > available.height) {
+      cellH = available.height / r;
+      // Rows only squash so far; on a very short screen the cupboard gives
+      // width back so the whole board still fits.
+      if (cellH < cellW * minCellAspect) cellW = cellH / minCellAspect;
     }
-    if (cellW * c > available.width && available.width > 0) {
-      cellW = available.width / c;
-    }
-    return cellW;
+    return Size(cellW, cellH);
   }
 
   @override
@@ -86,6 +97,19 @@ class _CellKey {
   int get hashCode => Object.hash(row, col);
 }
 
+/// What one box shows: its front row and the layer standing behind it.
+class _CellData {
+  final int shelfIndex;
+  final List<GameItem?> fronts;
+  final List<GameItem?>? behind;
+
+  const _CellData({
+    required this.shelfIndex,
+    required this.fronts,
+    this.behind,
+  });
+}
+
 class _Hit {
   final int shelfIndex;
   final int slot;
@@ -99,8 +123,10 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
   late final Ticker _ticker;
   Duration _last = Duration.zero;
 
-  final Map<String, ui.Image> _faceImages = {};
-  final Set<String> _requested = {};
+  final FaceImages _faces = FaceImages.instance;
+  final GoodsFx _fx = GoodsFx();
+  final FxRepaint _repaint = FxRepaint();
+  final StaticLayer _woodLayer = StaticLayer();
 
   static const String _cellBgAsset =
       'assets/images/premium/cupboards/shelf_cell.png';
@@ -116,11 +142,7 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
   final GlobalKey _boardKey = GlobalKey();
   late BoardDragController _drag;
   late bool _ownsDrag;
-
-  /// Progress of the SOLD stamp on [PremiumShelfGrid.clearingShelf].
-  double _sellT = 0;
-
-  static const double _sellDuration = 0.5;
+  Listenable? _painterRepaint;
 
   void _rebuildCellMaps() {
     _cellToShelf.clear();
@@ -158,7 +180,7 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
     super.initState();
     _rebuildCellMaps();
     _attachDrag(widget.drag);
-    _ticker = createTicker(_onTick)..start();
+    _ticker = createTicker(_onTick);
     _loadCellBg();
   }
 
@@ -166,22 +188,23 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
     _ownsDrag = external == null;
     _drag = external ?? BoardDragController();
     _drag.register(this);
-    _drag.held.addListener(_onDragChanged);
-    // On its own the grid draws the carried good itself, so it needs every
-    // finger update; with a shared controller the board area draws it.
-    if (_ownsDrag) _drag.finger.addListener(_onDragChanged);
+    _drag.held.addListener(_onHeldChanged);
+    _painterRepaint = Listenable.merge([
+      _repaint,
+      _faces,
+      _drag.held,
+      _drag.finger,
+    ]);
   }
 
   void _detachDrag() {
-    _drag.held.removeListener(_onDragChanged);
-    if (_ownsDrag) _drag.finger.removeListener(_onDragChanged);
+    _drag.held.removeListener(_onHeldChanged);
     _drag.unregister(this);
     if (_ownsDrag) _drag.dispose();
   }
 
-  void _onDragChanged() {
-    if (mounted) setState(() {});
-  }
+  /// Picking a good up or letting it go only changes what is painted.
+  void _onHeldChanged() => _repaint.ping();
 
   Future<void> _loadCellBg() async {
     try {
@@ -201,7 +224,6 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
   @override
   void didUpdateWidget(PremiumShelfGrid old) {
     super.didUpdateWidget(old);
-    if (old.clearingShelf != widget.clearingShelf) _sellT = 0;
     if (old.layout != widget.layout || old.shelves != widget.shelves) {
       _rebuildCellMaps();
     }
@@ -209,29 +231,63 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
       _detachDrag();
       _attachDrag(widget.drag);
     }
+    for (final shelfIndex in widget.clearingShelves) {
+      if (!old.clearingShelves.contains(shelfIndex)) {
+        _fx.startSell(shelfIndex);
+      }
+    }
+    for (final shelfIndex in old.clearingShelves) {
+      if (!widget.clearingShelves.contains(shelfIndex)) {
+        _fx.stopSell(shelfIndex);
+      }
+    }
+    _startArrivalAnimations(old);
+    _syncTicker();
+  }
+
+  /// A good that came out of the layer behind slides forward; any other new
+  /// good drops into the place it was put down on.
+  void _startArrivalAnimations(PremiumShelfGrid old) {
+    for (var i = 0; i < widget.shelves.length; i++) {
+      final slots = widget.shelves[i].slots;
+      final wasSlots = i < old.shelves.length ? old.shelves[i].slots : null;
+      final wasBehind =
+          i < old.nextLayers.length ? old.nextLayers[i] : null;
+      for (var s = 0; s < slots.length; s++) {
+        final item = slots[s].front;
+        if (item == null) continue;
+        final before =
+            wasSlots != null && s < wasSlots.length ? wasSlots[s].front : null;
+        if (before?.id == item.id) continue;
+        final cameFromBehind = wasBehind != null &&
+            wasBehind.any((behind) => behind?.id == item.id);
+        if (cameFromBehind) {
+          _fx.slideForward(item.id);
+        } else {
+          _fx.land(item.id);
+        }
+      }
+    }
+  }
+
+  void _syncTicker() {
+    if (_fx.busy) {
+      if (!_ticker.isActive) {
+        _last = Duration.zero;
+        _ticker.start();
+      }
+    } else if (_ticker.isActive) {
+      _ticker.stop();
+    }
   }
 
   @override
   void dispose() {
     _detachDrag();
     _ticker.dispose();
+    _woodLayer.dispose();
+    _repaint.dispose();
     super.dispose();
-  }
-
-  Future<void> _loadFace(String type) async {
-    if (!_requested.add(type)) return;
-    try {
-      final data = await rootBundle.load(EmojiAssets.pathFor(type));
-      final codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
-      final frame = await codec.getNextFrame();
-      if (!mounted) {
-        frame.image.dispose();
-        return;
-      }
-      setState(() => _faceImages[type] = frame.image);
-    } catch (_) {
-      // Missing art — slot stays empty visually.
-    }
   }
 
   void _onTick(Duration elapsed) {
@@ -241,9 +297,9 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
     }
     final dt = (elapsed - _last).inMicroseconds / 1e6;
     _last = elapsed;
-    if (dt <= 0 || dt > 0.1) return;
-    if (widget.clearingShelf < 0 || _sellT >= 1) return;
-    setState(() => _sellT = (_sellT + dt / _sellDuration).clamp(0.0, 1.0));
+    if (dt > 0 && dt <= 0.1) _fx.advance(dt);
+    _repaint.ping();
+    if (!_fx.busy) _ticker.stop();
   }
 
   _Hit? _hitTest(Offset local) {
@@ -297,9 +353,8 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
   BoardPos? freeSlotAt(Offset global) {
     final pos = slotAt(global);
     if (pos == null) return null;
-    final dest = widget.shelves[pos.shelfIndex].firstEmptyIndex;
-    if (dest < 0) return null;
-    return BoardPos(pos.shelfIndex, dest);
+    if (widget.clearingShelves.contains(pos.shelfIndex)) return null;
+    return dropSlot(widget.shelves[pos.shelfIndex].slots, pos);
   }
 
   @override
@@ -309,6 +364,7 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
     if (_drag.held.value != null || widget.inputLocked) return;
     final hit = _hitTest(event.localPosition);
     if (hit == null) return;
+    if (widget.clearingShelves.contains(hit.shelfIndex)) return;
 
     final slot = widget.shelves[hit.shelfIndex].slots[hit.slot];
     final item = slot.front;
@@ -332,7 +388,7 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
     _drag.end();
 
     final to = _drag.dropAt(event.position);
-    if (to == null || to.shelfIndex == held.from.shelfIndex) return;
+    if (to == null || to == held.from) return;
 
     HapticFeedback.lightImpact();
     widget.onMove(held.from, to);
@@ -343,36 +399,40 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
     _drag.end();
   }
 
+  /// Where the carried good would land right now, for the drop marker.
+  BoardPos? _landingSlot() {
+    if (_drag.held.value == null) return null;
+    return freeSlotAt(_drag.finger.value);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final held = _drag.held.value;
-    final cells = <_CellKey, List<GameItem?>>{};
-    final shadows = <_CellKey, List<GameItem?>>{};
+    final cells = <_CellKey, _CellData>{};
 
     for (final e in _cellToShelf.entries) {
       final i = e.value;
       if (i < 0 || i >= widget.shelves.length) continue;
       final fronts = <GameItem?>[];
-      for (var s = 0; s < widget.shelves[i].slots.length; s++) {
-        final item = widget.shelves[i].slots[s].front;
-        final lifted = held != null &&
-            held.from.shelfIndex == i &&
-            held.from.slotIndex == s;
-        fronts.add(lifted ? null : item);
-        if (item != null) _loadFace(item.type);
+      for (final slot in widget.shelves[i].slots) {
+        final item = slot.front;
+        fronts.add(item);
+        if (item != null) _faces.request(item.type);
       }
-      cells[e.key] = fronts;
 
-      final behind = i < widget.nextLayers.length ? widget.nextLayers[i] : null;
-      if (behind != null && behind.any((item) => item != null)) {
-        shadows[e.key] = behind;
+      List<GameItem?>? behind =
+          i < widget.nextLayers.length ? widget.nextLayers[i] : null;
+      if (behind != null && !behind.any((item) => item != null)) behind = null;
+      if (behind != null) {
         for (final item in behind) {
-          if (item != null) _loadFace(item.type);
+          if (item != null) _faces.request(item.type);
         }
       }
+
+      cells[e.key] = _CellData(shelfIndex: i, fronts: fronts, behind: behind);
     }
 
-    if (held != null) _loadFace(held.type);
+    final held = _drag.held.value;
+    if (held != null) _faces.request(held.type);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -384,13 +444,13 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
         final rows = math.max(1, _rows);
         final cols = math.max(1, _cols);
 
-        final cellW = PremiumShelfGrid.cellWidthFor(
+        final cell = PremiumShelfGrid.cellSizeFor(
           Size(availW, availH),
           rows,
           cols,
         );
-        _colWidth = cellW;
-        _cellHeight = cellW * PremiumShelfGrid.cellAspect;
+        _colWidth = cell.width;
+        _cellHeight = cell.height;
         final boardW = cols * _colWidth;
         final boardH = rows * _cellHeight;
 
@@ -408,29 +468,24 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
                 onPointerMove: _onPointerMove,
                 onPointerUp: _onPointerUp,
                 onPointerCancel: (_) => _onPointerCancel(),
-                child: CustomPaint(
-                  size: Size(boardW, boardH),
-                  painter: _ShelfGridPainter(
-                    rows: rows,
-                    cols: cols,
-                    cellHeight: _cellHeight,
-                    line: PremiumShelfGrid.line,
-                    cells: cells,
-                    shadows: shadows,
-                    faceImages: _faceImages,
-                    cellBg: _cellBg,
-                    occupied: _cellToShelf.keys.toSet(),
-                    sellingCell: widget.clearingShelf < 0
-                        ? null
-                        : _shelfToCell[widget.clearingShelf],
-                    sellT: _sellT,
-                    held: held == null || !_ownsDrag
-                        ? null
-                        : (
-                            type: held.type,
-                            finger: _localUnclamped(_drag.finger.value),
-                          ),
-                    highlightFree: held != null,
+                child: RepaintBoundary(
+                  child: CustomPaint(
+                    size: Size(boardW, boardH),
+                    painter: _ShelfGridPainter(
+                      rows: rows,
+                      cols: cols,
+                      cellHeight: _cellHeight,
+                      cells: cells,
+                      faces: _faces,
+                      cellBg: _cellBg,
+                      occupied: _cellToShelf.keys.toSet(),
+                      fx: _fx,
+                      drag: _drag,
+                      landing: _landingSlot,
+                      wood: _woodLayer,
+                      ghost: _ownsDrag ? _localUnclamped : null,
+                      repaint: _painterRepaint!,
+                    ),
                   ),
                 ),
               ),
@@ -446,261 +501,290 @@ class _ShelfGridPainter extends CustomPainter {
   final int rows;
   final int cols;
   final double cellHeight;
-  final double line;
-  final Map<_CellKey, List<GameItem?>> cells;
-  final Map<_CellKey, List<GameItem?>> shadows;
-  final Map<String, ui.Image> faceImages;
+  final Map<_CellKey, _CellData> cells;
+  final FaceImages faces;
   final ui.Image? cellBg;
   final Set<_CellKey> occupied;
-  final _CellKey? sellingCell;
-  final double sellT;
-  final ({String type, Offset finger})? held;
-  final bool highlightFree;
+  final GoodsFx fx;
+  final BoardDragController drag;
+  final BoardPos? Function() landing;
+  final StaticLayer wood;
 
-  const _ShelfGridPainter({
+  /// Set only when the grid carries the good itself.
+  final Offset Function(Offset global)? ghost;
+
+  _ShelfGridPainter({
     required this.rows,
     required this.cols,
     required this.cellHeight,
-    required this.line,
     required this.cells,
-    required this.faceImages,
+    required this.faces,
     required this.occupied,
+    required this.fx,
+    required this.drag,
+    required this.landing,
+    required this.wood,
+    required Listenable repaint,
     this.cellBg,
-    this.shadows = const {},
-    this.sellingCell,
-    this.sellT = 0,
-    this.held,
-    this.highlightFree = false,
-  });
+    this.ghost,
+  }) : super(repaint: repaint);
 
   bool _has(int r, int c) => occupied.contains(_CellKey(r, c));
+
+  Rect _cellRect(_CellKey key, double colWidth) => Rect.fromLTWH(
+        key.col * colWidth,
+        key.row * cellHeight,
+        colWidth,
+        cellHeight,
+      );
 
   @override
   void paint(Canvas canvas, Size size) {
     final colWidth = size.width / cols;
 
+    _paintWood(canvas, size, colWidth);
+
+    final held = drag.held.value;
+    final target = held == null ? null : landing();
+
     for (final key in occupied) {
-      final r = key.row;
-      final c = key.col;
-      final rect = Rect.fromLTWH(
-        c * colWidth,
-        r * cellHeight,
-        colWidth,
-        cellHeight,
-      );
-      final edgeL = !_has(r, c - 1);
-      final edgeR = !_has(r, c + 1);
-      final edgeT = !_has(r - 1, c);
-      final edgeB = !_has(r + 1, c);
-      final bg = cellBg;
-      if (bg != null) {
-        drawFace(canvas, bg, rect, null);
-      } else {
-        paintWoodCell(
-          canvas,
-          rect,
-          board: Offset.zero & size,
-          edgeL: edgeL,
-          edgeT: edgeT,
-          edgeR: edgeR,
-          edgeB: edgeB,
-        );
-      }
-
-      final slots = cells[key];
-      if (slots == null) continue;
-
-      if (highlightFree) {
-        final free = slots.where((s) => s == null).length;
-        if (free > 0) {
-          final glow = Paint()
-            ..color = const Color(0x3366BB6A)
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = 2;
-          canvas.drawRect(rect.deflate(2), glow);
-        }
-      }
-
-      final behind = shadows[key];
-      if (behind != null) {
-        _paintShadow(
-          canvas,
-          rect,
-          behind,
-          edgeL: edgeL,
-          edgeR: edgeR,
-          edgeB: edgeB,
-        );
-      }
-      _paintSlots(
-        canvas,
+      final data = cells[key];
+      if (data == null) continue;
+      final rect = _cellRect(key, colWidth);
+      final edgeL = !_has(key.row, key.col - 1);
+      final edgeR = !_has(key.row, key.col + 1);
+      final edgeB = !_has(key.row + 1, key.col);
+      final cavity = cavityMetrics(
         rect,
-        slots,
         edgeL: edgeL,
         edgeR: edgeR,
         edgeB: edgeB,
       );
-      if (key == sellingCell) _paintSoldStamp(canvas, rect);
+      final sellT = fx.sellOf(data.shelfIndex);
+      final selling = sellT < 1;
+
+      if (held != null) {
+        _paintDropHints(canvas, rect, cavity, data, target);
+      }
+      _paintBehind(canvas, rect, cavity, data);
+      if (selling) {
+        // A sale plays inside its own box; nothing spills over the frame.
+        canvas.save();
+        canvas.clipRect(rect);
+      }
+      _paintFronts(canvas, rect, cavity, data, held: held, sellT: sellT);
+      if (selling) {
+        paintSoldStamp(canvas, rect, sellT);
+        canvas.restore();
+      }
     }
 
-    final h = held;
-    if (h != null) {
-      final image = faceImages[h.type];
-      if (image != null) {
-        final cell = Rect.fromLTWH(0, 0, colWidth, cellHeight);
-        final s = faceSize(cell, cavityMetrics(cell).width) * 1.25;
-        drawFace(
+    _paintGhost(canvas, colWidth);
+  }
+
+  void _paintWood(Canvas canvas, Size size, double colWidth) {
+    final key = Object.hash(
+      size.width,
+      size.height,
+      rows,
+      cols,
+      cellBg?.hashCode,
+      Object.hashAllUnordered(occupied),
+    );
+    wood.paint(canvas, key, (layer) {
+      for (final cell in occupied) {
+        final rect = _cellRect(cell, colWidth);
+        final bg = cellBg;
+        if (bg != null) {
+          drawFace(layer, bg, rect, null);
+        } else {
+          paintWoodCell(
+            layer,
+            rect,
+            board: Offset.zero & size,
+            edgeL: !_has(cell.row, cell.col - 1),
+            edgeT: !_has(cell.row - 1, cell.col),
+            edgeR: !_has(cell.row, cell.col + 1),
+            edgeB: !_has(cell.row + 1, cell.col),
+          );
+        }
+      }
+    });
+  }
+
+  /// Green rim on a box with room, plus a marker on the exact place the good
+  /// would land.
+  void _paintDropHints(
+    Canvas canvas,
+    Rect rect,
+    ({double left, double width, double floorY}) cavity,
+    _CellData data,
+    BoardPos? target,
+  ) {
+    if (data.fronts.any((item) => item == null)) {
+      canvas.drawRect(
+        rect.deflate(2),
+        Paint()
+          ..color = const Color(0x3366BB6A)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2,
+      );
+    }
+    if (target == null || target.shelfIndex != data.shelfIndex) return;
+
+    final slotW = cavity.width / spotsPerCell;
+    final cx = rect.left + cavity.left + slotCenter(target.slotIndex, cavity.width);
+    final floorY = rect.top + cavity.floorY;
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: Offset(cx, floorY - slotW * 0.06),
+        width: slotW * 0.86,
+        height: slotW * 0.3,
+      ),
+      Paint()
+        ..color = const Color(0xFF66BB6A).withValues(alpha: 0.55)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2,
+    );
+  }
+
+  /// The layer behind is drawn as the real products in a dark shade, standing
+  /// on the shelf floor a step further back.
+  void _paintBehind(
+    Canvas canvas,
+    Rect rect,
+    ({double left, double width, double floorY}) cavity,
+    _CellData data,
+  ) {
+    final behind = data.behind;
+    if (behind == null) return;
+    final full = faceSize(rect, cavity.width);
+    final size = full * 0.86;
+    // A short step back on the same shelf floor — never hanging in air.
+    final baseY = rect.top + cavity.floorY - size * 0.08;
+
+    for (var slot = 0; slot < behind.length; slot++) {
+      final item = behind[slot];
+      if (item == null) continue;
+      final image = faces.of(item.type);
+      if (image == null) continue;
+
+      final cx = rect.left + cavity.left + slotCenter(slot, cavity.width);
+      paintContactShadow(canvas, cx, baseY, size, strength: 0.7);
+      drawFace(
+        canvas,
+        image,
+        Rect.fromLTWH(cx - size / 2, baseY - size, size, size),
+        shadeFilter(darken: behindShade),
+      );
+    }
+  }
+
+  void _paintFronts(
+    Canvas canvas,
+    Rect rect,
+    ({double left, double width, double floorY}) cavity,
+    _CellData data, {
+    required HeldGood? held,
+    required double sellT,
+  }) {
+    final selling = sellT < 1;
+    final full = faceSize(rect, cavity.width);
+    final floorY = rect.top + cavity.floorY;
+    final behindSize = full * 0.86;
+    final behindBaseY = floorY - behindSize * 0.08;
+
+    for (var slot = 0; slot < data.fronts.length; slot++) {
+      final item = data.fronts[slot];
+      if (item == null) continue;
+      if (held != null &&
+          held.from.shelfIndex == data.shelfIndex &&
+          held.from.slotIndex == slot) {
+        continue; // in hand
+      }
+      final image = faces.of(item.type);
+      if (image == null) continue;
+
+      final cx = rect.left + cavity.left + slotCenter(slot, cavity.width);
+      var size = full;
+      var baseY = floorY;
+      var darken = 1.0;
+      var opacity = 1.0;
+      var squash = 0.0;
+
+      final slide = fx.slideOf(item.id);
+      if (slide < 1) {
+        final p = Curves.easeOutCubic.transform(slide);
+        size = ui.lerpDouble(behindSize, full, p)!;
+        baseY = ui.lerpDouble(behindBaseY, floorY, p)!;
+        darken = ui.lerpDouble(behindShade, 1.0, p)!;
+      } else {
+        final drop = fx.landOf(item.id);
+        if (drop < 1) {
+          final pose = landPose(drop, full);
+          baseY -= pose.rise;
+          squash = pose.squash;
+        }
+      }
+      if (selling) {
+        final pose = sellPose(sellT, full);
+        size *= pose.scale;
+        baseY -= pose.rise;
+        opacity = pose.opacity;
+      }
+
+      final lift = ((floorY - baseY) / full).clamp(0.0, 1.0);
+      if (opacity > 0.05) {
+        paintContactShadow(
           canvas,
-          image,
-          Rect.fromCenter(center: h.finger, width: s, height: s),
-          null,
+          cx,
+          floorY,
+          size * (1 - lift * 0.35),
+          strength: (1 - lift) * opacity,
+        );
+      }
+      final w = size * (1 + squash);
+      final h = size * (1 - squash);
+      drawFace(
+        canvas,
+        image,
+        Rect.fromLTWH(cx - w / 2, baseY - h, w, h),
+        darken < 1 || opacity < 1
+            ? shadeFilter(darken: darken, opacity: opacity)
+            : null,
+      );
+      if (selling) {
+        paintSellBurst(
+          canvas,
+          Offset(cx, floorY - full * 0.45),
+          full * 0.62,
+          sellT,
         );
       }
     }
   }
 
-  void _paintSlots(
-    Canvas canvas,
-    Rect rect,
-    List<GameItem?> slots, {
-    bool edgeL = true,
-    bool edgeR = true,
-    bool edgeB = true,
-  }) {
-    final cavity = cavityMetrics(rect, edgeL: edgeL, edgeR: edgeR, edgeB: edgeB);
-    final size = faceSize(rect, cavity.width);
-    final floorY = rect.top + cavity.floorY;
+  void _paintGhost(Canvas canvas, double colWidth) {
+    final toLocal = ghost;
+    final held = drag.held.value;
+    if (toLocal == null || held == null) return;
+    final image = faces.of(held.type);
+    if (image == null) return;
 
-    for (var slot = 0; slot < slots.length; slot++) {
-      final item = slots[slot];
-      if (item == null) continue;
-      final image = faceImages[item.type];
-      if (image == null) continue;
-
-      // Sit on the wood shelf floor inside the cavity.
-      final cx = rect.left + cavity.left + slotCenter(slot, cavity.width);
-      paintContactShadow(canvas, cx, floorY, size);
-      drawFace(
-        canvas,
-        image,
-        Rect.fromLTWH(cx - size / 2, floorY - size, size, size),
-        null,
-      );
-    }
-  }
-
-  /// Only the layer directly behind the front is ever drawn.
-  void _paintShadow(
-    Canvas canvas,
-    Rect rect,
-    List<GameItem?> behind, {
-    bool edgeL = true,
-    bool edgeR = true,
-    bool edgeB = true,
-  }) {
-    final cavity = cavityMetrics(rect, edgeL: edgeL, edgeR: edgeR, edgeB: edgeB);
-    final size = faceSize(rect, cavity.width) * 0.78;
-    final floorY = rect.top + cavity.floorY - size * 0.34;
-
-    const filter = ColorFilter.mode(Color(0x59120A04), BlendMode.srcIn);
-    for (var slot = 0; slot < behind.length; slot++) {
-      final item = behind[slot];
-      if (item == null) continue;
-      final image = faceImages[item.type];
-      if (image == null) continue;
-
-      final cx = rect.left + cavity.left + slotCenter(slot, cavity.width);
-      drawFace(
-        canvas,
-        image,
-        Rect.fromLTWH(cx - size / 2, floorY - size, size, size),
-        filter,
-      );
-    }
-  }
-
-  /// Stamped straight onto the goods — no door, no cover.
-  void _paintSoldStamp(Canvas canvas, Rect rect) {
-    final t = sellT.clamp(0.0, 1.0);
-    if (t <= 0) return;
-    final bounce = Curves.elasticOut.transform(t);
-    final scale = 2.2 - 1.2 * bounce;
-    final opacity = (t * 3).clamp(0.0, 1.0);
-
-    canvas.save();
-    canvas.translate(rect.center.dx, rect.center.dy);
-    canvas.rotate(-0.18);
-    canvas.scale(scale);
-
-    final stampTp = TextPainter(
-      text: TextSpan(
-        text: 'SOLD',
-        style: TextStyle(
-          fontSize: math.min(rect.height * 0.42, 22.0),
-          fontWeight: FontWeight.w900,
-          letterSpacing: 1.2,
-          color: Color.fromRGBO(180, 30, 30, opacity),
-          height: 1,
-        ),
-      ),
-      textDirection: ui.TextDirection.ltr,
-    )..layout();
-
-    final pad = 4.0;
-    final stampRect = RRect.fromRectAndRadius(
+    final cell = Rect.fromLTWH(0, 0, colWidth, cellHeight);
+    final s = faceSize(cell, cavityMetrics(cell).width) * 1.25;
+    drawFace(
+      canvas,
+      image,
       Rect.fromCenter(
-        center: Offset.zero,
-        width: stampTp.width + pad * 2,
-        height: stampTp.height + pad,
+        center: toLocal(drag.finger.value),
+        width: s,
+        height: s,
       ),
-      const Radius.circular(4),
+      null,
     );
-    canvas.drawRRect(
-      stampRect,
-      Paint()
-        ..color = Color.fromRGBO(180, 30, 30, 0.18 * opacity)
-        ..style = PaintingStyle.fill,
-    );
-    canvas.drawRRect(
-      stampRect,
-      Paint()
-        ..color = Color.fromRGBO(180, 30, 30, 0.85 * opacity)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2.2,
-    );
-    stampTp.paint(canvas, Offset(-stampTp.width / 2, -stampTp.height / 2));
-    canvas.restore();
   }
 
   @override
-  bool shouldRepaint(covariant _ShelfGridPainter old) {
-    if (old.rows != rows || old.cols != cols) return true;
-    if (old.cellHeight != cellHeight || old.line != line) return true;
-    if (old.highlightFree != highlightFree) return true;
-    if (old.sellingCell != sellingCell || old.sellT != sellT) return true;
-    if (old.held?.type != held?.type || old.held?.finger != held?.finger) {
-      return true;
-    }
-    if (old.cellBg != cellBg) return true;
-    if (old.occupied.length != occupied.length) return true;
-    if (old.faceImages.length != faceImages.length) return true;
-    if (_cellsDiffer(old.cells, cells)) return true;
-    if (_cellsDiffer(old.shadows, shadows)) return true;
-    return false;
-  }
-
-  bool _cellsDiffer(
-    Map<_CellKey, List<GameItem?>> a,
-    Map<_CellKey, List<GameItem?>> b,
-  ) {
-    if (a.length != b.length) return true;
-    for (final e in b.entries) {
-      final o = a[e.key];
-      if (o == null || o.length != e.value.length) return true;
-      for (var i = 0; i < e.value.length; i++) {
-        if (o[i]?.id != e.value[i]?.id) return true;
-      }
-    }
-    return false;
-  }
+  bool shouldRepaint(covariant _ShelfGridPainter old) => true;
 }

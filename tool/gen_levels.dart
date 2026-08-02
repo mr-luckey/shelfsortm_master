@@ -1,4 +1,4 @@
-﻿// Writes authored early levels (1-20) and assets/levels/index.json.
+﻿// Writes the authored campaign (1-30) and assets/levels/index.json.
 //
 // Run: `dart run tool/gen_levels.dart` from the project root.
 import 'dart:convert';
@@ -20,7 +20,7 @@ void main() {
   }
 
   final authored = <int>[];
-  for (var levelId = 1; levelId <= 20; levelId++) {
+  for (var levelId = 1; levelId <= 30; levelId++) {
     final level = LevelGenerator.generate(levelId);
     final problems = LevelValidator.problems(level);
     if (problems.isNotEmpty) {

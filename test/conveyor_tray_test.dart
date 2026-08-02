@@ -8,23 +8,26 @@ import 'package:shelfsortm_master/engine/mechanics/mechanic_ids.dart';
 
 void main() {
   group('ConveyorTrayMechanic', () {
-    test('wraps without teleporting while on screen', () {
+    test('rides right to left without teleporting while on screen', () {
       final m = ConveyorTrayMechanic()
         ..trayCount = 2
         ..viewportTrays = 3.2
-        ..speed = 1.0
-        ..direction = 1;
+        ..speed = 1.0;
       expect(m.beltLength, greaterThan(m.viewportTrays));
       expect(m.spacing, greaterThan(1));
 
-      final before = [m.positionOf(0), m.positionOf(1)];
-      m.advance(0.05);
-      final after = [m.positionOf(0), m.positionOf(1)];
-      for (var i = 0; i < 2; i++) {
-        // While a tray is still in the window its position only drifts forward.
-        if (before[i] < m.viewportTrays && after[i] < m.viewportTrays) {
-          expect(after[i], greaterThan(before[i]));
+      var previous = [m.positionOf(0), m.positionOf(1)];
+      // Ride a couple of loops: a tray may only jump back to the right once it
+      // has slid fully past the left edge.
+      for (var frame = 0; frame < 400; frame++) {
+        m.advance(1 / 60);
+        final now = [m.positionOf(0), m.positionOf(1)];
+        for (var i = 0; i < 2; i++) {
+          if (now[i] < previous[i]) continue;
+          expect(previous[i], lessThan(-0.98), reason: 'tray $i popped');
+          expect(now[i], greaterThanOrEqualTo(m.viewportTrays));
         }
+        previous = now;
       }
     });
 
@@ -33,7 +36,7 @@ void main() {
       final engine = MatchEngine(level: level);
       final m = engine.mechanics.ofType<ConveyorTrayMechanic>()!;
       final indices = m.trayShelfIndices;
-      expect(indices.length, 2);
+      expect(indices.length, level.trayCount);
 
       final goods = [
         for (final i in indices)
@@ -73,20 +76,20 @@ void main() {
   });
 
   group('tray levels', () {
-    test('levels 1-10 have no trays', () {
-      for (var i = 1; i <= 10; i++) {
+    test('levels 1-5 teach the cupboard before any tray shows up', () {
+      for (var i = 1; i <= 5; i++) {
         final level = LevelGenerator.generate(i);
         expect(level.trayCount, 0, reason: 'L$i');
         expect(level.mechanics, isNot(contains(MechanicIds.conveyorTray)));
       }
     });
 
-    test('levels 11-20 introduce trays and stay fair', () {
-      for (var i = 11; i <= 20; i++) {
+    test('levels 6-30 run trays and stay fair', () {
+      for (var i = 6; i <= 30; i++) {
         final plan = LevelPlan.forLevel(i);
         final level = LevelGenerator.generate(i);
         expect(level.trayCount, plan.trayCount, reason: 'L$i');
-        expect(level.trayCount, inInclusiveRange(2, 8), reason: 'L$i');
+        expect(level.trayCount, inInclusiveRange(3, 8), reason: 'L$i');
         expect(level.mechanics, contains(MechanicIds.conveyorTray));
         expect(LevelValidator.problems(level), isEmpty, reason: 'L$i');
 

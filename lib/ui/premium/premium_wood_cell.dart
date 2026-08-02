@@ -54,10 +54,11 @@ double slotCenter(int slot, double cavityWidth) =>
 }
 
 /// Fills the shelf cavity height; the slot cap keeps neighbours from
-/// colliding on wide boards.
+/// colliding on wide boards. Goods overlap slightly, which reads as products
+/// standing shoulder to shoulder on a real shelf.
 double faceSize(Rect rect, double cavityWidth) {
   final slotW = cavityWidth / spotsPerCell;
-  return math.min(slotW * 1.12, rect.height * 0.62);
+  return math.min(slotW * 1.26, rect.height * 0.74);
 }
 
 void drawFace(
@@ -83,7 +84,17 @@ void drawFace(
 }
 
 /// Grounds an item so it reads as standing on the shelf, not floating.
-void paintContactShadow(Canvas canvas, double cx, double floorY, double s) {
+///
+/// [strength] fades the shadow out while a good is lifted off the shelf.
+void paintContactShadow(
+  Canvas canvas,
+  double cx,
+  double floorY,
+  double s, {
+  double strength = 1,
+}) {
+  final k = strength.clamp(0.0, 1.0);
+  if (k <= 0) return;
   canvas.drawOval(
     Rect.fromCenter(
       center: Offset(cx, floorY - s * 0.03),
@@ -91,7 +102,7 @@ void paintContactShadow(Canvas canvas, double cx, double floorY, double s) {
       height: s * 0.17,
     ),
     Paint()
-      ..color = const Color(0xFF6B5836).withValues(alpha: 0.28)
+      ..color = const Color(0xFF6B5836).withValues(alpha: 0.28 * k)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.4),
   );
 }

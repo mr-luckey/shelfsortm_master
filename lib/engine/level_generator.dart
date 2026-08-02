@@ -77,21 +77,27 @@ class LevelGenerator {
   static const int slotsPerShelf = 3;
   static const int maxLayers = 5;
 
-  /// Goods a tray rolls in with, leaving one free place on it.
-  static const int trayStock = 2;
+  /// Most goods a single level ever stocks, so even the deepest board stays a
+  /// board a player can finish rather than an endless shift.
+  static const int maxStock = 240;
+
+  /// Goods a tray rolls in with on its front layer. Trays alternate so roughly
+  /// half of the belt always has a free place to drop a good onto.
+  static int trayRoom(int ordinal) => ordinal.isEven ? 3 : 2;
 
   /// @deprecated Prefer [LevelPlan.forLevel]; kept for existing tests.
   static int flavorLevel(int levelId) =>
       ((levelId - 1) % ThemeRoom.levelsPerFlavor) + 1;
 
+  /// Deepest a box may stack on this level.
   static int layersFor(int levelId) => LevelPlan.forLevel(levelId).layers;
 
+  /// How often a set of three starts scattered as three loose goods instead of
+  /// a helpful pair plus a single. Climbs across the 30 level campaign.
   static double hardnessFor(int levelId) {
-    final plan = LevelPlan.forLevel(levelId);
-    if (plan.layers <= 1 && levelId <= 5) return 0;
-    final t = ((levelId - 1) % ThemeRoom.levelsPerFlavor) /
-        (ThemeRoom.levelsPerFlavor - 1);
-    return pow(t.clamp(0.0, 1.0), 0.62).toDouble();
+    if (levelId <= 3) return 0;
+    final t = ((levelId - 3) / (LevelPlan.lastLevel - 3)).clamp(0.0, 1.0);
+    return pow(t, 0.7).toDouble();
   }
 
   static LevelData generate(int levelId) {
@@ -105,41 +111,60 @@ class LevelGenerator {
     final tint = tintColors[(levelId - 1) % tintColors.length];
 
     final trays = plan.trayCount.clamp(0, ConveyorTrayMechanic.maxTrays);
-    final freeFrontTarget = boxes < 4 ? 2 : max(2, boxes ~/ 4);
-    final maxTypesByCapacity =
-        ((boxes * layers * slotsPerShelf + trays * trayStock - freeFrontTarget) ~/
-                slotsPerShelf)
-            .clamp(1, productTypes.length);
+    final trayLayers = plan.trayLayers.clamp(1, maxLayers);
+    // Free places in the front row. Early boards keep a couple more to learn
+    // in; later boards keep only the working room they need.
+    final freeFrontTarget = boxes <= 4
+        ? max(2, boxes ~/ 2)
+        : levelId <= 10
+            ? max(3, (boxes / 5).ceil())
+            : max(3, (boxes / 7).ceil());
 
-    // A board only holds so many sets; drop a type at a time until every set
-    // of three actually fits, so no good is ever left unplaced.
-    var typeCount = min(plan.typeCount, maxTypesByCapacity);
+    var trayFront = 0;
+    for (var t = 0; t < trays; t++) {
+      trayFront += trayRoom(t);
+    }
+
+    // The front row is stocked full — three goods a box, a handful of boxes
+    // with two — so the cupboard always looks shopped, never bare. Everything
+    // the plan hides goes into the layers behind that front row.
+    final front = boxes * slotsPerShelf - freeFrontTarget;
+    final deepCapacity = boxes * slotsPerShelf * (layers - 1) +
+        trays * 2 * (trayLayers - 1);
+    final deepRoom = max(0, maxStock - front - trayFront);
+    final deep = min(min(plan.hidden, deepCapacity), deepRoom);
+    final goods = front + trayFront + deep;
+
+    // Sets of three; a set may repeat a product family once every family has
+    // been used, which is what makes the late boards so easy to misread.
+    var sets = goods ~/ slotsPerShelf;
     List<InitialPlacement>? placements;
-    while (typeCount >= 1 && placements == null) {
+    while (sets >= 1 && placements == null) {
       placements = _stock(
         levelId: levelId,
         boxes: boxes,
         layers: layers,
         trays: trays,
-        typeCount: typeCount,
+        trayLayers: trayLayers,
+        sets: sets,
+        deepShare: goods == 0 ? 0 : deep / goods,
         freeFrontTarget: freeFrontTarget,
         tint: tint,
       );
-      if (placements == null) typeCount -= 1;
+      if (placements == null) sets -= 1;
     }
     placements ??= const [];
 
-    final optimal = (typeCount * 2.2).round() + boxes;
+    final optimal = (sets * 2.2).round() + boxes;
     final twoStar = (optimal * 1.35).round();
     final oneStar = (optimal * 1.8).round();
 
-    // Big boards need a floor on the clock, otherwise a designed time can be
-    // shorter than the moves the level actually asks for.
-    final fairFloor = (placements.length * 3).ceil();
-    final computedTime = max(
-      plan.timeLimit ?? _timeFor(difficulty, placements.length, layers),
-      fairFloor,
-    );
+    // The clock comes from the plan's seconds-per-good, with a floor so a board
+    // is never shorter than the moves it actually asks for.
+    final designed = plan.timeLimit ??
+        (placements.length * plan.secPerGood).round();
+    final fairFloor = (placements.length * 1.6).ceil();
+    final computedTime = max(designed, fairFloor).clamp(60, 480);
 
     return LevelData(
       levelId: levelId,
@@ -164,7 +189,6 @@ class LevelGenerator {
           'conveyorTray': {
             'trayCount': trays,
             'speed': plan.traySpeed,
-            'direction': plan.trayDirection,
           },
       },
       seed: levelId * 7919 + 17,
@@ -176,39 +200,254 @@ class LevelGenerator {
     );
   }
 
-  /// Stocks [typeCount] sets of three onto the board, or null when they do not
-  /// all fit under the free-space and no-instant-match rules.
+  /// Stocks [sets] sets of three onto the board, or null when they do not all
+  /// fit under the free-space and no-instant-match rules.
+  ///
+  /// Depth is decided box by box: one box may hide three layers behind its
+  /// front row while its neighbour hides none, and the same goes for the trays.
+  /// Every box and every tray still starts with at least one good in it.
   static List<InitialPlacement>? _stock({
     required int levelId,
     required int boxes,
     required int layers,
     required int trays,
-    required int typeCount,
+    required int trayLayers,
+    required int sets,
+    required double deepShare,
     required int freeFrontTarget,
     required String tint,
   }) {
-    final rng = Random(levelId * 7919 + 17 + typeCount);
+    final goods = sets * slotsPerShelf;
+    if (goods < boxes + trays) return null;
 
-    // Trays come first so the belt always rolls in loaded; then the visible
-    // cupboard row, then the layers stacked behind it.
-    final cells = <({int shelfId, int depth})>[];
-    for (var t = 0; t < trays; t++) {
-      cells.add((shelfId: boxes + 1 + t, depth: 0));
+    for (var attempt = 0; attempt < 40; attempt++) {
+      final rng = Random(levelId * 7919 + 17 + sets * 31 + attempt * 977);
+      final cells = _fillPlan(
+        rng: rng,
+        boxes: boxes,
+        layers: layers,
+        trays: trays,
+        trayLayers: trayLayers,
+        goods: goods,
+        deepShare: deepShare,
+        freeFrontTarget: freeFrontTarget,
+      );
+      if (cells == null) return null;
+      final placements = _assign(
+        rng: rng,
+        levelId: levelId,
+        cells: cells,
+        sets: sets,
+        tint: tint,
+      );
+      if (placements != null) return placements;
     }
-    for (var d = 0; d < layers; d++) {
-      for (var b = 1; b <= boxes; b++) {
-        cells.add((shelfId: b, depth: d));
+    return null;
+  }
+
+  /// One entry per stocked cell: which box or tray, how deep, and how many
+  /// goods it holds.
+  static List<({int shelfId, int depth, int count})>? _fillPlan({
+    required Random rng,
+    required int boxes,
+    required int layers,
+    required int trays,
+    required int trayLayers,
+    required int goods,
+    required double deepShare,
+    required int freeFrontTarget,
+  }) {
+    var trayFront = 0;
+    final trayFrontCount = <int>[];
+    for (var t = 0; t < trays; t++) {
+      trayFrontCount.add(trayRoom(t));
+      trayFront += trayRoom(t);
+    }
+    if (goods - trayFront < 2 * boxes) return null;
+
+    final frontCap = boxes * slotsPerShelf - freeFrontTarget;
+    // The front row is stocked first and stays as full as the free-space target
+    // allows; only what is left over hides in the layers behind. That way a
+    // cupboard never opens with half-empty boxes.
+    final wantDeep = layers > 1 && deepShare > 0 ? min(3, boxes) : 0;
+    final front = min(frontCap, goods - trayFront - wantDeep);
+    if (front < 2 * boxes) return null;
+    final deep = goods - trayFront - front;
+    // Depth each box and tray picked for itself. Deeper levels roll more often
+    // and we keep rolling until the hidden goods actually have somewhere to
+    // sit, so a designed deepShare never collapses into a flat board.
+    final boxExtra = List<int>.filled(boxes, 0);
+    final trayExtra = List<int>.filled(trays, 0);
+    var boxDeepCap = 0;
+    var trayDeepCap = 0;
+    void ensureDepth() {
+      boxDeepCap = 0;
+      trayDeepCap = 0;
+      for (var b = 0; b < boxes; b++) {
+        boxDeepCap += boxExtra[b] * slotsPerShelf;
+      }
+      for (var t = 0; t < trays; t++) {
+        trayDeepCap += trayExtra[t] * 2;
       }
     }
 
-    final types = List<String>.from(productTypes)..shuffle(rng);
-    final usedTypes = types.take(typeCount).toList();
+    // Seed with a random roll so stacks stay uneven box to box.
+    for (var b = 0; b < boxes; b++) {
+      boxExtra[b] = _rollDepth(rng, layers, deepShare);
+    }
+    for (var t = 0; t < trays; t++) {
+      trayExtra[t] = _rollDepth(rng, trayLayers, deepShare);
+    }
+    ensureDepth();
 
-    // A set either stands two-together with its third elsewhere, or is split
-    // into three loose goods on harder levels.
+    // Top up any box or tray that still has room until the deep goods fit.
+    final bumpOrder = <({bool tray, int i})>[
+      for (var b = 0; b < boxes; b++) (tray: false, i: b),
+      for (var t = 0; t < trays; t++) (tray: true, i: t),
+    ]..shuffle(rng);
+    var guard = 0;
+    while (boxDeepCap + trayDeepCap < deep && guard < 200) {
+      guard += 1;
+      var grew = false;
+      for (final e in bumpOrder) {
+        if (boxDeepCap + trayDeepCap >= deep) break;
+        if (e.tray) {
+          if (trayExtra[e.i] >= trayLayers - 1) continue;
+          trayExtra[e.i] += 1;
+          trayDeepCap += 2;
+          grew = true;
+        } else {
+          if (boxExtra[e.i] >= layers - 1) continue;
+          boxExtra[e.i] += 1;
+          boxDeepCap += slotsPerShelf;
+          grew = true;
+        }
+      }
+      if (!grew) break;
+      bumpOrder.shuffle(rng);
+    }
+    if (boxDeepCap + trayDeepCap < deep) return null;
+
+    // Front row: every box is stocked full, then a few single places are taken
+    // back out as working room. No box ever starts with just one good, and none
+    // starts empty.
+    final frontCount = List<int>.filled(boxes, slotsPerShelf);
+    var gaps = boxes * slotsPerShelf - front;
+    final gapOrder = [for (var b = 0; b < boxes; b++) b]..shuffle(rng);
+    for (final b in gapOrder) {
+      if (gaps <= 0) break;
+      frontCount[b] -= 1;
+      gaps -= 1;
+    }
+    if (gaps > 0) return null;
+
+    // Hidden layers: spread the deep goods over the layers the boxes and trays
+    // rolled for themselves, boxes first so the belt stays lighter.
+    final deepCells = <({int shelfId, int depth, int cap})>[];
+    for (var b = 0; b < boxes; b++) {
+      for (var d = 1; d <= boxExtra[b]; d++) {
+        deepCells.add((shelfId: b + 1, depth: d, cap: slotsPerShelf));
+      }
+    }
+    final trayDeepStart = deepCells.length;
+    for (var t = 0; t < trays; t++) {
+      for (var d = 1; d <= trayExtra[t]; d++) {
+        deepCells.add((shelfId: boxes + 1 + t, depth: d, cap: 2));
+      }
+    }
+
+    final counts = List<int>.filled(deepCells.length, 0);
+    final deepTickets = <int>[
+      for (var i = 0; i < trayDeepStart; i++)
+        for (var k = 0; k < deepCells[i].cap; k++) i,
+    ]..shuffle(rng);
+    final trayTickets = <int>[
+      for (var i = trayDeepStart; i < deepCells.length; i++)
+        for (var k = 0; k < deepCells[i].cap; k++) i,
+    ]..shuffle(rng);
+    // Around a fifth of the hidden goods ride in behind the tray fronts.
+    final wantTrayDeep = min(trayTickets.length, (deep * 0.22).round());
+    var placedDeep = 0;
+    for (final i in trayTickets.take(wantTrayDeep)) {
+      counts[i] += 1;
+      placedDeep += 1;
+    }
+    // Every box that rolled a layer gets a good in it first, so depth is spread
+    // across the cupboard instead of piling up in a handful of boxes.
+    final seedOrder = [
+      for (var i = 0; i < trayDeepStart; i++)
+        if (deepCells[i].depth == 1) i,
+    ]..shuffle(rng);
+    for (final i in seedOrder) {
+      if (placedDeep >= deep) break;
+      counts[i] += 1;
+      placedDeep += 1;
+    }
+    for (final i in deepTickets) {
+      if (placedDeep >= deep) break;
+      if (counts[i] >= deepCells[i].cap) continue;
+      counts[i] += 1;
+      placedDeep += 1;
+    }
+    for (final i in trayTickets) {
+      if (placedDeep >= deep) break;
+      if (counts[i] >= deepCells[i].cap) continue;
+      counts[i] += 1;
+      placedDeep += 1;
+    }
+    if (placedDeep < deep) return null;
+
+    return [
+      for (var b = 0; b < boxes; b++)
+        (shelfId: b + 1, depth: 0, count: frontCount[b]),
+      for (var t = 0; t < trays; t++)
+        (shelfId: boxes + 1 + t, depth: 0, count: trayFrontCount[t]),
+      for (var i = 0; i < deepCells.length; i++)
+        if (counts[i] > 0)
+          (
+            shelfId: deepCells[i].shelfId,
+            depth: deepCells[i].depth,
+            count: counts[i],
+          ),
+    ];
+  }
+
+  /// How many layers a single box or tray hides behind its front row.
+  static int _rollDepth(Random rng, int maxLayers, double deepShare) {
+    if (maxLayers <= 1 || deepShare <= 0) return 0;
+    var extra = 0;
+    for (var d = 1; d < maxLayers; d++) {
+      // The first hidden layer is likely so depth shows up all over the
+      // cupboard; deeper ones taper off, so only a few boxes stack really high.
+      final chance = d == 1
+          ? (deepShare * 3.4).clamp(0.25, 0.95)
+          : (deepShare * (2.4 - 0.3 * d)).clamp(0.15, 0.9);
+      if (rng.nextDouble() > chance) break;
+      extra += 1;
+    }
+    return extra;
+  }
+
+  /// Fills the planned cells with sets of three, keeping any cell from holding
+  /// a finished set of its own.
+  static List<InitialPlacement>? _assign({
+    required Random rng,
+    required int levelId,
+    required List<({int shelfId, int depth, int count})> cells,
+    required int sets,
+    required String tint,
+  }) {
+    // Product families are handed out in shuffled order; once every family has
+    // been used a level starts a second set of one, which reads as two very
+    // similar goods to sort apart.
+    final types = List<String>.from(productTypes)..shuffle(rng);
+
+    // A set either stands two-together with its third elsewhere, or arrives as
+    // three loose goods on the harder levels.
     final hardness = hardnessFor(levelId);
     final chunks = <List<String>>[];
-    for (final type in usedTypes) {
+    for (var s = 0; s < sets; s++) {
+      final type = types[s % types.length];
       if (rng.nextDouble() < hardness) {
         chunks
           ..add([type])
@@ -220,70 +459,45 @@ class LevelGenerator {
           ..add([type]);
       }
     }
-    chunks.shuffle(rng);
-
-    final itemTotal = typeCount * 3;
-    final capacity =
-        trays * trayStock + (cells.length - trays) * slotsPerShelf;
-    if (capacity - itemTotal < freeFrontTarget) return null;
-
-    // A few front boxes keep one place empty so goods can be carried around;
-    // those places are spread evenly across the visible row.
-    final gapBoxes = <int>{};
-    final gapCount = max(freeFrontTarget, boxes ~/ 4).clamp(1, boxes);
-    for (var k = 0; k < gapCount; k++) {
-      final at = (((k + 1) * boxes) ~/ (gapCount + 1)).clamp(0, boxes - 1);
-      gapBoxes.add(at);
-    }
-
-    // Trays roll in part-loaded so there is always somewhere to put a good;
-    // front boxes with a reserved place hold one good less.
-    final room = [
-      for (var i = 0; i < cells.length; i++)
-        if (i < trays)
-          trayStock
-        else if (i - trays < boxes && gapBoxes.contains(i - trays))
-          slotsPerShelf - 1
-        else
-          slotsPerShelf,
-    ];
 
     final stocked = List.generate(cells.length, (_) => <String>[]);
 
     bool fits(int index, List<String> chunk) {
-      if (stocked[index].length + chunk.length > room[index]) return false;
-      // A full box of three of a kind would already be sold.
-      final same = stocked[index].where((t) => t == chunk.first).length;
-      if (room[index] >= slotsPerShelf &&
-          same + chunk.length >= slotsPerShelf) {
+      if (stocked[index].length + chunk.length > cells[index].count) {
         return false;
       }
-      return true;
+      // Three of a kind together — in a box or on a tray — would already be
+      // sold before the player touched it.
+      final same = stocked[index].where((t) => t == chunk.first).length;
+      return same + chunk.length < slotsPerShelf;
     }
 
-    // Two-together sets are stocked first so they get the roomier places.
+    // Pairs are stocked first so they get the roomier cells; the order cells
+    // are tried in is shuffled so the board never fills left to right.
     chunks.sort((a, b) => b.length.compareTo(a.length));
+    final order = [for (var i = 0; i < cells.length; i++) i];
     for (final chunk in chunks) {
+      order.shuffle(rng);
       var placed = false;
-      for (var i = 0; i < cells.length && !placed; i++) {
+      for (final i in order) {
         if (!fits(i, chunk)) continue;
         stocked[i].addAll(chunk);
         placed = true;
+        break;
       }
       if (!placed) return null;
     }
 
-    var frontFree = 0;
-    for (var i = trays; i < trays + boxes; i++) {
-      frontFree += slotsPerShelf - stocked[i].length;
+    // Every cell in the plan has to end up exactly as full as planned,
+    // otherwise a box could start empty or a good would go missing.
+    for (var i = 0; i < cells.length; i++) {
+      if (stocked[i].length != cells[i].count) return null;
     }
-    if (frontFree < freeFrontTarget) return null;
 
     var counter = 0;
     final placements = <InitialPlacement>[];
     for (var i = 0; i < cells.length; i++) {
       final stock = stocked[i]..shuffle(rng);
-      if (stock.isEmpty) continue;
       final cell = cells[i];
       // Which place stays empty moves around: left, middle or right.
       final places = [for (var s = 0; s < slotsPerShelf; s++) s]..shuffle(rng);
@@ -302,22 +516,5 @@ class LevelGenerator {
       }
     }
     return placements;
-  }
-
-  static int _timeFor(LevelDifficulty d, int itemCount, int layers) {
-    final base = (itemCount * (3.2 + layers * 0.4)).round() + 55;
-    switch (d) {
-      case LevelDifficulty.easy:
-      case LevelDifficulty.rest:
-        return (base * 1.55).round().clamp(100, 900);
-      case LevelDifficulty.hard:
-        return (base * 1.05).round().clamp(80, 900);
-      case LevelDifficulty.tricky:
-        return base.clamp(75, 900);
-      case LevelDifficulty.boss:
-        return (base * 0.95).round().clamp(110, 900);
-      case LevelDifficulty.standard:
-        return (base * 1.2).round().clamp(90, 900);
-    }
   }
 }

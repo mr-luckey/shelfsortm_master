@@ -14,9 +14,16 @@ import 'package:shelfsortm_master/models/shelf.dart';
 
 void main() {
   group('mechanic progression', () {
-    test('campaign levels run on the layer progression alone', () {
-      for (final i in [1, 5, 10, 26, 51, 100, 101, 550, 1100]) {
-        expect(LevelGenerator.generate(i).mechanics, isEmpty, reason: 'Level $i');
+    test('the belt is the only mechanic the campaign turns on', () {
+      for (final i in [1, 5]) {
+        expect(LevelGenerator.generate(i).mechanics, isEmpty, reason: 'L$i');
+      }
+      for (final i in [10, 26, 51, 100, 101, 550, 1100]) {
+        expect(
+          LevelGenerator.generate(i).mechanics,
+          [MechanicIds.conveyorTray],
+          reason: 'L$i',
+        );
       }
     });
   });

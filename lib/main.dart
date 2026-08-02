@@ -17,6 +17,7 @@ Future<void> main() async {
 
   final save = SaveService();
   final audio = AudioService();
+  await audio.init();
   final ads = AdService();
   final iap = IapService();
   await ads.init();

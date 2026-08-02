@@ -1,32 +1,52 @@
 import 'level_shapes.dart';
 
-/// Per-level (or per-band) design recipe consumed by [LevelGenerator].
+/// Per-level design recipe consumed by `LevelGenerator`.
+///
+/// A plan says how big the cupboard is, how many goods start hidden behind the
+/// front row, and how busy the belt is. The front row itself is not authored:
+/// the generator fills every box (three goods, a few boxes with two, never one)
+/// and then buries [hidden] goods in the layers behind. Every knob only ever
+/// climbs across the campaign, which is what makes each level harder than the
+/// one before it.
 class LevelPlan {
   final String shapeId;
-  final int typeCount;
+
+  /// Goods that start hidden behind the front row (0 = flat board). This is the
+  /// main difficulty knob once the cupboard stops growing: the front row is
+  /// always stocked full, so everything authored here is memory work.
+  final int hidden;
+
+  /// Deepest a single box may stack. Boxes pick their own depth up to this, so
+  /// the board is never a uniform grid of equal stacks.
   final int layers;
-  final int? timeLimit;
 
   /// Trays riding the belt below the cupboard (0 = no belt, max 8).
   final int trayCount;
 
-  /// Belt speed in trays per second.
+  /// Deepest a single tray may stack; trays also pick their own depth.
+  final int trayLayers;
+
+  /// Belt speed in tray widths per second.
   final double traySpeed;
 
-  /// +1 rides right, -1 rides left.
-  final int trayDirection;
+  /// Seconds of clock per good on the board. Lower means more pressure.
+  final double secPerGood;
+
+  /// Overrides [secPerGood] for the hand-set tutorial clocks.
+  final int? timeLimit;
 
   final List<String> mechanics;
   final Map<String, dynamic> mechanicConfig;
 
   const LevelPlan({
     required this.shapeId,
-    required this.typeCount,
-    required this.layers,
-    this.timeLimit,
+    this.hidden = 0,
+    this.layers = 1,
     this.trayCount = 0,
+    this.trayLayers = 1,
     this.traySpeed = 0.24,
-    this.trayDirection = 1,
+    this.secPerGood = 3.0,
+    this.timeLimit,
     this.mechanics = const [],
     this.mechanicConfig = const {},
   });
@@ -35,175 +55,268 @@ class LevelPlan {
 
   int get boxes => LevelShapes.boxCount(layout);
 
-  /// Explicit designs for the tutorial / early campaign.
+  int get cols => LevelShapes.colCount(layout);
+
+  int get rows => LevelShapes.rowCount(layout);
+
+  /// The 30 level campaign. Treat this as the whole game.
   ///
-  /// 1-3 teach the basics, 4-6 bring new cupboard shapes, 7-10 shrink the
-  /// cupboard and stack hidden layers, 11-15 introduce the moving trays and
-  /// 16-20 push the belt further.
-  static const Map<int, LevelPlan> early = {
-    1: LevelPlan(shapeId: 'pair', typeCount: 1, layers: 1, timeLimit: 180),
-    2: LevelPlan(shapeId: 'trio', typeCount: 2, layers: 1, timeLimit: 170),
-    3: LevelPlan(shapeId: 'grid3x2', typeCount: 4, layers: 1, timeLimit: 160),
-    4: LevelPlan(shapeId: 'stair7', typeCount: 5, layers: 1, timeLimit: 155),
-    5: LevelPlan(shapeId: 'lShape', typeCount: 4, layers: 1, timeLimit: 150),
-    6: LevelPlan(shapeId: 'grid3x3', typeCount: 7, layers: 1, timeLimit: 150),
-    7: LevelPlan(shapeId: 'offset', typeCount: 5, layers: 2, timeLimit: 145),
-    8: LevelPlan(shapeId: 'grid2x2', typeCount: 6, layers: 2, timeLimit: 145),
-    9: LevelPlan(shapeId: 'uShape', typeCount: 6, layers: 2, timeLimit: 140),
-    10: LevelPlan(shapeId: 'tShape', typeCount: 7, layers: 2, timeLimit: 140),
-    11: LevelPlan(
-      shapeId: 'grid3x2',
-      typeCount: 6,
-      layers: 1,
-      timeLimit: 150,
-      trayCount: 2,
+  /// 1-3 teach picking, carrying and matching on a cupboard that is already
+  /// fully stocked. 4 introduces depth: goods hide behind the front row, a
+  /// different number behind every box. 6 brings the belt. The cabinet then
+  /// grows nearly every level up to the 4x10 wall on 20. From there it is the
+  /// deep vault: the cabinets get smaller again but stack far deeper, so more
+  /// and more of the level is hidden while the belt runs faster and the clock
+  /// gets shorter, right down to level 30 where a small cupboard hides almost
+  /// everything. Neighbouring levels never share a shape.
+  static const Map<int, LevelPlan> campaign = {
+    1: LevelPlan(shapeId: 'trio', timeLimit: 90),
+    2: LevelPlan(shapeId: 'grid2x2', timeLimit: 110),
+    3: LevelPlan(shapeId: 'grid3x2', timeLimit: 150),
+    4: LevelPlan(
+      shapeId: 'grid4x2',
+      hidden: 3,
+      layers: 2,
+      secPerGood: 5.4,
+    ),
+    5: LevelPlan(
+      shapeId: 'grid3x3',
+      hidden: 6,
+      layers: 2,
+      secPerGood: 5.2,
+    ),
+    6: LevelPlan(
+      shapeId: 'grid4x3',
+      hidden: 12,
+      layers: 2,
+      trayCount: 4,
+      traySpeed: 0.16,
+      secPerGood: 5.0,
+    ),
+    7: LevelPlan(
+      shapeId: 'grid3x4',
+      hidden: 15,
+      layers: 2,
+      trayCount: 4,
       traySpeed: 0.18,
+      secPerGood: 4.8,
+    ),
+    8: LevelPlan(
+      shapeId: 'grid3x5',
+      hidden: 21,
+      layers: 3,
+      trayCount: 5,
+      traySpeed: 0.19,
+      secPerGood: 4.6,
+    ),
+    9: LevelPlan(
+      shapeId: 'grid4x4',
+      hidden: 24,
+      layers: 3,
+      trayCount: 5,
+      traySpeed: 0.20,
+      secPerGood: 4.45,
+    ),
+    10: LevelPlan(
+      shapeId: 'grid3x6',
+      hidden: 30,
+      layers: 3,
+      trayCount: 6,
+      trayLayers: 2,
+      traySpeed: 0.22,
+      secPerGood: 4.3,
+    ),
+    11: LevelPlan(
+      shapeId: 'podium4x5',
+      hidden: 34,
+      layers: 3,
+      trayCount: 6,
+      trayLayers: 2,
+      traySpeed: 0.23,
+      secPerGood: 4.15,
     ),
     12: LevelPlan(
-      shapeId: 'stair7',
-      typeCount: 7,
-      layers: 1,
-      timeLimit: 150,
-      trayCount: 2,
-      traySpeed: 0.18,
-      trayDirection: -1,
+      shapeId: 'grid4x5',
+      hidden: 40,
+      layers: 4,
+      trayCount: 6,
+      trayLayers: 2,
+      traySpeed: 0.24,
+      secPerGood: 4.0,
     ),
     13: LevelPlan(
-      shapeId: 'lShape',
-      typeCount: 6,
-      layers: 1,
-      timeLimit: 145,
-      trayCount: 3,
-      traySpeed: 0.22,
+      shapeId: 'grid3x7',
+      hidden: 46,
+      layers: 4,
+      trayCount: 7,
+      trayLayers: 2,
+      traySpeed: 0.25,
+      secPerGood: 3.85,
     ),
     14: LevelPlan(
-      shapeId: 'grid3x3',
-      typeCount: 9,
-      layers: 1,
-      timeLimit: 145,
-      trayCount: 3,
-      traySpeed: 0.22,
-      trayDirection: -1,
+      shapeId: 'grid4x6',
+      hidden: 54,
+      layers: 4,
+      trayCount: 7,
+      trayLayers: 2,
+      traySpeed: 0.26,
+      secPerGood: 3.7,
     ),
     15: LevelPlan(
-      shapeId: 'grid4x2',
-      typeCount: 12,
-      layers: 2,
-      timeLimit: 145,
-      trayCount: 4,
-      traySpeed: 0.26,
+      shapeId: 'grid3x8',
+      hidden: 60,
+      layers: 4,
+      trayCount: 7,
+      trayLayers: 3,
+      traySpeed: 0.27,
+      secPerGood: 3.55,
     ),
     16: LevelPlan(
-      shapeId: 'tallNarrow',
-      typeCount: 13,
-      layers: 2,
-      timeLimit: 145,
-      trayCount: 5,
-      traySpeed: 0.26,
-      trayDirection: -1,
+      shapeId: 'grid3x9',
+      hidden: 68,
+      layers: 4,
+      trayCount: 8,
+      trayLayers: 3,
+      traySpeed: 0.28,
+      secPerGood: 3.4,
     ),
     17: LevelPlan(
-      shapeId: 'offset',
-      typeCount: 8,
-      layers: 3,
-      timeLimit: 140,
-      trayCount: 5,
-      traySpeed: 0.30,
+      shapeId: 'grid4x7',
+      hidden: 76,
+      layers: 5,
+      trayCount: 8,
+      trayLayers: 3,
+      traySpeed: 0.29,
+      secPerGood: 3.3,
     ),
     18: LevelPlan(
-      shapeId: 'pyramid',
-      typeCount: 13,
-      layers: 2,
-      timeLimit: 140,
-      trayCount: 6,
+      shapeId: 'grid3x10',
+      hidden: 84,
+      layers: 5,
+      trayCount: 8,
+      trayLayers: 3,
       traySpeed: 0.30,
-      trayDirection: -1,
+      secPerGood: 3.2,
     ),
     19: LevelPlan(
-      shapeId: 'uShape',
-      typeCount: 11,
-      layers: 3,
-      timeLimit: 140,
-      trayCount: 7,
-      traySpeed: 0.34,
+      shapeId: 'grid4x8',
+      hidden: 92,
+      layers: 5,
+      trayCount: 8,
+      trayLayers: 3,
+      traySpeed: 0.31,
+      secPerGood: 3.1,
     ),
     20: LevelPlan(
-      shapeId: 'medium12',
-      typeCount: 18,
-      layers: 2,
-      timeLimit: 140,
+      shapeId: 'grid4x10',
+      hidden: 102,
+      layers: 5,
       trayCount: 8,
+      trayLayers: 3,
+      traySpeed: 0.32,
+      secPerGood: 3.0,
+    ),
+    21: LevelPlan(
+      shapeId: 'grid4x9',
+      hidden: 110,
+      layers: 5,
+      trayCount: 8,
+      trayLayers: 4,
       traySpeed: 0.34,
-      trayDirection: -1,
+      secPerGood: 2.9,
+    ),
+    22: LevelPlan(
+      shapeId: 'grid4x8',
+      hidden: 116,
+      layers: 5,
+      trayCount: 8,
+      trayLayers: 4,
+      traySpeed: 0.35,
+      secPerGood: 2.8,
+    ),
+    23: LevelPlan(
+      shapeId: 'grid3x10',
+      hidden: 122,
+      layers: 5,
+      trayCount: 8,
+      trayLayers: 4,
+      traySpeed: 0.36,
+      secPerGood: 2.7,
+    ),
+    24: LevelPlan(
+      shapeId: 'grid4x7',
+      hidden: 128,
+      layers: 5,
+      trayCount: 8,
+      trayLayers: 4,
+      traySpeed: 0.37,
+      secPerGood: 2.6,
+    ),
+    25: LevelPlan(
+      shapeId: 'grid3x9',
+      hidden: 132,
+      layers: 5,
+      trayCount: 8,
+      trayLayers: 4,
+      traySpeed: 0.38,
+      secPerGood: 2.5,
+    ),
+    26: LevelPlan(
+      shapeId: 'grid3x8',
+      hidden: 138,
+      layers: 5,
+      trayCount: 8,
+      trayLayers: 4,
+      traySpeed: 0.40,
+      secPerGood: 2.4,
+    ),
+    27: LevelPlan(
+      shapeId: 'grid3x7',
+      hidden: 144,
+      layers: 5,
+      trayCount: 8,
+      trayLayers: 4,
+      traySpeed: 0.41,
+      secPerGood: 2.3,
+    ),
+    28: LevelPlan(
+      shapeId: 'grid4x5',
+      hidden: 148,
+      layers: 5,
+      trayCount: 8,
+      trayLayers: 4,
+      traySpeed: 0.43,
+      secPerGood: 2.2,
+    ),
+    29: LevelPlan(
+      shapeId: 'grid3x6',
+      hidden: 152,
+      layers: 5,
+      trayCount: 8,
+      trayLayers: 4,
+      traySpeed: 0.44,
+      secPerGood: 2.1,
+    ),
+    30: LevelPlan(
+      shapeId: 'grid4x4',
+      hidden: 158,
+      layers: 5,
+      trayCount: 8,
+      trayLayers: 4,
+      traySpeed: 0.46,
+      secPerGood: 2.0,
     ),
   };
 
-  /// Shape rotation used by the banded generator after the authored campaign.
-  static const List<String> bandShapes = [
-    'grid3x2',
-    'stair7',
-    'lShape',
-    'tallNarrow',
-    'offset',
-    'uShape',
-    'tShape',
-    'grid4x2',
-    'asymmetric8',
-    'pyramid',
-    'wide10',
-    'medium12',
-    'grid4x3',
-    'grid3x3',
-    'split',
-    'grid4x4',
-  ];
-
-  /// First generated level; everything before this is authored above.
-  static const int firstBandLevel = 21;
+  /// Last authored level. The campaign is 30 levels long; anything past it
+  /// replays the closing levels so a stray level id still opens a board.
+  static const int lastLevel = 30;
 
   static LevelPlan forLevel(int levelId) {
-    final earlyPlan = early[levelId];
-    if (earlyPlan != null) return earlyPlan;
-    return _bandPlan(levelId);
-  }
-
-  static LevelPlan _bandPlan(int levelId) {
-    // Cycle shapes so consecutive levels feel different.
-    final shapeId = bandShapes[(levelId - 1) % bandShapes.length];
-    final layout = LevelShapes.byId(shapeId);
-    final boxes = LevelShapes.boxCount(layout);
-
-    // Layers climb slowly, capped at 5.
-    final layers = (1 + ((levelId - 1) ~/ 8)).clamp(1, 5);
-
-    // The belt keeps growing and speeding up, up to eight trays.
-    final step = ((levelId - firstBandLevel) ~/ 5).clamp(0, 8);
-    final trayCount = (4 + step).clamp(2, 8);
-    final traySpeed = (0.30 + 0.02 * step).clamp(0.18, 0.46);
-    final trayDirection = levelId.isEven ? -1 : 1;
-
-    // Leave room for carry space: roughly 1/4 of the front slots stay empty.
-    final freeFrontTarget = boxes < 4 ? 2 : (boxes ~/ 4).clamp(2, boxes);
-    final maxTypes =
-        ((boxes * layers * 3 + trayCount * 2 - freeFrontTarget) ~/ 3)
-            .clamp(1, 40);
-    // Boards fill up as levels climb: about 60% stocked at first, packed later.
-    final density = 0.6 + 0.4 * (((levelId - 16) / 60).clamp(0.0, 1.0));
-    final typeCount = (maxTypes * density).floor().clamp(1, maxTypes);
-
-    // Tighter clocks as levels climb; still above validator floor.
-    final base = 90 + boxes * 4 + layers * 15 + trayCount * 3;
-    final squeeze = ((levelId - firstBandLevel) * 0.4).round().clamp(0, 40);
-    final timeLimit = (base - squeeze).clamp(75, 300);
-
-    return LevelPlan(
-      shapeId: shapeId,
-      typeCount: typeCount,
-      layers: layers,
-      timeLimit: timeLimit,
-      trayCount: trayCount,
-      traySpeed: traySpeed.toDouble(),
-      trayDirection: trayDirection,
-    );
+    final authored = campaign[levelId];
+    if (authored != null) return authored;
+    if (levelId < 1) return campaign[1]!;
+    // Past the campaign, cycle the final ten levels.
+    return campaign[21 + ((levelId - 31) % 10)]!;
   }
 }

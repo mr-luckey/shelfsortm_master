@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import '../../app/theme/app_colors.dart';
-import '../../app/theme/goods_sort_theme.dart';
+import '../meta/meta_chrome.dart';
+import '../premium/premium_tokens.dart';
 import 'goods_emoji.dart';
 
 class CurrencyHud extends StatelessWidget {
@@ -23,15 +24,17 @@ class CurrencyHud extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         _Chip(
-          icon: Icons.monetization_on_rounded,
-          color: AppColors.secondary,
+          asset: '${PremiumTokens.uiRoot}/coin.png',
+          fallbackIcon: Icons.monetization_on_rounded,
+          color: MetaChrome.gold,
           value: coins,
           compact: compact,
         ),
         const SizedBox(width: 8),
         _Chip(
-          icon: Icons.diamond_rounded,
-          color: AppColors.accent,
+          asset: '${PremiumTokens.uiRoot}/gem.png',
+          fallbackIcon: Icons.diamond_rounded,
+          color: const Color(0xFFCE93D8),
           value: gems,
           compact: compact,
         ),
@@ -41,13 +44,15 @@ class CurrencyHud extends StatelessWidget {
 }
 
 class _Chip extends StatelessWidget {
-  final IconData icon;
+  final String asset;
+  final IconData fallbackIcon;
   final Color color;
   final int value;
   final bool compact;
 
   const _Chip({
-    required this.icon,
+    required this.asset,
+    required this.fallbackIcon,
     required this.color,
     required this.value,
     required this.compact,
@@ -55,37 +60,55 @@ class _Chip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final h = compact ? 28.0 : 34.0;
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: compact ? 8 : 12,
-        vertical: compact ? 4 : 6,
+      height: h,
+      padding: EdgeInsets.only(
+        left: 4,
+        right: compact ? 8 : 10,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xEE2A1608),
         borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: MetaChrome.brass, width: 1.2),
         boxShadow: [
           BoxShadow(
-            color: color.withValues(alpha: 0.25),
-            blurRadius: 8,
+            color: Colors.black.withValues(alpha: 0.3),
+            blurRadius: 6,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Row(
         children: [
-          Icon(icon, color: color, size: compact ? 16 : 18),
+          Image.asset(
+            asset,
+            width: compact ? 18 : 22,
+            height: compact ? 18 : 22,
+            errorBuilder: (context, error, stack) =>
+                Icon(fallbackIcon, color: color, size: compact ? 16 : 18),
+          ),
           const SizedBox(width: 4),
           Text(
-            '$value',
-            style: TextStyle(
-              fontWeight: FontWeight.w800,
+            _fmt(value),
+            style: GoogleFonts.nunito(
+              fontWeight: FontWeight.w900,
               fontSize: compact ? 13 : 15,
-              color: AppColors.textDark,
+              color: MetaChrome.cream,
             ),
           ),
         ],
       ),
     );
+  }
+
+  static String _fmt(int n) {
+    if (n >= 1000000) return '${(n / 1000000).toStringAsFixed(1)}M';
+    if (n >= 10000) return '${(n / 1000).toStringAsFixed(1)}K';
+    if (n >= 1000) {
+      return '${n ~/ 1000},${(n % 1000).toString().padLeft(3, '0')}';
+    }
+    return '$n';
   }
 }
 
@@ -101,41 +124,7 @@ class GlowPlayButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        width: 200,
-        height: 64,
-        decoration: BoxDecoration(
-          gradient: GoodsSortTheme.playGradient,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: GoodsSortTheme.playGreen.withValues(alpha: 0.5),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
-        alignment: Alignment.center,
-        child: Text(
-          label,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 26,
-            fontWeight: FontWeight.w900,
-            letterSpacing: 2,
-          ),
-        ),
-      )
-          .animate(onPlay: (c) => c.repeat(reverse: true))
-          .scale(
-            begin: const Offset(1, 1),
-            end: const Offset(1.04, 1.04),
-            duration: 1200.ms,
-            curve: Curves.easeInOut,
-          ),
-    );
+    return MetaPlayButton(onPressed: onPressed, label: label);
   }
 }
 
@@ -164,16 +153,18 @@ class MiaAvatar extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: const LinearGradient(
-          colors: [Color(0xFFFFE0B2), Color(0xFFFFCC80)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFFE8C45A), Color(0xFF8A5A10)],
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.3),
+            color: Colors.black.withValues(alpha: 0.35),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
         ],
-        border: Border.all(color: Colors.white, width: 3),
+        border: Border.all(color: MetaChrome.cream, width: 3),
       ),
       alignment: Alignment.center,
       child: Column(

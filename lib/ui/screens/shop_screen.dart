@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../app/theme/app_colors.dart';
 import '../../providers/progress_provider.dart';
 import '../../services/iap_service.dart';
+import '../meta/meta_chrome.dart';
 import '../widgets/common_widgets.dart';
 
 class ShopScreen extends StatelessWidget {
@@ -14,42 +16,24 @@ class ShopScreen extends StatelessWidget {
     return Consumer<ProgressProvider>(
       builder: (context, progress, _) {
         final p = progress.progress;
-        return Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.background, Color(0xFFF3E5F5)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
+        return MetaBackdrop(
           child: SafeArea(
             child: ListView(
               padding: const EdgeInsets.all(16),
               children: [
                 Row(
                   children: [
-                    const Expanded(
-                      child: Text(
-                        'Shop',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
+                    const Expanded(child: MetaTitle('Shop', size: 26)),
                     CurrencyHud(coins: p.coins, gems: p.gems),
                   ],
-                ),
+                ).animate().fadeIn(),
                 const SizedBox(height: 8),
-                const Text(
+                MetaSubtitle(
                   'Earn first, pay for comfort — never paywalled levels.',
-                  style: TextStyle(
-                    color: AppColors.textLight,
-                    fontWeight: FontWeight.w600,
-                  ),
                 ),
-                const SizedBox(height: 8),
-                OutlinedButton.icon(
+                const SizedBox(height: 12),
+                MetaSecondaryButton(
+                  label: 'Restore Purchases',
                   onPressed: () async {
                     await progress.restorePurchases();
                     if (!context.mounted) return;
@@ -60,30 +44,62 @@ class ShopScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.restore),
-                  label: const Text('Restore Purchases'),
                 ),
                 const SizedBox(height: 16),
                 ...IapService.products.map((product) {
                   final owned = product.removeAds && p.removeAds;
-                  return Card(
+                  return MetaWoodCard(
                     margin: const EdgeInsets.only(bottom: 12),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.all(16),
-                      title: Text(
-                        product.title,
-                        style: const TextStyle(fontWeight: FontWeight.w800),
-                      ),
-                      subtitle: Text(product.description),
-                      trailing: owned
-                          ? const Text(
-                              'Owned',
-                              style: TextStyle(
-                                color: AppColors.success,
-                                fontWeight: FontWeight.w800,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                product.title,
+                                style: GoogleFonts.nunito(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16,
+                                  color: MetaChrome.cream,
+                                ),
                               ),
-                            )
-                          : ElevatedButton(
+                              const SizedBox(height: 4),
+                              Text(
+                                product.description,
+                                style: GoogleFonts.nunito(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                  color: MetaChrome.cream.withValues(alpha: 0.75),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        if (owned)
+                          Text(
+                            'Owned',
+                            style: GoogleFonts.nunito(
+                              color: const Color(0xFF81C784),
+                              fontWeight: FontWeight.w900,
+                            ),
+                          )
+                        else
+                          SizedBox(
+                            height: 40,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF2E7D32),
+                                foregroundColor: Colors.white,
+                                side: const BorderSide(
+                                  color: MetaChrome.gold,
+                                  width: 1.2,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
                               onPressed: () async {
                                 final ok = await progress.purchase(product);
                                 if (!context.mounted) return;
@@ -100,19 +116,24 @@ class ShopScreen extends StatelessWidget {
                               },
                               child: Text(product.priceLabel),
                             ),
+                          ),
+                      ],
                     ),
-                  );
+                  ).animate().fadeIn().slideY(begin: 0.04);
                 }),
                 const SizedBox(height: 8),
-                const Text(
-                  'Cosmetics (Coins)',
-                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
+                Text(
+                  'Cosmetics',
+                  style: GoogleFonts.nunito(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 18,
+                    color: MetaChrome.cream,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 _CosmeticTile(
-                  id: 'shelf_oak_gold',
                   title: 'Golden Oak Shelf',
-                  cost: 500,
+                  costLabel: '500 Coins',
                   owned: p.ownedCosmetics.contains('shelf_oak_gold'),
                   onBuy: () => progress.buyCosmetic(
                     'shelf_oak_gold',
@@ -120,9 +141,8 @@ class ShopScreen extends StatelessWidget {
                   ),
                 ),
                 _CosmeticTile(
-                  id: 'item_pastel',
                   title: 'Pastel Item Theme',
-                  cost: 200,
+                  costLabel: '200 Coins',
                   owned: p.ownedCosmetics.contains('item_pastel'),
                   onBuy: () => progress.buyCosmetic(
                     'item_pastel',
@@ -130,10 +150,8 @@ class ShopScreen extends StatelessWidget {
                   ),
                 ),
                 _CosmeticTile(
-                  id: 'mia_chef',
                   title: 'Mia Chef Outfit',
-                  cost: 0,
-                  gemCost: 5,
+                  costLabel: '5 Gems',
                   owned: p.ownedCosmetics.contains('mia_chef'),
                   onBuy: () => progress.buyCosmetic(
                     'mia_chef',
@@ -150,33 +168,60 @@ class ShopScreen extends StatelessWidget {
 }
 
 class _CosmeticTile extends StatelessWidget {
-  final String id;
   final String title;
-  final int cost;
-  final int gemCost;
+  final String costLabel;
   final bool owned;
   final VoidCallback onBuy;
 
   const _CosmeticTile({
-    required this.id,
     required this.title,
-    required this.cost,
+    required this.costLabel,
     required this.owned,
     required this.onBuy,
-    this.gemCost = 0,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w800)),
-        subtitle: Text(
-          gemCost > 0 ? '$gemCost Gems' : '$cost Coins',
-        ),
-        trailing: owned
-            ? const Icon(Icons.check_circle, color: AppColors.success)
-            : TextButton(onPressed: onBuy, child: const Text('Buy')),
+    return MetaWoodCard(
+      margin: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.nunito(
+                    fontWeight: FontWeight.w900,
+                    color: MetaChrome.cream,
+                  ),
+                ),
+                Text(
+                  costLabel,
+                  style: GoogleFonts.nunito(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12,
+                    color: MetaChrome.gold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (owned)
+            const Icon(Icons.check_circle, color: Color(0xFF81C784))
+          else
+            TextButton(
+              onPressed: onBuy,
+              child: Text(
+                'Buy',
+                style: GoogleFonts.nunito(
+                  fontWeight: FontWeight.w900,
+                  color: MetaChrome.gold,
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

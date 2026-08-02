@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-import '../../app/theme/app_colors.dart';
-import '../../app/theme/app_theme.dart';
+import '../../services/audio_service.dart';
+import '../meta/meta_chrome.dart';
 import '../widgets/common_widgets.dart';
 import 'home_shell.dart';
 
@@ -17,14 +19,17 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 2500), () {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) context.read<AudioService>().startMusic();
+    });
+    Future.delayed(const Duration(milliseconds: 2600), () {
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const HomeShell(),
-          transitionsBuilder: (_, anim, __, child) =>
+          pageBuilder: (context, animation, secondary) => const HomeShell(),
+          transitionsBuilder: (context, anim, secondary, child) =>
               FadeTransition(opacity: anim, child: child),
-          transitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: const Duration(milliseconds: 550),
         ),
       );
     });
@@ -33,45 +38,38 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFFFF8F0), Color(0xFFFFCC80), Color(0xFFFF6B35)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+      body: MetaBackdrop(
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const MiaAvatar(size: 120, mood: 'happy')
                   .animate()
-                  .slideY(begin: 0.3, duration: 600.ms, curve: Curves.easeOut)
+                  .slideY(begin: 0.25, duration: 650.ms, curve: Curves.easeOut)
                   .fadeIn(),
-              const SizedBox(height: 24),
-              Text('ShelfSort Master', style: AppTheme.logoStyle)
+              const SizedBox(height: 20),
+              const MetaTitle('ShelfSort Master', size: 34)
                   .animate()
-                  .fadeIn(delay: 300.ms)
-                  .scale(begin: const Offset(0.9, 0.9)),
+                  .fadeIn(delay: 280.ms)
+                  .scale(begin: const Offset(0.92, 0.92)),
               const SizedBox(height: 8),
-              const Text(
-                "Help Mia open her dream store",
-                style: TextStyle(
-                  color: AppColors.textDark,
-                  fontWeight: FontWeight.w600,
+              Text(
+                'Sort · Match · Master the shelves',
+                style: GoogleFonts.nunito(
+                  color: MetaChrome.cream.withValues(alpha: 0.9),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 15,
                 ),
-              ).animate().fadeIn(delay: 500.ms),
-              const SizedBox(height: 40),
-              const SizedBox(
-                width: 28,
-                height: 28,
+              ).animate().fadeIn(delay: 480.ms),
+              const SizedBox(height: 36),
+              SizedBox(
+                width: 30,
+                height: 30,
                 child: CircularProgressIndicator(
                   strokeWidth: 3,
-                  color: Colors.white,
+                  color: MetaChrome.gold,
                 ),
-              ).animate().fadeIn(delay: 800.ms),
+              ).animate().fadeIn(delay: 700.ms),
             ],
           ),
         ),

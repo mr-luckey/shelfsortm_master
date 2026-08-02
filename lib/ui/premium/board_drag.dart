@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../engine/match_engine.dart';
+import '../../models/shelf.dart';
 
 /// The good currently lifted off the board.
 @immutable
@@ -24,11 +25,31 @@ abstract class BoardDropZone {
   /// is outside this zone.
   BoardPos? slotAt(Offset global);
 
-  /// First free place in the box or tray under [global].
+  /// Where a good dropped at [global] would land in this zone.
   BoardPos? freeSlotAt(Offset global);
 
   /// Whether the place under [global] belongs to a moving tray.
   bool isTrayAt(Offset global);
+}
+
+/// The place a good dropped over [pos] takes.
+///
+/// A good stays exactly where the player let go of it; only when that place is
+/// taken does it settle into the nearest free place beside it.
+BoardPos? dropSlot(List<ShelfSlot> slots, BoardPos pos) {
+  bool free(int i) =>
+      i >= 0 && i < slots.length && slots[i].isEmpty && slots[i].accessible;
+
+  if (free(pos.slotIndex)) return pos;
+  for (var step = 1; step < slots.length; step++) {
+    if (free(pos.slotIndex - step)) {
+      return BoardPos(pos.shelfIndex, pos.slotIndex - step);
+    }
+    if (free(pos.slotIndex + step)) {
+      return BoardPos(pos.shelfIndex, pos.slotIndex + step);
+    }
+  }
+  return null;
 }
 
 /// Carries one good between the cupboard and the tray belt.

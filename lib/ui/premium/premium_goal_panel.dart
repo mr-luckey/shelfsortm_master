@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/emoji_assets.dart';
 import 'premium_tokens.dart';
 
+/// Goal board — products only (no reward).
 class PremiumGoalPanel extends StatelessWidget {
   final List<({String type, int remaining})> goals;
   final String goalText;
@@ -15,82 +15,132 @@ class PremiumGoalPanel extends StatelessWidget {
     this.goalText = 'Clear all sets',
   });
 
+  static const _ui = PremiumTokens.uiRoot;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 78,
-      margin: const EdgeInsets.fromLTRB(12, 8, 12, 4),
-      decoration: BoxDecoration(
-        color: PremiumTokens.goalCream,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: PremiumTokens.goalBorder, width: 2),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.16),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Stack(
-        clipBehavior: Clip.hardEdge,
-        children: [
-          Positioned(
-            left: 10,
-            top: -1,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-              decoration: const BoxDecoration(
-                color: PremiumTokens.goalBlue,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(8),
-                  bottomRight: Radius.circular(8),
-                ),
-              ),
-              child: Text(
-                'GOAL',
-                style: GoogleFonts.nunito(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 10,
-                  letterSpacing: 0.5,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 16, 6, 6),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 72,
-                  child: Text(
-                    goalText,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.nunito(
-                      color: PremiumTokens.goalText,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 10,
-                      height: 1.1,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final scale = (constraints.maxWidth / 280).clamp(0.85, 1.1);
+        final h = 70.0 * scale;
+
+        return SizedBox(
+          height: h,
+          width: double.infinity,
+          child: Stack(
+            clipBehavior: Clip.hardEdge,
+            children: [
+              // Crop out baked REWARD / gift on the right of the art.
+              Positioned.fill(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12 * scale),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    widthFactor: 0.78,
+                    child: Image.asset(
+                      '$_ui/goal_board.png',
+                      fit: BoxFit.cover,
+                      height: h,
+                      width: constraints.maxWidth / 0.78,
+                      filterQuality: FilterQuality.medium,
+                      errorBuilder: (context, error, stack) => DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: PremiumTokens.goalCream,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: PremiumTokens.goalBorder,
+                            width: 2,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      for (final g in goals.take(4))
-                        _GoalChip(type: g.type, remaining: g.remaining),
-                    ],
+              ),
+              Positioned(
+                left: 10 * scale,
+                top: -2 * scale,
+                child: Image.asset(
+                  '$_ui/ribbon_goal.png',
+                  height: 22 * scale,
+                  fit: BoxFit.contain,
+                  filterQuality: FilterQuality.medium,
+                  errorBuilder: (context, error, stack) => Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10 * scale,
+                      vertical: 2 * scale,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF2E7D32),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      'GOAL',
+                      style: GoogleFonts.nunito(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 10 * scale,
+                      ),
+                    ),
                   ),
                 ),
-                const _RewardBox(),
-              ],
-            ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(
+                  8 * scale,
+                  16 * scale,
+                  8 * scale,
+                  4 * scale,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 48 * scale,
+                      child: Text(
+                        goalText,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.nunito(
+                          color: const Color(0xFF4A2E14),
+                          fontWeight: FontWeight.w800,
+                          fontSize: 9.5 * scale,
+                          height: 1.1,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: LayoutBuilder(
+                        builder: (context, chipBox) {
+                          return SizedBox(
+                            height: chipBox.maxHeight,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                for (final g in goals.take(4))
+                                  Flexible(
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: _GoalChip(
+                                        type: g.type,
+                                        remaining: g.remaining,
+                                        scale: scale,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -98,87 +148,58 @@ class PremiumGoalPanel extends StatelessWidget {
 class _GoalChip extends StatelessWidget {
   final String type;
   final int remaining;
+  final double scale;
 
-  const _GoalChip({required this.type, required this.remaining});
+  const _GoalChip({
+    required this.type,
+    required this.remaining,
+    required this.scale,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final icon = 34.0 * scale;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Image.asset(
           EmojiAssets.pathFor(type),
-          width: 28,
-          height: 28,
+          width: icon,
+          height: icon,
           fit: BoxFit.contain,
-          errorBuilder: (_, error, stack) => Text(
+          errorBuilder: (context, error, stack) => Text(
             '?',
-            style: GoogleFonts.nunito(fontWeight: FontWeight.w900, fontSize: 18),
+            style: GoogleFonts.nunito(
+              fontWeight: FontWeight.w900,
+              fontSize: 18 * scale,
+            ),
           ),
         ),
-        const SizedBox(height: 1),
+        SizedBox(height: 1 * scale),
         Container(
-          constraints: const BoxConstraints(minWidth: 18),
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+          constraints: BoxConstraints(minWidth: 15 * scale),
+          padding: EdgeInsets.symmetric(
+            horizontal: 4 * scale,
+            vertical: 0.5 * scale,
+          ),
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: PremiumTokens.goalBorder),
+            color: const Color(0xFFFFF3C4),
+            shape: BoxShape.circle,
+            border: Border.all(color: const Color(0xFFD4B56A), width: 1),
           ),
           child: Text(
             '$remaining',
             textAlign: TextAlign.center,
             style: GoogleFonts.nunito(
               fontWeight: FontWeight.w900,
-              fontSize: 10,
-              color: PremiumTokens.goalText,
-              height: 1.2,
+              fontSize: 9 * scale,
+              color: const Color(0xFF4A2E14),
+              height: 1.1,
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class _RewardBox extends StatelessWidget {
-  const _RewardBox();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 56,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            'REWARD',
-            style: GoogleFonts.nunito(
-              color: PremiumTokens.goalBlue,
-              fontWeight: FontWeight.w900,
-              fontSize: 8,
-              letterSpacing: 0.3,
-            ),
-          ),
-          Image.asset(
-            '${PremiumTokens.uiRoot}/gift_box.png',
-            width: 32,
-            height: 32,
-            fit: BoxFit.contain,
-            errorBuilder: (_, error, stack) =>
-                const Text('🎁', style: TextStyle(fontSize: 26)),
-          )
-              .animate(onPlay: (c) => c.repeat(reverse: true))
-              .scale(
-                begin: const Offset(1, 1),
-                end: const Offset(1.06, 1.06),
-                duration: 700.ms,
-              )
-              .then(delay: 4000.ms),
-        ],
-      ),
     );
   }
 }

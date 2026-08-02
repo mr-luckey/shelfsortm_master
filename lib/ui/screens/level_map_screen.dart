@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/theme/goods_sort_theme.dart';
 import '../../models/player_progress.dart';
 import '../../models/theme_room.dart';
 import '../../providers/progress_provider.dart';
-import '../widgets/ad_banner_widget.dart';
+import '../../services/audio_service.dart';
+import '../meta/meta_chrome.dart';
 import '../widgets/goods_emoji.dart';
 import '../widgets/map_background.dart';
 import 'level_intro_sheet.dart';
@@ -54,101 +56,89 @@ class _LevelMapScreenState extends State<LevelMapScreen> {
         final p = progress.progress;
         _scrollToCurrent(p.currentLevel);
 
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            const MapBackground(),
-            SafeArea(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 6),
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.92),
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.1),
-                                blurRadius: 8,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: const Row(
-                            children: [
-                              EmojiImage(type: 'trophy', size: 20),
-                              SizedBox(width: 8),
-                              Text(
-                                'World Tour',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 18,
-                                  color: Color(0xFF2E7D32),
-                                ),
-                              ),
-                            ],
-                          ),
+        return MetaBackdrop(
+          dim: true,
+          child: SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 6, 16, 6),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          context.read<AudioService>().playButton();
+                          Navigator.of(context).maybePop();
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: MetaChrome.cream,
                         ),
-                        const Spacer(),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.9),
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.star_rounded,
-                                color: Color(0xFFFFB300),
-                                size: 18,
-                              ),
-                              Text(
-                                ' ${p.totalStars}',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                            ],
-                          ),
+                      ),
+                      MetaWoodCard(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
                         ),
-                      ],
-                    ),
+                        child: Row(
+                          children: [
+                            const EmojiImage(type: 'trophy', size: 20),
+                            const SizedBox(width: 8),
+                            Text(
+                              'World Tour',
+                              style: GoogleFonts.nunito(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 17,
+                                color: MetaChrome.gold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                      MetaWoodCard(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.star_rounded,
+                              color: MetaChrome.gold,
+                              size: 18,
+                            ),
+                            Text(
+                              ' ${p.totalStars}',
+                              style: GoogleFonts.nunito(
+                                fontWeight: FontWeight.w900,
+                                color: MetaChrome.cream,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  if (!p.removeAds)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-                      child: Center(child: AdBannerWidget()),
-                    ),
-                  Expanded(
-                    child: ListView.builder(
-                      controller: _scroll,
-                      padding: const EdgeInsets.fromLTRB(8, 4, 8, 28),
-                      itemCount: ThemeRoom.all.length,
-                      itemBuilder: (context, section) {
-                        final theme = ThemeRoom.all[section];
-                        return _ZoneSection(
-                          theme: theme,
-                          progress: p,
-                          onLevelTap: (id) => _openLevel(context, p, id),
-                        );
-                      },
-                    ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    controller: _scroll,
+                    padding: const EdgeInsets.fromLTRB(8, 4, 8, 28),
+                    itemCount: ThemeRoom.all.length,
+                    itemBuilder: (context, section) {
+                      final theme = ThemeRoom.all[section];
+                      return _ZoneSection(
+                        theme: theme,
+                        progress: p,
+                        onLevelTap: (id) => _openLevel(context, p, id),
+                      );
+                    },
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         );
       },
     );
@@ -157,6 +147,7 @@ class _LevelMapScreenState extends State<LevelMapScreen> {
   void _openLevel(BuildContext context, PlayerProgress p, int id) {
     final lp = p.levelOf(id);
     if (!lp.unlocked) {
+      context.read<AudioService>().playInvalid();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Complete previous levels to unlock!'),
@@ -165,6 +156,7 @@ class _LevelMapScreenState extends State<LevelMapScreen> {
       );
       return;
     }
+    context.read<AudioService>().playButton();
     launchLevel(context, levelId: id);
   }
 }
@@ -230,25 +222,8 @@ class _ZoneSection extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(12, 14, 12, 6),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  GoodsSortTheme.playGreen.withValues(alpha: 0.92),
-                  GoodsSortTheme.playGreenDark.withValues(alpha: 0.92),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(18),
-              boxShadow: [
-                BoxShadow(
-                  color: GoodsSortTheme.playGreen.withValues(alpha: 0.35),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
+          child: MetaWoodCard(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             child: Row(
               children: [
                 EmojiImage(type: theme.iconType, size: 26),
@@ -259,16 +234,16 @@ class _ZoneSection extends StatelessWidget {
                     children: [
                       Text(
                         theme.name,
-                        style: const TextStyle(
+                        style: GoogleFonts.nunito(
                           fontWeight: FontWeight.w900,
                           fontSize: 17,
-                          color: Colors.white,
+                          color: MetaChrome.cream,
                         ),
                       ),
                       Text(
                         'Levels ${theme.startLevel}–${theme.endLevel}',
-                        style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.85),
+                        style: GoogleFonts.nunito(
+                          color: MetaChrome.cream.withValues(alpha: 0.8),
                           fontWeight: FontWeight.w600,
                           fontSize: 12,
                         ),
@@ -276,7 +251,7 @@ class _ZoneSection extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Icon(Icons.flag_rounded, color: Colors.white70),
+                const Icon(Icons.flag_rounded, color: MetaChrome.gold),
               ],
             ),
           ),

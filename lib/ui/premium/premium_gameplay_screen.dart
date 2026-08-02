@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 import '../../bloc/game_bloc.dart';
 import '../../bloc/game_event.dart';
@@ -10,21 +12,25 @@ import '../../data/level_repository.dart';
 import '../../engine/match_engine.dart';
 import '../../models/item.dart';
 import '../../models/level_data.dart';
+import '../../models/shelf.dart';
 import '../../providers/progress_provider.dart';
+import '../../providers/settings_provider.dart';
 import '../../services/ad_service.dart';
 import '../../services/audio_service.dart';
 import '../../services/save_service.dart';
+import '../meta/praise_burst.dart';
 import '../screens/level_complete_screen.dart';
-import '../screens/shop_screen.dart';
 import '../widgets/goods_sort_gameplay_ui.dart';
+import 'board_drag.dart';
+import 'face_images.dart';
 import 'premium_goal_panel.dart';
 import 'premium_hud.dart';
 import 'premium_shelf_grid.dart';
+import 'premium_tokens.dart';
 import 'premium_toolbar.dart';
 import 'premium_tray_belt.dart';
-import 'board_drag.dart';
+import 'premium_wood_cell.dart';
 import '../../engine/mechanics/conveyor_tray.dart';
-import '../widgets/emoji_assets.dart';
 
 /// Premium UI + real MatchEngine gameplay (tap/drag match-3, waves, boosters).
 class PremiumGameplayScreen extends StatelessWidget {
@@ -59,14 +65,20 @@ class _PremiumPlayView extends StatefulWidget {
 class _PremiumPlayViewState extends State<_PremiumPlayView> {
   bool _loseOfferShown = false;
   int _prevMatches = 0;
+  int _prevMoves = 0;
   GameStatus? _prevStatus;
   bool _started = false;
   bool _hapticAt10 = false;
+  String? _praise;
+  int _praiseSeq = 0;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _startLevel());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _startLevel();
+      if (mounted) context.read<AudioService>().startMusic();
+    });
   }
 
   void _startLevel() {
@@ -124,6 +136,85 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
     if (!ok || !context.mounted) return;
     setState(() => _loseOfferShown = false);
     context.read<GameBloc>().add(ContinueAfterAd(extraTime: isTime));
+  }
+
+  void _showPauseSettings(BuildContext context) {
+    MetaPopupScope.show<void>(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          backgroundColor: const Color(0xFF3A2410),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+            side: const BorderSide(color: Color(0xFFE8C45A), width: 1.5),
+          ),
+          title: const Text(
+            'Settings',
+            style: TextStyle(
+              color: Color(0xFFF7E6C8),
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+          content: Material(
+            type: MaterialType.transparency,
+            child: Consumer<SettingsProvider>(
+              builder: (context, settings, _) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SwitchListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text(
+                        'Sound Effects',
+                        style: TextStyle(color: Color(0xFFF7E6C8)),
+                      ),
+                      value: settings.sfx,
+                      activeThumbColor: const Color(0xFFE8C45A),
+                      onChanged: settings.setSfx,
+                    ),
+                    SwitchListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text(
+                        'Music',
+                        style: TextStyle(color: Color(0xFFF7E6C8)),
+                      ),
+                      value: settings.music,
+                      activeThumbColor: const Color(0xFFE8C45A),
+                      onChanged: settings.setMusic,
+                    ),
+                    SwitchListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text(
+                        'Haptics',
+                        style: TextStyle(color: Color(0xFFF7E6C8)),
+                      ),
+                      value: settings.haptics,
+                      activeThumbColor: const Color(0xFFE8C45A),
+                      onChanged: settings.setHaptics,
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                context.read<AudioService>().playButton();
+                Navigator.pop(ctx);
+              },
+              child: const Text(
+                'Close',
+                style: TextStyle(
+                  color: Color(0xFFE8C45A),
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> _booster(
@@ -195,9 +286,17 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: BlocConsumer<GameBloc, GameState>(
+        // The hud, goals and board listen for themselves, so the frame around
+        // them only rebuilds when the level or its outcome changes.
+        buildWhen: (p, c) =>
+            p.status != c.status ||
+            p.ready != c.ready ||
+            p.level?.levelId != c.level?.levelId ||
+            p.level?.timeLimit != c.level?.timeLimit,
         listenWhen: (p, c) =>
             p.status != c.status ||
             p.matches != c.matches ||
+            p.moves != c.moves ||
             p.timeLeft != c.timeLeft ||
             (!p.isTerminal && c.isTerminal),
         listener: (context, state) async {
@@ -206,9 +305,36 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
               state.status == GameStatus.won) {
             audio.playLevelComplete();
           }
+          if (_prevStatus != state.status &&
+              state.status == GameStatus.paused) {
+            audio.playButton();
+          }
           _prevStatus = state.status;
+
+          if (state.moves > _prevMoves) {
+            audio.playPlace();
+          }
+          _prevMoves = state.moves;
+
           if (state.matches > _prevMatches) {
-            audio.playShelfComplete();
+            final gained = state.matches - _prevMatches;
+            if (gained >= 2) {
+              audio.playCombo();
+            } else {
+              audio.playShelfComplete();
+            }
+            final label = await audio.playPraise();
+            if (mounted) {
+              setState(() {
+                _praise = label;
+                _praiseSeq++;
+              });
+              Future<void>.delayed(const Duration(milliseconds: 1100), () {
+                if (mounted && _praise == label) {
+                  setState(() => _praise = null);
+                }
+              });
+            }
           }
           _prevMatches = state.matches;
 
@@ -216,7 +342,8 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
               !_hapticAt10 &&
               state.status == GameStatus.playing) {
             _hapticAt10 = true;
-            HapticFeedback.lightImpact();
+            HapticFeedback.mediumImpact();
+            audio.playInvalid();
           }
 
           if (state.status == GameStatus.won) {
@@ -247,61 +374,65 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                   child: Column(
                     children: [
                       BlocSelector<GameBloc, GameState,
-                          ({int timeLeft, bool frozen, int stars})>(
+                          ({int timeLeft, bool frozen})>(
                         selector: (s) => (
                           timeLeft: s.timeLeft,
                           frozen: s.frozen,
-                          stars: s.stars,
                         ),
                         builder: (context, hud) {
                           return PremiumHudBar(
                             coins: progress.progress.coins,
-                            gems: progress.progress.gems,
                             level: widget.daily
                                 ? widget.levelId
                                 : (state.level?.levelId ?? widget.levelId),
-                            stars: hud.stars,
                             timeLeft: hud.timeLeft,
                             timeLimit: timeLimit,
                             frozen: hud.frozen,
-                            onSettings: () => context
+                            onPause: () => context
                                 .read<GameBloc>()
                                 .add(const PauseToggled(true)),
-                            onShop: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => const ShopScreen(),
-                                ),
-                              );
-                            },
-                            onAddCoins: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => const ShopScreen(),
-                                ),
-                              );
-                            },
-                            onAddGems: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => const ShopScreen(),
-                                ),
-                              );
-                            },
+                            onAddCoins: null,
                           );
                         },
                       ),
                       if (state.ready)
-                        BlocBuilder<GameBloc, GameState>(
-                          buildWhen: (p, c) =>
-                              p.itemCount != c.itemCount ||
-                              p.matches != c.matches,
-                          builder: (context, goalState) {
-                            return PremiumGoalPanel(
-                              goals: _goalsFrom(goalState),
-                              goalText: 'Clear all sets',
-                            );
-                          },
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 10, 8, 2),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: BlocBuilder<GameBloc, GameState>(
+                                  buildWhen: (p, c) =>
+                                      p.itemCount != c.itemCount ||
+                                      p.matches != c.matches,
+                                  builder: (context, goalState) {
+                                    return PremiumGoalPanel(
+                                      goals: _goalsFrom(goalState),
+                                      goalText: 'Clear all sets',
+                                    );
+                                  },
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              PremiumBoosterRail(
+                                freezeCount:
+                                    progress.progress.hintsRemaining,
+                                hintCount:
+                                    progress.progress.autoSortRemaining,
+                                onFreeze: () => _booster(
+                                  context,
+                                  BoosterKind.freeze,
+                                  progress,
+                                ),
+                                onHint: () => _booster(
+                                  context,
+                                  BoosterKind.magnet,
+                                  progress,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       Expanded(
                         child: !state.ready
@@ -310,66 +441,47 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                               )
                             : BlocBuilder<GameBloc, GameState>(
                                 buildWhen: (p, c) =>
-                                    p.shelves != c.shelves ||
-                                    p.clearingShelf != c.clearingShelf ||
+                                    !setEquals(
+                                      p.clearingShelves,
+                                      c.clearingShelves,
+                                    ) ||
                                     p.inputLocked != c.inputLocked ||
-                                    p.nextLayers != c.nextLayers ||
-                                    p.level?.levelId != c.level?.levelId,
+                                    p.level?.levelId != c.level?.levelId ||
+                                    !_sameGoods(p.shelves, c.shelves) ||
+                                    !_sameLayers(p.nextLayers, c.nextLayers),
                                 builder: (context, board) {
                                   return _PremiumBoardArea(board: board);
                                 },
                               ),
                       ),
-                      PremiumActionToolbar(
-                        undoCount: 99,
-                        shuffleCount:
-                            progress.progress.shufflesRemaining,
-                        freezeCount: progress.progress.hintsRemaining,
-                        extraCount:
-                            progress.progress.extraShelfRemaining,
-                        hintCount:
-                            progress.progress.autoSortRemaining,
-                        onUndo: () => _booster(
-                          context,
-                          BoosterKind.undo,
-                          progress,
-                        ),
-                        onShuffle: () => _booster(
-                          context,
-                          BoosterKind.shuffle,
-                          progress,
-                        ),
-                        onFreeze: () => _booster(
-                          context,
-                          BoosterKind.freeze,
-                          progress,
-                        ),
-                        onExtraSlot: () => _booster(
-                          context,
-                          BoosterKind.extraShelf,
-                          progress,
-                        ),
-                        onHint: () => _booster(
-                          context,
-                          BoosterKind.magnet,
-                          progress,
-                        ),
-                      ),
+                      // Room for a banner ad under the board.
+                      const SizedBox(height: PremiumTokens.bannerAdHeight),
                     ],
                   ).animate().fadeIn(duration: 350.ms),
                 ),
                 if (paused)
                   GoodsSortPauseOverlay(
-                    onResume: () => context
-                        .read<GameBloc>()
-                        .add(const PauseToggled(false)),
+                    onResume: () {
+                      context
+                          .read<GameBloc>()
+                          .add(const PauseToggled(false));
+                    },
                     onRestart: () {
                       _hapticAt10 = false;
+                      _prevMatches = 0;
+                      _prevMoves = 0;
                       context
                           .read<GameBloc>()
                           .add(const GameRestarted());
                     },
                     onQuit: () => Navigator.pop(context),
+                    onHome: () => Navigator.pop(context),
+                    onSettings: () => _showPauseSettings(context),
+                  ),
+                if (_praise != null)
+                  PraiseBurst(
+                    key: ValueKey(_praiseSeq),
+                    label: _praise!,
                   ),
                 if (showLose)
                   GoodsSortLoseOverlay(
@@ -386,6 +498,45 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
   }
 }
 
+/// Whether two board snapshots hold the same goods in the same places.
+///
+/// Every emitted state carries fresh shelf objects, so the board only rebuilds
+/// when the goods themselves changed.
+bool _sameGoods(List<Shelf> a, List<Shelf> b) {
+  if (a.length != b.length) return false;
+  for (var i = 0; i < a.length; i++) {
+    final left = a[i].slots;
+    final right = b[i].slots;
+    if (left.length != right.length) return false;
+    for (var s = 0; s < left.length; s++) {
+      if (left[s].stack.length != right[s].stack.length) return false;
+      if (left[s].accessible != right[s].accessible) return false;
+      if (left[s].frontBlocked != right[s].frontBlocked) return false;
+      for (var k = 0; k < left[s].stack.length; k++) {
+        if (left[s].stack[k].id != right[s].stack[k].id) return false;
+      }
+    }
+  }
+  return true;
+}
+
+bool _sameLayers(List<List<GameItem?>?> a, List<List<GameItem?>?> b) {
+  if (a.length != b.length) return false;
+  for (var i = 0; i < a.length; i++) {
+    final left = a[i];
+    final right = b[i];
+    if (left == null || right == null) {
+      if (left != right) return false;
+      continue;
+    }
+    if (left.length != right.length) return false;
+    for (var s = 0; s < left.length; s++) {
+      if (left[s]?.id != right[s]?.id) return false;
+    }
+  }
+  return true;
+}
+
 /// Cupboard + optional tray belt, sharing one drag so goods can move between.
 class _PremiumBoardArea extends StatefulWidget {
   final GameState board;
@@ -398,11 +549,18 @@ class _PremiumBoardArea extends StatefulWidget {
 
 class _PremiumBoardAreaState extends State<_PremiumBoardArea> {
   late final BoardDragController _drag;
+  final GlobalKey _ghostKey = GlobalKey();
+  late final Listenable _ghostRepaint;
 
   @override
   void initState() {
     super.initState();
     _drag = BoardDragController();
+    _ghostRepaint = Listenable.merge([
+      _drag.held,
+      _drag.finger,
+      FaceImages.instance,
+    ]);
   }
 
   @override
@@ -437,7 +595,7 @@ class _PremiumBoardAreaState extends State<_PremiumBoardArea> {
               child: PremiumShelfGrid(
                 layout: layout,
                 shelves: board.shelves,
-                clearingShelf: board.clearingShelf,
+                clearingShelves: board.clearingShelves,
                 inputLocked: board.inputLocked,
                 nextLayers: board.nextLayers,
                 drag: _drag,
@@ -456,6 +614,8 @@ class _PremiumBoardAreaState extends State<_PremiumBoardArea> {
                     inputLocked: board.inputLocked,
                     drag: _drag,
                     onMove: _onMove,
+                    clearingShelves: board.clearingShelves,
+                    nextLayers: board.nextLayers,
                   ),
                 ),
               ),
@@ -463,43 +623,70 @@ class _PremiumBoardAreaState extends State<_PremiumBoardArea> {
         ),
         Positioned.fill(
           child: IgnorePointer(
-            child: ValueListenableBuilder<HeldGood?>(
-              valueListenable: _drag.held,
-              builder: (context, held, _) {
-                if (held == null) return const SizedBox.shrink();
-                return ValueListenableBuilder<Offset>(
-                  valueListenable: _drag.finger,
-                  builder: (context, finger, _) {
-                    final box = context.findRenderObject() as RenderBox?;
-                    if (box == null || !box.hasSize) {
-                      return const SizedBox.shrink();
-                    }
-                    final local = box.globalToLocal(finger);
-                    const size = 56.0;
-                    return Stack(
-                      children: [
-                        Positioned(
-                          left: local.dx - size / 2,
-                          top: local.dy - size / 2 - 10,
-                          width: size,
-                          height: size,
-                          child: Image.asset(
-                            EmojiAssets.pathFor(held.type),
-                            fit: BoxFit.contain,
-                            filterQuality: FilterQuality.medium,
-                            errorBuilder: (_, error, stack) =>
-                                const SizedBox.shrink(),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
+            child: RepaintBoundary(
+              child: CustomPaint(
+                key: _ghostKey,
+                painter: _HeldGoodPainter(
+                  drag: _drag,
+                  faces: FaceImages.instance,
+                  overlay: _ghostKey,
+                  repaint: _ghostRepaint,
+                ),
+              ),
             ),
           ),
         ),
       ],
     );
   }
+}
+
+/// Draws the good in the player's hand above both halves of the board.
+class _HeldGoodPainter extends CustomPainter {
+  final BoardDragController drag;
+  final FaceImages faces;
+  final GlobalKey overlay;
+
+  /// Size the carried good is drawn at, a little larger than on the shelf.
+  static const double goodSize = 62;
+
+  _HeldGoodPainter({
+    required this.drag,
+    required this.faces,
+    required this.overlay,
+    required Listenable repaint,
+  }) : super(repaint: repaint);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final held = drag.held.value;
+    if (held == null) return;
+    final image = faces.of(held.type);
+    if (image == null) return;
+    final box = overlay.currentContext?.findRenderObject() as RenderBox?;
+    if (box == null || !box.hasSize) return;
+
+    final local = box.globalToLocal(drag.finger.value);
+    // Lifted goods hang just above the finger so the shelf stays visible.
+    final center = Offset(local.dx, local.dy - goodSize * 0.22);
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: Offset(center.dx, center.dy + goodSize * 0.52),
+        width: goodSize * 0.5,
+        height: goodSize * 0.14,
+      ),
+      Paint()
+        ..color = const Color(0xFF1B0F02).withValues(alpha: 0.22)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
+    );
+    drawFace(
+      canvas,
+      image,
+      Rect.fromCenter(center: center, width: goodSize, height: goodSize),
+      null,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _HeldGoodPainter old) => true;
 }

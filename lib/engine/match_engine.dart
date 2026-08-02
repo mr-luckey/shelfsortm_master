@@ -46,7 +46,10 @@ class MatchEngine {
   late final ShelfWaveManager waves;
   int maxCombo = 0;
   bool inputLocked = false;
-  int? _closingShelfIndex;
+
+  /// Boxes playing their sale right now. The rest of the board stays live, so a
+  /// sale never freezes the game.
+  final Set<int> _closingShelves = {};
 
   MatchEngine({required this.level})
       : shelves = [],
@@ -62,6 +65,11 @@ class MatchEngine {
     mechanics.initialize(this);
     _checkEnd();
   }
+
+  /// Boxes whose goods are being sold; they are off limits until the sale ends.
+  Set<int> get closingShelves => Set.unmodifiable(_closingShelves);
+
+  bool isClosing(int shelfIndex) => _closingShelves.contains(shelfIndex);
 
   int get emptyFrontCount =>
       shelves.fold<int>(0, (n, s) => n + s.emptyFrontCount);
@@ -137,6 +145,7 @@ class MatchEngine {
   /// Tap front to select → empty column to move. Re-tap same = deselect.
   bool tap(BoardPos pos) {
     if (status != GameStatus.playing || inputLocked) return false;
+    if (isClosing(pos.shelfIndex)) return false;
     lastClear = null;
 
     if (selected == null) {
@@ -173,6 +182,7 @@ class MatchEngine {
   bool move(BoardPos from, BoardPos to) {
     if (status != GameStatus.playing || inputLocked) return false;
     if (from == to) return false;
+    if (isClosing(from.shelfIndex) || isClosing(to.shelfIndex)) return false;
 
     final item = itemAt(from);
     if (item == null) return false;
@@ -220,7 +230,7 @@ class MatchEngine {
   /// a sale or because the player carried everything out of it.
   void _refillEmptiedShelves() {
     for (var i = 0; i < shelves.length; i++) {
-      if (i == _closingShelfIndex) continue; // sale animation owns this box
+      if (isClosing(i)) continue; // sale animation owns this box
       if (waves.hasPendingWave(i)) continue;
       final shelf = shelves[i];
       if (shelf.isTemporary || !shelf.isEmpty) continue;
@@ -243,37 +253,36 @@ class MatchEngine {
     lastClear = MatchClear(shelfIndex: shelfIndex, type: matchType);
     mechanics.onShelfCleared(shelfIndex, matchType);
     waves.queueNextWave(shelfIndex, current);
-    _closingShelfIndex = shelfIndex;
-    inputLocked = true;
+    _closingShelves.add(shelfIndex);
   }
 
-  /// After door-close animation — empties bay, then opens next wave if any.
+  /// After the sale animation — empties the bay, then opens the next wave if any.
+  ///
+  /// A box with a layer still waiting stays off limits until that layer has slid
+  /// forward, so a good can never be dropped into the gap and lost.
   void finishShelfClose(int shelfIndex) {
-    if (_closingShelfIndex != shelfIndex) return;
-    _closingShelfIndex = null;
+    if (!_closingShelves.contains(shelfIndex)) return;
     shelves[shelfIndex] = shelves[shelfIndex].copyWith(
       slots: List.generate(
         shelves[shelfIndex].slots.length,
         (_) => const ShelfSlot(),
       ),
     );
-    if (!waves.hasPendingWave(shelfIndex)) {
-      inputLocked = false;
-      _refillEmptiedShelves();
-      _checkEnd();
-    }
+    if (waves.hasPendingWave(shelfIndex)) return;
+    _closingShelves.remove(shelfIndex);
+    _refillEmptiedShelves();
+    _checkEnd();
   }
 
-  /// Called after close animation — loads the next wave into the bay.
+  /// Called after the sale — slides the layer behind forward into the bay.
   bool openNextWave(int shelfIndex) {
     final wave = waves.takePendingWave(shelfIndex);
+    _closingShelves.remove(shelfIndex);
     if (wave == null) {
-      inputLocked = false;
       _checkEnd();
       return false;
     }
     shelves[shelfIndex] = waves.applyWave(shelves[shelfIndex], wave);
-    inputLocked = false;
     _checkEnd();
     return true;
   }
@@ -293,7 +302,8 @@ class MatchEngine {
     for (var i = 0; i < shelves.length; i++) {
       playableEmpty += shelves[i].emptyFrontCount;
     }
-    if (playableEmpty == 0 && itemCount > 0) {
+    // A sale in flight is about to free a whole box, so the board is not stuck.
+    if (playableEmpty == 0 && itemCount > 0 && _closingShelves.isEmpty) {
       status = GameStatus.lostSpace;
     } else if (status == GameStatus.lostSpace && playableEmpty > 0) {
       status = GameStatus.playing;
@@ -312,7 +322,7 @@ class MatchEngine {
     lastClear = null;
     selected = null;
     inputLocked = false;
-    _closingShelfIndex = null;
+    _closingShelves.clear();
     if (s.mechanicState != null) {
       mechanics.loadState(s.mechanicState!);
     }

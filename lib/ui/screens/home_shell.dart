@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../app/theme/app_colors.dart';
-import '../../app/theme/goods_sort_theme.dart';
 import '../../data/level_repository.dart';
 import '../../models/player_progress.dart';
-import '../../models/theme_room.dart';
 import '../../providers/progress_provider.dart';
+import '../../services/audio_service.dart';
+import '../meta/meta_chrome.dart';
+import '../premium/premium_tokens.dart';
 import '../widgets/common_widgets.dart';
-import '../widgets/goods_emoji.dart';
-import '../widgets/store_background.dart';
 import 'asmr_mode_screen.dart';
-import 'daily_rewards_screen.dart';
 import 'level_intro_sheet.dart';
 import 'level_map_screen.dart';
 import 'profile_screen.dart';
-import 'shop_screen.dart';
 
+/// Single premium home hub — no bottom nav, no shop/rewards tabs.
 class HomeShell extends StatefulWidget {
   const HomeShell({super.key});
 
@@ -26,306 +25,192 @@ class HomeShell extends StatefulWidget {
 }
 
 class _HomeShellState extends State<HomeShell> {
-  int _tab = 0;
-
   @override
-  Widget build(BuildContext context) {
-    final pages = [
-      const _HomeTab(),
-      const LevelMapScreen(),
-      const DailyRewardsScreen(),
-      const ShopScreen(),
-      const ProfileScreen(),
-    ];
-
-    return Scaffold(
-      body: IndexedStack(index: _tab, children: pages),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _tab,
-        onDestinationSelected: (i) => setState(() => _tab = i),
-        backgroundColor: Colors.white,
-        indicatorColor: GoodsSortTheme.playGreen.withValues(alpha: 0.18),
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.storefront_rounded),
-            selectedIcon: Icon(Icons.storefront_rounded, color: GoodsSortTheme.playGreen),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.map_rounded),
-            selectedIcon: Icon(Icons.map_rounded, color: GoodsSortTheme.playGreen),
-            label: 'Map',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.card_giftcard_rounded),
-            selectedIcon: Icon(Icons.card_giftcard_rounded, color: GoodsSortTheme.playGreen),
-            label: 'Rewards',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.shopping_bag_rounded),
-            selectedIcon: Icon(Icons.shopping_bag_rounded, color: GoodsSortTheme.playGreen),
-            label: 'Shop',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_rounded),
-            selectedIcon: Icon(Icons.person_rounded, color: GoodsSortTheme.playGreen),
-            label: 'Profile',
-          ),
-        ],
-      ),
-    );
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      context.read<AudioService>().startMusic();
+    });
   }
-}
-
-class _HomeTab extends StatelessWidget {
-  const _HomeTab();
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProgressProvider>(
-      builder: (context, progress, _) {
-        final p = progress.progress;
-        final theme = ThemeRoom.forLevel(p.currentLevel);
-        final maxLevel = LevelRepository.instance.totalLevels;
+    return Scaffold(
+      body: Consumer<ProgressProvider>(
+        builder: (context, progress, _) {
+          final p = progress.progress;
+          final maxLevel = LevelRepository.instance.totalLevels;
+          final level = p.currentLevel.clamp(1, maxLevel);
 
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            StoreBackground(
-              colors: GoodsSortTheme.homeGradient.colors,
-              moodType: theme.iconType,
-            ),
-            SafeArea(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+          return MetaBackdrop(
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8,
+                    _TopBar(
+                      coins: p.coins,
+                      gems: p.gems,
+                      onProfile: () {
+                        context.read<AudioService>().playButton();
+                        Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (_) => const ProfileScreen(),
                           ),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.92),
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.08),
-                                blurRadius: 8,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            children: [
-                              EmojiImage(type: theme.iconType, size: 22),
-                              const SizedBox(width: 8),
-                              Text(
-                                p.playerName,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const Spacer(),
-                        CurrencyHud(coins: p.coins, gems: p.gems, compact: true),
-                      ],
-                    ),
-                    const SizedBox(height: 28),
-                    const Text(
-                      'Goods Sort',
-                      style: TextStyle(
-                        fontSize: 34,
-                        fontWeight: FontWeight.w900,
-                        color: Color(0xFF2E7D32),
-                        letterSpacing: -0.5,
-                      ),
-                    ).animate().fadeIn(duration: 500.ms),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Triple Match • Organize • Relax',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textLight.withValues(alpha: 0.9),
-                        fontSize: 14,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    _GoodsSortShowcase(theme: theme),
-                    const SizedBox(height: 20),
+                        );
+                      },
+                    ).animate().fadeIn(duration: 350.ms),
+                    const Spacer(flex: 2),
+                    const MetaTitle('ShelfSort Master', size: 32)
+                        .animate()
+                        .fadeIn(delay: 60.ms),
+                    const SizedBox(height: 6),
+                    const MetaSubtitle('Sort · Match · Master')
+                        .animate()
+                        .fadeIn(delay: 100.ms),
+                    const Spacer(flex: 2),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: GoodsSortTheme.playGreen,
-                        borderRadius: BorderRadius.circular(24),
+                        color: const Color(0xEE2A1608),
+                        borderRadius: BorderRadius.circular(22),
+                        border: Border.all(color: MetaChrome.gold, width: 1.5),
                         boxShadow: [
                           BoxShadow(
-                            color: GoodsSortTheme.playGreen.withValues(alpha: 0.4),
+                            color: Colors.black.withValues(alpha: 0.35),
                             blurRadius: 10,
                             offset: const Offset(0, 4),
                           ),
                         ],
                       ),
                       child: Text(
-                        'LEVEL ${p.currentLevel.clamp(1, maxLevel)}',
-                        style: const TextStyle(
-                          color: Colors.white,
+                        'LEVEL $level',
+                        style: GoogleFonts.nunito(
+                          color: MetaChrome.gold,
                           fontWeight: FontWeight.w900,
                           fontSize: 18,
-                          letterSpacing: 1.2,
+                          letterSpacing: 1.4,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        EmojiImage(type: theme.iconType, size: 20),
-                        const SizedBox(width: 6),
-                        Text(
-                          theme.name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.textDark,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
+                    ).animate().fadeIn(delay: 140.ms),
+                    const SizedBox(height: 18),
                     GlowPlayButton(
-                      onPressed: () {
-                        launchLevel(
-                          context,
-                          levelId: p.currentLevel.clamp(1, maxLevel),
-                        );
-                      },
+                      onPressed: () => launchLevel(context, levelId: level),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 14),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _QuickChip(
-                          icon: Icons.star_rounded,
+                        _StatPill(
+                          asset: '${PremiumTokens.uiRoot}/meta_star_badge.png',
+                          fallback: Icons.star_rounded,
                           label: '${p.totalStars} Stars',
-                          color: const Color(0xFFFFB300),
                         ),
                         const SizedBox(width: 10),
-                        _QuickChip(
-                          icon: Icons.emoji_events_rounded,
-                          label: '${_levelClears(p)} Clears',
-                          color: GoodsSortTheme.playGreen,
+                        _StatPill(
+                          fallback: Icons.emoji_events_rounded,
+                          label: '${_clears(p)} Clears',
                         ),
                       ],
-                    ),
-                    const SizedBox(height: 16),
-                    _AsmrModeBanner(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute<void>(
-                            builder: (_) => const AsmrModeScreen(),
+                    ).animate().fadeIn(delay: 200.ms),
+                    const Spacer(flex: 2),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _HubTile(
+                            icon: Icons.map_rounded,
+                            label: 'World Map',
+                            onTap: () {
+                              context.read<AudioService>().playButton();
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) => const LevelMapScreen(),
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: _HubTile(
+                            icon: Icons.headphones_rounded,
+                            label: 'ASMR',
+                            onTap: () {
+                              context.read<AudioService>().playButton();
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) => const AsmrModeScreen(),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ).animate().fadeIn(delay: 240.ms).slideY(begin: 0.08),
+                    const SizedBox(height: 8),
                   ],
                 ),
               ),
             ),
-          ],
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
-  int _levelClears(PlayerProgress p) =>
+  static int _clears(PlayerProgress p) =>
       p.levels.values.fold<int>(0, (n, l) => n + l.playCount);
 }
 
-class _GoodsSortShowcase extends StatelessWidget {
-  final ThemeRoom theme;
+class _TopBar extends StatelessWidget {
+  final int coins;
+  final int gems;
+  final VoidCallback onProfile;
 
-  const _GoodsSortShowcase({required this.theme});
+  const _TopBar({
+    required this.coins,
+    required this.gems,
+    required this.onProfile,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final types = theme.itemTypes;
-    const colors = ['red', 'blue', 'green', 'yellow', 'purple'];
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(12, 20, 12, 16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        color: Colors.white.withValues(alpha: 0.88),
-        border: Border.all(color: Colors.white, width: 2),
-        boxShadow: [
-          BoxShadow(
-            color: GoodsSortTheme.playGreen.withValues(alpha: 0.15),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: List.generate(3, (i) {
-              return PreviewEmoji(
-                type: types[i % types.length],
-                color: colors[i % colors.length],
-                size: 52,
-              );
-            }),
-          ),
-          const SizedBox(height: 10),
-          Container(
-            height: 12,
-            margin: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              gradient: const LinearGradient(
-                colors: [Color(0xFF8D6E63), Color(0xFF5D4037)],
-              ),
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: () {
+            HapticFeedback.selectionClick();
+            onProfile();
+          },
+          child: MetaWoodCard(
+            padding: const EdgeInsets.all(10),
+            child: const Icon(
+              Icons.person_rounded,
+              color: MetaChrome.gold,
+              size: 22,
             ),
           ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: List.generate(3, (i) {
-              return PreviewEmoji(
-                type: types[(i + 1) % types.length],
-                color: colors[(i + 2) % colors.length],
-                size: 48,
-              );
-            }),
-          ),
-        ],
-      ),
-    ).animate().fadeIn(duration: 600.ms).slideY(begin: 0.08);
+        ),
+        const Spacer(),
+        CurrencyHud(coins: coins, gems: gems, compact: true),
+      ],
+    );
   }
 }
 
-class _QuickChip extends StatelessWidget {
-  final IconData icon;
+class _StatPill extends StatelessWidget {
+  final IconData fallback;
   final String label;
-  final Color color;
+  final String? asset;
 
-  const _QuickChip({
-    required this.icon,
+  const _StatPill({
+    required this.fallback,
     required this.label,
-    required this.color,
+    this.asset,
   });
 
   @override
@@ -333,17 +218,31 @@ class _QuickChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.9),
+        color: const Color(0xEE2A1608),
         borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: MetaChrome.brass.withValues(alpha: 0.75)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 18, color: color),
+          if (asset != null)
+            Image.asset(
+              asset!,
+              width: 18,
+              height: 18,
+              errorBuilder: (context, error, stack) =>
+                  Icon(fallback, size: 18, color: MetaChrome.gold),
+            )
+          else
+            Icon(fallback, size: 18, color: MetaChrome.gold),
           const SizedBox(width: 6),
           Text(
             label,
-            style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
+            style: GoogleFonts.nunito(
+              fontWeight: FontWeight.w800,
+              fontSize: 12,
+              color: MetaChrome.cream,
+            ),
           ),
         ],
       ),
@@ -351,49 +250,36 @@ class _QuickChip extends StatelessWidget {
   }
 }
 
-class _AsmrModeBanner extends StatelessWidget {
+class _HubTile extends StatelessWidget {
+  final IconData icon;
+  final String label;
   final VoidCallback onTap;
 
-  const _AsmrModeBanner({required this.onTap});
+  const _HubTile({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
-              Color(0xFF2A2A3A),
-              Color(0xFF121218),
-            ],
-          ),
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: 0.12),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.35),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+      onTap: () {
+        HapticFeedback.lightImpact();
+        onTap();
+      },
+      child: MetaWoodCard(
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+        child: Column(
           children: [
-            Icon(Icons.headphones_rounded, color: Colors.white),
-            SizedBox(width: 8),
+            Icon(icon, color: MetaChrome.gold, size: 28),
+            const SizedBox(height: 6),
             Text(
-              'ASMR Mode',
-              style: TextStyle(
+              label,
+              style: GoogleFonts.nunito(
                 fontWeight: FontWeight.w900,
-                color: Colors.white,
-                fontSize: 15,
-                letterSpacing: 0.4,
+                fontSize: 14,
+                color: MetaChrome.cream,
               ),
             ),
           ],

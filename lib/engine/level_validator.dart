@@ -6,7 +6,7 @@ import 'mechanics/mechanic_ids.dart';
 
 /// Fairness / solvability checks for authored and generated levels.
 abstract final class LevelValidator {
-  static const double minSecondsPerItem = 2.5;
+  static const double minSecondsPerItem = 1.5;
 
   /// Returns human-readable problems, or an empty list when the level is ok.
   static List<String> problems(LevelData level) {
@@ -71,25 +71,42 @@ abstract final class LevelValidator {
     }
 
     var freeFront = 0;
+    final emptyBoxes = <int>[];
     for (var id = 1; id <= boxes; id++) {
       final slots = frontByShelf[id];
       if (slots == null) {
         freeFront += level.slotsPerShelf;
+        emptyBoxes.add(id);
       } else {
         freeFront += slots.where((s) => s == null).length;
+        if (slots.every((s) => s == null)) emptyBoxes.add(id);
       }
     }
     if (freeFront < 2) {
       out.add('only $freeFront free front slots (need >= 2)');
     }
-
-    // A tray must roll past with room on it, otherwise a good picked off the
-    // cupboard has nowhere to ride.
+    // A cupboard that opens with a bare box looks unfinished; every box holds
+    // something at the start.
+    if (emptyBoxes.isNotEmpty) {
+      out.add('boxes start empty: $emptyBoxes');
+    }
     for (var t = 0; t < level.trayCount; t++) {
       final slots = frontByShelf[boxes + 1 + t];
-      if (slots == null) continue;
-      if (!slots.any((s) => s == null)) {
-        out.add('tray ${t + 1} starts with no free place');
+      if (slots == null || slots.every((s) => s == null)) {
+        out.add('tray ${t + 1} starts empty');
+      }
+    }
+
+    // Some trays roll past with room on them, otherwise a good picked off the
+    // cupboard has nowhere to ride.
+    if (level.trayCount > 0) {
+      var trayWithRoom = 0;
+      for (var t = 0; t < level.trayCount; t++) {
+        final slots = frontByShelf[boxes + 1 + t];
+        if (slots == null || slots.any((s) => s == null)) trayWithRoom += 1;
+      }
+      if (trayWithRoom == 0) {
+        out.add('no tray starts with a free place');
       }
     }
 
@@ -129,4 +146,40 @@ abstract final class LevelValidator {
   }
 
   static bool isValid(LevelData level) => problems(level).isEmpty;
+
+  /// How much pressure a level puts on the player, used to prove the campaign
+  /// only ever gets harder.
+  ///
+  /// What makes a board hard is how much of it is hidden, how deep the stacks
+  /// go, how fast the belt runs and how little time there is per good. Sheer
+  /// stock counts too, but only lightly: a big board is longer work, not
+  /// necessarily harder work.
+  static double pressure(LevelData level) {
+    final goods = level.initialPlacement.length;
+    if (goods == 0) return 0;
+    var hidden = 0;
+    var maxDepth = 0;
+    final types = <String>{};
+    for (final p in level.initialPlacement) {
+      if (p.depth > 0) hidden += 1;
+      if (p.depth > maxDepth) maxDepth = p.depth;
+      types.add(GameItem.fromId(p.itemId).type);
+    }
+    final speed =
+        ((level.mechanicConfig['conveyorTray'] as Map?)?['speed'] as num?)
+                ?.toDouble() ??
+            0;
+    final secondsPerGood = level.timeLimit / goods;
+    final clock = (5.0 - secondsPerGood).clamp(0.0, 5.0);
+    final hiddenShare = hidden / goods;
+
+    return goods * 0.6 +
+        hidden * 0.9 +
+        hiddenShare * 40 +
+        maxDepth * 8 +
+        types.length * 0.4 +
+        level.trayCount * 4 +
+        speed * 55 +
+        clock * 20;
+  }
 }

@@ -17,7 +17,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   Timer? _mechClock;
   Timer? _freezeTimer;
   Timer? _bannerTimer;
-  Timer? _shelfAnimTimer;
+  Timer? _openTimer;
+
+  /// One sale timer per box, keyed by shelf index.
+  final Map<int, Timer> _saleTimers = {};
+
+  /// Length of the sale animation the board plays; see `FxTiming.sell`.
+  static const Duration _saleDuration = Duration(milliseconds: 520);
 
   GameBloc() : super(const GameState()) {
     on<GameStarted>(_onStarted);
@@ -56,7 +62,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   GameState _snap({
     String? banner,
-    int clearingShelf = -1,
     int openingShelf = -1,
     bool clearBanner = false,
   }) {
@@ -85,7 +90,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       status: e.status,
       lastClear: e.lastClear,
       banner: clearBanner ? null : comboBanner,
-      clearingShelf: clearingShelf,
+      clearingShelves: e.closingShelves,
+      clearingShelf: e.closingShelves.isEmpty ? -1 : e.closingShelves.first,
       openingShelf: openingShelf,
       inputLocked: e.inputLocked,
       finishedShelves: e.waves.finishedShelfIndices,
@@ -104,7 +110,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     _mechClock?.cancel();
     _freezeTimer?.cancel();
     _bannerTimer?.cancel();
-    _shelfAnimTimer?.cancel();
+    _cancelSales();
     _engine = MatchEngine(level: event.level);
     if (event.midSave != null) {
       try {
@@ -131,10 +137,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       emit(_snap());
       return;
     }
-    var clearing = -1;
     String? banner;
     if (e.matches > before && e.lastClear != null) {
-      clearing = e.lastClear!.shelfIndex;
       if (e.combo >= 7) {
         banner = 'UNSTOPPABLE!';
       } else if (e.combo >= 5) {
@@ -149,8 +153,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       banner = 'Combo x${e.combo}!';
       _flashBanner();
     }
-    emit(_snap(banner: banner, clearingShelf: clearing));
-    if (clearing >= 0) _scheduleShelfWave(clearing);
+    emit(_snap(banner: banner));
+    _scheduleSales();
   }
 
   void _onMoved(ItemMoved event, Emitter<GameState> emit) {
@@ -164,10 +168,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       _flashBanner();
       return;
     }
-    var clearing = -1;
     String? banner;
     if (e.matches > before && e.lastClear != null) {
-      clearing = e.lastClear!.shelfIndex;
       if (e.combo >= 7) {
         banner = 'UNSTOPPABLE!';
       } else if (e.combo >= 5) {
@@ -179,31 +181,37 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       }
       _flashBanner();
     }
-    emit(_snap(banner: banner, clearingShelf: clearing));
-    if (clearing >= 0) _scheduleShelfWave(clearing);
+    emit(_snap(banner: banner));
+    _scheduleSales();
   }
 
-  void _scheduleShelfWave(int shelfIndex) {
-    _shelfAnimTimer?.cancel();
-    _shelfAnimTimer = Timer(const Duration(milliseconds: 520), () {
-      if (isClosed || _engine == null) return;
-      _engine!.finishShelfClose(shelfIndex);
-      if (_engine!.waves.hasPendingWave(shelfIndex)) {
-        add(ShelfWaveOpened(shelfIndex));
-      } else {
-        _engine!.unlockInput();
-        if (!isClosed) add(const BannerCleared());
-      }
-    });
+  /// Every box that just matched runs its own sale, so a second match never cuts
+  /// the first one short.
+  void _scheduleSales() {
+    final e = _engine;
+    if (e == null) return;
+    for (final shelfIndex in e.closingShelves) {
+      if (_saleTimers.containsKey(shelfIndex)) continue;
+      _saleTimers[shelfIndex] = Timer(_saleDuration, () {
+        _saleTimers.remove(shelfIndex);
+        if (isClosed || _engine == null) return;
+        _engine!.finishShelfClose(shelfIndex);
+        if (_engine!.waves.hasPendingWave(shelfIndex)) {
+          add(ShelfWaveOpened(shelfIndex));
+        } else {
+          add(const BannerCleared());
+        }
+      });
+    }
   }
 
   void _onShelfWaveOpened(ShelfWaveOpened event, Emitter<GameState> emit) {
     final e = _engine;
     if (e == null) return;
     e.openNextWave(event.shelfIndex);
-    emit(_snap(openingShelf: event.shelfIndex, clearingShelf: -1));
-    _shelfAnimTimer?.cancel();
-    _shelfAnimTimer = Timer(const Duration(milliseconds: 480), () {
+    emit(_snap(openingShelf: event.shelfIndex));
+    _openTimer?.cancel();
+    _openTimer = Timer(const Duration(milliseconds: 480), () {
       if (!isClosed) add(const BannerCleared());
     });
   }
@@ -215,7 +223,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     e.tickSecond();
     emit(_snap(
       banner: state.banner,
-      clearingShelf: state.clearingShelf,
       openingShelf: state.openingShelf,
     ));
   }
@@ -230,7 +237,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     if (v.isEmpty) return;
     emit(_snap(
       banner: state.banner,
-      clearingShelf: state.clearingShelf,
       openingShelf: state.openingShelf,
     ));
   }
@@ -271,13 +277,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       case BoosterKind.extraShelf:
         e.addExtraShelf();
     }
-    var clearing = -1;
-    if (e.lastClear != null && e.inputLocked) {
-      clearing = e.lastClear!.shelfIndex;
-    }
-    emit(_snap(banner: _boosterLabel(event.kind), clearingShelf: clearing));
+    emit(_snap(banner: _boosterLabel(event.kind)));
     _flashBanner();
-    if (clearing >= 0) _scheduleShelfWave(clearing);
+    _scheduleSales();
   }
 
   String _boosterLabel(BoosterKind k) => switch (k) {
@@ -297,6 +299,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     final level = _engine?.level;
     if (level == null) return;
     _freezeTimer?.cancel();
+    _cancelSales();
     _engine = MatchEngine(level: level);
     emit(_snap());
   }
@@ -317,7 +320,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   void _onBannerCleared(BannerCleared event, Emitter<GameState> emit) {
     if (_engine == null) return;
-    emit(_snap(clearBanner: true, clearingShelf: -1, openingShelf: -1));
+    emit(_snap(clearBanner: true, openingShelf: -1));
   }
 
   void _flashBanner() {
@@ -325,6 +328,14 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     _bannerTimer = Timer(const Duration(milliseconds: 900), () {
       if (!isClosed) add(const BannerCleared());
     });
+  }
+
+  void _cancelSales() {
+    for (final timer in _saleTimers.values) {
+      timer.cancel();
+    }
+    _saleTimers.clear();
+    _openTimer?.cancel();
   }
 
   Map<String, dynamic>? toSave() => _engine?.toSaveJson();
@@ -335,7 +346,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     _mechClock?.cancel();
     _freezeTimer?.cancel();
     _bannerTimer?.cancel();
-    _shelfAnimTimer?.cancel();
+    _cancelSales();
     _engine?.mechanics.dispose();
     return super.close();
   }

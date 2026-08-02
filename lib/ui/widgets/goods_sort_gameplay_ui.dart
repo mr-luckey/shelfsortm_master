@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/theme/goods_sort_theme.dart';
+import '../../services/audio_service.dart';
+import '../meta/praise_burst.dart';
 
 /// Pixel specs from Goods Sort™ gameplay screenshots (Play Store).
 abstract final class GoodsSortLayout {
@@ -344,56 +348,163 @@ class GoodsSortPauseOverlay extends StatelessWidget {
   final VoidCallback onResume;
   final VoidCallback onRestart;
   final VoidCallback onQuit;
+  final VoidCallback? onHome;
+  final VoidCallback? onSettings;
 
   const GoodsSortPauseOverlay({
     super.key,
     required this.onResume,
     required this.onRestart,
     required this.onQuit,
+    this.onHome,
+    this.onSettings,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black54,
-      alignment: Alignment.center,
-      child: Container(
-        margin: const EdgeInsets.all(32),
-        padding: const EdgeInsets.all(24),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(24),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              'Paused',
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900),
+    return Material(
+      color: Colors.black.withValues(alpha: 0.62),
+      child: MetaPopupScope(
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(20, 22, 20, 18),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(22),
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xFF5A3418), Color(0xFF2A1608)],
             ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: GoodsSortTheme.playGreen,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
+            border: Border.all(color: const Color(0xFFE8C45A), width: 1.8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.45),
+                blurRadius: 24,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 56,
+                height: 56,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color(0xFF2A1608),
+                  border: Border.all(color: const Color(0xFFE8C45A), width: 1.5),
                 ),
-                onPressed: onResume,
-                child: const Text(
-                  'Continue',
-                  style: TextStyle(fontWeight: FontWeight.w900),
+                child: const Icon(
+                  Icons.pause_rounded,
+                  color: Color(0xFFE8C45A),
+                  size: 32,
                 ),
               ),
+              const SizedBox(height: 12),
+              Text(
+                'Paused',
+                style: GoogleFonts.fredoka(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xFFF7E6C8),
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'Take a breath — shelves can wait',
+                style: GoogleFonts.nunito(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 13,
+                  color: const Color(0xFFF7E6C8).withValues(alpha: 0.75),
+                ),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF2E7D32),
+                    foregroundColor: Colors.white,
+                    elevation: 6,
+                    side: const BorderSide(color: Color(0xFFE8C45A), width: 1.4),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  onPressed: () {
+                    try {
+                      context.read<AudioService>().playButton();
+                    } catch (_) {}
+                    onResume();
+                  },
+                  child: Text(
+                    'Continue',
+                    style: GoogleFonts.nunito(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              _PauseAction(
+                icon: Icons.refresh_rounded,
+                label: 'Restart',
+                onTap: onRestart,
+              ),
+              if (onSettings != null)
+                _PauseAction(
+                  icon: Icons.settings_rounded,
+                  label: 'Settings',
+                  onTap: onSettings!,
+                ),
+              _PauseAction(
+                icon: Icons.home_rounded,
+                label: 'Home',
+                onTap: onHome ?? onQuit,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PauseAction extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  const _PauseAction({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: SizedBox(
+        width: double.infinity,
+        child: TextButton.icon(
+          onPressed: () {
+            try {
+              context.read<AudioService>().playButton();
+            } catch (_) {}
+            onTap();
+          },
+          icon: Icon(icon, color: const Color(0xFFE8C45A), size: 20),
+          label: Text(
+            label,
+            style: GoogleFonts.nunito(
+              fontWeight: FontWeight.w800,
+              fontSize: 15,
+              color: const Color(0xFFF7E6C8),
             ),
-            const SizedBox(height: 10),
-            TextButton(onPressed: onRestart, child: const Text('Restart')),
-            TextButton(onPressed: onQuit, child: const Text('Quit')),
-          ],
+          ),
         ),
       ),
     );
@@ -417,51 +528,67 @@ class GoodsSortLoseOverlay extends StatelessWidget {
     return Container(
       color: Colors.black54,
       alignment: Alignment.bottomCenter,
-      child: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.all(16),
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(24),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              isTime ? "Time's Up!" : 'No Space Left!',
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              isTime ? '+60 seconds to keep sorting' : 'Add a shelf to continue',
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Color(0xFF757575)),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: onQuit,
-                    child: const Text('Quit'),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  flex: 2,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: GoodsSortTheme.playGreen,
-                      foregroundColor: Colors.white,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 360),
+        child: Container(
+          width: double.infinity,
+          margin: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                isTime ? "Time's Up!" : 'No Space Left!',
+                style:
+                    const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                isTime
+                    ? '+60 seconds to keep sorting'
+                    : 'Add a shelf to continue',
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Color(0xFF757575)),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        try {
+                          context.read<AudioService>().playButton();
+                        } catch (_) {}
+                        onQuit();
+                      },
+                      child: const Text('Quit'),
                     ),
-                    onPressed: onWatchAd,
-                    child: const Text('Watch Ad'),
                   ),
-                ),
-              ],
-            ),
-          ],
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 2,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: GoodsSortTheme.playGreen,
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed: () {
+                        try {
+                          context.read<AudioService>().playButton();
+                        } catch (_) {}
+                        onWatchAd();
+                      },
+                      child: const Text('Watch Ad'),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,109 +1,94 @@
 /// Named cupboard silhouettes. Every shape fits inside 4 columns × 10 rows.
 ///
 /// Layout cells are 1-based shelf ids. `0` is a visual hole (no compartment).
+/// Shapes are plain rectangular cabinets apart from one symmetrical design with
+/// a narrower base, so a board always reads as joinery instead of a random blob.
 abstract final class LevelShapes {
   static const int maxCols = 4;
   static const int maxRows = 10;
 
-  static const Map<String, List<List<int>>> all = {
-    'pair': [
+  /// Cabinet sizes the campaign draws from, as `cols x rows`.
+  static const List<List<int>> gridSizes = [
+    [2, 1],
+    [3, 1],
+    [2, 2],
+    [3, 2],
+    [4, 2],
+    [3, 3],
+    [4, 3],
+    [3, 4],
+    [4, 4],
+    [3, 5],
+    [4, 5],
+    [3, 6],
+    [4, 6],
+    [3, 7],
+    [4, 7],
+    [3, 8],
+    [4, 8],
+    [3, 9],
+    [4, 9],
+    [3, 10],
+    [4, 10],
+  ];
+
+  /// Cabinets that are not a plain rectangle but still look manufactured:
+  /// a full carcass with a narrower, centred base section.
+  static const Map<String, List<List<int>>> special = {
+    'duo': [
       [1, 2],
     ],
     'trio': [
       [1, 2, 3],
     ],
-    'row4': [
-      [1, 2, 3, 4],
-    ],
-    'grid2x2': [
-      [1, 2],
-      [3, 4],
-    ],
-    'grid3x2': [
-      [1, 2, 3],
-      [4, 5, 6],
-    ],
-    'grid3x3': [
-      [1, 2, 3],
-      [4, 5, 6],
-      [7, 8, 9],
-    ],
-    'grid4x2': [
-      [1, 2, 3, 4],
-      [5, 6, 7, 8],
-    ],
-    'grid4x3': [
-      [1, 2, 3, 4],
-      [5, 6, 7, 8],
-      [9, 10, 11, 12],
-    ],
-    'grid4x4': [
+    'podium4x5': [
       [1, 2, 3, 4],
       [5, 6, 7, 8],
       [9, 10, 11, 12],
       [13, 14, 15, 16],
-    ],
-    'stair7': [
-      [1, 2, 3],
-      [4, 5, 6, 7],
-    ],
-    'tallNarrow': [
-      [1, 2],
-      [3, 4],
-      [5, 6],
-      [7, 8],
-    ],
-    'lShape': [
-      [1, 2, 3],
-      [4, 0, 0],
-      [5, 0, 0],
-    ],
-    'tShape': [
-      [1, 2, 3],
-      [0, 4, 0],
-      [0, 5, 0],
-    ],
-    'uShape': [
-      [1, 0, 2],
-      [3, 4, 5],
-    ],
-    'pyramid': [
-      [0, 1, 0],
-      [2, 3, 4],
-      [5, 6, 7, 8],
-    ],
-    'offset': [
-      [0, 1, 2],
-      [3, 4, 0],
-    ],
-    'split': [
-      [1, 2],
-      [0, 0],
-      [3, 4],
-    ],
-    'asymmetric8': [
-      [1, 2, 3, 0],
-      [4, 5, 6, 7],
-      [0, 8, 0, 0],
-    ],
-    'wide10': [
-      [1, 2, 3, 4],
-      [5, 6, 7, 8],
-      [9, 10, 0, 0],
-    ],
-    'medium12': [
-      [1, 2, 3, 4],
-      [5, 6, 7, 8],
-      [9, 10, 11, 12],
+      [0, 17, 18, 0],
     ],
   };
 
-  static List<List<int>> byId(String id) {
-    final layout = all[id];
-    if (layout == null) {
-      throw ArgumentError('Unknown shape id: $id');
+  /// Rectangular cabinet, ids running left to right and top to bottom.
+  static List<List<int>> grid(int cols, int rows) {
+    if (cols < 1 || cols > maxCols) {
+      throw ArgumentError('cols $cols outside 1..$maxCols');
     }
-    return layout.map((row) => List<int>.from(row)).toList();
+    if (rows < 1 || rows > maxRows) {
+      throw ArgumentError('rows $rows outside 1..$maxRows');
+    }
+    var id = 0;
+    return [
+      for (var r = 0; r < rows; r++)
+        [
+          for (var c = 0; c < cols; c++) ++id,
+        ],
+    ];
+  }
+
+  static String gridId(int cols, int rows) => 'grid${cols}x$rows';
+
+  /// Every shape the campaign can ask for, by id.
+  static Map<String, List<List<int>>> get all => {
+        for (final e in special.entries)
+          e.key: e.value.map((row) => List<int>.from(row)).toList(),
+        for (final size in gridSizes)
+          gridId(size[0], size[1]): grid(size[0], size[1]),
+      };
+
+  static final RegExp _gridPattern = RegExp(r'^grid(\d+)x(\d+)$');
+
+  static List<List<int>> byId(String id) {
+    final named = special[id];
+    if (named != null) {
+      return named.map((row) => List<int>.from(row)).toList();
+    }
+    final match = _gridPattern.firstMatch(id);
+    if (match != null) {
+      return grid(int.parse(match.group(1)!), int.parse(match.group(2)!));
+    }
+    throw ArgumentError('Unknown shape id: $id');
   }
 
   /// Non-zero shelf ids in row-major order.
@@ -124,6 +109,8 @@ abstract final class LevelShapes {
     }
     return cols;
   }
+
+  static int rowCount(List<List<int>> layout) => layout.length;
 
   /// Pads every row to the same column count with trailing zeros.
   static List<List<int>> normalize(List<List<int>> layout) {

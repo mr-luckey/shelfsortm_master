@@ -18,7 +18,11 @@ class GameState extends Equatable {
   final GameStatus status;
   final MatchClear? lastClear;
   final String? banner;
+  /// First box playing its sale, kept for the older board widgets.
   final int clearingShelf;
+
+  /// Every box playing its sale right now.
+  final Set<int> clearingShelves;
   final int openingShelf;
   final bool inputLocked;
   final Set<int> finishedShelves;
@@ -46,6 +50,7 @@ class GameState extends Equatable {
     this.lastClear,
     this.banner,
     this.clearingShelf = -1,
+    this.clearingShelves = const {},
     this.openingShelf = -1,
     this.inputLocked = false,
     this.finishedShelves = const {},
@@ -94,6 +99,7 @@ class GameState extends Equatable {
     MatchClear? lastClear,
     String? banner,
     int? clearingShelf,
+    Set<int>? clearingShelves,
     int? openingShelf,
     bool? inputLocked,
     Set<int>? finishedShelves,
@@ -122,6 +128,7 @@ class GameState extends Equatable {
       lastClear: lastClear ?? this.lastClear,
       banner: clearBanner ? null : (banner ?? this.banner),
       clearingShelf: clearingShelf ?? this.clearingShelf,
+      clearingShelves: clearingShelves ?? this.clearingShelves,
       openingShelf: openingShelf ?? this.openingShelf,
       inputLocked: inputLocked ?? this.inputLocked,
       finishedShelves: finishedShelves ?? this.finishedShelves,
@@ -151,6 +158,7 @@ class GameState extends Equatable {
         lastClear,
         banner,
         clearingShelf,
+        clearingShelves,
         openingShelf,
         inputLocked,
         finishedShelves,

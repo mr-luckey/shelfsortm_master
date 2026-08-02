@@ -4,7 +4,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
+import '../../services/audio_service.dart';
 import '../widgets/emoji_assets.dart';
 
 /// Full black ASMR mode — scrolling cubbies; sort 3 matching faces to sell.
@@ -499,11 +501,18 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                 left: 4,
                 child: IconButton(
                   tooltip: 'Close',
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: Icon(
+                  onPressed: () {
+                    context.read<AudioService>().playButton();
+                    Navigator.of(context).pop();
+                  },
+                  style: IconButton.styleFrom(
+                    backgroundColor: const Color(0xEE2A1608),
+                    side: const BorderSide(color: Color(0xFFB8860B), width: 1.4),
+                  ),
+                  icon: const Icon(
                     Icons.close_rounded,
-                    color: Colors.white.withValues(alpha: 0.35),
-                    size: 28,
+                    color: Color(0xFFF7E6C8),
+                    size: 26,
                   ),
                 ),
               ),

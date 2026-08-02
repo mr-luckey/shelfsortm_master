@@ -43,6 +43,41 @@ void main() {
     }
   });
 
+  test('campaign pressure only climbs across levels 1-30', () {
+    var previous = -1.0;
+    for (var id = 1; id <= 30; id++) {
+      final level = LevelGenerator.generate(id);
+      final score = LevelValidator.pressure(level);
+      expect(score, greaterThan(previous), reason: 'L$id not harder');
+      previous = score;
+      // No cupboard box opens empty.
+      final fronts = <int>{};
+      for (final p in level.initialPlacement) {
+        if (p.depth == 0 && p.shelfId <= level.shelfCount) {
+          fronts.add(p.shelfId);
+        }
+      }
+      expect(fronts.length, level.shelfCount, reason: 'L$id empty box');
+    }
+  });
+
+  test('depth arrives on level 4 and trays get their own layers later', () {
+    expect(
+      LevelGenerator.generate(3).initialPlacement.every((p) => p.depth == 0),
+      isTrue,
+    );
+    expect(
+      LevelGenerator.generate(4).initialPlacement.any((p) => p.depth > 0),
+      isTrue,
+    );
+    expect(
+      LevelGenerator.generate(10)
+          .initialPlacement
+          .any((p) => p.depth > 0 && p.shelfId > LevelGenerator.generate(10).shelfCount),
+      isTrue,
+    );
+  });
+
   test('validator rejects a pre-matched full box', () {
     final base = LevelGenerator.generate(3);
     final forged = [

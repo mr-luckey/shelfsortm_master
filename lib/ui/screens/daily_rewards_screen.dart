@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../app/theme/app_colors.dart';
 import '../../providers/progress_provider.dart';
+import '../meta/meta_chrome.dart';
+import '../premium/premium_tokens.dart';
 
 class DailyRewardsScreen extends StatelessWidget {
   const DailyRewardsScreen({super.key});
@@ -25,122 +27,100 @@ class DailyRewardsScreen extends StatelessWidget {
         final p = progress.progress;
         final day = p.loginStreak.clamp(1, 7);
 
-        return Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.background, Color(0xFFFFE0B2)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
+        return MetaBackdrop(
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  const Text(
-                    'Daily Login Rewards',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Streak Day $day / 7',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textLight,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
+                  const MetaTitle('Daily Rewards', size: 26)
+                      .animate()
+                      .fadeIn(),
+                  const SizedBox(height: 6),
+                  MetaSubtitle('Streak Day $day / 7'),
+                  const SizedBox(height: 16),
                   Expanded(
                     child: GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
-                        mainAxisSpacing: 12,
-                        crossAxisSpacing: 12,
-                        childAspectRatio: 0.85,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        childAspectRatio: 0.82,
                       ),
                       itemCount: 7,
                       itemBuilder: (context, i) {
                         final d = i + 1;
                         final claimed = p.claimedRewardDays.contains(d);
                         final current = d == day;
-                        return Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            gradient: claimed
-                                ? LinearGradient(
-                                    colors: [
-                                      AppColors.success.withValues(alpha: 0.3),
-                                      AppColors.success.withValues(alpha: 0.1),
-                                    ],
-                                  )
-                                : AppColors.primaryGradient,
-                            border: current
-                                ? Border.all(color: AppColors.secondary, width: 3)
-                                : null,
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.primary.withValues(alpha: 0.2),
-                                blurRadius: 8,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
+                        return MetaWoodCard(
                           padding: const EdgeInsets.all(8),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 'Day $d',
-                                style: TextStyle(
+                                style: GoogleFonts.nunito(
                                   fontWeight: FontWeight.w900,
-                                  color: claimed ? AppColors.success : Colors.white,
+                                  color: current
+                                      ? MetaChrome.gold
+                                      : MetaChrome.cream,
                                 ),
                               ),
-                              const SizedBox(height: 6),
+                              const SizedBox(height: 4),
+                              Image.asset(
+                                '${PremiumTokens.uiRoot}/gift_reward.png',
+                                width: 28,
+                                height: 28,
+                                errorBuilder: (context, error, stack) =>
+                                    const Icon(
+                                  Icons.card_giftcard,
+                                  color: MetaChrome.gold,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
                               Text(
                                 rewards[i],
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 11,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.nunito(
+                                  fontSize: 10,
                                   fontWeight: FontWeight.w700,
-                                  color: claimed
-                                      ? AppColors.textDark
-                                      : Colors.white,
+                                  color: MetaChrome.cream.withValues(alpha: 0.9),
                                 ),
                               ),
                               if (claimed)
-                                const Icon(Icons.check_circle,
-                                    color: AppColors.success, size: 18),
+                                const Icon(
+                                  Icons.check_circle,
+                                  color: Color(0xFF81C784),
+                                  size: 16,
+                                ),
                             ],
                           ),
-                        ).animate(delay: (60 * i).ms).fadeIn().scale(
-                              begin: const Offset(0.9, 0.9),
-                            );
+                        )
+                            .animate(delay: (50 * i).ms)
+                            .fadeIn()
+                            .scale(begin: const Offset(0.92, 0.92));
                       },
                     ),
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 54,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        final claimed = await progress.claimDailyReward();
-                        if (!context.mounted) return;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              claimed < 0
-                                  ? 'Already claimed today!'
-                                  : 'Day $claimed reward claimed!',
-                            ),
-                            behavior: SnackBarBehavior.floating,
+                  MetaPrimaryButton(
+                    label: 'Claim Today',
+                    onPressed: () async {
+                      final claimed = await progress.claimDailyReward();
+                      if (!context.mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            claimed < 0
+                                ? 'Already claimed today!'
+                                : 'Day $claimed reward claimed!',
                           ),
-                        );
-                      },
-                      child: const Text('Claim Today'),
-                    ),
+                          behavior: SnackBarBehavior.floating,
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

@@ -3,6 +3,8 @@ import 'package:shelfsortm_master/engine/level_generator.dart';
 import 'package:shelfsortm_master/engine/level_plan.dart';
 import 'package:shelfsortm_master/engine/level_shapes.dart';
 import 'package:shelfsortm_master/engine/match_engine.dart';
+import 'package:shelfsortm_master/models/item.dart';
+import 'package:shelfsortm_master/models/shelf.dart';
 
 void main() {
   test('levels: 3-slot shelves, buffers, item count % 3 == 0', () {
@@ -23,7 +25,7 @@ void main() {
   });
 
   test('depth items queue as next shelf waves', () {
-    final level = LevelGenerator.generate(15);
+    final level = LevelGenerator.generate(11);
     final engine = MatchEngine(level: level);
     expect(engine.waves.wavesRemaining, greaterThan(0));
     expect(engine.itemCount, greaterThan(0));
@@ -31,33 +33,37 @@ void main() {
 
   test('layers follow the level plan and cap out', () {
     expect(LevelGenerator.layersFor(1), 1);
-    expect(LevelGenerator.layersFor(2), 1);
-    expect(LevelGenerator.layersFor(7), 2);
-    expect(LevelGenerator.layersFor(15), 2);
+    expect(LevelGenerator.layersFor(3), 1);
+    // Depth arrives on level 4 and keeps climbing across the campaign.
+    expect(LevelGenerator.layersFor(4), 2);
+    expect(LevelGenerator.layersFor(8), 3);
+    expect(LevelGenerator.layersFor(12), 4);
+    expect(LevelGenerator.layersFor(17), 5);
+    expect(LevelGenerator.layersFor(30), 5);
     expect(LevelGenerator.layersFor(100), lessThanOrEqualTo(LevelGenerator.maxLayers));
   });
 
   test('early levels use the designed cupboard shapes', () {
-    expect(LevelGenerator.generate(1).shelfCount, 2);
-    expect(LevelGenerator.generate(2).shelfCount, 3);
+    expect(LevelGenerator.generate(1).shelfCount, 3);
+    expect(LevelGenerator.generate(2).shelfCount, 4);
     expect(LevelGenerator.generate(3).shelfCount, 6);
-    expect(LevelGenerator.generate(4).shelfCount, 7);
+    expect(LevelGenerator.generate(5).shelfCount, 9);
 
     final l1 = LevelGenerator.generate(1).layout;
-    expect(LevelShapes.boxCount(l1), 2);
+    expect(LevelShapes.boxCount(l1), 3);
     expect(l1.length, lessThanOrEqualTo(LevelShapes.maxRows));
     expect(LevelShapes.colCount(l1), lessThanOrEqualTo(LevelShapes.maxCols));
   });
 
-  test('sorting hardness climbs across a flavor and restarts', () {
+  test('sorting hardness climbs across the campaign', () {
     expect(LevelGenerator.hardnessFor(1), 0);
-    expect(LevelGenerator.hardnessFor(100), 1);
-    expect(LevelGenerator.hardnessFor(101), 0);
+    expect(LevelGenerator.hardnessFor(3), 0);
+    expect(LevelGenerator.hardnessFor(30), 1);
 
     var previous = -1.0;
-    for (var n = 16; n <= 100; n++) {
+    for (var n = 1; n <= LevelPlan.lastLevel; n++) {
       final h = LevelGenerator.hardnessFor(n);
-      expect(h, greaterThanOrEqualTo(previous));
+      expect(h, greaterThanOrEqualTo(previous), reason: 'L$n');
       previous = h;
     }
   });
@@ -89,21 +95,28 @@ void main() {
   });
 
   test('a hidden layer only arrives once its box is emptied', () {
-    final level = LevelGenerator.generate(7);
+    final level = LevelGenerator.generate(11);
     final engine = MatchEngine(level: level);
-    expect(engine.waves.nextWaveFor(engine.shelves.first.shelfId), isNotNull);
+    // Depth is rolled per box, so hunt for one that actually hides a layer.
+    final shelfIndex = [
+      for (var i = 0; i < level.shelfCount; i++) i,
+    ].firstWhere(
+      (i) => engine.waves.nextWaveFor(engine.shelves[i].shelfId) != null,
+    );
+    final shelfId = engine.shelves[shelfIndex].shelfId;
+    expect(engine.waves.nextWaveFor(shelfId), isNotNull);
 
-    final shelfId = engine.shelves.first.shelfId;
     final layersBefore = engine.waves.layersLeftFor(shelfId);
     var guard = 0;
-    while (engine.waves.layersLeftFor(shelfId) == layersBefore && guard < 40) {
+    while (engine.waves.layersLeftFor(shelfId) == layersBefore && guard < 80) {
       guard++;
       final fromSlot =
-          engine.shelves[0].slots.indexWhere((s) => !s.isEmpty);
+          engine.shelves[shelfIndex].slots.indexWhere((s) => !s.isEmpty);
       if (fromSlot < 0) break;
-      final from = BoardPos(0, fromSlot);
+      final from = BoardPos(shelfIndex, fromSlot);
       BoardPos? to;
-      for (var si = 1; si < engine.shelves.length && to == null; si++) {
+      for (var si = 0; si < engine.shelves.length && to == null; si++) {
+        if (si == shelfIndex) continue;
         final slot = engine.shelves[si].firstEmptyIndex;
         if (slot >= 0) to = BoardPos(si, slot);
       }
@@ -152,6 +165,38 @@ void main() {
     expect(engine.selected, from);
     expect(engine.tap(to), isTrue);
     expect(engine.selected, isNull);
+  });
+
+  test('a sale only holds its own box, the rest of the board keeps playing', () {
+    final engine = MatchEngine(level: LevelGenerator.generate(2));
+    ShelfSlot good(String id) => ShelfSlot.front(GameItem.fromId(id));
+
+    engine.shelves[0] = engine.shelves[0].copyWith(
+      slots: [good('cupcake_red_001'), good('cupcake_red_002'), const ShelfSlot()],
+    );
+    engine.shelves[1] = engine.shelves[1].copyWith(
+      slots: [good('cupcake_red_003'), const ShelfSlot(), const ShelfSlot()],
+    );
+    engine.shelves[2] = engine.shelves[2].copyWith(
+      slots: [good('jar_teal_001'), const ShelfSlot(), const ShelfSlot()],
+    );
+
+    expect(engine.move(const BoardPos(1, 0), const BoardPos(0, 2)), isTrue);
+    expect(engine.closingShelves, {0});
+
+    // The selling box is off limits until its sale finishes.
+    expect(engine.move(const BoardPos(0, 0), const BoardPos(1, 1)), isFalse);
+    // Everything else stays live — no board wide freeze.
+    expect(engine.move(const BoardPos(2, 0), const BoardPos(1, 0)), isTrue);
+
+    engine.finishShelfClose(0);
+    if (engine.waves.hasPendingWave(0)) {
+      // A waiting layer keeps the box shut until it has slid forward.
+      expect(engine.isClosing(0), isTrue);
+      engine.openNextWave(0);
+    }
+    expect(engine.closingShelves, isEmpty);
+    expect(engine.isClosing(0), isFalse);
   });
 
   test('level plans stay within the hard board limit', () {

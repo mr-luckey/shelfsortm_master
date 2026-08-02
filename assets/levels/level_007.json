@@ -2,110 +2,349 @@
   "levelId": 7,
   "themeRoom": "activities",
   "difficulty": "standard",
-  "timeLimit": 145,
-  "shelfCount": 4,
+  "timeLimit": 274,
+  "shelfCount": 12,
   "slotsPerShelf": 3,
-  "bufferShelves": 4,
+  "bufferShelves": 12,
   "levelTint": "pink",
   "layout": [
     [
-      0,
       1,
-      2
+      2,
+      3
     ],
     [
-      3,
       4,
-      0
+      5,
+      6
+    ],
+    [
+      7,
+      8,
+      9
+    ],
+    [
+      10,
+      11,
+      12
     ]
   ],
+  "trayCount": 4,
   "initialPlacement": [
     {
-      "itemId": "dumpling_pink_001",
+      "itemId": "sandwich_pink_001",
       "shelfId": 1,
       "slot": 0
     },
     {
-      "itemId": "dumpling_pink_002",
+      "itemId": "mate_pink_002",
       "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "potoffood_pink_003",
+      "itemId": "mate_pink_003",
       "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "mooncake_pink_004",
-      "shelfId": 2,
-      "slot": 0
-    },
-    {
-      "itemId": "mooncake_pink_005",
+      "itemId": "sushi_pink_004",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "babybottle_pink_006",
+      "itemId": "cupcake_pink_005",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "pancakes_pink_006",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "shavedice_pink_007",
       "shelfId": 3,
       "slot": 1
     },
     {
-      "itemId": "babybottle_pink_007",
+      "itemId": "pancakes_pink_008",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "potoffood_pink_008",
+      "itemId": "takeoutbox_pink_009",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "custard_pink_009",
+      "itemId": "birthdaycake_pink_010",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "potoffood_pink_010",
+      "itemId": "birthdaycake_pink_011",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "custard_pink_011",
+      "itemId": "steamingbowl_pink_012",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "steamingbowl_pink_013",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "frenchfries_pink_014",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "shavedice_pink_015",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "shavedice_pink_016",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "cupcake_pink_017",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "takeoutbox_pink_018",
+      "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "cupcake_pink_019",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "dumpling_pink_020",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "dumpling_pink_021",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "greensalad_pink_022",
+      "shelfId": 9,
+      "slot": 0
+    },
+    {
+      "itemId": "pie_pink_023",
+      "shelfId": 9,
+      "slot": 1
+    },
+    {
+      "itemId": "greensalad_pink_024",
+      "shelfId": 9,
+      "slot": 2
+    },
+    {
+      "itemId": "bentobox_pink_025",
+      "shelfId": 10,
+      "slot": 0
+    },
+    {
+      "itemId": "cookedrice_pink_026",
+      "shelfId": 10,
+      "slot": 1
+    },
+    {
+      "itemId": "sandwich_pink_027",
+      "shelfId": 10,
+      "slot": 2
+    },
+    {
+      "itemId": "curryrice_pink_028",
+      "shelfId": 11,
+      "slot": 0
+    },
+    {
+      "itemId": "mate_pink_029",
+      "shelfId": 11,
+      "slot": 1
+    },
+    {
+      "itemId": "curryrice_pink_030",
+      "shelfId": 11,
+      "slot": 2
+    },
+    {
+      "itemId": "hotbeverage_pink_031",
+      "shelfId": 12,
+      "slot": 0
+    },
+    {
+      "itemId": "frenchfries_pink_032",
+      "shelfId": 12,
+      "slot": 1
+    },
+    {
+      "itemId": "frenchfries_pink_033",
+      "shelfId": 12,
+      "slot": 2
+    },
+    {
+      "itemId": "pancakes_pink_034",
+      "shelfId": 13,
+      "slot": 0
+    },
+    {
+      "itemId": "sandwich_pink_035",
+      "shelfId": 13,
+      "slot": 1
+    },
+    {
+      "itemId": "takeoutbox_pink_036",
+      "shelfId": 13,
+      "slot": 2
+    },
+    {
+      "itemId": "hamburger_pink_037",
+      "shelfId": 14,
+      "slot": 0
+    },
+    {
+      "itemId": "hamburger_pink_038",
+      "shelfId": 14,
+      "slot": 2
+    },
+    {
+      "itemId": "pie_pink_039",
+      "shelfId": 15,
+      "slot": 0
+    },
+    {
+      "itemId": "sushi_pink_040",
+      "shelfId": 15,
+      "slot": 1
+    },
+    {
+      "itemId": "bentobox_pink_041",
+      "shelfId": 15,
+      "slot": 2
+    },
+    {
+      "itemId": "hamburger_pink_042",
+      "shelfId": 16,
+      "slot": 1
+    },
+    {
+      "itemId": "dumpling_pink_043",
+      "shelfId": 16,
+      "slot": 2
+    },
+    {
+      "itemId": "amphora_pink_044",
       "shelfId": 1,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "custard_pink_012",
-      "shelfId": 1,
+      "itemId": "greensalad_pink_045",
+      "shelfId": 2,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "curryrice_pink_046",
+      "shelfId": 3,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "bentobox_pink_047",
+      "shelfId": 4,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "dumpling_pink_013",
-      "shelfId": 1,
+      "itemId": "amphora_pink_048",
+      "shelfId": 5,
       "slot": 2,
       "depth": 1
     },
     {
-      "itemId": "babybottle_pink_014",
-      "shelfId": 2,
+      "itemId": "amphora_pink_049",
+      "shelfId": 6,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "cookedrice_pink_050",
+      "shelfId": 7,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "mooncake_pink_015",
-      "shelfId": 2,
+      "itemId": "cookedrice_pink_051",
+      "shelfId": 7,
       "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "hotbeverage_pink_052",
+      "shelfId": 8,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "hotbeverage_pink_053",
+      "shelfId": 8,
+      "slot": 1,
+      "depth": 1
+    },
+    {
+      "itemId": "steamingbowl_pink_054",
+      "shelfId": 9,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "sushi_pink_055",
+      "shelfId": 10,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "pie_pink_056",
+      "shelfId": 11,
+      "slot": 2,
+      "depth": 1
+    },
+    {
+      "itemId": "birthdaycake_pink_057",
+      "shelfId": 12,
+      "slot": 0,
       "depth": 1
     }
   ],
-  "optimalMoves": 15,
+  "optimalMoves": 54,
   "starThresholds": {
-    "3star": 15,
-    "2star": 20,
-    "1star": 27
+    "3star": 54,
+    "2star": 73,
+    "1star": 97
+  },
+  "mechanics": [
+    "conveyor_tray"
+  ],
+  "mechanicConfig": {
+    "conveyorTray": {
+      "trayCount": 4,
+      "speed": 0.18
+    }
   },
   "seed": 55450
 }
