@@ -142,30 +142,49 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
     MetaPopupScope.show<void>(
       context: context,
       builder: (ctx) {
-        return AlertDialog(
-          backgroundColor: const Color(0xFF3A2410),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
-            side: const BorderSide(color: Color(0xFFE8C45A), width: 1.5),
-          ),
-          title: const Text(
-            'Settings',
-            style: TextStyle(
-              color: Color(0xFFF7E6C8),
-              fontWeight: FontWeight.w900,
+        return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.fromLTRB(20, 22, 20, 18),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(22),
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xFF5A3418), Color(0xFF2A1608)],
             ),
+            border: Border.all(color: const Color(0xFFE8C45A), width: 1.8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.45),
+                blurRadius: 24,
+                offset: const Offset(0, 10),
+              ),
+            ],
           ),
-          content: Material(
+          child: Material(
             type: MaterialType.transparency,
             child: Consumer<SettingsProvider>(
               builder: (context, settings, _) {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    const Text(
+                      'Settings',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color(0xFFF7E6C8),
+                        fontWeight: FontWeight.w900,
+                        fontSize: 22,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
                       title: const Text(
                         'Sound Effects',
+                        maxLines: 1,
+                        softWrap: false,
                         style: TextStyle(color: Color(0xFFF7E6C8)),
                       ),
                       value: settings.sfx,
@@ -176,6 +195,8 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                       contentPadding: EdgeInsets.zero,
                       title: const Text(
                         'Music',
+                        maxLines: 1,
+                        softWrap: false,
                         style: TextStyle(color: Color(0xFFF7E6C8)),
                       ),
                       value: settings.music,
@@ -186,32 +207,36 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                       contentPadding: EdgeInsets.zero,
                       title: const Text(
                         'Haptics',
+                        maxLines: 1,
+                        softWrap: false,
                         style: TextStyle(color: Color(0xFFF7E6C8)),
                       ),
                       value: settings.haptics,
                       activeThumbColor: const Color(0xFFE8C45A),
                       onChanged: settings.setHaptics,
                     ),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                        onPressed: () {
+                          context.read<AudioService>().playButton();
+                          Navigator.pop(ctx);
+                        },
+                        child: const Text(
+                          'Close',
+                          style: TextStyle(
+                            color: Color(0xFFE8C45A),
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 );
               },
             ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                context.read<AudioService>().playButton();
-                Navigator.pop(ctx);
-              },
-              child: const Text(
-                'Close',
-                style: TextStyle(
-                  color: Color(0xFFE8C45A),
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ),
-          ],
         );
       },
     );
