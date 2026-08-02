@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../widgets/emoji_assets.dart';
 import 'premium_tokens.dart';
-import 'toy_item_type.dart';
-import 'toy_item_widget.dart';
 
 class PremiumGoalPanel extends StatelessWidget {
-  final List<({ToyType type, int remaining})> goals;
+  final List<({String type, int remaining})> goals;
   final String goalText;
 
   const PremiumGoalPanel({
     super.key,
     required this.goals,
-    this.goalText = 'Sort all items by type',
+    this.goalText = 'Clear all sets',
   });
 
   @override
@@ -41,9 +40,9 @@ class PremiumGoalPanel extends StatelessWidget {
             top: -1,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: PremiumTokens.goalBlue,
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(8),
                   bottomRight: Radius.circular(8),
                 ),
@@ -97,7 +96,7 @@ class PremiumGoalPanel extends StatelessWidget {
 }
 
 class _GoalChip extends StatelessWidget {
-  final ToyType type;
+  final String type;
   final int remaining;
 
   const _GoalChip({required this.type, required this.remaining});
@@ -108,7 +107,16 @@ class _GoalChip extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        ToyItemWidget.fromType(type: type, size: 28),
+        Image.asset(
+          EmojiAssets.pathFor(type),
+          width: 28,
+          height: 28,
+          fit: BoxFit.contain,
+          errorBuilder: (_, error, stack) => Text(
+            '?',
+            style: GoogleFonts.nunito(fontWeight: FontWeight.w900, fontSize: 18),
+          ),
+        ),
         const SizedBox(height: 1),
         Container(
           constraints: const BoxConstraints(minWidth: 18),

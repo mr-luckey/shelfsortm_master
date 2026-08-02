@@ -1,3 +1,4 @@
+import '../engine/level_shapes.dart';
 import 'item.dart';
 import 'shelf.dart';
 import 'theme_room.dart';
@@ -81,6 +82,9 @@ class LevelData {
   final String levelTint;
   /// Irregular cabinet: each row is shelfIds (1-based), 0 = visual gap.
   final List<List<int>> layout;
+  /// Trays riding the belt below the cupboard. Their shelf ids continue after
+  /// the cupboard boxes, so goods on a tray are ordinary board goods.
+  final int trayCount;
   /// Active dynamic mechanics for this level (PRD §6A).
   final List<String> mechanics;
   /// Per-mechanic configuration keyed by camelCase mechanic name.
@@ -103,6 +107,7 @@ class LevelData {
     this.dockSlots = 0,
     this.levelTint = 'orange',
     this.layout = const [],
+    this.trayCount = 0,
     this.mechanics = const [],
     this.mechanicConfig = const {},
     this.seed = 0,
@@ -148,6 +153,10 @@ class LevelData {
           Map<String, dynamic>.from(json['mechanicConfig'] as Map);
     }
 
+    if (layout.isNotEmpty) {
+      LevelShapes.validate(layout);
+    }
+
     return LevelData(
       levelId: json['levelId'] as int,
       themeRoom: json['themeRoom'] as String,
@@ -162,6 +171,7 @@ class LevelData {
       dockSlots: json['dockSlots'] as int? ?? 0,
       levelTint: json['levelTint'] as String? ?? 'orange',
       layout: layout,
+      trayCount: json['trayCount'] as int? ?? 0,
       mechanics: (json['mechanics'] as List?)
               ?.map((e) => e as String)
               .toList() ??
@@ -186,9 +196,12 @@ class LevelData {
         'bufferShelves': bufferShelves,
         'levelTint': levelTint,
         'layout': layout,
+        if (trayCount != 0) 'trayCount': trayCount,
         'initialPlacement': initialPlacement.map((e) => e.toJson()).toList(),
         'optimalMoves': optimalMoves,
         'starThresholds': starThresholds.toJson(),
+        if (queue.isNotEmpty) 'queue': queue,
+        if (dockSlots != 0) 'dockSlots': dockSlots,
         if (mechanics.isNotEmpty) 'mechanics': mechanics,
         if (mechanicConfig.isNotEmpty) 'mechanicConfig': mechanicConfig,
         if (seed != 0) 'seed': seed,
@@ -207,7 +220,6 @@ class LevelData {
       return 1;
     }
     return starThresholds.starsForTimeLeft(
-      // Approximate leftover quality from move efficiency
       (optimalMoves > 0 ? (optimalMoves - moves).clamp(0, 999) : 30),
       optimalMoves > 0 ? optimalMoves : 60,
     );
@@ -224,6 +236,17 @@ class LevelData {
         slots: List.generate(slotsPerShelf, (_) => const ShelfSlot()),
       ),
     );
+    // Belt trays sit after the cupboard, in belt order.
+    for (var i = 0; i < trayCount; i++) {
+      board.add(
+        Shelf(
+          shelfId: shelfCount + 1 + i,
+          slotCount: slotsPerShelf,
+          slots: List.generate(slotsPerShelf, (_) => const ShelfSlot()),
+          isDock: true,
+        ),
+      );
+    }
 
     for (final p in initialPlacement) {
       if (p.depth != 0) continue;
@@ -266,7 +289,6 @@ class LevelData {
         List.generate(n - 4, (_) => id++),
       ];
     }
-    // Pick column width by board size
     final cols = n <= 9
         ? 3
         : n <= 12

@@ -1,11 +1,11 @@
 {
   "levelId": 11,
-  "themeRoom": "kitchen",
+  "themeRoom": "activities",
   "difficulty": "standard",
-  "timeLimit": 181,
-  "shelfCount": 7,
+  "timeLimit": 150,
+  "shelfCount": 6,
   "slotsPerShelf": 3,
-  "bufferShelves": 2,
+  "bufferShelves": 6,
   "levelTint": "green",
   "layout": [
     [
@@ -17,155 +17,115 @@
       4,
       5,
       6
-    ],
-    [
-      7
     ]
   ],
+  "trayCount": 2,
   "initialPlacement": [
     {
-      "itemId": "orangejuice_green_020",
-      "shelfId": 7,
-      "slot": 1
-    },
-    {
-      "itemId": "orangejuice_green_021",
-      "shelfId": 4,
-      "slot": 0
-    },
-    {
-      "itemId": "orangejuice_green_004",
-      "shelfId": 4,
-      "slot": 0,
-      "depth": 1
-    },
-    {
-      "itemId": "buddletea_green_007",
-      "shelfId": 6,
-      "slot": 2
-    },
-    {
-      "itemId": "coffee_green_013",
-      "shelfId": 6,
-      "slot": 2,
-      "depth": 1
-    },
-    {
-      "itemId": "orangejuice_green_005",
-      "shelfId": 1,
-      "slot": 0
-    },
-    {
-      "itemId": "orangejuice_green_024",
-      "shelfId": 1,
-      "slot": 0,
-      "depth": 1
-    },
-    {
-      "itemId": "orangejuice_green_003",
-      "shelfId": 6,
-      "slot": 0
-    },
-    {
-      "itemId": "coffee_green_018",
-      "shelfId": 6,
-      "slot": 0,
-      "depth": 1
-    },
-    {
-      "itemId": "buddletea_green_010",
-      "shelfId": 3,
-      "slot": 1
-    },
-    {
-      "itemId": "buddletea_green_008",
+      "itemId": "salt_green_001",
       "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "buddletea_green_009",
+      "itemId": "salt_green_002",
       "shelfId": 7,
+      "slot": 1
+    },
+    {
+      "itemId": "popcorn_green_003",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "popcorn_green_004",
+      "shelfId": 8,
       "slot": 2
     },
     {
-      "itemId": "orangejuice_green_006",
-      "shelfId": 7,
-      "slot": 2,
-      "depth": 1
+      "itemId": "popcorn_green_005",
+      "shelfId": 1,
+      "slot": 0
     },
     {
-      "itemId": "coffee_green_017",
+      "itemId": "cookedrice_green_006",
+      "shelfId": 1,
+      "slot": 1
+    },
+    {
+      "itemId": "cookedrice_green_007",
+      "shelfId": 1,
+      "slot": 2
+    },
+    {
+      "itemId": "bubbletea_green_008",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "oden_green_009",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "oden_green_010",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "mate_green_011",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "buddletea_green_011",
-      "shelfId": 4,
-      "slot": 1
-    },
-    {
-      "itemId": "orangejuice_green_019",
-      "shelfId": 1,
-      "slot": 1
-    },
-    {
-      "itemId": "coffee_green_016",
-      "shelfId": 1,
-      "slot": 2
-    },
-    {
-      "itemId": "orangejuice_green_002",
-      "shelfId": 1,
-      "slot": 2,
-      "depth": 1
-    },
-    {
-      "itemId": "orangejuice_green_023",
-      "shelfId": 6,
-      "slot": 1
-    },
-    {
-      "itemId": "orangejuice_green_022",
-      "shelfId": 6,
-      "slot": 1,
-      "depth": 1
-    },
-    {
-      "itemId": "buddletea_green_012",
+      "itemId": "mate_green_012",
       "shelfId": 3,
       "slot": 2
     },
     {
-      "itemId": "coffee_green_015",
-      "shelfId": 3,
-      "slot": 2,
-      "depth": 1
+      "itemId": "bubbletea_green_013",
+      "shelfId": 4,
+      "slot": 0
     },
     {
-      "itemId": "coffee_green_014",
+      "itemId": "mate_green_014",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "cookedrice_green_015",
       "shelfId": 4,
       "slot": 2
     },
     {
-      "itemId": "orangejuice_green_001",
-      "shelfId": 4,
-      "slot": 2,
-      "depth": 1
+      "itemId": "oden_green_016",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "salt_green_017",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "bubbletea_green_018",
+      "shelfId": 6,
+      "slot": 2
     }
   ],
-  "optimalMoves": 24,
+  "optimalMoves": 19,
   "starThresholds": {
-    "3star": 24,
-    "2star": 29,
-    "1star": 999
+    "3star": 19,
+    "2star": 26,
+    "1star": 34
   },
   "mechanics": [
-    "hidden_back_row"
+    "conveyor_tray"
   ],
   "mechanicConfig": {
-    "hiddenBackRow": {
-      "rows": 1,
-      "revealMode": "front_clear"
+    "conveyorTray": {
+      "trayCount": 2,
+      "speed": 0.18,
+      "direction": 1
     }
   },
   "seed": 87126

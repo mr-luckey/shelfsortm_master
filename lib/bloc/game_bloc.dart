@@ -103,6 +103,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     _clock?.cancel();
     _mechClock?.cancel();
     _freezeTimer?.cancel();
+    _bannerTimer?.cancel();
+    _shelfAnimTimer?.cancel();
     _engine = MatchEngine(level: event.level);
     if (event.midSave != null) {
       try {
@@ -269,8 +271,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       case BoosterKind.extraShelf:
         e.addExtraShelf();
     }
-    emit(_snap(banner: _boosterLabel(event.kind)));
+    var clearing = -1;
+    if (e.lastClear != null && e.inputLocked) {
+      clearing = e.lastClear!.shelfIndex;
+    }
+    emit(_snap(banner: _boosterLabel(event.kind), clearingShelf: clearing));
     _flashBanner();
+    if (clearing >= 0) _scheduleShelfWave(clearing);
   }
 
   String _boosterLabel(BoosterKind k) => switch (k) {

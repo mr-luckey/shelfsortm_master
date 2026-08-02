@@ -10,6 +10,9 @@ class PremiumHudBar extends StatelessWidget {
   final int gems;
   final int level;
   final int stars;
+  final int timeLeft;
+  final int timeLimit;
+  final bool frozen;
   final VoidCallback? onSettings;
   final VoidCallback? onShop;
   final VoidCallback? onAddCoins;
@@ -21,6 +24,9 @@ class PremiumHudBar extends StatelessWidget {
     this.gems = 0,
     this.level = 1,
     this.stars = 0,
+    this.timeLeft = 0,
+    this.timeLimit = 1,
+    this.frozen = false,
     this.onSettings,
     this.onShop,
     this.onAddCoins,
@@ -65,9 +71,15 @@ class PremiumHudBar extends StatelessWidget {
               onPlus: onAddCoins,
             ),
           ),
-          const SizedBox(width: 6),
+          const SizedBox(width: 4),
+          _TimerPill(
+            timeLeft: timeLeft,
+            timeLimit: timeLimit,
+            frozen: frozen,
+          ),
+          const SizedBox(width: 4),
           _LevelPanel(level: level, stars: stars),
-          const SizedBox(width: 6),
+          const SizedBox(width: 4),
           Expanded(
             child: _CurrencyPill(
               asset: '${PremiumTokens.uiRoot}/gem.png',
@@ -120,6 +132,85 @@ class PremiumHudBar extends StatelessWidget {
       return '${n ~/ 1000},${(n % 1000).toString().padLeft(3, '0')}';
     }
     return '$n';
+  }
+}
+
+class _TimerPill extends StatelessWidget {
+  final int timeLeft;
+  final int timeLimit;
+  final bool frozen;
+
+  const _TimerPill({
+    required this.timeLeft,
+    required this.timeLimit,
+    required this.frozen,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final ratio = timeLimit <= 0 ? 1.0 : timeLeft / timeLimit;
+    final Color bg;
+    final Color border;
+    if (frozen) {
+      bg = const Color(0xFFB3E5FC);
+      border = const Color(0xFF0288D1);
+    } else if (ratio <= 0.10) {
+      bg = const Color(0xFFFFCDD2);
+      border = const Color(0xFFC62828);
+    } else if (ratio <= 0.25) {
+      bg = const Color(0xFFFFE0B2);
+      border = const Color(0xFFEF6C00);
+    } else if (ratio <= 0.50) {
+      bg = const Color(0xFFFFF9C4);
+      border = const Color(0xFFF9A825);
+    } else {
+      bg = const Color(0xFFC8E6C9);
+      border = const Color(0xFF43A047);
+    }
+
+    final mins = timeLeft ~/ 60;
+    final secs = timeLeft % 60;
+    final text =
+        '${mins.toString().padLeft(1, '0')}:${secs.toString().padLeft(2, '0')}';
+
+    Widget pill = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: border, width: 2),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            frozen ? Icons.ac_unit : Icons.timer_outlined,
+            size: 16,
+            color: border,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            text,
+            style: GoogleFonts.nunito(
+              color: const Color(0xFF1A237E),
+              fontWeight: FontWeight.w900,
+              fontSize: 13,
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (!frozen && timeLeft > 0 && timeLeft <= 5) {
+      pill = pill
+          .animate(onPlay: (c) => c.repeat(reverse: true))
+          .scale(
+            begin: const Offset(1, 1),
+            end: const Offset(1.06, 1.06),
+            duration: 350.ms,
+          );
+    }
+    return pill;
   }
 }
 
@@ -268,7 +359,7 @@ class _LevelPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [PremiumTokens.hudBlue, PremiumTokens.hudNavy],
@@ -285,7 +376,7 @@ class _LevelPanel extends StatelessWidget {
             style: GoogleFonts.nunito(
               color: Colors.white,
               fontWeight: FontWeight.w900,
-              fontSize: 12,
+              fontSize: 11,
               letterSpacing: 0.5,
             ),
           ),
@@ -296,13 +387,8 @@ class _LevelPanel extends StatelessWidget {
               (i) => Icon(
                 i < stars ? Icons.star_rounded : Icons.star_border_rounded,
                 color: PremiumTokens.starGold,
-                size: 15,
-              )
-                  .animate(onPlay: (c) => c.repeat(reverse: true))
-                  .shimmer(
-                    duration: 1800.ms,
-                    color: Colors.white.withValues(alpha: 0.45),
-                  ),
+                size: 14,
+              ),
             ),
           ),
         ],

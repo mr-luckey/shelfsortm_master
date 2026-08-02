@@ -311,8 +311,13 @@ class MatchEngine {
     timeLeft = s.timeLeft;
     lastClear = null;
     selected = null;
+    inputLocked = false;
+    _closingShelfIndex = null;
     if (s.mechanicState != null) {
       mechanics.loadState(s.mechanicState!);
+    }
+    if (s.waveState != null) {
+      waves.loadJson(s.waveState!);
     }
     _checkEnd();
     return true;
@@ -470,6 +475,7 @@ class MatchEngine {
         combo: combo,
         timeLeft: timeLeft,
         mechanicState: Map<String, dynamic>.from(mechanics.saveState()),
+        waveState: Map<String, dynamic>.from(waves.toJson()),
       ),
     );
     if (_undo.length > 60) _undo.removeAt(0);
@@ -486,6 +492,7 @@ class MatchEngine {
         'frozen': frozen,
         'status': status.name,
         'mechanics': mechanics.saveState(),
+        'waves': waves.toJson(),
       };
 
   void loadSaveJson(Map<String, dynamic> json) {
@@ -508,6 +515,12 @@ class MatchEngine {
     } else if (ms is Map) {
       mechanics.loadState(Map<String, dynamic>.from(ms));
     }
+    final ws = json['waves'];
+    if (ws is Map<String, dynamic>) {
+      waves.loadJson(ws);
+    } else if (ws is Map) {
+      waves.loadJson(Map<String, dynamic>.from(ws));
+    }
   }
 }
 
@@ -518,6 +531,7 @@ class _Snap {
   final int combo;
   final int timeLeft;
   final Map<String, dynamic>? mechanicState;
+  final Map<String, dynamic>? waveState;
 
   _Snap({
     required this.shelves,
@@ -526,5 +540,6 @@ class _Snap {
     required this.combo,
     required this.timeLeft,
     this.mechanicState,
+    this.waveState,
   });
 }

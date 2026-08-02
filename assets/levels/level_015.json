@@ -1,171 +1,229 @@
 {
   "levelId": 15,
-  "themeRoom": "kitchen",
+  "themeRoom": "activities",
   "difficulty": "hard",
-  "timeLimit": 159,
-  "shelfCount": 7,
+  "timeLimit": 145,
+  "shelfCount": 8,
   "slotsPerShelf": 3,
-  "bufferShelves": 2,
+  "bufferShelves": 8,
   "levelTint": "pink",
   "layout": [
     [
       1,
       2,
-      3
+      3,
+      4
     ],
     [
-      4,
       5,
-      6
-    ],
-    [
-      7
+      6,
+      7,
+      8
     ]
   ],
+  "trayCount": 4,
   "initialPlacement": [
     {
-      "itemId": "orangejuice_pink_002",
-      "shelfId": 6,
-      "slot": 0
+      "itemId": "honeypot_pink_001",
+      "shelfId": 9,
+      "slot": 1
     },
     {
-      "itemId": "orangejuice_pink_020",
-      "shelfId": 6,
-      "slot": 0,
-      "depth": 1
-    },
-    {
-      "itemId": "coffee_pink_016",
-      "shelfId": 3,
+      "itemId": "honeypot_pink_002",
+      "shelfId": 9,
       "slot": 2
     },
     {
-      "itemId": "buddletea_pink_012",
-      "shelfId": 3,
-      "slot": 2,
-      "depth": 1
+      "itemId": "cheesewedge_pink_003",
+      "shelfId": 10,
+      "slot": 0
     },
     {
-      "itemId": "orangejuice_pink_005",
+      "itemId": "cheesewedge_pink_004",
+      "shelfId": 10,
+      "slot": 2
+    },
+    {
+      "itemId": "softicecream_pink_005",
+      "shelfId": 11,
+      "slot": 0
+    },
+    {
+      "itemId": "softicecream_pink_006",
+      "shelfId": 11,
+      "slot": 2
+    },
+    {
+      "itemId": "teapot_pink_007",
+      "shelfId": 12,
+      "slot": 1
+    },
+    {
+      "itemId": "teapot_pink_008",
+      "shelfId": 12,
+      "slot": 2
+    },
+    {
+      "itemId": "mate_pink_009",
+      "shelfId": 1,
+      "slot": 0
+    },
+    {
+      "itemId": "mate_pink_010",
+      "shelfId": 1,
+      "slot": 1
+    },
+    {
+      "itemId": "softicecream_pink_011",
+      "shelfId": 1,
+      "slot": 2
+    },
+    {
+      "itemId": "honeypot_pink_012",
+      "shelfId": 2,
+      "slot": 0
+    },
+    {
+      "itemId": "icecream_pink_013",
+      "shelfId": 2,
+      "slot": 1
+    },
+    {
+      "itemId": "icecream_pink_014",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "bentobox_pink_015",
+      "shelfId": 3,
+      "slot": 0
+    },
+    {
+      "itemId": "butter_pink_016",
+      "shelfId": 3,
+      "slot": 1
+    },
+    {
+      "itemId": "cheesewedge_pink_017",
+      "shelfId": 4,
+      "slot": 0
+    },
+    {
+      "itemId": "tropicaldrink_pink_018",
+      "shelfId": 4,
+      "slot": 1
+    },
+    {
+      "itemId": "dumpling_pink_019",
+      "shelfId": 4,
+      "slot": 2
+    },
+    {
+      "itemId": "shavedice_pink_020",
+      "shelfId": 5,
+      "slot": 0
+    },
+    {
+      "itemId": "butter_pink_021",
       "shelfId": 5,
       "slot": 1
     },
     {
-      "itemId": "coffee_pink_017",
-      "shelfId": 4,
+      "itemId": "shavedice_pink_022",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "dumpling_pink_023",
+      "shelfId": 6,
       "slot": 0
     },
     {
-      "itemId": "orangejuice_pink_003",
-      "shelfId": 4,
-      "slot": 0,
-      "depth": 1
+      "itemId": "bentobox_pink_024",
+      "shelfId": 6,
+      "slot": 2
     },
     {
-      "itemId": "coffee_pink_014",
-      "shelfId": 3,
+      "itemId": "dumpling_pink_025",
+      "shelfId": 7,
       "slot": 0
     },
     {
-      "itemId": "orangejuice_pink_006",
-      "shelfId": 3,
-      "slot": 0,
-      "depth": 1
-    },
-    {
-      "itemId": "orangejuice_pink_004",
-      "shelfId": 3,
+      "itemId": "tropicaldrink_pink_026",
+      "shelfId": 7,
       "slot": 1
     },
     {
-      "itemId": "coffee_pink_015",
-      "shelfId": 3,
+      "itemId": "sushi_pink_027",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "mate_pink_028",
+      "shelfId": 8,
+      "slot": 0
+    },
+    {
+      "itemId": "shavedice_pink_029",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "sushi_pink_030",
+      "shelfId": 8,
+      "slot": 2
+    },
+    {
+      "itemId": "bentobox_pink_031",
+      "shelfId": 1,
+      "slot": 0,
+      "depth": 1
+    },
+    {
+      "itemId": "sushi_pink_032",
+      "shelfId": 1,
       "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "orangejuice_pink_022",
-      "shelfId": 5,
-      "slot": 2
+      "itemId": "teapot_pink_033",
+      "shelfId": 1,
+      "slot": 2,
+      "depth": 1
     },
     {
-      "itemId": "buddletea_pink_007",
-      "shelfId": 5,
-      "slot": 0
-    },
-    {
-      "itemId": "coffee_pink_018",
-      "shelfId": 5,
+      "itemId": "tropicaldrink_pink_034",
+      "shelfId": 2,
       "slot": 0,
       "depth": 1
     },
     {
-      "itemId": "orangejuice_pink_019",
+      "itemId": "icecream_pink_035",
       "shelfId": 2,
-      "slot": 2
-    },
-    {
-      "itemId": "orangejuice_pink_023",
-      "shelfId": 2,
-      "slot": 2,
+      "slot": 1,
       "depth": 1
     },
     {
-      "itemId": "buddletea_pink_011",
-      "shelfId": 4,
-      "slot": 2
-    },
-    {
-      "itemId": "buddletea_pink_008",
-      "shelfId": 4,
-      "slot": 2,
-      "depth": 1
-    },
-    {
-      "itemId": "buddletea_pink_010",
+      "itemId": "butter_pink_036",
       "shelfId": 2,
-      "slot": 1
-    },
-    {
-      "itemId": "orangejuice_pink_024",
-      "shelfId": 4,
-      "slot": 1
-    },
-    {
-      "itemId": "orangejuice_pink_021",
-      "shelfId": 2,
-      "slot": 0
-    },
-    {
-      "itemId": "buddletea_pink_009",
-      "shelfId": 6,
-      "slot": 1
-    },
-    {
-      "itemId": "orangejuice_pink_001",
-      "shelfId": 6,
-      "slot": 2
-    },
-    {
-      "itemId": "coffee_pink_013",
-      "shelfId": 6,
       "slot": 2,
       "depth": 1
     }
   ],
-  "optimalMoves": 24,
+  "optimalMoves": 34,
   "starThresholds": {
-    "3star": 24,
-    "2star": 29,
-    "1star": 999
+    "3star": 34,
+    "2star": 46,
+    "1star": 61
   },
   "mechanics": [
-    "hidden_back_row"
+    "conveyor_tray"
   ],
   "mechanicConfig": {
-    "hiddenBackRow": {
-      "rows": 1,
-      "revealMode": "front_clear"
+    "conveyorTray": {
+      "trayCount": 4,
+      "speed": 0.26,
+      "direction": 1
     }
   },
   "seed": 118802

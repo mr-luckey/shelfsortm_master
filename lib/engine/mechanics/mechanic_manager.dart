@@ -1,6 +1,7 @@
 import '../match_engine.dart';
 import 'chain_release.dart';
 import 'conveyor_shelf.dart';
+import 'conveyor_tray.dart';
 import 'frozen_item.dart';
 import 'hidden_back_row.dart';
 import 'level_mechanic.dart';
@@ -21,6 +22,7 @@ String configKeyFor(String mechanicId) {
     MechanicIds.slidingShelves => 'slidingShelves',
     MechanicIds.rotatingTray => 'rotatingTray',
     MechanicIds.conveyorShelf => 'conveyorShelf',
+    MechanicIds.conveyorTray => 'conveyorTray',
     MechanicIds.lockedItems => 'lockedItems',
     MechanicIds.mysteryBoxes => 'mysteryBoxes',
     MechanicIds.stackedItems => 'stackedItems',
@@ -38,6 +40,7 @@ LevelMechanic? createMechanic(String id) {
     MechanicIds.slidingShelves => SlidingShelfMechanic(),
     MechanicIds.rotatingTray => RotatingTrayMechanic(),
     MechanicIds.conveyorShelf => ConveyorShelfMechanic(),
+    MechanicIds.conveyorTray => ConveyorTrayMechanic(),
     MechanicIds.lockedItems => LockedItemMechanic(),
     MechanicIds.mysteryBoxes => MysteryBoxMechanic(),
     MechanicIds.stackedItems => StackedItemMechanic(),
@@ -84,6 +87,7 @@ class MechanicManager {
       if (m is SlidingShelfMechanic) m.reducedMotion = reducedMotion;
       if (m is RotatingTrayMechanic) m.reducedMotion = reducedMotion;
       if (m is ConveyorShelfMechanic) m.reducedMotion = reducedMotion;
+      if (m is ConveyorTrayMechanic) m.reducedMotion = reducedMotion;
       if (m is MovingDividerMechanic) m.reducedMotion = reducedMotion;
       m.start();
     }

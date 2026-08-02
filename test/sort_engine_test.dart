@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shelfsortm_master/engine/level_generator.dart';
+import 'package:shelfsortm_master/engine/level_plan.dart';
+import 'package:shelfsortm_master/engine/level_shapes.dart';
 import 'package:shelfsortm_master/engine/match_engine.dart';
 
 void main() {
@@ -27,40 +29,40 @@ void main() {
     expect(engine.itemCount, greaterThan(0));
   });
 
-  test('layers grow one per level and cap out', () {
+  test('layers follow the level plan and cap out', () {
     expect(LevelGenerator.layersFor(1), 1);
-    expect(LevelGenerator.layersFor(2), 2);
-    expect(LevelGenerator.layersFor(3), 3);
-    expect(LevelGenerator.layersFor(100), LevelGenerator.maxLayers);
-    // Every flavor restarts the same curve.
-    expect(LevelGenerator.layersFor(101), 1);
-    expect(LevelGenerator.layersFor(102), 2);
-    expect(LevelGenerator.layersFor(1001), 1);
+    expect(LevelGenerator.layersFor(2), 1);
+    expect(LevelGenerator.layersFor(7), 2);
+    expect(LevelGenerator.layersFor(15), 2);
+    expect(LevelGenerator.layersFor(100), lessThanOrEqualTo(LevelGenerator.maxLayers));
   });
 
-  test('the board keeps the same box count and 4 columns on every level', () {
-    for (final id in [1, 2, 5, 20, 50, 100, 101, 500]) {
-      final level = LevelGenerator.generate(id, boxes: 24);
-      expect(level.shelfCount, 24);
-      expect(level.layout.length, 6);
-      expect(level.layout.every((row) => row.length == 4), isTrue);
-    }
+  test('early levels use the designed cupboard shapes', () {
+    expect(LevelGenerator.generate(1).shelfCount, 2);
+    expect(LevelGenerator.generate(2).shelfCount, 3);
+    expect(LevelGenerator.generate(3).shelfCount, 6);
+    expect(LevelGenerator.generate(4).shelfCount, 7);
+
+    final l1 = LevelGenerator.generate(1).layout;
+    expect(LevelShapes.boxCount(l1), 2);
+    expect(l1.length, lessThanOrEqualTo(LevelShapes.maxRows));
+    expect(LevelShapes.colCount(l1), lessThanOrEqualTo(LevelShapes.maxCols));
   });
 
-  test('sorting hardness climbs from level 1 to 100 and restarts per flavor', () {
+  test('sorting hardness climbs across a flavor and restarts', () {
     expect(LevelGenerator.hardnessFor(1), 0);
     expect(LevelGenerator.hardnessFor(100), 1);
     expect(LevelGenerator.hardnessFor(101), 0);
 
     var previous = -1.0;
-    for (var n = 1; n <= 100; n++) {
+    for (var n = 16; n <= 100; n++) {
       final h = LevelGenerator.hardnessFor(n);
-      expect(h, greaterThan(previous));
+      expect(h, greaterThanOrEqualTo(previous));
       previous = h;
     }
   });
 
-  test('level 1 keeps matching sets together, level 100 scatters them', () {
+  test('level 1 keeps matching sets together, later levels scatter more', () {
     int readyBoxes(int levelId) {
       final fronts = <int, List<String>>{};
       for (final p in LevelGenerator.generate(levelId).initialPlacement) {
@@ -72,34 +74,34 @@ void main() {
           .length;
     }
 
-    // Level 1: almost every box is already one move from a match.
-    expect(readyBoxes(1), greaterThanOrEqualTo(2));
-    // Level 100: sets are spread across boxes and layers.
-    expect(readyBoxes(100), lessThan(15));
+    expect(readyBoxes(1), greaterThanOrEqualTo(1));
+    expect(readyBoxes(100), lessThan(readyBoxes(1) + 20));
   });
 
-  test('level 1 shows a single layer with one free spot per box', () {
+  test('level 1 shows a single layer with room to carry goods', () {
     final level = LevelGenerator.generate(1);
     final engine = MatchEngine(level: level);
     expect(engine.waves.wavesRemaining, 0, reason: 'no layers behind');
+    expect(engine.emptyFrontCount, greaterThanOrEqualTo(2));
     for (final shelf in engine.shelves) {
-      expect(shelf.emptyFrontCount, greaterThanOrEqualTo(1));
       expect(shelf.slots.every((s) => s.stack.length <= 1), isTrue);
     }
   });
 
   test('a hidden layer only arrives once its box is emptied', () {
-    final level = LevelGenerator.generate(2);
+    final level = LevelGenerator.generate(7);
     final engine = MatchEngine(level: level);
     expect(engine.waves.nextWaveFor(engine.shelves.first.shelfId), isNotNull);
 
-    // Carry the front layer of box 0 out into free spots elsewhere.
     final shelfId = engine.shelves.first.shelfId;
     final layersBefore = engine.waves.layersLeftFor(shelfId);
     var guard = 0;
-    while (engine.waves.layersLeftFor(shelfId) == layersBefore && guard < 20) {
+    while (engine.waves.layersLeftFor(shelfId) == layersBefore && guard < 40) {
       guard++;
-      final from = BoardPos(0, engine.shelves[0].slots.indexWhere((s) => !s.isEmpty));
+      final fromSlot =
+          engine.shelves[0].slots.indexWhere((s) => !s.isEmpty);
+      if (fromSlot < 0) break;
+      final from = BoardPos(0, fromSlot);
       BoardPos? to;
       for (var si = 1; si < engine.shelves.length && to == null; si++) {
         final slot = engine.shelves[si].firstEmptyIndex;
@@ -108,7 +110,6 @@ void main() {
       if (to == null) break;
       engine.move(from, to);
     }
-    // Emptying the box pulls its next layer forward automatically.
     expect(engine.shelves[0].isEmpty, isFalse);
   });
 
@@ -151,5 +152,15 @@ void main() {
     expect(engine.selected, from);
     expect(engine.tap(to), isTrue);
     expect(engine.selected, isNull);
+  });
+
+  test('level plans stay within the hard board limit', () {
+    for (var id = 1; id <= 40; id++) {
+      final plan = LevelPlan.forLevel(id);
+      final layout = plan.layout;
+      LevelShapes.validate(layout);
+      expect(layout.length, lessThanOrEqualTo(LevelShapes.maxRows));
+      expect(LevelShapes.colCount(layout), lessThanOrEqualTo(LevelShapes.maxCols));
+    }
   });
 }

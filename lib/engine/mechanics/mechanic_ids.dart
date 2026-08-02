@@ -5,6 +5,7 @@ abstract final class MechanicIds {
   static const slidingShelves = 'sliding_shelves';
   static const rotatingTray = 'rotating_tray';
   static const conveyorShelf = 'conveyor_shelf';
+  static const conveyorTray = 'conveyor_tray';
   static const lockedItems = 'locked_items';
   static const mysteryBoxes = 'mystery_boxes';
   static const stackedItems = 'stacked_items';
@@ -18,6 +19,7 @@ abstract final class MechanicIds {
     slidingShelves,
     rotatingTray,
     conveyorShelf,
+    conveyorTray,
     lockedItems,
     mysteryBoxes,
     stackedItems,

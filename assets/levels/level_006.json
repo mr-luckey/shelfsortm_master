@@ -1,11 +1,11 @@
 {
   "levelId": 6,
-  "themeRoom": "kitchen",
+  "themeRoom": "activities",
   "difficulty": "standard",
-  "timeLimit": 144,
-  "shelfCount": 6,
+  "timeLimit": 150,
+  "shelfCount": 9,
   "slotsPerShelf": 3,
-  "bufferShelves": 2,
+  "bufferShelves": 9,
   "levelTint": "orange",
   "layout": [
     [
@@ -17,75 +17,125 @@
       4,
       5,
       6
+    ],
+    [
+      7,
+      8,
+      9
     ]
   ],
   "initialPlacement": [
     {
-      "itemId": "orangejuice_orange_002",
-      "shelfId": 4,
-      "slot": 2
+      "itemId": "greensalad_orange_001",
+      "shelfId": 1,
+      "slot": 0
     },
     {
-      "itemId": "coffee_orange_018",
-      "shelfId": 5,
+      "itemId": "pancakes_orange_002",
+      "shelfId": 1,
       "slot": 1
     },
     {
-      "itemId": "buddletea_orange_008",
-      "shelfId": 3,
+      "itemId": "pancakes_orange_003",
+      "shelfId": 1,
       "slot": 2
     },
     {
-      "itemId": "buddletea_orange_010",
-      "shelfId": 3,
-      "slot": 1
+      "itemId": "riceball_orange_004",
+      "shelfId": 2,
+      "slot": 0
     },
     {
-      "itemId": "orangejuice_orange_005",
+      "itemId": "cupcake_orange_005",
       "shelfId": 2,
       "slot": 1
     },
     {
-      "itemId": "buddletea_orange_012",
+      "itemId": "riceball_orange_006",
+      "shelfId": 2,
+      "slot": 2
+    },
+    {
+      "itemId": "bentobox_orange_007",
       "shelfId": 3,
       "slot": 0
     },
     {
-      "itemId": "buddletea_orange_009",
-      "shelfId": 5,
-      "slot": 0
+      "itemId": "bentobox_orange_008",
+      "shelfId": 3,
+      "slot": 1
     },
     {
-      "itemId": "coffee_orange_016",
+      "itemId": "babybottle_orange_009",
+      "shelfId": 3,
+      "slot": 2
+    },
+    {
+      "itemId": "potoffood_orange_010",
       "shelfId": 4,
       "slot": 0
     },
     {
-      "itemId": "coffee_orange_017",
-      "shelfId": 2,
-      "slot": 2
-    },
-    {
-      "itemId": "orangejuice_orange_006",
-      "shelfId": 5,
-      "slot": 2
-    },
-    {
-      "itemId": "coffee_orange_014",
+      "itemId": "potoffood_orange_011",
       "shelfId": 4,
       "slot": 1
     },
     {
-      "itemId": "orangejuice_orange_004",
-      "shelfId": 2,
+      "itemId": "babybottle_orange_012",
+      "shelfId": 5,
       "slot": 0
+    },
+    {
+      "itemId": "bentobox_orange_013",
+      "shelfId": 5,
+      "slot": 1
+    },
+    {
+      "itemId": "babybottle_orange_014",
+      "shelfId": 5,
+      "slot": 2
+    },
+    {
+      "itemId": "greensalad_orange_015",
+      "shelfId": 6,
+      "slot": 0
+    },
+    {
+      "itemId": "pancakes_orange_016",
+      "shelfId": 6,
+      "slot": 1
+    },
+    {
+      "itemId": "greensalad_orange_017",
+      "shelfId": 6,
+      "slot": 2
+    },
+    {
+      "itemId": "potoffood_orange_018",
+      "shelfId": 7,
+      "slot": 0
+    },
+    {
+      "itemId": "cupcake_orange_019",
+      "shelfId": 7,
+      "slot": 2
+    },
+    {
+      "itemId": "cupcake_orange_020",
+      "shelfId": 8,
+      "slot": 1
+    },
+    {
+      "itemId": "riceball_orange_021",
+      "shelfId": 8,
+      "slot": 2
     }
   ],
-  "optimalMoves": 18,
+  "optimalMoves": 24,
   "starThresholds": {
-    "3star": 18,
-    "2star": 22,
-    "1star": 999
+    "3star": 24,
+    "2star": 32,
+    "1star": 43
   },
   "seed": 47531
 }

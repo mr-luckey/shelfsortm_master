@@ -116,6 +116,12 @@ class ShelfWaveManager {
   Map<String, dynamic> toJson() => {
         'cursor': _cursorByShelfId.map((k, v) => MapEntry(k.toString(), v)),
         'finished': _finishedShelfIndices.toList(),
+        'pending': _pendingByShelfIndex.map(
+          (k, v) => MapEntry(
+            k.toString(),
+            v.map((item) => item?.toJson()).toList(),
+          ),
+        ),
       };
 
   void loadJson(Map<String, dynamic> json) {
@@ -127,5 +133,19 @@ class ShelfWaveManager {
     _finishedShelfIndices
       ..clear()
       ..addAll((json['finished'] as List?)?.cast<int>() ?? []);
+    _pendingByShelfIndex.clear();
+    final pending = json['pending'];
+    if (pending is Map) {
+      for (final e in pending.entries) {
+        final key = int.parse(e.key.toString());
+        final list = (e.value as List?) ?? const [];
+        _pendingByShelfIndex[key] = [
+          for (final item in list)
+            item == null
+                ? null
+                : GameItem.fromJson(Map<String, dynamic>.from(item as Map)),
+        ];
+      }
+    }
   }
 }
