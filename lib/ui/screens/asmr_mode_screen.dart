@@ -18,12 +18,14 @@ class AsmrModeScreen extends StatefulWidget {
   const AsmrModeScreen({super.key});
 
   static const double baseRowHeight = 58;
-  static const double colWidth = 150;
+  static const double colWidth = 150; // fallback; live width is responsive
   static const int spotsPerCell = 3;
   static const int plateCount = 3;
   static const double plateBandHeight = 110;
+  static const int minBoxesPerRow = 5;
+  static const int maxBoxesPerRow = 6;
 
-  /// Same stock as gameplay levels.
+  /// Same stock as gameplay — flat-base shelf products only.
   static List<String> get faces => LevelGenerator.productTypes;
 
   @override
@@ -101,6 +103,8 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
 
   int _refillNonce = 0;
   int _rowCount = 0;
+  int _boxesPerRow = AsmrModeScreen.maxBoxesPerRow;
+  double _colWidth = AsmrModeScreen.colWidth;
   int _plateClears = 0;
   int _boxClears = 0;
   ui.Image? _cubbyBg;
@@ -129,8 +133,8 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     super.initState();
     final rng = math.Random();
     final faces = List<String>.from(AsmrModeScreen.faces)..shuffle(rng);
-    // Gameplay drinks/cakes/ice-creams — small pool for easy finds.
-    _pool = faces.take(math.min(14, faces.length)).toList();
+    // Full flat-base gameplay pool (shelf-sitting products).
+    _pool = faces;
     _plates = [
       for (var i = 0; i < AsmrModeScreen.plateCount; i++)
         _Plate(target: _pool[i % _pool.length]),
@@ -145,6 +149,14 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
       final audio = context.read<AudioService>();
       audio.asmrMode = true;
       audio.startMusic();
+      // Seed every looping box once layout is known.
+      for (var r = 0; r < math.max(_rowCount, 3); r++) {
+        for (var c = 0; c < _boxesPerRow; c++) {
+          _slotsFor(_CellKey(r, c));
+        }
+      }
+      _ensureMinMatchOnBoard();
+      setState(() {});
     });
   }
 
@@ -239,6 +251,25 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     _rowCount = count;
   }
 
+  int _wrapCol(int col) {
+    final n = _boxesPerRow;
+    return ((col % n) + n) % n;
+  }
+
+  _CellKey _canon(int row, int col) => _CellKey(row, _wrapCol(col));
+
+  void _layoutBoard(double width, double gridH) {
+    _boxesPerRow = width >= 380
+        ? AsmrModeScreen.maxBoxesPerRow
+        : AsmrModeScreen.minBoxesPerRow;
+    // Keep original cubby width — do not squeeze to fit the row.
+    _colWidth = AsmrModeScreen.colWidth;
+    final naturalRows = (gridH / AsmrModeScreen.baseRowHeight).floor();
+    final rows = math.max(3, naturalRows);
+    _ensureRows(rows);
+    _rowHeight = gridH / rows;
+  }
+
   int _countTypeInBoxes(String type, {_CellKey? ignore}) {
     var n = 0;
     for (final e in _cells.entries) {
@@ -251,112 +282,143 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     return n;
   }
 
-  /// Never more than 3 of the same type on the belt at once.
+  /// At most 3 of one type on the looping board.
   static const int _maxSameOnScreen = 3;
 
+  /// Never-empty box: 3 products usually, sometimes 2.
   List<String?> _generateEasySlots(int row, int col, {int nonce = 0}) {
-    if (_pool.isEmpty) {
-      return List<String?>.filled(AsmrModeScreen.spotsPerCell, null);
-    }
     final rng = math.Random(_seed(row, col) ^ (nonce * 0x9E3779B9));
-    final targets = _plateTargets.toList();
-    final missingTargets = targets
-        .where((t) => _countTypeInBoxes(t) == 0)
-        .toList()
-      ..shuffle(rng);
-
-    final List<String?> raw;
-    final roll = rng.nextDouble();
-
-    if (missingTargets.isNotEmpty && roll < 0.8) {
-      // Tray goals must appear below — inject when missing.
-      final need = missingTargets.first;
-      final other = _pickUnderCap(rng, avoidExtra: need);
-      raw = roll < 0.45 ? [need, other, null] : [need, null, null];
-    } else if (roll < 0.55) {
-      final a = _pickUnderCap(rng);
-      raw = [a, a, null];
-    } else if (roll < 0.82) {
-      final a = _pickUnderCap(rng);
-      var b = _pickUnderCap(rng, avoidExtra: a);
-      if (b == a) b = _pickUnderCap(rng);
-      raw = [a, a, b];
-    } else {
-      raw = [_pickUnderCap(rng), _pickUnderCap(rng), null];
+    final want = rng.nextDouble() < 0.78 ? 3 : 2;
+    final slots = List<String?>.filled(AsmrModeScreen.spotsPerCell, null);
+    for (var i = 0; i < want; i++) {
+      slots[i] = _pickType(rng);
     }
-
-    return _capAndEnsureTargets(raw, row: row, col: col, nonce: nonce);
+    // Absolute guarantee — never return an empty cubby.
+    if (slots.every((s) => s == null)) {
+      final a = _pool[rng.nextInt(_pool.length)];
+      slots[0] = a;
+      slots[1] = a;
+      slots[2] = rng.nextDouble() < 0.5 ? a : _pool[rng.nextInt(_pool.length)];
+    }
+    return slots;
   }
 
-  String _pickUnderCap(math.Random rng, {String? avoidExtra}) {
-    for (var i = 0; i < 16; i++) {
+  String _pickType(math.Random rng) {
+    // Prefer types still under the on-screen cap.
+    for (var i = 0; i < 20; i++) {
       final t = _takeFromBag(
-        prefer: i < 4 && _plateTargets.isNotEmpty
+        prefer: i < 3 && _plateTargets.isNotEmpty
             ? _plateTargets.elementAt(rng.nextInt(_plateTargets.length))
             : null,
       );
-      if (avoidExtra != null && t == avoidExtra) continue;
       if (_countTypeInBoxes(t) < _maxSameOnScreen) return t;
     }
     return _pool[rng.nextInt(_pool.length)];
   }
 
-  /// Cap any type at 3 on screen; ensure each tray target shows at least once.
-  List<String?> _capAndEnsureTargets(
-    List<String?> slots, {
-    required int row,
-    required int col,
-    int nonce = 0,
-  }) {
-    final key = _CellKey(row, col);
-    final out = List<String?>.from(slots);
-    final rng = math.Random(_seed(row, col) ^ nonce ^ 0xC0FFEE);
-
-    for (var i = 0; i < out.length; i++) {
-      final t = out[i];
-      if (t == null) continue;
-      // How many of t already on board + earlier slots in this box.
-      var already = _countTypeInBoxes(t, ignore: key);
-      for (var j = 0; j < i; j++) {
-        if (out[j] == t) already++;
-      }
-      if (already >= _maxSameOnScreen) {
-        out[i] = null;
+  bool _boardHasCompletableTriple() {
+    final counts = <String, int>{};
+    for (final slots in _cells.values) {
+      for (final s in slots) {
+        if (s == null) continue;
+        counts[s] = (counts[s] ?? 0) + 1;
+        if (counts[s]! >= 3) return true;
       }
     }
+    if (_held != null) {
+      final c = (counts[_held!.emoji] ?? 0) + 1;
+      if (c >= 3) return true;
+    }
+    // Ready-made match-3 box also counts.
+    for (final slots in _cells.values) {
+      if (_isMatch3(slots)) return true;
+    }
+    return false;
+  }
 
-    // Tray extra-task: each shaded target should appear somewhere below.
-    final missing = _plateTargets
-        .where((t) => _countTypeInBoxes(t, ignore: key) == 0)
-        .where((t) => !out.contains(t))
-        .toList()
-      ..shuffle(rng);
-    for (final need in missing) {
-      final free = out.indexWhere((s) => s == null);
-      if (free < 0) break;
-      if (_countTypeInBoxes(need, ignore: key) >= _maxSameOnScreen) continue;
-      out[free] = need;
+  /// Keep at least one 3-of-a-kind available so the player never waits.
+  /// Also keep each tray goal visible somewhere on the looping board.
+  void _ensureMinMatchOnBoard() {
+    if (_pool.isEmpty) return;
+    final rng = math.Random();
+
+    for (final need in _plateTargets) {
+      if (_countTypeInBoxes(need) > 0) continue;
+      final keys = [
+        for (var r = 0; r < _rowCount; r++)
+          for (var c = 0; c < _boxesPerRow; c++) _CellKey(r, c),
+      ]..shuffle(rng);
+      for (final key in keys) {
+        if (_isSelling(key)) continue;
+        final slots = _cells.putIfAbsent(
+          key,
+          () => _generateEasySlots(key.row, key.col),
+        );
+        final dest = slots.indexWhere((s) => s == null) >= 0
+            ? slots.indexWhere((s) => s == null)
+            : 0;
+        slots[dest] = need;
+        break;
+      }
     }
 
-    final filled = out.whereType<String>().toList();
-    final packed = List<String?>.filled(AsmrModeScreen.spotsPerCell, null);
-    for (var i = 0; i < filled.length && i < packed.length; i++) {
-      packed[i] = filled[i];
+    if (_boardHasCompletableTriple()) return;
+
+    final type = _plateTargets.isNotEmpty && rng.nextBool()
+        ? _plateTargets.elementAt(rng.nextInt(_plateTargets.length))
+        : _pool[rng.nextInt(_pool.length)];
+
+    var need = 3 - _countTypeInBoxes(type);
+    if (need <= 0) return;
+
+    final keys = [
+      for (var r = 0; r < _rowCount; r++)
+        for (var c = 0; c < _boxesPerRow; c++) _CellKey(r, c),
+    ]..shuffle(rng);
+
+    for (final key in keys) {
+      if (need <= 0) break;
+      final slots = _cells[key] ?? _generateEasySlots(key.row, key.col);
+      _cells[key] = slots;
+      if (_isSelling(key)) continue;
+
+      var dest = slots.indexWhere((s) => s == null);
+      if (dest < 0) {
+        dest = slots.indexWhere((s) => s != null && s != type);
+      }
+      if (dest < 0) continue;
+      slots[dest] = type;
+      need--;
     }
-    return packed;
+
+    if (!_boardHasCompletableTriple()) {
+      _cells[_CellKey(0, 0)] = [type, type, type];
+    }
   }
 
   int _seed(int row, int col) => Object.hash(row, col, 0xA5E17);
 
   List<String?> _slotsFor(_CellKey key) {
-    final existing = _cells[key];
-    if (existing != null) return existing;
-    final generated = _generateEasySlots(key.row, key.col);
-    _cells[key] = generated;
+    final canon = _canon(key.row, key.col);
+    final existing = _cells[canon];
+    if (existing != null) {
+      // Repair any empty box that slipped through.
+      if (existing.every((s) => s == null)) {
+        _cells[canon] = _generateEasySlots(canon.row, canon.col,
+            nonce: ++_refillNonce);
+        _ensureMinMatchOnBoard();
+        return _cells[canon]!;
+      }
+      return existing;
+    }
+    final generated = _generateEasySlots(canon.row, canon.col);
+    _cells[canon] = generated;
+    _ensureMinMatchOnBoard();
     return generated;
   }
 
-  bool _isSelling(_CellKey key) => _selling.containsKey(key);
+  bool _isSelling(_CellKey key) =>
+      _selling.containsKey(_canon(key.row, key.col));
 
   bool _isMatch3(List<String?> slots) {
     if (slots.length < AsmrModeScreen.spotsPerCell) return false;
@@ -365,9 +427,8 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     return slots.every((s) => s == first);
   }
 
-  void _markTouched(_CellKey key) => _touched.add(key);
-
   Future<void> _celebrate({bool plate = false}) async {
+    if (!mounted) return;
     final audio = context.read<AudioService>();
     if (plate) {
       audio.playCombo();
@@ -385,20 +446,26 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     });
   }
 
+  void _markTouched(_CellKey key) => _touched.add(_canon(key.row, key.col));
+
   void _tryStartSell(_CellKey key) {
-    if (_isSelling(key)) return;
-    final slots = _cells[key];
+    final canon = _canon(key.row, key.col);
+    if (_isSelling(canon)) return;
+    final slots = _cells[canon];
     if (slots == null || !_isMatch3(slots)) return;
-    _selling[key] = _SellAnim(emoji: slots.first!);
+    _selling[canon] = _SellAnim(emoji: slots.first!);
     _boxClears++;
     HapticFeedback.mediumImpact();
     _celebrate();
   }
 
   void _finishSell(_CellKey key) {
+    final canon = _canon(key.row, key.col);
     _refillNonce += 1;
-    _cells[key] = _generateEasySlots(key.row, key.col, nonce: _refillNonce);
-    _touched.remove(key);
+    _cells[canon] =
+        _generateEasySlots(canon.row, canon.col, nonce: _refillNonce);
+    _touched.remove(canon);
+    _ensureMinMatchOnBoard();
   }
 
   void _tryBurstPlate(int index) {
@@ -467,23 +534,25 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     final gridTop = AsmrModeScreen.plateBandHeight + 8;
     final gridLocal = Offset(local.dx, local.dy - gridTop);
     if (gridLocal.dy < 0) return null;
-    if (_boardSize == Size.zero || _rowHeight <= 0) return null;
+    if (_boardSize == Size.zero || _rowHeight <= 0 || _colWidth <= 0) {
+      return null;
+    }
     final row = (gridLocal.dy / _rowHeight).floor();
     if (row < 0 || row >= _rowCount) return null;
 
     final ox = row < _scroll.length ? _scroll[row] : 0.0;
-    final col = ((gridLocal.dx - ox) / AsmrModeScreen.colWidth).floor();
-    final cellLeft = col * AsmrModeScreen.colWidth + ox;
+    final col = ((gridLocal.dx - ox) / _colWidth).floor();
+    final cellLeft = col * _colWidth + ox;
     final localX = gridLocal.dx - cellLeft;
-    if (localX < 0 || localX > AsmrModeScreen.colWidth) return null;
+    if (localX < 0 || localX > _colWidth) return null;
 
-    final key = _CellKey(row, col);
+    final key = _canon(row, col);
     if (_isSelling(key)) return null;
 
     final slots = _slotsFor(key);
-    final totalW = AsmrModeScreen.colWidth * 0.88;
+    final totalW = _colWidth * 0.88;
     final slotW = totalW / AsmrModeScreen.spotsPerCell;
-    final startX = (AsmrModeScreen.colWidth - totalW) / 2;
+    final startX = (_colWidth - totalW) / 2;
     final slot = ((localX - startX) / slotW)
         .floor()
         .clamp(0, AsmrModeScreen.spotsPerCell - 1);
@@ -667,29 +736,16 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                       120.0,
                       constraints.maxHeight - AsmrModeScreen.plateBandHeight - 8,
                     );
-                    final naturalRows =
-                        (gridH / AsmrModeScreen.baseRowHeight).ceil();
-                    final rows = math.max(3, naturalRows - 1);
-                    final rowHeight = gridH / rows;
-                    _ensureRows(rows);
-                    _rowHeight = rowHeight;
+                    _layoutBoard(constraints.maxWidth, gridH);
+                    final rows = _rowCount;
+                    final rowHeight = _rowHeight;
 
+                    // Only the looping 5–6 boxes per row exist as game state.
                     final visible = <_CellKey, List<String?>>{};
                     final sellSnapshot = <_CellKey, _SellAnim>{};
                     for (var r = 0; r < rows; r++) {
-                      final ox = r < _scroll.length ? _scroll[r] : 0.0;
-                      final kMin =
-                          ((-AsmrModeScreen.colWidth - ox) /
-                                  AsmrModeScreen.colWidth)
-                              .floor() -
-                          1;
-                      final kMax =
-                          ((constraints.maxWidth - ox) /
-                                  AsmrModeScreen.colWidth)
-                              .ceil() +
-                          1;
-                      for (var k = kMin; k <= kMax; k++) {
-                        final key = _CellKey(r, k);
+                      for (var c = 0; c < _boxesPerRow; c++) {
+                        final key = _CellKey(r, c);
                         visible[key] = List<String?>.from(_slotsFor(key));
                         final sell = _selling[key];
                         if (sell != null) {
@@ -742,7 +798,8 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                                       size: Size(constraints.maxWidth, gridH),
                                       painter: _AsmrMovingGridPainter(
                                         rowHeight: rowHeight,
-                                        colWidth: AsmrModeScreen.colWidth,
+                                        colWidth: _colWidth,
+                                        boxesPerRow: _boxesPerRow,
                                         scroll: List<double>.from(_scroll),
                                         cells: visible,
                                         selling: sellSnapshot,
@@ -1011,6 +1068,7 @@ class _AsmrPlatesPainter extends CustomPainter {
 class _AsmrMovingGridPainter extends CustomPainter {
   final double rowHeight;
   final double colWidth;
+  final int boxesPerRow;
   final List<double> scroll;
   final Map<_CellKey, List<String?>> cells;
   final Map<_CellKey, _SellAnim> selling;
@@ -1024,6 +1082,7 @@ class _AsmrMovingGridPainter extends CustomPainter {
   const _AsmrMovingGridPainter({
     required this.rowHeight,
     required this.colWidth,
+    required this.boxesPerRow,
     required this.scroll,
     required this.cells,
     this.selling = const {},
@@ -1034,6 +1093,11 @@ class _AsmrMovingGridPainter extends CustomPainter {
     this.held,
     this.highlightFree = false,
   });
+
+  int _wrap(int col) {
+    final n = boxesPerRow;
+    return ((col % n) + n) % n;
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -1064,7 +1128,7 @@ class _AsmrMovingGridPainter extends CustomPainter {
           );
         }
 
-        final key = _CellKey(r, k);
+        final key = _CellKey(r, _wrap(k));
         final sell = selling[key];
         final slots = cells[key] ??
             List<String?>.filled(AsmrModeScreen.spotsPerCell, null);
