@@ -6,21 +6,25 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../../engine/level_generator.dart';
 import '../../services/audio_service.dart';
 import '../meta/praise_burst.dart';
+import '../premium/premium_goods_fx.dart';
+import '../premium/premium_tray_plank.dart';
 import '../widgets/emoji_assets.dart';
 
-/// Dual ASMR: scrolling match-3 boxes + top plates with colorful shadows.
+/// Dual ASMR: scrolling match-3 boxes + top goal trays (gameplay-style planks).
 class AsmrModeScreen extends StatefulWidget {
   const AsmrModeScreen({super.key});
 
-  static const double baseRowHeight = 56;
+  static const double baseRowHeight = 58;
   static const double colWidth = 150;
   static const int spotsPerCell = 3;
-  static const int plateCount = 4;
-  static const double plateBandHeight = 108;
+  static const int plateCount = 3;
+  static const double plateBandHeight = 110;
 
-  static List<String> get faces => EmojiAssets.allTypes;
+  /// Same stock as gameplay levels.
+  static List<String> get faces => LevelGenerator.productTypes;
 
   @override
   State<AsmrModeScreen> createState() => _AsmrModeScreenState();
@@ -92,6 +96,8 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   late final List<String> _pool;
   late final List<_Plate> _plates;
   final Map<String, ui.Image> _faceImages = {};
+  /// Upcoming goods as scrambled complete triplets (easy match supply).
+  final List<String> _bag = [];
 
   int _refillNonce = 0;
   int _rowCount = 0;
@@ -105,21 +111,17 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   String? _praise;
   int _praiseSeq = 0;
 
-  static const double _slowMoFactor = 0.35;
-  static const double _baseSpeed = 32.0;
-  static const double _sellDuration = 0.9;
-  static const double _burstDuration = 0.55;
+  static const double _slowMoFactor = 0.4;
+  static const double _baseSpeed = 44.0;
+  static const double _sellDuration = 0.85;
+  static const double _burstDuration = 0.5;
   static const _cubbyAsset = 'assets/images/premium/cupboards/shelf_cell.png';
 
-  static const _shadowColors = <Color>[
-    Color(0xFFFF6B9D),
+  static const _accentColors = <Color>[
+    Color(0xFFE8C45A),
     Color(0xFF6BCBFF),
-    Color(0xFFFFD93D),
+    Color(0xFFFF6B9D),
     Color(0xFF6BFFB8),
-    Color(0xFFFF9F6B),
-    Color(0xFFC77DFF),
-    Color(0xFF7DFFEE),
-    Color(0xFFFF7D7D),
   ];
 
   @override
@@ -127,12 +129,14 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     super.initState();
     final rng = math.Random();
     final faces = List<String>.from(AsmrModeScreen.faces)..shuffle(rng);
-    _pool = faces.take(math.min(28, faces.length)).toList();
+    // Gameplay drinks/cakes/ice-creams — small pool for easy finds.
+    _pool = faces.take(math.min(14, faces.length)).toList();
     _plates = [
       for (var i = 0; i < AsmrModeScreen.plateCount; i++)
         _Plate(target: _pool[i % _pool.length]),
     ];
     _dedupePlateTargets();
+    _refillBag(forceTargets: true);
     _ticker = createTicker(_onTick)..start();
     _loadCubbyBg();
     _loadFaceImages();
@@ -164,7 +168,31 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   Set<String> get _plateTargets => {for (final p in _plates) p.target};
 
   Color _tintFor(String type) =>
-      _shadowColors[type.hashCode.abs() % _shadowColors.length];
+      _accentColors[type.hashCode.abs() % _accentColors.length];
+
+  void _refillBag({bool forceTargets = false}) {
+    final rng = math.Random();
+    // Scrambled complete triplets so every type can finish a box of 3.
+    for (var i = 0; i < 10; i++) {
+      final type = _pool[rng.nextInt(_pool.length)];
+      _bag.addAll([type, type, type]);
+    }
+    if (forceTargets) {
+      for (final t in _plateTargets) {
+        _bag.addAll([t, t, t]);
+      }
+    }
+    _bag.shuffle(rng);
+  }
+
+  String _takeFromBag({String? prefer}) {
+    if (_bag.length < 6) _refillBag();
+    if (prefer != null) {
+      final i = _bag.indexOf(prefer);
+      if (i >= 0) return _bag.removeAt(i);
+    }
+    return _bag.removeLast();
+  }
 
   Future<void> _loadFaceImages() async {
     for (final type in _pool) {
@@ -223,94 +251,93 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     return n;
   }
 
+  /// Never more than 3 of the same type on the belt at once.
+  static const int _maxSameOnScreen = 3;
+
   List<String?> _generateEasySlots(int row, int col, {int nonce = 0}) {
     if (_pool.isEmpty) {
       return List<String?>.filled(AsmrModeScreen.spotsPerCell, null);
     }
     final rng = math.Random(_seed(row, col) ^ (nonce * 0x9E3779B9));
-    final a = _pool[rng.nextInt(_pool.length)];
-    String pickOther(String avoid) {
-      for (var i = 0; i < 8; i++) {
-        final v = _pool[rng.nextInt(_pool.length)];
-        if (v != avoid) return v;
-      }
-      return _pool.firstWhere((e) => e != avoid, orElse: () => avoid);
-    }
+    final targets = _plateTargets.toList();
+    final missingTargets = targets
+        .where((t) => _countTypeInBoxes(t) == 0)
+        .toList()
+      ..shuffle(rng);
 
-    final b = pickOther(a);
-    var c = pickOther(a);
-    if (c == b && _pool.length > 2) {
-      c = _pool.firstWhere((e) => e != a && e != b, orElse: () => c);
-    }
-
-    final roll = rng.nextDouble();
     final List<String?> raw;
-    if (roll < 0.48) {
+    final roll = rng.nextDouble();
+
+    if (missingTargets.isNotEmpty && roll < 0.8) {
+      // Tray goals must appear below — inject when missing.
+      final need = missingTargets.first;
+      final other = _pickUnderCap(rng, avoidExtra: need);
+      raw = roll < 0.45 ? [need, other, null] : [need, null, null];
+    } else if (roll < 0.55) {
+      final a = _pickUnderCap(rng);
       raw = [a, a, null];
-    } else if (roll < 0.72) {
+    } else if (roll < 0.82) {
+      final a = _pickUnderCap(rng);
+      var b = _pickUnderCap(rng, avoidExtra: a);
+      if (b == a) b = _pickUnderCap(rng);
       raw = [a, a, b];
-    } else if (roll < 0.88) {
-      raw = [a, null, null];
-    } else if (roll < 0.96) {
-      raw = [a, b, null];
     } else {
-      raw = [a, b, c];
+      raw = [_pickUnderCap(rng), _pickUnderCap(rng), null];
     }
 
-    final filled = raw.whereType<String>().toList();
-    final slots = List<String?>.filled(AsmrModeScreen.spotsPerCell, null);
-    for (var i = 0; i < filled.length && i < slots.length; i++) {
-      slots[i] = filled[i];
-    }
-    return _enforceShadowUniqueness(slots, row: row, col: col, nonce: nonce);
+    return _capAndEnsureTargets(raw, row: row, col: col, nonce: nonce);
   }
 
-  /// At most one of each plate-shadow type may exist in boxes at once.
-  /// Also injects a missing plate target so dual-play stays feedable.
-  List<String?> _enforceShadowUniqueness(
+  String _pickUnderCap(math.Random rng, {String? avoidExtra}) {
+    for (var i = 0; i < 16; i++) {
+      final t = _takeFromBag(
+        prefer: i < 4 && _plateTargets.isNotEmpty
+            ? _plateTargets.elementAt(rng.nextInt(_plateTargets.length))
+            : null,
+      );
+      if (avoidExtra != null && t == avoidExtra) continue;
+      if (_countTypeInBoxes(t) < _maxSameOnScreen) return t;
+    }
+    return _pool[rng.nextInt(_pool.length)];
+  }
+
+  /// Cap any type at 3 on screen; ensure each tray target shows at least once.
+  List<String?> _capAndEnsureTargets(
     List<String?> slots, {
     required int row,
     required int col,
     int nonce = 0,
   }) {
     final key = _CellKey(row, col);
-    final targets = _plateTargets;
     final out = List<String?>.from(slots);
     final rng = math.Random(_seed(row, col) ^ nonce ^ 0xC0FFEE);
 
     for (var i = 0; i < out.length; i++) {
       final t = out[i];
-      if (t == null || !targets.contains(t)) continue;
-      if (_countTypeInBoxes(t, ignore: key) >= 1) {
-        out[i] = _pool.firstWhere(
-          (e) => !targets.contains(e) || _countTypeInBoxes(e, ignore: key) == 0,
-          orElse: () => _pool[rng.nextInt(_pool.length)],
-        );
-        if (targets.contains(out[i]) &&
-            _countTypeInBoxes(out[i]!, ignore: key) >= 1) {
-          out[i] = null;
-        }
+      if (t == null) continue;
+      // How many of t already on board + earlier slots in this box.
+      var already = _countTypeInBoxes(t, ignore: key);
+      for (var j = 0; j < i; j++) {
+        if (out[j] == t) already++;
+      }
+      if (already >= _maxSameOnScreen) {
+        out[i] = null;
       }
     }
 
-    // Inject one missing plate-target if this box has a free slot.
-    final missing = targets
+    // Tray extra-task: each shaded target should appear somewhere below.
+    final missing = _plateTargets
         .where((t) => _countTypeInBoxes(t, ignore: key) == 0)
+        .where((t) => !out.contains(t))
         .toList()
       ..shuffle(rng);
-    if (missing.isNotEmpty) {
+    for (final need in missing) {
       final free = out.indexWhere((s) => s == null);
-      final already = out.contains(missing.first);
-      if (free >= 0 && !already) {
-        out[free] = missing.first;
-      } else if (!already) {
-        // Replace a non-target filler so the shadow item appears.
-        final replace = out.indexWhere((s) => s != null && !targets.contains(s));
-        if (replace >= 0) out[replace] = missing.first;
-      }
+      if (free < 0) break;
+      if (_countTypeInBoxes(need, ignore: key) >= _maxSameOnScreen) continue;
+      out[free] = need;
     }
 
-    // Pack left.
     final filled = out.whereType<String>().toList();
     final packed = List<String?>.filled(AsmrModeScreen.spotsPerCell, null);
     for (var i = 0; i < filled.length && i < packed.length; i++) {
@@ -387,15 +414,15 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   void _finishPlateBurst(int index) {
     final used = {for (final p in _plates) p.target};
     final rng = math.Random();
-    var next = _pool[rng.nextInt(_pool.length)];
-    for (var i = 0; i < 12; i++) {
-      final cand = _pool[rng.nextInt(_pool.length)];
-      if (!used.contains(cand) || cand == _plates[index].target) {
-        next = cand;
-        if (!used.contains(cand)) break;
-      }
-    }
+    // Prefer a type not currently on any tray so goals feel fresh.
+    final candidates = _pool.where((e) => !used.contains(e)).toList()
+      ..shuffle(rng);
+    final next = candidates.isNotEmpty
+        ? candidates.first
+        : _pool[rng.nextInt(_pool.length)];
     _plates[index] = _Plate(target: next);
+    _bag.addAll([next, next, next]);
+    _bag.shuffle(rng);
   }
 
   void _onTick(Duration elapsed) {
@@ -468,8 +495,8 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     if (local.dy < 0 || local.dy > AsmrModeScreen.plateBandHeight) return null;
     final w = _boardSize.width;
     if (w <= 0) return null;
-    const pad = 4.0;
-    const gap = 6.0;
+    const pad = 2.0;
+    const gap = 10.0;
     final plateW =
         (w - pad * 2 - gap * (AsmrModeScreen.plateCount - 1)) /
         AsmrModeScreen.plateCount;
@@ -613,7 +640,21 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
       ),
       child: Scaffold(
         backgroundColor: Colors.black,
-        body: SafeArea(
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(
+              'assets/images/rooms/premium_room_bg.png',
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stack) => Image.asset(
+                'assets/images/rooms/gameplay_room_bg.png',
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stack) =>
+                    const ColoredBox(color: Color(0xFF1A1208)),
+              ),
+            ),
+            const ColoredBox(color: Color(0x66000000)),
+            SafeArea(
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -688,7 +729,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                               Expanded(
                                 child: DecoratedBox(
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFF141414),
+                                    color: const Color(0xBB141414),
                                     borderRadius: BorderRadius.circular(18),
                                     border: Border.all(
                                       color:
@@ -768,7 +809,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                 right: 12,
                 child: Row(
                   children: [
-                    _ScoreChip(label: 'Plates', value: _plateClears),
+                    _ScoreChip(label: 'Trays', value: _plateClears),
                     const SizedBox(width: 8),
                     _ScoreChip(label: 'Boxes', value: _boxClears),
                   ],
@@ -781,6 +822,8 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                 ),
             ],
           ),
+            ),
+          ],
         ),
       ),
     );
@@ -865,131 +908,99 @@ class _AsmrPlatesPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    const pad = 4.0;
-    const gap = 6.0;
+    const pad = 2.0;
+    const gap = 10.0;
     final n = plates.length;
-    final plateW = (size.width - pad * 2 - gap * (n - 1)) / n;
-    final plateH = size.height - 4;
+    final trayW = (size.width - pad * 2 - gap * (n - 1)) / n;
+    final trayH = size.height;
 
     for (var i = 0; i < n; i++) {
       final p = plates[i];
-      final left = pad + i * (plateW + gap);
-      final rect = Rect.fromLTWH(left, 2, plateW, plateH);
+      final left = pad + i * (trayW + gap);
+      final rect = Rect.fromLTWH(left, 0, trayW, trayH);
       final tint = tintFor(p.target);
 
       canvas.save();
       if (p.bursting) {
         final t = p.burstT.clamp(0.0, 1.0);
-        final s = 1.0 + 0.35 * Curves.easeOut.transform(t);
+        final s = 1.0 + 0.28 * Curves.easeOut.transform(t);
         canvas.translate(rect.center.dx, rect.center.dy);
-        canvas.scale(s, s * (1.0 - 0.55 * t));
+        canvas.scale(s, s * (1.0 - 0.5 * t));
         canvas.translate(-rect.center.dx, -rect.center.dy);
+      }
+
+      // Same wooden tray plank as gameplay belt.
+      final surface = paintTrayPlank(canvas, rect);
+
+      if (heldType == p.target && !p.bursting) {
         canvas.drawRRect(
-          RRect.fromRectAndRadius(rect.deflate(2), const Radius.circular(14)),
-          Paint()..color = tint.withValues(alpha: 0.55 * (1 - t)),
+          RRect.fromRectAndRadius(
+            Rect.fromLTWH(
+              surface.left - 2,
+              surface.surfaceY - trayH * 0.62,
+              surface.width + 4,
+              trayH * 0.7,
+            ),
+            const Radius.circular(10),
+          ),
+          Paint()
+            ..color = tint.withValues(alpha: 0.55)
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 2.2,
         );
       }
 
-      // Plate body.
-      final body = RRect.fromRectAndRadius(
-        rect.deflate(1),
-        const Radius.circular(14),
-      );
-      canvas.drawRRect(
-        body,
-        Paint()
-          ..shader = ui.Gradient.linear(
-            rect.topCenter,
-            rect.bottomCenter,
-            [
-              const Color(0xFF3A2410),
-              const Color(0xFF1A1008),
-            ],
-          ),
-      );
-      canvas.drawRRect(
-        body,
-        Paint()
-          ..color = tint.withValues(alpha: heldType == p.target ? 0.95 : 0.65)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = heldType == p.target ? 2.4 : 1.5,
-      );
+      final slotW = surface.width / AsmrModeScreen.spotsPerCell;
+      // Large faces so tray goals are obvious.
+      final full = math.min(trayH * 0.92, slotW * 1.18);
+      final behindSize = full * 0.96;
 
-      // Soft glow under plate.
-      canvas.drawOval(
-        Rect.fromCenter(
-          center: Offset(rect.center.dx, rect.bottom - 6),
-          width: rect.width * 0.7,
-          height: 10,
-        ),
-        Paint()
-          ..color = tint.withValues(alpha: 0.35)
-          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6),
-      );
-
-      final slotW = rect.width / AsmrModeScreen.spotsPerCell;
-      final side = math.min(rect.height * 0.42, slotW * 0.72);
       for (var s = 0; s < AsmrModeScreen.spotsPerCell; s++) {
-        final cx = rect.left + slotW * (s + 0.5);
-        final cy = rect.center.dy - 2;
-        final dest = Rect.fromCenter(
-          center: Offset(cx, cy),
-          width: side,
-          height: side,
-        );
+        final cx = surface.left + slotW * (s + 0.5);
         final filled = p.slots[s];
         if (filled != null) {
-          _paintFace(canvas, filled, dest);
+          final dest = Rect.fromCenter(
+            center: Offset(cx, surface.surfaceY - full * 0.52),
+            width: full,
+            height: full,
+          );
+          _paintFace(canvas, filled, dest, shaded: false);
         } else if (!p.bursting) {
-          _paintShadow(canvas, p.target, dest, tint);
+          final dest = Rect.fromCenter(
+            center: Offset(cx, surface.surfaceY - behindSize * 0.5),
+            width: behindSize,
+            height: behindSize,
+          );
+          _paintFace(canvas, p.target, dest, shaded: true);
         }
       }
       canvas.restore();
     }
   }
 
-  void _paintShadow(Canvas canvas, String type, Rect dest, Color tint) {
+  void _paintFace(
+    Canvas canvas,
+    String type,
+    Rect dest, {
+    required bool shaded,
+  }) {
     final img = faceImages[type];
-    // Colored disc behind silhouette.
-    canvas.drawCircle(
-      dest.center,
-      dest.shortestSide * 0.52,
-      Paint()..color = tint.withValues(alpha: 0.28),
-    );
     if (img == null) {
       canvas.drawCircle(
         dest.center,
-        dest.shortestSide * 0.38,
-        Paint()..color = tint.withValues(alpha: 0.55),
+        dest.shortestSide * 0.4,
+        Paint()
+          ..color = Colors.white.withValues(alpha: shaded ? 0.25 : 0.5),
       );
       return;
     }
-    canvas.saveLayer(dest.inflate(2), Paint());
     paintImage(
       canvas: canvas,
       rect: dest,
       image: img,
       fit: BoxFit.contain,
       filterQuality: FilterQuality.medium,
-    );
-    canvas.drawRect(
-      dest.inflate(2),
-      Paint()
-        ..color = tint.withValues(alpha: 0.75)
-        ..blendMode = BlendMode.srcATop,
-    );
-    canvas.restore();
-  }
-
-  void _paintFace(Canvas canvas, String type, Rect dest) {
-    final img = faceImages[type];
-    if (img == null) return;
-    paintImage(
-      canvas: canvas,
-      rect: dest,
-      image: img,
-      fit: BoxFit.contain,
-      filterQuality: FilterQuality.medium,
+      colorFilter: shaded ? shadeFilter(darken: behindShade) : null,
     );
   }
 
