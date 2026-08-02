@@ -25,20 +25,22 @@ class AudioService {
 
   static const _root = 'audio';
 
-  static const _praises = [
-    'voice_nice.wav',
-    'voice_great.wav',
-    'voice_awesome.wav',
-    'voice_perfect.wav',
-    'voice_amazing.wav',
-  ];
-
   static const praiseLabels = [
     'Nice!',
     'Great!',
     'Awesome!',
+    'Sweet!',
     'Perfect!',
     'Amazing!',
+  ];
+
+  static const _praises = [
+    'voice_nice.wav',
+    'voice_great.wav',
+    'voice_awesome.wav',
+    'voice_nice.wav', // Sweet! reuses soft nice stinger
+    'voice_perfect.wav',
+    'voice_amazing.wav',
   ];
 
   Future<void> init() async {
