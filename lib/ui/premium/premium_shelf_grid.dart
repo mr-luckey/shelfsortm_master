@@ -130,7 +130,7 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
 
   static const String _cellBgAsset =
       'assets/images/premium/cupboards/shelf_cell.png';
-  ui.Image? _cellBg;
+  final ValueNotifier<ui.Image?> _cellBg = ValueNotifier<ui.Image?>(null);
 
   double _colWidth = 0;
   double _cellHeight = 56;
@@ -194,6 +194,7 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
       _faces,
       _drag.held,
       _drag.finger,
+      _cellBg,
     ]);
   }
 
@@ -215,7 +216,9 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
         frame.image.dispose();
         return;
       }
-      setState(() => _cellBg = frame.image);
+      final old = _cellBg.value;
+      _cellBg.value = frame.image;
+      old?.dispose();
     } catch (_) {
       // Missing art — the painted wood cell stays as the background.
     }
@@ -285,6 +288,8 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
   void dispose() {
     _detachDrag();
     _ticker.dispose();
+    _cellBg.value?.dispose();
+    _cellBg.dispose();
     _woodLayer.dispose();
     _repaint.dispose();
     super.dispose();
@@ -477,7 +482,7 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
                       cellHeight: _cellHeight,
                       cells: cells,
                       faces: _faces,
-                      cellBg: _cellBg,
+                      cellBg: _cellBg.value,
                       occupied: _cellToShelf.keys.toSet(),
                       fx: _fx,
                       drag: _drag,
@@ -612,8 +617,7 @@ class _ShelfGridPainter extends CustomPainter {
     });
   }
 
-  /// Green rim on a box with room, plus a marker on the exact place the good
-  /// would land.
+  /// Marker on the exact place the good would land (no box rim).
   void _paintDropHints(
     Canvas canvas,
     Rect rect,
@@ -621,15 +625,6 @@ class _ShelfGridPainter extends CustomPainter {
     _CellData data,
     BoardPos? target,
   ) {
-    if (data.fronts.any((item) => item == null)) {
-      canvas.drawRect(
-        rect.deflate(2),
-        Paint()
-          ..color = const Color(0x3366BB6A)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 2,
-      );
-    }
     if (target == null || target.shelfIndex != data.shelfIndex) return;
 
     final slotW = cavity.width / spotsPerCell;

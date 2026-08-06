@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:provider/provider.dart';
 
 import '../../providers/progress_provider.dart';
 import '../../services/ad_service.dart';
@@ -14,9 +14,14 @@ class AdBannerWidget extends StatefulWidget {
 }
 
 class _AdBannerWidgetState extends State<AdBannerWidget> {
-  BannerAd? _ad;
-  bool _loaded = false;
+  late final _AdBannerCubit _bannerCubit;
   bool _started = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _bannerCubit = _AdBannerCubit();
+  }
 
   @override
   void didChangeDependencies() {
@@ -35,28 +40,47 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
       banner.dispose();
       return;
     }
-    setState(() {
-      _ad = banner;
-      _loaded = true;
-    });
+    _bannerCubit.show(banner);
   }
 
   @override
   void dispose() {
-    _ad?.dispose();
+    _bannerCubit.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final removeAds = context.watch<ProgressProvider>().progress.removeAds;
-    if (removeAds || !_loaded || _ad == null) {
-      return const SizedBox.shrink();
-    }
-    return SizedBox(
-      width: _ad!.size.width.toDouble(),
-      height: _ad!.size.height.toDouble(),
-      child: AdWidget(ad: _ad!),
+    return BlocProvider.value(
+      value: _bannerCubit,
+      child: BlocBuilder<_AdBannerCubit, BannerAd?>(
+        builder: (context, ad) {
+          final removeAds = context.watch<ProgressProvider>().progress.removeAds;
+          if (removeAds || ad == null) {
+            return const SizedBox.shrink();
+          }
+          return SizedBox(
+            width: ad.size.width.toDouble(),
+            height: ad.size.height.toDouble(),
+            child: AdWidget(ad: ad),
+          );
+        },
+      ),
     );
+  }
+}
+
+class _AdBannerCubit extends Cubit<BannerAd?> {
+  _AdBannerCubit() : super(null);
+
+  void show(BannerAd ad) {
+    state?.dispose();
+    emit(ad);
+  }
+
+  @override
+  Future<void> close() {
+    state?.dispose();
+    return super.close();
   }
 }

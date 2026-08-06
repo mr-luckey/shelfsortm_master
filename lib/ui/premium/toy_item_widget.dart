@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../models/item.dart';
 import '../widgets/emoji_assets.dart';
@@ -78,7 +79,19 @@ class ToyItemWidget extends StatefulWidget {
 }
 
 class _ToyItemWidgetState extends State<ToyItemWidget> {
-  double _scale = 1;
+  late final _ToyPressCubit _pressCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _pressCubit = _ToyPressCubit();
+  }
+
+  @override
+  void dispose() {
+    _pressCubit.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,66 +100,73 @@ class _ToyItemWidgetState extends State<ToyItemWidget> {
         ? EmojiAssets.pathFor(widget.emojiType!)
         : widget.type.assetPath;
 
-    Widget body = GestureDetector(
-      onTapDown: (_) => setState(() => _scale = 0.92),
-      onTapUp: (_) {
-        setState(() => _scale = 1);
-        widget.onTap?.call();
-      },
-      onTapCancel: () => setState(() => _scale = 1),
-      child: AnimatedScale(
-        scale: widget.lifting ? 1.1 : _scale,
-        duration: const Duration(milliseconds: 120),
-        curve: Curves.easeOut,
-        child: SizedBox(
-          width: s,
-          height: s,
-          child: Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.center,
-            children: [
-              Positioned(
-                bottom: 0,
-                left: s * 0.12,
-                right: s * 0.12,
-                child: Container(
-                  height: s * 0.08,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(99),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.35),
-                        blurRadius: s * 0.1,
-                        spreadRadius: 0.2,
-                        offset: Offset(0, s * 0.02),
+    Widget body = BlocProvider.value(
+      value: _pressCubit,
+      child: BlocBuilder<_ToyPressCubit, double>(
+        builder: (context, tapScale) {
+          return GestureDetector(
+            onTapDown: (_) => context.read<_ToyPressCubit>().down(),
+            onTapUp: (_) {
+              context.read<_ToyPressCubit>().up();
+              widget.onTap?.call();
+            },
+            onTapCancel: () => context.read<_ToyPressCubit>().up(),
+            child: AnimatedScale(
+              scale: widget.lifting ? 1.1 : tapScale,
+              duration: const Duration(milliseconds: 120),
+              curve: Curves.easeOut,
+              child: SizedBox(
+                width: s,
+                height: s,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.center,
+                  children: [
+                    Positioned(
+                      bottom: 0,
+                      left: s * 0.12,
+                      right: s * 0.12,
+                      child: Container(
+                        height: s * 0.08,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(99),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.35),
+                              blurRadius: s * 0.1,
+                              spreadRadius: 0.2,
+                              offset: Offset(0, s * 0.02),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: s * 0.02,
-                right: s * 0.02,
-                bottom: s * 0.01,
-                top: s * 0.02,
-                child: Image.asset(
-                  asset,
-                  fit: BoxFit.contain,
-                  alignment: Alignment.bottomCenter,
-                  filterQuality: FilterQuality.high,
-                  errorBuilder: (_, error, stack) => Text(
-                    widget.type.emoji,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: s * 0.82,
-                      height: 1,
                     ),
-                  ),
+                    Positioned(
+                      left: s * 0.02,
+                      right: s * 0.02,
+                      bottom: s * 0.01,
+                      top: s * 0.02,
+                      child: Image.asset(
+                        asset,
+                        fit: BoxFit.contain,
+                        alignment: Alignment.bottomCenter,
+                        filterQuality: FilterQuality.high,
+                        errorBuilder: (_, error, stack) => Text(
+                          widget.type.emoji,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: s * 0.82,
+                            height: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
 
@@ -173,4 +193,10 @@ class _ToyItemWidgetState extends State<ToyItemWidget> {
 
     return body;
   }
+}
+
+class _ToyPressCubit extends Cubit<double> {
+  _ToyPressCubit() : super(1);
+  void down() => emit(0.92);
+  void up() => emit(1);
 }

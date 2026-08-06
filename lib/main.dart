@@ -14,7 +14,6 @@ import 'ui/screens/splash_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
   final save = SaveService();
   final audio = AudioService();
   await audio.init();

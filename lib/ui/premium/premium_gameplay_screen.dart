@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../bloc/game_bloc.dart';
 import '../../bloc/game_event.dart';
 import '../../bloc/game_state.dart';
+import '../../bloc/gameplay_ui_cubit.dart';
 import '../../data/level_repository.dart';
 import '../../engine/match_engine.dart';
 import '../../models/item.dart';
@@ -45,8 +46,11 @@ class PremiumGameplayScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => GameBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => GameBloc()),
+        BlocProvider(create: (_) => GameplayUiCubit()),
+      ],
       child: _PremiumPlayView(levelId: levelId, daily: daily),
     );
   }
@@ -63,14 +67,11 @@ class _PremiumPlayView extends StatefulWidget {
 }
 
 class _PremiumPlayViewState extends State<_PremiumPlayView> {
-  bool _loseOfferShown = false;
   int _prevMatches = 0;
   int _prevMoves = 0;
   GameStatus? _prevStatus;
   bool _started = false;
   bool _hapticAt10 = false;
-  String? _praise;
-  int _praiseSeq = 0;
 
   @override
   void initState() {
@@ -134,7 +135,7 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
           isTime ? RewardType.hint : RewardType.extraShelf,
         );
     if (!ok || !context.mounted) return;
-    setState(() => _loseOfferShown = false);
+    context.read<GameplayUiCubit>().hideLoseOffer();
     context.read<GameBloc>().add(ContinueAfterAd(extraTime: isTime));
   }
 
@@ -350,13 +351,10 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
             }
             final label = await audio.playPraise();
             if (mounted) {
-              setState(() {
-                _praise = label;
-                _praiseSeq++;
-              });
+              context.read<GameplayUiCubit>().showPraise(label);
               Future<void>.delayed(const Duration(milliseconds: 1100), () {
-                if (mounted && _praise == label) {
-                  setState(() => _praise = null);
+                if (mounted) {
+                  context.read<GameplayUiCubit>().clearPraiseIfSame(label);
                 }
               });
             }
@@ -375,14 +373,15 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
             await _finish(context, state);
             return;
           }
-          if (state.isTerminal && !_loseOfferShown) {
-            setState(() => _loseOfferShown = true);
+          if (state.isTerminal) {
+            context.read<GameplayUiCubit>().showLoseOffer();
           }
         },
         builder: (context, state) {
           final progress = context.watch<ProgressProvider>();
           final paused = state.status == GameStatus.paused;
-          final showLose = _loseOfferShown &&
+          final uiState = context.watch<GameplayUiCubit>().state;
+          final showLose = uiState.loseOfferShown &&
               (state.status == GameStatus.lostTime ||
                   state.status == GameStatus.lostSpace);
           final timeLimit = state.level?.timeLimit ?? 1;
@@ -503,10 +502,10 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                     onHome: () => Navigator.pop(context),
                     onSettings: () => _showPauseSettings(context),
                   ),
-                if (_praise != null)
+                if (uiState.praise != null)
                   PraiseBurst(
-                    key: ValueKey(_praiseSeq),
-                    label: _praise!,
+                    key: ValueKey(uiState.praiseSeq),
+                    label: uiState.praise!,
                   ),
                 if (showLose)
                   GoodsSortLoseOverlay(

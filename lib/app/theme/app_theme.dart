@@ -22,6 +22,14 @@ class AppTheme {
       textTheme: GoogleFonts.nunitoTextTheme(base.textTheme).apply(
         bodyColor: AppColors.textDark,
         displayColor: AppColors.textDark,
+        decoration: TextDecoration.none,
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          textStyle: GoogleFonts.nunito(
+            decoration: TextDecoration.none,
+          ),
+        ),
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,

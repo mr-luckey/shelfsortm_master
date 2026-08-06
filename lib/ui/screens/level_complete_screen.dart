@@ -1,8 +1,8 @@
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 import '../../data/level_repository.dart';
 import '../../providers/progress_provider.dart';
@@ -41,12 +41,13 @@ class LevelCompleteScreen extends StatefulWidget {
 
 class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
   late final ConfettiController _confetti;
-  int _shownCoins = 0;
+  late final _CoinsCubit _coinsCubit;
 
   @override
   void initState() {
     super.initState();
     _confetti = ConfettiController(duration: const Duration(seconds: 2));
+    _coinsCubit = _CoinsCubit();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final audio = context.read<AudioService>();
@@ -64,14 +65,15 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
   Future<void> _animateCoins() async {
     for (var i = 0; i <= widget.coins; i += 2) {
       if (!mounted) return;
-      setState(() => _shownCoins = i.clamp(0, widget.coins));
+      _coinsCubit.show(i.clamp(0, widget.coins));
       await Future<void>.delayed(const Duration(milliseconds: 30));
     }
-    setState(() => _shownCoins = widget.coins);
+    _coinsCubit.show(widget.coins);
   }
 
   @override
   void dispose() {
+    _coinsCubit.close();
     _confetti.dispose();
     super.dispose();
   }
@@ -83,9 +85,11 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
         !widget.daily &&
         next <= LevelRepository.instance.totalLevels;
 
-    return Scaffold(
-      body: MetaBackdrop(
-        child: Stack(
+    return BlocProvider.value(
+      value: _coinsCubit,
+      child: Scaffold(
+        body: MetaBackdrop(
+          child: Stack(
           alignment: Alignment.topCenter,
           children: [
             if (widget.won)
@@ -193,13 +197,17 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                                   ),
                                 ),
                                 const SizedBox(width: 6),
-                                Text(
-                                  '+$_shownCoins',
-                                  style: GoogleFonts.nunito(
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.w900,
-                                    color: MetaChrome.gold,
-                                  ),
+                                BlocBuilder<_CoinsCubit, int>(
+                                  builder: (context, shownCoins) {
+                                    return Text(
+                                      '+$shownCoins',
+                                      style: GoogleFonts.nunito(
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.w900,
+                                        color: MetaChrome.gold,
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -279,8 +287,14 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
               ),
             ),
           ],
+          ),
         ),
       ),
     );
   }
+}
+
+class _CoinsCubit extends Cubit<int> {
+  _CoinsCubit() : super(0);
+  void show(int value) => emit(value);
 }

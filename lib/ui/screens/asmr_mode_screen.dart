@@ -116,10 +116,10 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   Size _boardSize = Size.zero;
   double _rowHeight = AsmrModeScreen.baseRowHeight;
 
-  static const double _slowMoFactor = 0.4;
   static const double _baseSpeed = 44.0;
   static const double _sellDuration = 0.85;
   static const double _burstDuration = 0.5;
+  static const double _dropSnapRadius = 92.0;
   static const _cubbyAsset = 'assets/images/premium/cupboards/shelf_cell.png';
 
   static const _accentColors = <Color>[
@@ -306,7 +306,20 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
       slots[1] = a;
       slots[2] = rng.nextDouble() < 0.5 ? a : _pool[rng.nextInt(_pool.length)];
     }
+    _breakAutoShelfTriple(slots, rng);
     return slots;
+  }
+
+  void _breakAutoShelfTriple(List<String?> slots, math.Random rng) {
+    if (!_isMatch3(slots)) return;
+    final trip = slots.first!;
+    for (var i = 0; i < 10; i++) {
+      final alt = _pool[rng.nextInt(_pool.length)];
+      if (alt == trip) continue;
+      slots[rng.nextInt(AsmrModeScreen.spotsPerCell)] = alt;
+      return;
+    }
+    slots[2] = _pool.firstWhere((e) => e != trip, orElse: () => trip);
   }
 
   String _pickType(math.Random rng) {
@@ -398,7 +411,21 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     }
 
     if (!_boardHasCompletableTriple()) {
-      _cells[_CellKey(0, 0)] = [type, type, type];
+      final keys = [
+        for (var r = 0; r < _rowCount; r++)
+          for (var c = 0; c < _boxesPerRow; c++) _CellKey(r, c),
+      ]..shuffle(rng);
+      var placed = 0;
+      for (final key in keys) {
+        if (placed >= 3) break;
+        final slots = _cells[key] ?? _generateEasySlots(key.row, key.col);
+        _cells[key] = slots;
+        var dest = slots.indexWhere((s) => s == null);
+        if (dest < 0) dest = rng.nextInt(AsmrModeScreen.spotsPerCell);
+        slots[dest] = type;
+        _breakAutoShelfTriple(slots, rng);
+        placed++;
+      }
     }
   }
 
@@ -412,14 +439,12 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
       if (existing.every((s) => s == null)) {
         _cells[canon] = _generateEasySlots(canon.row, canon.col,
             nonce: ++_refillNonce);
-        _ensureMinMatchOnBoard();
         return _cells[canon]!;
       }
       return existing;
     }
     final generated = _generateEasySlots(canon.row, canon.col);
     _cells[canon] = generated;
-    _ensureMinMatchOnBoard();
     return generated;
   }
 
@@ -507,7 +532,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     if (dt <= 0 || dt > 0.1) return;
 
     if (_rowCount > 0) {
-      final scale = _held != null ? _slowMoFactor : 1.0;
+      final scale = _held != null ? 0.0 : 1.0;
       for (var i = 0; i < _rowCount; i++) {
         _scroll[i] += _speeds[i] * dt * scale;
       }
@@ -577,9 +602,110 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
         AsmrModeScreen.plateCount;
     final x = local.dx - pad;
     if (x < 0) return null;
-    final i = (x / (plateW + gap)).floor();
+    final lane = plateW + gap;
+    final i = (x / lane).floor();
     if (i < 0 || i >= AsmrModeScreen.plateCount) return null;
+    final inLane = x - i * lane;
+    if (inLane > plateW) return null;
     return i;
+  }
+
+  /// Same empty-slot search as gameplay [dropSlot], for ASMR box slots.
+  int? _asmrDropSlot(List<String?> slots, int slotIndex) {
+    bool free(int i) => i >= 0 && i < slots.length && slots[i] == null;
+
+    if (free(slotIndex)) return slotIndex;
+    for (var step = 1; step < slots.length; step++) {
+      if (free(slotIndex - step)) return slotIndex - step;
+      if (free(slotIndex + step)) return slotIndex + step;
+    }
+    return null;
+  }
+
+  /// Where a released good lands on the scrolling boxes (gameplay-style).
+  _Hit? _resolveBoxDrop(Offset local) {
+    final hit = _hitTestBox(local);
+    if (hit != null) {
+      final dest = _asmrDropSlot(hit.slots, hit.slot);
+      if (dest != null) {
+        return _Hit(key: hit.key, slot: dest, slots: hit.slots);
+      }
+    }
+    return _snapDropHit(local);
+  }
+
+  _Hit? _snapDropHit(Offset local) {
+    if (_boardSize == Size.zero || _rowCount <= 0 || _colWidth <= 0) return null;
+    final gridTop = AsmrModeScreen.plateBandHeight + 8;
+    final gridY = local.dy - gridTop;
+    if (gridY < 0) return null;
+
+    _Hit? bestNear;
+    _Hit? bestAny;
+    var bestNearDist2 = _dropSnapRadius * _dropSnapRadius;
+    var bestAnyDist2 = double.infinity;
+    final totalW = _colWidth * 0.88;
+    final slotW = totalW / AsmrModeScreen.spotsPerCell;
+    final startX = (_colWidth - totalW) / 2;
+
+    for (var row = 0; row < _rowCount; row++) {
+      final top = row * _rowHeight;
+      if (gridY < top - _rowHeight || gridY > top + _rowHeight * 2) continue;
+      final ox = row < _scroll.length ? _scroll[row] : 0.0;
+      final kMin = ((-_colWidth - ox) / _colWidth).floor() - 1;
+      final kMax = ((_boardSize.width - ox) / _colWidth).ceil() + 1;
+      for (var k = kMin; k <= kMax; k++) {
+        final left = k * _colWidth + ox;
+        if (left > _boardSize.width || left + _colWidth < 0) continue;
+        final key = _canon(row, k);
+        if (_isSelling(key)) continue;
+        final slots = _slotsFor(key);
+        for (var s = 0; s < AsmrModeScreen.spotsPerCell; s++) {
+          if (slots[s] != null) continue;
+          final cx = left + startX + slotW * (s + 0.5);
+          final cy = gridTop + top + _rowHeight * 0.5;
+          final dx = local.dx - cx;
+          final dy = local.dy - cy;
+          final d2 = dx * dx + dy * dy;
+          if (d2 < bestAnyDist2) {
+            bestAnyDist2 = d2;
+            bestAny = _Hit(key: key, slot: s, slots: slots);
+          }
+          if (d2 < bestNearDist2) {
+            bestNearDist2 = d2;
+            bestNear = _Hit(key: key, slot: s, slots: slots);
+          }
+        }
+      }
+    }
+    return bestNear ?? bestAny;
+  }
+
+  bool _tryPlaceOnMatchingPlate(_HeldFace held, {int? preferredIndex}) {
+    if (preferredIndex != null) {
+      final plate = _plates[preferredIndex];
+      if (!plate.bursting &&
+          held.emoji == plate.target &&
+          plate.slots.any((s) => s == null)) {
+        final dest = plate.slots.indexWhere((s) => s == null);
+        plate.slots[dest] = held.emoji;
+        context.read<AudioService>().playPlace();
+        _tryBurstPlate(preferredIndex);
+        return true;
+      }
+    }
+    for (var i = 0; i < _plates.length; i++) {
+      if (i == preferredIndex) continue;
+      final p = _plates[i];
+      if (p.bursting || held.emoji != p.target) continue;
+      final dest = p.slots.indexWhere((s) => s == null);
+      if (dest < 0) continue;
+      p.slots[dest] = held.emoji;
+      context.read<AudioService>().playPlace();
+      _tryBurstPlate(i);
+      return true;
+    }
+    return false;
   }
 
   void _onPointerDown(Offset local) {
@@ -592,6 +718,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
 
     hit.slots[hit.slot] = null;
     _markTouched(hit.key);
+    HapticFeedback.selectionClick();
     context.read<AudioService>().playButton();
     _held = _HeldFace(
       from: hit.key,
@@ -612,16 +739,8 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   void _returnHeldToOrigin(_HeldFace held) {
     if (held.from == null) return;
     final origin = _slotsFor(held.from!);
-    if (origin[held.fromSlot] == null) {
-      origin[held.fromSlot] = held.emoji;
-    } else {
-      final free = origin.indexWhere((s) => s == null);
-      if (free >= 0) {
-        origin[free] = held.emoji;
-      } else {
-        origin[held.fromSlot] = held.emoji;
-      }
-    }
+    final dest = _asmrDropSlot(origin, held.fromSlot) ?? held.fromSlot;
+    origin[dest] = held.emoji;
     _markTouched(held.from!);
     _tryStartSell(held.from!);
   }
@@ -632,48 +751,25 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
 
     // Prefer dropping onto a matching plate.
     final plateI = _hitPlateIndex(local);
-    if (plateI != null) {
-      final plate = _plates[plateI];
-      if (!plate.bursting &&
-          held.emoji == plate.target &&
-          plate.slots.any((s) => s == null)) {
-        final dest = plate.slots.indexWhere((s) => s == null);
-        plate.slots[dest] = held.emoji;
-        context.read<AudioService>().playPlace();
-        _tryBurstPlate(plateI);
-        _held = null;
-        _repaint();
-        return;
-      }
-      // Wrong plate / full — try any plate that wants this emoji.
-      for (var i = 0; i < _plates.length; i++) {
-        final p = _plates[i];
-        if (p.bursting) continue;
-        if (held.emoji != p.target) continue;
-        final dest = p.slots.indexWhere((s) => s == null);
-        if (dest < 0) continue;
-        p.slots[dest] = held.emoji;
-        context.read<AudioService>().playPlace();
-        _tryBurstPlate(i);
-        _held = null;
-        _repaint();
-        return;
-      }
+    if (_tryPlaceOnMatchingPlate(held, preferredIndex: plateI)) {
+      _held = null;
+      _repaint();
+      return;
     }
 
-    // Otherwise place back into boxes (original ASMR).
-    final hit = _hitTestBox(local);
+    // Box sort — same drop rules as premium gameplay shelves.
+    final drop = _resolveBoxDrop(local);
     var placed = false;
     _CellKey? placedKey;
 
-    if (hit != null) {
-      var dest = hit.slots[hit.slot] == null ? hit.slot : -1;
-      if (dest < 0) dest = hit.slots.indexWhere((s) => s == null);
-      if (dest >= 0) {
-        hit.slots[dest] = held.emoji;
+    if (drop != null) {
+      final sameSpot = held.from == drop.key && held.fromSlot == drop.slot;
+      if (!sameSpot) {
+        drop.slots[drop.slot] = held.emoji;
         placed = true;
-        placedKey = hit.key;
-        _markTouched(hit.key);
+        placedKey = drop.key;
+        _markTouched(drop.key);
+        HapticFeedback.lightImpact();
         context.read<AudioService>().playPlace();
       }
     }
@@ -807,8 +903,6 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                                             faceImages: _faceImages,
                                             plateTargets: _plateTargets,
                                             tintFor: _tintFor,
-                                            highlightFreeOf: () =>
-                                                _held != null,
                                             repaint: _frame,
                                           ),
                                         ),
@@ -1121,7 +1215,6 @@ class _AsmrMovingGridPainter extends CustomPainter {
   final Map<String, ui.Image> faceImages;
   final Set<String> plateTargets;
   final Color Function(String) tintFor;
-  final bool Function() highlightFreeOf;
 
   _AsmrMovingGridPainter({
     required this.rowHeight,
@@ -1134,7 +1227,6 @@ class _AsmrMovingGridPainter extends CustomPainter {
     this.faceImages = const {},
     this.plateTargets = const {},
     required this.tintFor,
-    required this.highlightFreeOf,
     Listenable? repaint,
   }) : super(repaint: repaint);
 
@@ -1190,22 +1282,6 @@ class _AsmrMovingGridPainter extends CustomPainter {
               ..style = PaintingStyle.stroke
               ..strokeWidth = 2.2,
           );
-        }
-
-        if (highlightFreeOf() && sell == null) {
-          final free = slots.where((s) => s == null).length;
-          if (free > 0) {
-            canvas.drawRRect(
-              RRect.fromRectAndRadius(
-                rect.deflate(3),
-                const Radius.circular(8),
-              ),
-              Paint()
-                ..color = const Color(0x3366BB6A)
-                ..style = PaintingStyle.stroke
-                ..strokeWidth = 2,
-            );
-          }
         }
 
         if (sell == null) {

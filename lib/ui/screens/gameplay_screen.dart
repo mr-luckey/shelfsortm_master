@@ -5,6 +5,7 @@ import '../../app/theme/app_colors.dart';
 import '../../bloc/game_bloc.dart';
 import '../../bloc/game_event.dart';
 import '../../bloc/game_state.dart';
+import '../../bloc/gameplay_ui_cubit.dart';
 import '../../data/level_repository.dart';
 import '../../engine/match_engine.dart';
 import '../../models/level_data.dart';
@@ -35,8 +36,11 @@ class GameplayScreen extends StatelessWidget {
         ? LevelRepository.instance.dailyChallenge(DateTime.now())
         : LevelRepository.instance.getLevel(levelId);
 
-    return BlocProvider(
-      create: (_) => GameBloc()..add(GameStarted(level)),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => GameBloc()..add(GameStarted(level))),
+        BlocProvider(create: (_) => GameplayUiCubit()),
+      ],
       child: _View(levelId: levelId, daily: daily),
     );
   }
@@ -53,7 +57,6 @@ class _View extends StatefulWidget {
 }
 
 class _ViewState extends State<_View> {
-  bool _loseOfferShown = false;
   int _prevMatches = 0;
   int _prevCombo = 0;
   GameStatus? _prevStatus;
@@ -75,7 +78,7 @@ class _ViewState extends State<_View> {
       isTime ? RewardType.hint : RewardType.extraShelf,
     );
     if (!ok || !context.mounted) return;
-    setState(() => _loseOfferShown = false);
+    context.read<GameplayUiCubit>().hideLoseOffer();
     context.read<GameBloc>().add(ContinueAfterAd(extraTime: isTime));
   }
 
@@ -194,8 +197,8 @@ class _ViewState extends State<_View> {
           await _finish(context, state);
           return;
         }
-        if (state.isTerminal && !_loseOfferShown) {
-          setState(() => _loseOfferShown = true);
+        if (state.isTerminal) {
+          context.read<GameplayUiCubit>().showLoseOffer();
         }
       },
       builder: (context, state) {
@@ -235,7 +238,9 @@ class _ViewState extends State<_View> {
         final levelLabel = widget.daily
             ? 'Daily'
             : 'Level ${state.level?.levelId ?? widget.levelId}';
-        final showLose = _loseOfferShown &&
+        final showLose = context.select<GameplayUiCubit, bool>(
+              (c) => c.state.loseOfferShown,
+            ) &&
             (state.status == GameStatus.lostTime ||
                 state.status == GameStatus.lostSpace);
         final paused = state.status == GameStatus.paused;

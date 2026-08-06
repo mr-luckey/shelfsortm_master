@@ -64,7 +64,10 @@ class MetaBackdrop extends StatelessWidget {
               ),
             ),
           ),
-        child,
+        Material(
+          type: MaterialType.transparency,
+          child: child,
+        ),
       ],
     );
   }
