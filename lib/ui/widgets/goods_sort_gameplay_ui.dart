@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/theme/goods_sort_theme.dart';
-import '../../services/audio_service.dart';
+import '../../bloc/audio_cubit.dart';
 import '../meta/praise_burst.dart';
 
 /// Pixel specs from Goods Sort™ gameplay screenshots (Play Store).
@@ -434,7 +434,7 @@ class GoodsSortPauseOverlay extends StatelessWidget {
                   ),
                   onPressed: () {
                     try {
-                      context.read<AudioService>().playButton();
+                      context.read<AudioCubit>().playButton();
                     } catch (_) {}
                     onResume();
                   },
@@ -492,7 +492,7 @@ class _PauseAction extends StatelessWidget {
         child: TextButton.icon(
           onPressed: () {
             try {
-              context.read<AudioService>().playButton();
+              context.read<AudioCubit>().playButton();
             } catch (_) {}
             onTap();
           },
@@ -561,7 +561,7 @@ class GoodsSortLoseOverlay extends StatelessWidget {
                     child: OutlinedButton(
                       onPressed: () {
                         try {
-                          context.read<AudioService>().playButton();
+                          context.read<AudioCubit>().playButton();
                         } catch (_) {}
                         onQuit();
                       },
@@ -578,7 +578,7 @@ class GoodsSortLoseOverlay extends StatelessWidget {
                       ),
                       onPressed: () {
                         try {
-                          context.read<AudioService>().playButton();
+                          context.read<AudioCubit>().playButton();
                         } catch (_) {}
                         onWatchAd();
                       },

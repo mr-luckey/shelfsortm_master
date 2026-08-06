@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../services/audio_service.dart';
+import '../../bloc/audio_cubit.dart';
 import '../meta/meta_chrome.dart';
 import '../widgets/common_widgets.dart';
 import 'home_shell.dart';
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) context.read<AudioService>().startMusic();
+      if (mounted) context.read<AudioCubit>().startMusic();
     });
     Future.delayed(const Duration(milliseconds: 2600), () {
       if (!mounted) return;

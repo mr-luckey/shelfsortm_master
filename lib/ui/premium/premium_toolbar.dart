@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../services/audio_service.dart';
+import '../../bloc/audio_cubit.dart';
 import 'premium_tokens.dart';
 
 /// Freeze + Hint — compact pair beside the goal panel (bottom stays free for ads).
@@ -93,9 +93,9 @@ class _BoosterBtnState extends State<_BoosterBtn> {
             onTapUp: (_) {
               context.read<_PressScaleCubit>().up();
               try {
-                context.read<AudioService>().playButton();
+                context.read<AudioCubit>().playButton();
               } catch (_) {
-                HapticFeedback.mediumImpact();
+                HapticFeedback.selectionClick();
               }
               widget.onTap();
             },

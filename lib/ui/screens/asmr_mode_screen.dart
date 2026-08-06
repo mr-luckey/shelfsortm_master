@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/asmr_cubit.dart';
+import '../../bloc/audio_cubit.dart';
 import '../../engine/level_generator.dart';
-import '../../services/audio_service.dart';
 import '../meta/praise_burst.dart';
 import '../premium/premium_goods_fx.dart';
 import '../premium/premium_tray_plank.dart';
@@ -152,8 +152,8 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     _loadFaceImages();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      final audio = context.read<AudioService>();
-      audio.asmrMode = true;
+      final audio = context.read<AudioCubit>();
+      audio.setAsmrMode(true);
       audio.startMusic();
       for (var r = 0; r < math.max(_rowCount, 3); r++) {
         for (var c = 0; c < _boxesPerRow; c++) {
@@ -460,13 +460,13 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
 
   Future<void> _celebrate({bool plate = false}) async {
     if (!mounted) return;
-    final audio = context.read<AudioService>();
+    final audio = context.read<AudioCubit>();
     if (plate) {
       audio.playCombo();
     } else {
       audio.playShelfComplete();
     }
-    final label = await audio.playPraise();
+    final label = audio.playPraise();
     if (!mounted) return;
     _cubit.showPraise(label);
     _syncScores();
@@ -485,7 +485,6 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     if (slots == null || !_isMatch3(slots)) return;
     _selling[canon] = _SellAnim(emoji: slots.first!);
     _boxClears++;
-    HapticFeedback.mediumImpact();
     _celebrate();
   }
 
@@ -504,7 +503,6 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     p.bursting = true;
     p.burstT = 0;
     _plateClears++;
-    HapticFeedback.heavyImpact();
     _celebrate(plate: true);
   }
 
@@ -689,7 +687,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
           plate.slots.any((s) => s == null)) {
         final dest = plate.slots.indexWhere((s) => s == null);
         plate.slots[dest] = held.emoji;
-        context.read<AudioService>().playPlace();
+        context.read<AudioCubit>().playPlace();
         _tryBurstPlate(preferredIndex);
         return true;
       }
@@ -701,7 +699,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
       final dest = p.slots.indexWhere((s) => s == null);
       if (dest < 0) continue;
       p.slots[dest] = held.emoji;
-      context.read<AudioService>().playPlace();
+      context.read<AudioCubit>().playPlace();
       _tryBurstPlate(i);
       return true;
     }
@@ -718,8 +716,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
 
     hit.slots[hit.slot] = null;
     _markTouched(hit.key);
-    HapticFeedback.selectionClick();
-    context.read<AudioService>().playButton();
+    context.read<AudioCubit>().playPick();
     _held = _HeldFace(
       from: hit.key,
       fromSlot: hit.slot,
@@ -769,8 +766,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
         placed = true;
         placedKey = drop.key;
         _markTouched(drop.key);
-        HapticFeedback.lightImpact();
-        context.read<AudioService>().playPlace();
+        context.read<AudioCubit>().playPlace();
       }
     }
 
@@ -933,8 +929,8 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                       child: IconButton(
                         tooltip: 'Close',
                         onPressed: () {
-                          context.read<AudioService>().asmrMode = false;
-                          context.read<AudioService>().playButton();
+                          context.read<AudioCubit>().setAsmrMode(false);
+                          context.read<AudioCubit>().playButton();
                           Navigator.of(context).pop();
                         },
                         style: IconButton.styleFrom(

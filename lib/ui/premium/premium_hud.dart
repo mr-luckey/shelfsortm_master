@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../services/audio_service.dart';
+import '../../bloc/audio_cubit.dart';
 import 'premium_tokens.dart';
 
 /// Top HUD matching the wood-plank reference: pause · coins · timer · level.
@@ -90,7 +90,7 @@ class PremiumHudBar extends StatelessWidget {
                                   size: 34 * scale,
                                   onTap: () {
                                     try {
-                                      context.read<AudioService>().playButton();
+                                      context.read<AudioCubit>().playButton();
                                     } catch (_) {
                                       HapticFeedback.selectionClick();
                                     }
@@ -300,7 +300,7 @@ class _CoinsPill extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              HapticFeedback.lightImpact();
+              HapticFeedback.selectionClick();
               onPlus?.call();
             },
             child: Container(

@@ -11,7 +11,7 @@ import '../../engine/match_engine.dart';
 import '../../models/level_data.dart';
 import '../../providers/progress_provider.dart';
 import '../../services/ad_service.dart';
-import '../../services/audio_service.dart';
+import '../../bloc/audio_cubit.dart';
 import '../../services/save_service.dart';
 import '../theme/shelf_look.dart';
 import '../widgets/cupboard_board.dart';
@@ -83,7 +83,7 @@ class _ViewState extends State<_View> {
   }
 
   void _playFeedback(BuildContext context, GameState state) {
-    final audio = context.read<AudioService>();
+    final audio = context.read<AudioCubit>();
     if (_prevStatus != state.status) {
       if (state.status == GameStatus.won) {
         audio.playLevelComplete();
@@ -280,7 +280,7 @@ class _ViewState extends State<_View> {
                             onTap: state.inputLocked
                                 ? (_) {}
                                 : (pos) {
-                                    context.read<AudioService>().playPick();
+                                    context.read<AudioCubit>().playPick();
                                     context.read<GameBloc>().add(
                                           ItemTapped(pos),
                                         );
@@ -288,7 +288,7 @@ class _ViewState extends State<_View> {
                             onMove: state.inputLocked
                                 ? (_, __) {}
                                 : (from, to) {
-                                    context.read<AudioService>().playPlace();
+                                    context.read<AudioCubit>().playPlace();
                                     context.read<GameBloc>().add(
                                           ItemMoved(
                                             from: from,

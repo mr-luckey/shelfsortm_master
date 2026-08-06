@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/progress_provider.dart';
 import '../../providers/settings_provider.dart';
-import '../../services/audio_service.dart';
+import '../../bloc/audio_cubit.dart';
 import '../../services/iap_service.dart';
 import '../meta/meta_chrome.dart';
 import '../widgets/common_widgets.dart';
@@ -31,7 +31,7 @@ class ProfileScreen extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: IconButton(
                         onPressed: () {
-                          context.read<AudioService>().playButton();
+                          context.read<AudioCubit>().playButton();
                           Navigator.of(context).maybePop();
                         },
                         icon: const Icon(
@@ -118,7 +118,7 @@ class ProfileScreen extends StatelessWidget {
                               color: MetaChrome.gold,
                             ),
                             onTap: () async {
-                              context.read<AudioService>().playButton();
+                              context.read<AudioCubit>().playButton();
                               await IapService().restorePurchases();
                               if (!context.mounted) return;
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -139,7 +139,7 @@ class ProfileScreen extends StatelessWidget {
                               ),
                             ),
                             onTap: () {
-                              context.read<AudioService>().playButton();
+                              context.read<AudioCubit>().playButton();
                               showDialog(
                                 context: context,
                                 builder: (c) => AlertDialog(

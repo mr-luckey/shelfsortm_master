@@ -4,12 +4,12 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../services/audio_service.dart';
+import '../../bloc/audio_cubit.dart';
 import '../premium/premium_tokens.dart';
 
 void _uiTap(BuildContext context) {
   try {
-    context.read<AudioService>().playButton();
+    context.read<AudioCubit>().playButton();
   } catch (_) {
     HapticFeedback.selectionClick();
   }

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'app/theme/app_theme.dart';
+import 'bloc/audio_cubit.dart';
 import 'data/level_repository.dart';
 import 'providers/progress_provider.dart';
 import 'providers/settings_provider.dart';
 import 'services/ad_service.dart';
-import 'services/audio_service.dart';
 import 'services/iap_service.dart';
 import 'services/save_service.dart';
 import 'ui/screens/splash_screen.dart';
@@ -15,7 +16,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   final save = SaveService();
-  final audio = AudioService();
+  final audio = AudioCubit();
   await audio.init();
   final ads = AdService();
   final iap = IapService();
@@ -30,16 +31,20 @@ Future<void> main() async {
   await LevelRepository.instance.preload();
 
   runApp(
-    MultiProvider(
+    MultiBlocProvider(
       providers: [
-        Provider.value(value: save),
-        Provider.value(value: audio),
-        Provider.value(value: ads),
-        Provider.value(value: iap),
-        ChangeNotifierProvider.value(value: progress),
-        ChangeNotifierProvider(create: (_) => SettingsProvider(audio)),
+        BlocProvider<AudioCubit>.value(value: audio),
       ],
-      child: const ShelfSortApp(),
+      child: MultiProvider(
+        providers: [
+          Provider.value(value: save),
+          Provider.value(value: ads),
+          Provider.value(value: iap),
+          ChangeNotifierProvider.value(value: progress),
+          ChangeNotifierProvider(create: (_) => SettingsProvider(audio)),
+        ],
+        child: const ShelfSortApp(),
+      ),
     ),
   );
 }

@@ -17,7 +17,7 @@ import '../../models/shelf.dart';
 import '../../providers/progress_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../services/ad_service.dart';
-import '../../services/audio_service.dart';
+import '../../bloc/audio_cubit.dart';
 import '../../services/save_service.dart';
 import '../meta/praise_burst.dart';
 import '../screens/level_complete_screen.dart';
@@ -68,7 +68,6 @@ class _PremiumPlayView extends StatefulWidget {
 
 class _PremiumPlayViewState extends State<_PremiumPlayView> {
   int _prevMatches = 0;
-  int _prevMoves = 0;
   GameStatus? _prevStatus;
   bool _started = false;
   bool _hapticAt10 = false;
@@ -78,7 +77,7 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _startLevel();
-      if (mounted) context.read<AudioService>().startMusic();
+      if (mounted) context.read<AudioCubit>().startMusic();
     });
   }
 
@@ -221,7 +220,7 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                       width: double.infinity,
                       child: TextButton(
                         onPressed: () {
-                          context.read<AudioService>().playButton();
+                          context.read<AudioCubit>().playButton();
                           Navigator.pop(ctx);
                         },
                         child: const Text(
@@ -326,7 +325,7 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
             p.timeLeft != c.timeLeft ||
             (!p.isTerminal && c.isTerminal),
         listener: (context, state) async {
-          final audio = context.read<AudioService>();
+          final audio = context.read<AudioCubit>();
           if (_prevStatus != state.status &&
               state.status == GameStatus.won) {
             audio.playLevelComplete();
@@ -337,10 +336,8 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
           }
           _prevStatus = state.status;
 
-          if (state.moves > _prevMoves) {
-            audio.playPlace();
-          }
-          _prevMoves = state.moves;
+          // Pick/place SFX fire instantly on the board drag — only match
+          // feedback lives here so place isn't delayed by the Bloc queue.
 
           if (state.matches > _prevMatches) {
             final gained = state.matches - _prevMatches;
@@ -349,7 +346,7 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
             } else {
               audio.playShelfComplete();
             }
-            final label = await audio.playPraise();
+            final label = audio.playPraise();
             if (mounted) {
               context.read<GameplayUiCubit>().showPraise(label);
               Future<void>.delayed(const Duration(milliseconds: 1100), () {
@@ -365,7 +362,6 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
               !_hapticAt10 &&
               state.status == GameStatus.playing) {
             _hapticAt10 = true;
-            HapticFeedback.mediumImpact();
             audio.playInvalid();
           }
 
@@ -493,7 +489,6 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                     onRestart: () {
                       _hapticAt10 = false;
                       _prevMatches = 0;
-                      _prevMoves = 0;
                       context
                           .read<GameBloc>()
                           .add(const GameRestarted());

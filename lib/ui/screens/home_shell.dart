@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../../data/level_repository.dart';
 import '../../models/player_progress.dart';
 import '../../providers/progress_provider.dart';
-import '../../services/audio_service.dart';
+import '../../bloc/audio_cubit.dart';
 import '../meta/meta_chrome.dart';
 import '../premium/premium_tokens.dart';
 import '../widgets/common_widgets.dart';
@@ -30,7 +30,7 @@ class _HomeShellState extends State<HomeShell> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      context.read<AudioService>().startMusic();
+      context.read<AudioCubit>().startMusic();
     });
   }
 
@@ -53,7 +53,7 @@ class _HomeShellState extends State<HomeShell> {
                       coins: p.coins,
                       gems: p.gems,
                       onProfile: () {
-                        context.read<AudioService>().playButton();
+                        context.read<AudioCubit>().playButton();
                         Navigator.of(context).push(
                           MaterialPageRoute<void>(
                             builder: (_) => const ProfileScreen(),
@@ -125,7 +125,7 @@ class _HomeShellState extends State<HomeShell> {
                             icon: Icons.map_rounded,
                             label: 'World Map',
                             onTap: () {
-                              context.read<AudioService>().playButton();
+                              context.read<AudioCubit>().playButton();
                               Navigator.of(context).push(
                                 MaterialPageRoute<void>(
                                   builder: (_) => const LevelMapScreen(),
@@ -140,7 +140,7 @@ class _HomeShellState extends State<HomeShell> {
                             icon: Icons.headphones_rounded,
                             label: 'ASMR',
                             onTap: () {
-                              context.read<AudioService>().playButton();
+                              context.read<AudioCubit>().playButton();
                               Navigator.of(context).push(
                                 MaterialPageRoute<void>(
                                   builder: (_) => const AsmrModeScreen(),
@@ -265,7 +265,7 @@ class _HubTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        HapticFeedback.lightImpact();
+        HapticFeedback.selectionClick();
         onTap();
       },
       child: MetaWoodCard(

@@ -3,8 +3,9 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../bloc/audio_cubit.dart';
 import '../../engine/match_engine.dart';
 import '../../engine/mechanics/conveyor_tray.dart';
 import '../../models/item.dart';
@@ -225,7 +226,7 @@ class _PremiumTrayBeltState extends State<PremiumTrayBelt>
     final item = slot.front;
     if (item == null || slot.frontBlocked || !slot.accessible) return;
 
-    HapticFeedback.selectionClick();
+    context.read<AudioCubit>().playPick();
     widget.drag.begin(
       HeldGood(
         from: BoardPos(hit.shelfIndex, hit.slot),
@@ -249,7 +250,7 @@ class _PremiumTrayBeltState extends State<PremiumTrayBelt>
     final to = widget.drag.dropAt(event.position);
     if (to == null || to == held.from) return;
 
-    HapticFeedback.lightImpact();
+    context.read<AudioCubit>().playPlace();
     widget.onMove(held.from, to);
   }
 

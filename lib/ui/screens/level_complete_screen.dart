@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../data/level_repository.dart';
 import '../../providers/progress_provider.dart';
 import '../../services/ad_service.dart';
-import '../../services/audio_service.dart';
+import '../../bloc/audio_cubit.dart';
 import '../meta/meta_chrome.dart';
 import '../premium/premium_gameplay_screen.dart';
 import '../premium/premium_tokens.dart';
@@ -50,7 +50,7 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
     _coinsCubit = _CoinsCubit();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      final audio = context.read<AudioService>();
+      final audio = context.read<AudioCubit>();
       audio.startMusic();
       if (widget.won) {
         audio.playWhoosh();
@@ -271,7 +271,7 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        context.read<AudioService>().playButton();
+                        context.read<AudioCubit>().playButton();
                         Navigator.of(context).popUntil((r) => r.isFirst);
                       },
                       child: Text(
