@@ -343,6 +343,14 @@ class _TrayBeltPainter extends CustomPainter {
     final trayWidth = size.width / mechanic.viewportTrays;
     final held = drag.held.value;
     final target = held == null ? null : landing();
+    final blasts = <({
+      ui.Image image,
+      Rect from,
+      Offset center,
+      double radius,
+      double t,
+      int seed,
+    })>[];
 
     for (var i = 0; i < trayIndices.length; i++) {
       final rect = Rect.fromLTWH(
@@ -417,11 +425,6 @@ class _TrayBeltPainter extends CustomPainter {
         );
       }
 
-      if (selling) {
-        // A sale stays over its own tray — nothing spills onto the next one.
-        canvas.save();
-        canvas.clipRect(rect);
-      }
       for (var slot = 0; slot < shelf.slots.length; slot++) {
         final item = shelf.slots[slot].front;
         if (item == null) continue;
@@ -461,8 +464,8 @@ class _TrayBeltPainter extends CustomPainter {
           opacity = pose.opacity;
         }
 
-        final lift = ((surface.surfaceY - baseY) / full).clamp(0.0, 1.0);
         if (opacity > 0.05) {
+          final lift = ((surface.surfaceY - baseY) / full).clamp(0.0, 1.0);
           paintContactShadow(
             canvas,
             cx,
@@ -470,35 +473,40 @@ class _TrayBeltPainter extends CustomPainter {
             s * (1 - lift * 0.35),
             strength: (1 - lift) * opacity,
           );
-        }
-        final w = s * (1 + squash);
-        final h = s * (1 - squash);
-        drawFace(
-          canvas,
-          image,
-          Rect.fromLTWH(cx - w / 2, baseY - h, w, h),
-          darken < 1 || opacity < 1
-              ? shadeFilter(darken: darken, opacity: opacity)
-              : null,
-        );
-        if (selling) {
-          paintSellBurst(
+          final w = s * (1 + squash);
+          final h = s * (1 - squash);
+          drawFace(
             canvas,
-            Offset(cx, surface.surfaceY - full * 0.45),
-            full * 0.62,
-            sellT,
+            image,
+            Rect.fromLTWH(cx - w / 2, baseY - h, w, h),
+            darken < 1 || opacity < 1
+                ? shadeFilter(darken: darken, opacity: opacity)
+                : null,
           );
         }
+        if (selling) {
+          blasts.add((
+            image: image,
+            from: Rect.fromLTWH(cx - full / 2, surface.surfaceY - full, full, full),
+            center: Offset(cx, surface.surfaceY - full * 0.45),
+            radius: full * 0.9,
+            t: sellT,
+            seed: item.id.hashCode,
+          ));
+        }
       }
+    }
 
-      if (selling) {
-        paintSoldStamp(
-          canvas,
-          Rect.fromLTRB(rect.left, rect.top, rect.right, surface.surfaceY),
-          sellT,
-        );
-        canvas.restore();
-      }
+    for (final b in blasts) {
+      paintMatchBlast(
+        canvas,
+        center: b.center,
+        radius: b.radius,
+        t: b.t,
+        from: b.from,
+        image: b.image,
+        seed: b.seed,
+      );
     }
   }
 

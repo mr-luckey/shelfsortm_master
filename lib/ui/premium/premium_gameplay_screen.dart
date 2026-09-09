@@ -21,6 +21,7 @@ import '../../bloc/audio_cubit.dart';
 import '../../services/save_service.dart';
 import '../meta/praise_burst.dart';
 import '../screens/level_complete_screen.dart';
+import '../widgets/gift_box_fab.dart';
 import '../widgets/goods_sort_gameplay_ui.dart';
 import 'board_drag.dart';
 import 'face_images.dart';
@@ -478,6 +479,11 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                       const SizedBox(height: PremiumTokens.bannerAdHeight),
                     ],
                   ).animate().fadeIn(duration: 350.ms),
+                ),
+                Positioned(
+                  right: 16,
+                  bottom: PremiumTokens.bannerAdHeight + 16,
+                  child: const GiftBoxFab(),
                 ),
                 if (paused)
                   GoodsSortPauseOverlay(

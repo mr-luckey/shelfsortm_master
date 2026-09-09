@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
+import '../config/test_flags.dart';
 import '../data/level_repository.dart';
 import '../models/player_progress.dart';
 import '../services/ad_service.dart';
@@ -24,8 +25,11 @@ class ProgressProvider extends ChangeNotifier {
   Future<void> init() async {
     await saveService.init();
     progress = await saveService.loadProgress();
-    // Testing: unlock entire campaign map.
-    progress = progress.withAllLevelsUnlocked();
+    if (TestFlags.unlockAllLevels) {
+      progress = progress.withAllLevelsUnlocked();
+    } else {
+      progress = progress.withRepairedLevelLocks();
+    }
     _resetToolsIfNeeded();
     _syncDailyChallengeDate();
     ready = true;
@@ -33,8 +37,9 @@ class ProgressProvider extends ChangeNotifier {
     await _persist();
   }
 
-  /// Unlock every campaign level and persist (testing helper).
+  /// Unlock every campaign level and persist (honours [TestFlags.unlockAllLevels]).
   Future<void> unlockAllLevelsForTesting() async {
+    if (!TestFlags.unlockAllLevels) return;
     progress = progress.withAllLevelsUnlocked();
     notifyListeners();
     await _persist();

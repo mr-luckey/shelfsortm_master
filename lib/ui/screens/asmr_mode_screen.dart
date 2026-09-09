@@ -13,6 +13,7 @@ import '../meta/praise_burst.dart';
 import '../premium/premium_goods_fx.dart';
 import '../premium/premium_tray_plank.dart';
 import '../widgets/emoji_assets.dart';
+import '../widgets/gift_box_fab.dart';
 
 /// Dual ASMR: scrolling match-3 boxes + top goal trays (gameplay-style planks).
 class AsmrModeScreen extends StatefulWidget {
@@ -61,9 +62,7 @@ class _HeldFace {
 }
 
 class _SellAnim {
-  final String emoji;
-  double t;
-  _SellAnim({required this.emoji, this.t = 0});
+  double t = 0;
 }
 
 class _Plate {
@@ -117,8 +116,8 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   double _rowHeight = AsmrModeScreen.baseRowHeight;
 
   static const double _baseSpeed = 44.0;
-  static const double _sellDuration = 0.85;
-  static const double _burstDuration = 0.5;
+  static const double _sellDuration = 0.80;
+  static const double _burstDuration = 0.80;
   static const double _dropSnapRadius = 92.0;
   static const _cubbyAsset = 'assets/images/premium/cupboards/shelf_cell.png';
 
@@ -483,7 +482,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     if (_isSelling(canon)) return;
     final slots = _cells[canon];
     if (slots == null || !_isMatch3(slots)) return;
-    _selling[canon] = _SellAnim(emoji: slots.first!);
+    _selling[canon] = _SellAnim();
     _boxClears++;
     _celebrate();
   }
@@ -852,56 +851,75 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                                 _onPointerMove(e.localPosition),
                             onPointerUp: (e) => _onPointerUp(e.localPosition),
                             onPointerCancel: (_) => _onPointerCancel(),
-                            child: Column(
+                            child: Stack(
                               children: [
-                                SizedBox(
-                                  height: AsmrModeScreen.plateBandHeight,
-                                  width: constraints.maxWidth,
-                                  child: RepaintBoundary(
-                                    child: CustomPaint(
-                                      painter: _AsmrPlatesPainter(
-                                        plates: _plates,
-                                        faceImages: _faceImages,
-                                        tintFor: _tintFor,
-                                        heldTypeOf: () => _held?.emoji,
-                                        repaint: _frame,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Expanded(
-                                  child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xBB141414),
-                                      borderRadius: BorderRadius.circular(18),
-                                      border: Border.all(
-                                        color: Colors.white
-                                            .withValues(alpha: 0.12),
-                                      ),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(18),
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      height: AsmrModeScreen.plateBandHeight,
+                                      width: constraints.maxWidth,
                                       child: RepaintBoundary(
                                         child: CustomPaint(
-                                          size: Size(
-                                            constraints.maxWidth,
-                                            gridH,
-                                          ),
-                                          painter: _AsmrMovingGridPainter(
-                                            rowHeight: _rowHeight,
-                                            colWidth: _colWidth,
-                                            boxesPerRow: _boxesPerRow,
-                                            scroll: _scroll,
-                                            cells: _cells,
-                                            selling: _selling,
-                                            cubbyBgOf: () => _cubbyBg,
+                                          painter: _AsmrPlatesPainter(
+                                            plates: _plates,
                                             faceImages: _faceImages,
-                                            plateTargets: _plateTargets,
                                             tintFor: _tintFor,
+                                            heldTypeOf: () => _held?.emoji,
                                             repaint: _frame,
                                           ),
                                         ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Expanded(
+                                      child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xBB141414),
+                                          borderRadius:
+                                              BorderRadius.circular(18),
+                                          border: Border.all(
+                                            color: Colors.white
+                                                .withValues(alpha: 0.12),
+                                          ),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(18),
+                                          child: RepaintBoundary(
+                                            child: CustomPaint(
+                                              size: Size(
+                                                constraints.maxWidth,
+                                                gridH,
+                                              ),
+                                              painter: _AsmrMovingGridPainter(
+                                                rowHeight: _rowHeight,
+                                                colWidth: _colWidth,
+                                                boxesPerRow: _boxesPerRow,
+                                                scroll: _scroll,
+                                                cells: _cells,
+                                                selling: _selling,
+                                                cubbyBgOf: () => _cubbyBg,
+                                                faceImages: _faceImages,
+                                                plateTargets: _plateTargets,
+                                                tintFor: _tintFor,
+                                                repaint: _frame,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Positioned.fill(
+                                  child: IgnorePointer(
+                                    child: CustomPaint(
+                                      painter: _AsmrPlateBlastPainter(
+                                        plates: _plates,
+                                        faceImages: _faceImages,
+                                        plateBandHeight:
+                                            AsmrModeScreen.plateBandHeight,
+                                        repaint: _frame,
                                       ),
                                     ),
                                   ),
@@ -970,6 +988,11 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                           );
                         },
                       ),
+                    ),
+                    const Positioned(
+                      right: 16,
+                      bottom: 16,
+                      child: GiftBoxFab(),
                     ),
                     BlocBuilder<AsmrCubit, AsmrState>(
                       buildWhen: (p, c) =>
@@ -1083,6 +1106,60 @@ class _HeldOverlayPainter extends CustomPainter {
   bool shouldRepaint(covariant _HeldOverlayPainter old) => false;
 }
 
+class _AsmrPlateBlastPainter extends CustomPainter {
+  final List<_Plate> plates;
+  final Map<String, ui.Image> faceImages;
+  final double plateBandHeight;
+
+  _AsmrPlateBlastPainter({
+    required this.plates,
+    required this.faceImages,
+    required this.plateBandHeight,
+    Listenable? repaint,
+  }) : super(repaint: repaint);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    const pad = 2.0;
+    const gap = 10.0;
+    final n = plates.length;
+    final trayW = (size.width - pad * 2 - gap * (n - 1)) / n;
+    final trayH = plateBandHeight;
+
+    for (var i = 0; i < n; i++) {
+      final p = plates[i];
+      if (!p.bursting) continue;
+      final left = pad + i * (trayW + gap);
+      final rect = Rect.fromLTWH(left, 0, trayW, trayH);
+      final surface = trayPlankSurface(rect);
+      final slotW = surface.width / AsmrModeScreen.spotsPerCell;
+      final full = math.min(trayH * 0.92, slotW * 1.18);
+      for (var s = 0; s < AsmrModeScreen.spotsPerCell; s++) {
+        final filled = p.slots[s];
+        if (filled == null) continue;
+        final cx = surface.left + slotW * (s + 0.5);
+        final dest = Rect.fromCenter(
+          center: Offset(cx, surface.surfaceY - full * 0.52),
+          width: full,
+          height: full,
+        );
+        paintMatchBlast(
+          canvas,
+          center: dest.center,
+          radius: full * 0.9,
+          t: p.burstT,
+          from: dest,
+          image: faceImages[filled],
+          seed: Object.hash(i, s, filled),
+        );
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _AsmrPlateBlastPainter old) => false;
+}
+
 class _AsmrPlatesPainter extends CustomPainter {
   final List<_Plate> plates;
   final Map<String, ui.Image> faceImages;
@@ -1112,13 +1189,6 @@ class _AsmrPlatesPainter extends CustomPainter {
       final tint = tintFor(p.target);
 
       canvas.save();
-      if (p.bursting) {
-        final t = p.burstT.clamp(0.0, 1.0);
-        final s = 1.0 + 0.28 * Curves.easeOut.transform(t);
-        canvas.translate(rect.center.dx, rect.center.dy);
-        canvas.scale(s, s * (1.0 - 0.5 * t));
-        canvas.translate(-rect.center.dx, -rect.center.dy);
-      }
 
       // Same wooden tray plank as gameplay belt.
       final surface = paintTrayPlank(canvas, rect);
@@ -1151,11 +1221,20 @@ class _AsmrPlatesPainter extends CustomPainter {
         final cx = surface.left + slotW * (s + 0.5);
         final filled = p.slots[s];
         if (filled != null) {
-          final dest = Rect.fromCenter(
+          var dest = Rect.fromCenter(
             center: Offset(cx, surface.surfaceY - full * 0.52),
             width: full,
             height: full,
           );
+          if (p.bursting) {
+            final pose = sellPose(p.burstT, dest.shortestSide);
+            if (pose.opacity <= 0.05) continue;
+            dest = Rect.fromCenter(
+              center: dest.center.translate(0, -pose.rise),
+              width: dest.width * pose.scale,
+              height: dest.height * pose.scale,
+            );
+          }
           _paintFace(canvas, filled, dest, shaded: false);
         } else if (!p.bursting) {
           final dest = Rect.fromCenter(
@@ -1235,6 +1314,14 @@ class _AsmrMovingGridPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final rows = (size.height / rowHeight).ceil();
     final bg = cubbyBgOf();
+    final blasts = <({
+      ui.Image? image,
+      Rect from,
+      Offset center,
+      double radius,
+      double t,
+      int seed,
+    })>[];
 
     for (var r = 0; r < rows; r++) {
       final top = r * rowHeight;
@@ -1280,63 +1367,54 @@ class _AsmrMovingGridPainter extends CustomPainter {
           );
         }
 
-        if (sell == null) {
-          _paintSlots(canvas, rect, slots);
-        } else {
-          if (sell.t < 0.45) _paintSlots(canvas, rect, slots);
-          _paintSoldOverlay(canvas, rect, sell);
+        _paintSlots(canvas, rect, slots, sellT: sell?.t ?? 1);
+        if (sell != null) {
+          final side = math.min(rect.height * 0.58, 34.0);
+          final totalW = rect.width * 0.88;
+          final slotW = totalW / AsmrModeScreen.spotsPerCell;
+          final startX = rect.center.dx - totalW / 2;
+          for (var i = 0; i < slots.length; i++) {
+            final emoji = slots[i];
+            if (emoji == null) continue;
+            final cx = startX + slotW * (i + 0.5);
+            final dest = Rect.fromCenter(
+              center: Offset(cx, rect.center.dy),
+              width: side,
+              height: side,
+            );
+            blasts.add((
+              image: faceImages[emoji],
+              from: dest,
+              center: dest.center,
+              radius: side * 0.95,
+              t: sell.t,
+              seed: Object.hash(key.row, key.col, i, emoji),
+            ));
+          }
         }
       }
     }
-  }
 
-  void _paintSoldOverlay(Canvas canvas, Rect rect, _SellAnim sell) {
-    final t = sell.t.clamp(0.0, 1.0);
-    final doorT = (t / 0.38).clamp(0.0, 1.0);
-    final doorH = rect.height * Curves.easeInOutCubic.transform(doorT);
-    final doorRect = Rect.fromLTWH(rect.left, rect.top, rect.width, doorH);
-
-    final wood = Paint()
-      ..shader = ui.Gradient.linear(
-        doorRect.topLeft,
-        doorRect.bottomRight,
-        const [Color(0xFFE8C9A0), Color(0xFFD4A574), Color(0xFF8B5A2B)],
-        const [0.0, 0.45, 1.0],
+    for (final b in blasts) {
+      paintMatchBlast(
+        canvas,
+        center: b.center,
+        radius: b.radius,
+        t: b.t,
+        from: b.from,
+        image: b.image,
+        seed: b.seed,
       );
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(doorRect.deflate(2), const Radius.circular(6)),
-      wood,
-    );
-
-    if (t < 0.32) return;
-    final stampT = ((t - 0.32) / 0.28).clamp(0.0, 1.0);
-    final bounce = Curves.elasticOut.transform(stampT);
-    final scale = 2.2 - 1.2 * bounce;
-    final opacity = (stampT * 1.4).clamp(0.0, 1.0);
-    final leave = t > 0.78 ? (1.0 - ((t - 0.78) / 0.22).clamp(0.0, 1.0)) : 1.0;
-
-    canvas.save();
-    canvas.translate(rect.center.dx, rect.center.dy);
-    canvas.rotate(-0.18);
-    canvas.scale(scale);
-    final stampTp = TextPainter(
-      text: TextSpan(
-        text: 'SOLD',
-        style: TextStyle(
-          fontSize: math.min(rect.height * 0.42, 22.0),
-          fontWeight: FontWeight.w900,
-          letterSpacing: 1.2,
-          color: Color.fromRGBO(180, 30, 30, opacity * leave),
-          height: 1,
-        ),
-      ),
-      textDirection: ui.TextDirection.ltr,
-    )..layout();
-    stampTp.paint(canvas, Offset(-stampTp.width / 2, -stampTp.height / 2));
-    canvas.restore();
+    }
   }
 
-  void _paintSlots(Canvas canvas, Rect rect, List<String?> slots) {
+  void _paintSlots(
+    Canvas canvas,
+    Rect rect,
+    List<String?> slots, {
+    double sellT = 1,
+  }) {
+    final selling = sellT < 1;
     final side = math.min(rect.height * 0.58, 34.0);
     final totalW = rect.width * 0.88;
     final slotW = totalW / AsmrModeScreen.spotsPerCell;
@@ -1345,12 +1423,20 @@ class _AsmrMovingGridPainter extends CustomPainter {
     for (var i = 0; i < slots.length; i++) {
       final emoji = slots[i];
       if (emoji == null) continue;
-      final cx = startX + slotW * (i + 0.5);
-      final dest = Rect.fromCenter(
-        center: Offset(cx, rect.center.dy),
+      var dest = Rect.fromCenter(
+        center: Offset(startX + slotW * (i + 0.5), rect.center.dy),
         width: side,
         height: side,
       );
+      if (selling) {
+        final pose = sellPose(sellT, dest.shortestSide);
+        if (pose.opacity <= 0.05) continue;
+        dest = Rect.fromCenter(
+          center: dest.center.translate(0, -pose.rise),
+          width: dest.width * pose.scale,
+          height: dest.height * pose.scale,
+        );
+      }
       final img = faceImages[emoji];
       if (img == null) continue;
       paintImage(
@@ -1360,7 +1446,7 @@ class _AsmrMovingGridPainter extends CustomPainter {
         fit: BoxFit.contain,
         filterQuality: FilterQuality.medium,
       );
-      if (plateTargets.contains(emoji)) {
+      if (!selling && plateTargets.contains(emoji)) {
         canvas.drawCircle(
           dest.center,
           dest.shortestSide * 0.55,

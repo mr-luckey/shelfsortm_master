@@ -68,14 +68,13 @@ void main() {
       expect(landPose(1, 40).squash, 0);
     });
 
-    test('a sold good swells, lifts away and fades out', () {
-      final early = sellPose(0.2, 40);
+    test('a matched good pops then shatters', () {
+      final early = sellPose(0.1, 40);
       final late = sellPose(0.95, 40);
 
       expect(early.scale, greaterThan(1));
       expect(early.opacity, 1);
-      expect(late.rise, greaterThan(early.rise));
-      expect(late.opacity, lessThan(0.2));
+      expect(late.opacity, 0);
     });
   });
 }

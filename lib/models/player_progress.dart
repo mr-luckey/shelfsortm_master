@@ -1,3 +1,5 @@
+import '../config/test_flags.dart';
+
 class LevelProgress {
   final int levelId;
   final int bestStars;
@@ -112,8 +114,35 @@ class PlayerProgress {
     return copyWith(levels: next);
   }
 
-  LevelProgress levelOf(int id) =>
-      levels[id] ?? LevelProgress(levelId: id, unlocked: false);
+  /// Restore normal locks from play history + [currentLevel] (level 1 always open).
+  PlayerProgress withRepairedLevelLocks() {
+    final next = Map<int, LevelProgress>.from(levels);
+    final open = <int>{1, currentLevel.clamp(1, totalLevels)};
+
+    for (final entry in next.entries) {
+      if (entry.value.playCount > 0) {
+        open.add(entry.key);
+        if (entry.key + 1 <= totalLevels) open.add(entry.key + 1);
+      }
+    }
+
+    for (var i = 1; i <= totalLevels; i++) {
+      final shouldUnlock = open.contains(i);
+      final existing = next[i];
+      if (existing != null) {
+        next[i] = existing.copyWith(unlocked: shouldUnlock);
+      } else if (shouldUnlock) {
+        next[i] = LevelProgress(levelId: i, unlocked: true);
+      }
+    }
+    return copyWith(levels: next);
+  }
+
+  LevelProgress levelOf(int id) {
+    final base = levels[id] ?? LevelProgress(levelId: id, unlocked: false);
+    if (TestFlags.unlockAllLevels) return base.copyWith(unlocked: true);
+    return base;
+  }
 
   PlayerProgress copyWith({
     String? playerName,

@@ -568,22 +568,30 @@ class _ShelfGridPainter extends CustomPainter {
         edgeB: edgeB,
       );
       final sellT = fx.sellOf(data.shelfIndex);
-      final selling = sellT < 1;
 
       if (held != null) {
         _paintDropHints(canvas, rect, cavity, data, target);
       }
       _paintBehind(canvas, rect, cavity, data);
-      if (selling) {
-        // A sale plays inside its own box; nothing spills over the frame.
-        canvas.save();
-        canvas.clipRect(rect);
-      }
       _paintFronts(canvas, rect, cavity, data, held: held, sellT: sellT);
-      if (selling) {
-        paintSoldStamp(canvas, rect, sellT);
-        canvas.restore();
-      }
+    }
+
+    for (final key in occupied) {
+      final data = cells[key];
+      if (data == null) continue;
+      final sellT = fx.sellOf(data.shelfIndex);
+      if (sellT >= 1) continue;
+      final rect = _cellRect(key, colWidth);
+      final edgeL = !_has(key.row, key.col - 1);
+      final edgeR = !_has(key.row, key.col + 1);
+      final edgeB = !_has(key.row + 1, key.col);
+      final cavity = cavityMetrics(
+        rect,
+        edgeL: edgeL,
+        edgeR: edgeR,
+        edgeB: edgeB,
+      );
+      _paintBlasts(canvas, rect, cavity, data, sellT);
     }
 
     _paintGhost(canvas, colWidth);
@@ -730,16 +738,15 @@ class _ShelfGridPainter extends CustomPainter {
         opacity = pose.opacity;
       }
 
+      if (opacity <= 0.05) continue;
       final lift = ((floorY - baseY) / full).clamp(0.0, 1.0);
-      if (opacity > 0.05) {
-        paintContactShadow(
-          canvas,
-          cx,
-          floorY,
-          size * (1 - lift * 0.35),
-          strength: (1 - lift) * opacity,
-        );
-      }
+      paintContactShadow(
+        canvas,
+        cx,
+        floorY,
+        size * (1 - lift * 0.35),
+        strength: (1 - lift) * opacity,
+      );
       final w = size * (1 + squash);
       final h = size * (1 - squash);
       drawFace(
@@ -750,14 +757,33 @@ class _ShelfGridPainter extends CustomPainter {
             ? shadeFilter(darken: darken, opacity: opacity)
             : null,
       );
-      if (selling) {
-        paintSellBurst(
-          canvas,
-          Offset(cx, floorY - full * 0.45),
-          full * 0.62,
-          sellT,
-        );
-      }
+    }
+  }
+
+  void _paintBlasts(
+    Canvas canvas,
+    Rect rect,
+    ({double left, double width, double floorY}) cavity,
+    _CellData data,
+    double sellT,
+  ) {
+    final full = faceSize(rect, cavity.width);
+    final floorY = rect.top + cavity.floorY;
+    for (var slot = 0; slot < data.fronts.length; slot++) {
+      final item = data.fronts[slot];
+      if (item == null) continue;
+      final image = faces.of(item.type);
+      final cx = rect.left + cavity.left + slotCenter(slot, cavity.width);
+      final from = Rect.fromLTWH(cx - full / 2, floorY - full, full, full);
+      paintMatchBlast(
+        canvas,
+        center: Offset(cx, floorY - full * 0.45),
+        radius: full * 0.9,
+        t: sellT,
+        from: from,
+        image: image,
+        seed: item.id.hashCode,
+      );
     }
   }
 

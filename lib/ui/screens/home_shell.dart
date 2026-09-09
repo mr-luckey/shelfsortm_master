@@ -13,7 +13,7 @@ import '../premium/premium_tokens.dart';
 import '../widgets/common_widgets.dart';
 import 'asmr_mode_screen.dart';
 import 'level_intro_sheet.dart';
-import 'level_map_screen.dart';
+import 'levels_screen.dart';
 import 'profile_screen.dart';
 
 /// Single premium home hub — no bottom nav, no shop/rewards tabs.
@@ -122,13 +122,13 @@ class _HomeShellState extends State<HomeShell> {
                       children: [
                         Expanded(
                           child: _HubTile(
-                            icon: Icons.map_rounded,
-                            label: 'World Map',
+                            icon: Icons.grid_view_rounded,
+                            label: 'Levels',
                             onTap: () {
                               context.read<AudioCubit>().playButton();
                               Navigator.of(context).push(
                                 MaterialPageRoute<void>(
-                                  builder: (_) => const LevelMapScreen(),
+                                  builder: (_) => const LevelsScreen(),
                                 ),
                               );
                             },

@@ -23,7 +23,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   final Map<int, Timer> _saleTimers = {};
 
   /// Length of the sale animation the board plays; see `FxTiming.sell`.
-  static const Duration _saleDuration = Duration(milliseconds: 520);
+  static const Duration _saleDuration = Duration(milliseconds: 720);
 
   GameBloc() : super(const GameState()) {
     on<GameStarted>(_onStarted);
