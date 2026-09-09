@@ -59,8 +59,8 @@ class StarThresholds {
   int starsForTimeLeft(int timeLeft, int timeLimit) {
     if (timeLimit <= 0) return 3;
     final ratio = timeLeft / timeLimit;
-    if (ratio >= 0.45 || timeLeft >= threeStar) return 3;
-    if (ratio >= 0.2 || timeLeft >= twoStar) return 2;
+    if (ratio >= 0.5) return 3;
+    if (ratio >= 0.25) return 2;
     return 1;
   }
 }

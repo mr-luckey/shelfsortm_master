@@ -95,7 +95,10 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
     final progress = context.read<ProgressProvider>();
     await context.read<SaveService>().clearMidLevel();
     final stars = state.stars;
-    final coins = stars * 10 + state.matches * 2;
+    final coins = ProgressProvider.coinsForStars(stars);
+    final gems = (!widget.daily && state.status == GameStatus.won)
+        ? ProgressProvider.gemsForStars(stars)
+        : 0;
     if (widget.daily) {
       await progress.completeDailyChallenge(coins: 80 + coins);
     } else if (state.status == GameStatus.won) {
@@ -114,6 +117,7 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
           stars: stars,
           moves: state.moves,
           coins: coins,
+          gems: gems,
           won: state.status == GameStatus.won,
           timeLeft: state.timeLeft,
           daily: widget.daily,
@@ -253,11 +257,7 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
       case BoosterKind.undo:
         bloc.add(const BoosterPressed(BoosterKind.undo));
       case BoosterKind.freeze:
-        if (progress.progress.hintsRemaining <= 0) return;
-        await progress.spendHint();
-        if (context.mounted) {
-          bloc.add(const BoosterPressed(BoosterKind.freeze));
-        }
+        bloc.add(const BoosterPressed(BoosterKind.freeze));
       case BoosterKind.shuffle:
         if (progress.progress.shufflesRemaining <= 0) return;
         await progress.spendShuffle();
@@ -265,11 +265,9 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
           bloc.add(const BoosterPressed(BoosterKind.shuffle));
         }
       case BoosterKind.magnet:
-        if (progress.progress.autoSortRemaining <= 0) return;
-        await progress.spendAutoSort();
-        if (context.mounted) {
-          bloc.add(const BoosterPressed(BoosterKind.magnet));
-        }
+        bloc.add(const BoosterPressed(BoosterKind.magnet));
+      case BoosterKind.hint:
+        bloc.add(const BoosterPressed(BoosterKind.hint));
       case BoosterKind.extraShelf:
         if (progress.progress.extraShelfRemaining <= 0) return;
         await progress.spendExtraShelf();
@@ -436,21 +434,30 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                                 ),
                               ),
                               const SizedBox(width: 8),
-                              PremiumBoosterRail(
-                                freezeCount:
-                                    progress.progress.hintsRemaining,
-                                hintCount:
-                                    progress.progress.autoSortRemaining,
-                                onFreeze: () => _booster(
-                                  context,
-                                  BoosterKind.freeze,
-                                  progress,
+                              BlocSelector<
+                                  GameBloc,
+                                  GameState,
+                                  ({int freezes, int hints})>(
+                                selector: (s) => (
+                                  freezes: s.freezesLeft,
+                                  hints: s.hintsLeft,
                                 ),
-                                onHint: () => _booster(
-                                  context,
-                                  BoosterKind.magnet,
-                                  progress,
-                                ),
+                                builder: (context, boost) {
+                                  return PremiumBoosterRail(
+                                    freezeCount: boost.freezes,
+                                    hintCount: boost.hints,
+                                    onFreeze: () => _booster(
+                                      context,
+                                      BoosterKind.freeze,
+                                      progress,
+                                    ),
+                                    onHint: () => _booster(
+                                      context,
+                                      BoosterKind.hint,
+                                      progress,
+                                    ),
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -468,6 +475,8 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                                     ) ||
                                     p.inputLocked != c.inputLocked ||
                                     p.level?.levelId != c.level?.levelId ||
+                                    p.hintFrom != c.hintFrom ||
+                                    p.hintTo != c.hintTo ||
                                     !_sameGoods(p.shelves, c.shelves) ||
                                     !_sameLayers(p.nextLayers, c.nextLayers),
                                 builder: (context, board) {
@@ -623,6 +632,8 @@ class _PremiumBoardAreaState extends State<_PremiumBoardArea> {
                 clearingShelves: board.clearingShelves,
                 inputLocked: board.inputLocked,
                 nextLayers: board.nextLayers,
+                hintFrom: board.hintFrom,
+                hintTo: board.hintTo,
                 drag: _drag,
                 onMove: _onMove,
               ),

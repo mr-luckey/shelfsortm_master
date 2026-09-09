@@ -84,9 +84,6 @@ class MatchEngine {
       ];
 
   int get stars {
-    if (level.optimalMoves > 0) {
-      return level.starsForMoves(moves);
-    }
     return level.starThresholds.starsForTimeLeft(timeLeft, level.timeLimit);
   }
 
@@ -373,6 +370,47 @@ class MatchEngine {
   }
 
   void shuffleBelt() => shuffleBoard();
+
+  /// Best legal from→to for the Hint guide (prefer completing a set).
+  ({BoardPos from, BoardPos to})? findHintMove() {
+    if (status != GameStatus.playing || inputLocked) return null;
+
+    ({BoardPos from, BoardPos to})? best;
+    var bestScore = -1;
+
+    for (var fi = 0; fi < shelves.length; fi++) {
+      if (isClosing(fi)) continue;
+      for (var fs = 0; fs < shelves[fi].slots.length; fs++) {
+        final from = BoardPos(fi, fs);
+        final item = itemAt(from);
+        if (item == null) continue;
+        if (!mechanics.canInteract(from)) continue;
+        if (shelves[fi].slots[fs].frontBlocked) continue;
+
+        for (var ti = 0; ti < shelves.length; ti++) {
+          if (isClosing(ti)) continue;
+          for (var ts = 0; ts < shelves[ti].slots.length; ts++) {
+            final to = BoardPos(ti, ts);
+            if (from == to) continue;
+            if (!mechanics.validateMove(from, to)) continue;
+            final toSlot = shelves[ti].slots[ts];
+            if (!toSlot.isEmpty || !toSlot.accessible) continue;
+
+            var same = 0;
+            for (final slot in shelves[ti].slots) {
+              if (slot.front?.type == item.type) same++;
+            }
+            final score = same >= 2 ? 100 : (same == 1 ? 50 : 10);
+            if (score > bestScore) {
+              bestScore = score;
+              best = (from: from, to: to);
+            }
+          }
+        }
+      }
+    }
+    return best;
+  }
 
   int hammerRemove(BoardPos pos) {
     if (status != GameStatus.playing) return 0;

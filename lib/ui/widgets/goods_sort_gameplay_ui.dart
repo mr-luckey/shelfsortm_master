@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../app/theme/goods_sort_theme.dart';
 import '../../bloc/audio_cubit.dart';
 import '../meta/praise_burst.dart';
+import '../premium/premium_tokens.dart';
 
 /// Pixel specs from Goods Sort™ gameplay screenshots (Play Store).
 abstract final class GoodsSortLayout {
@@ -545,6 +546,14 @@ class GoodsSortLoseOverlay extends StatelessWidget {
                 isTime ? "Time's Up!" : 'No Space Left!',
                 style:
                     const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+              ),
+              const SizedBox(height: 12),
+              Image.asset(
+                '${PremiumTokens.uiRoot}/gift_box.png',
+                width: 72,
+                height: 72,
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.medium,
               ),
               const SizedBox(height: 8),
               Text(

@@ -6,6 +6,9 @@ import '../models/level_data.dart';
 import '../models/shelf.dart';
 
 class GameState extends Equatable {
+  static const int freezesPerLevel = 3;
+  static const int hintsPerLevel = 3;
+
   final LevelData? level;
   final List<Shelf> shelves;
   final List<GameItem?> belt;
@@ -36,6 +39,18 @@ class GameState extends Equatable {
   /// Layer waiting behind each box, drawn as a shadow. Null = nothing behind.
   final List<List<GameItem?>?> nextLayers;
 
+  /// Remaining Freeze uses this level (starts at [freezesPerLevel]).
+  final int freezesLeft;
+
+  /// Remaining Hint uses this level (starts at [hintsPerLevel]).
+  final int hintsLeft;
+
+  /// Hint guide: pick up this front…
+  final BoardPos? hintFrom;
+
+  /// …and drop it on this empty slot.
+  final BoardPos? hintTo;
+
   const GameState({
     this.level,
     this.shelves = const [],
@@ -61,6 +76,10 @@ class GameState extends Equatable {
     this.maxCombo = 0,
     this.mechanicVisual = const {},
     this.nextLayers = const [],
+    this.freezesLeft = 0,
+    this.hintsLeft = 0,
+    this.hintFrom,
+    this.hintTo,
   });
 
   int get itemCount {
@@ -76,7 +95,6 @@ class GameState extends Equatable {
 
   int get stars {
     if (level == null) return 1;
-    if (level!.optimalMoves > 0) return level!.starsForMoves(moves);
     return level!.starThresholds.starsForTimeLeft(timeLeft, level!.timeLimit);
   }
 
@@ -110,9 +128,14 @@ class GameState extends Equatable {
     int? maxCombo,
     Map<String, dynamic>? mechanicVisual,
     List<List<GameItem?>?>? nextLayers,
+    int? freezesLeft,
+    int? hintsLeft,
+    BoardPos? hintFrom,
+    BoardPos? hintTo,
     bool clearBanner = false,
     bool clearSelected = false,
     bool clearObjective = false,
+    bool clearHint = false,
   }) {
     return GameState(
       level: level ?? this.level,
@@ -140,6 +163,10 @@ class GameState extends Equatable {
       maxCombo: maxCombo ?? this.maxCombo,
       mechanicVisual: mechanicVisual ?? this.mechanicVisual,
       nextLayers: nextLayers ?? this.nextLayers,
+      freezesLeft: freezesLeft ?? this.freezesLeft,
+      hintsLeft: hintsLeft ?? this.hintsLeft,
+      hintFrom: clearHint ? null : (hintFrom ?? this.hintFrom),
+      hintTo: clearHint ? null : (hintTo ?? this.hintTo),
     );
   }
 
@@ -169,5 +196,9 @@ class GameState extends Equatable {
         maxCombo,
         mechanicVisual,
         nextLayers,
+        freezesLeft,
+        hintsLeft,
+        hintFrom,
+        hintTo,
       ];
 }

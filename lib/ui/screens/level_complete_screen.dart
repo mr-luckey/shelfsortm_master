@@ -12,12 +12,14 @@ import '../meta/meta_chrome.dart';
 import '../premium/premium_gameplay_screen.dart';
 import '../premium/premium_tokens.dart';
 import '../widgets/common_widgets.dart';
+import '../widgets/gift_box_fab.dart';
 
 class LevelCompleteScreen extends StatefulWidget {
   final int levelId;
   final int stars;
   final int moves;
   final int coins;
+  final int gems;
   final bool won;
   final int timeLeft;
   final bool daily;
@@ -29,6 +31,7 @@ class LevelCompleteScreen extends StatefulWidget {
     required this.stars,
     required this.moves,
     required this.coins,
+    this.gems = 0,
     required this.won,
     this.timeLeft = 0,
     this.daily = false,
@@ -187,7 +190,7 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.asset(
-                                  '${PremiumTokens.uiRoot}/coin.png',
+                                  '${PremiumTokens.uiRoot}/coin.webp',
                                   width: 26,
                                   height: 26,
                                   errorBuilder: (context, error, stack) =>
@@ -209,6 +212,28 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                                     );
                                   },
                                 ),
+                                if (widget.gems > 0) ...[
+                                  const SizedBox(width: 18),
+                                  Image.asset(
+                                    '${PremiumTokens.uiRoot}/gem.webp',
+                                    width: 26,
+                                    height: 26,
+                                    errorBuilder: (context, error, stack) =>
+                                        const Icon(
+                                      Icons.diamond,
+                                      color: PremiumTokens.gemMagenta,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    '+${widget.gems}',
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.w900,
+                                      color: PremiumTokens.gemMagenta,
+                                    ),
+                                  ),
+                                ],
                               ],
                             ),
                           ],
@@ -217,31 +242,37 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                     ),
                     const Spacer(),
                     if (widget.won)
-                      TextButton(
-                        onPressed: () async {
-                          final ok = await context
-                              .read<ProgressProvider>()
-                              .watchAdForTool(RewardType.doubleCoins);
-                          if (ok && mounted) {
-                            await context
-                                .read<ProgressProvider>()
-                                .addCoins(widget.coins);
-                            if (!mounted) return;
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('2x coins claimed!'),
-                                behavior: SnackBarBehavior.floating,
-                              ),
-                            );
-                          }
-                        },
-                        child: Text(
-                          'Watch ad for 2x coins',
-                          style: GoogleFonts.nunito(
-                            fontWeight: FontWeight.w800,
-                            color: MetaChrome.gold,
+                      Column(
+                        children: [
+                          GiftBoxFab(
+                            size: 72,
+                            onPressed: () async {
+                              final ok = await context
+                                  .read<ProgressProvider>()
+                                  .watchAdForTool(RewardType.doubleCoins);
+                              if (ok && mounted) {
+                                await context
+                                    .read<ProgressProvider>()
+                                    .addCoins(widget.coins);
+                                if (!mounted) return;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('2x coins claimed!'),
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
+                              }
+                            },
                           ),
-                        ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Watch ad for 2x coins',
+                            style: GoogleFonts.nunito(
+                              fontWeight: FontWeight.w800,
+                              color: MetaChrome.gold,
+                            ),
+                          ),
+                        ],
                       ),
                     if (hasNext)
                       MetaPrimaryButton(

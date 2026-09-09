@@ -5,6 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../bloc/audio_cubit.dart';
+import '../../providers/progress_provider.dart';
 import 'premium_tokens.dart';
 
 /// Freeze + Hint — compact pair beside the goal panel (bottom stays free for ads).
@@ -33,6 +34,10 @@ class PremiumBoosterRail extends StatelessWidget {
           color: PremiumTokens.freezeGreen,
           count: freezeCount,
           label: 'FREEZE',
+          cost: ProgressProvider.freezeCoinCost,
+          costAsset: '${PremiumTokens.uiRoot}/coin.webp',
+          costFallbackIcon: Icons.monetization_on,
+          costColor: PremiumTokens.coinGold,
           onTap: onFreeze ?? () {},
         ),
         const SizedBox(width: 6),
@@ -41,6 +46,10 @@ class PremiumBoosterRail extends StatelessWidget {
           color: PremiumTokens.hintOrange,
           count: hintCount,
           label: 'HINT',
+          cost: ProgressProvider.hintGemCost,
+          costAsset: '${PremiumTokens.uiRoot}/gem.webp',
+          costFallbackIcon: Icons.diamond,
+          costColor: PremiumTokens.gemMagenta,
           onTap: onHint ?? () {},
         ),
       ],
@@ -53,6 +62,10 @@ class _BoosterBtn extends StatefulWidget {
   final Color color;
   final int count;
   final String label;
+  final int cost;
+  final String costAsset;
+  final IconData costFallbackIcon;
+  final Color costColor;
   final VoidCallback onTap;
 
   const _BoosterBtn({
@@ -60,6 +73,10 @@ class _BoosterBtn extends StatefulWidget {
     required this.color,
     required this.count,
     required this.label,
+    required this.cost,
+    required this.costAsset,
+    required this.costFallbackIcon,
+    required this.costColor,
     required this.onTap,
   });
 
@@ -106,6 +123,36 @@ class _BoosterBtnState extends State<_BoosterBtn> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        widget.costAsset,
+                        width: 12,
+                        height: 12,
+                        fit: BoxFit.contain,
+                        errorBuilder: (_, __, ___) => Icon(
+                          widget.costFallbackIcon,
+                          color: widget.costColor,
+                          size: 12,
+                        ),
+                      ),
+                      const SizedBox(width: 2),
+                      Text(
+                        '${widget.cost}',
+                        style: GoogleFonts.nunito(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 10,
+                          color: Colors.white,
+                          height: 1,
+                          shadows: const [
+                            Shadow(color: Colors.black54, blurRadius: 2),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 2),
                   Stack(
                     clipBehavior: Clip.none,
                     children: [

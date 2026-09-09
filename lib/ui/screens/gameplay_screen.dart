@@ -104,7 +104,10 @@ class _ViewState extends State<_View> {
     final progress = context.read<ProgressProvider>();
     await context.read<SaveService>().clearMidLevel();
     final stars = state.stars;
-    final coins = stars * 10 + state.matches * 2;
+    final coins = ProgressProvider.coinsForStars(stars);
+    final gems = (!widget.daily && state.status == GameStatus.won)
+        ? ProgressProvider.gemsForStars(stars)
+        : 0;
     if (widget.daily) {
       await progress.completeDailyChallenge(coins: 80 + coins);
     } else if (state.status == GameStatus.won) {
@@ -123,6 +126,7 @@ class _ViewState extends State<_View> {
           stars: stars,
           moves: state.moves,
           coins: coins,
+          gems: gems,
           won: state.status == GameStatus.won,
           timeLeft: state.timeLeft,
           daily: widget.daily,
@@ -148,11 +152,7 @@ class _ViewState extends State<_View> {
       case BoosterKind.undo:
         bloc.add(const BoosterPressed(BoosterKind.undo));
       case BoosterKind.freeze:
-        if (progress.progress.hintsRemaining <= 0) return;
-        await progress.spendHint();
-        if (context.mounted) {
-          bloc.add(const BoosterPressed(BoosterKind.freeze));
-        }
+        bloc.add(const BoosterPressed(BoosterKind.freeze));
       case BoosterKind.shuffle:
         if (progress.progress.shufflesRemaining <= 0) return;
         await progress.spendShuffle();
@@ -160,11 +160,9 @@ class _ViewState extends State<_View> {
           bloc.add(const BoosterPressed(BoosterKind.shuffle));
         }
       case BoosterKind.magnet:
-        if (progress.progress.autoSortRemaining <= 0) return;
-        await progress.spendAutoSort();
-        if (context.mounted) {
-          bloc.add(const BoosterPressed(BoosterKind.magnet));
-        }
+        bloc.add(const BoosterPressed(BoosterKind.magnet));
+      case BoosterKind.hint:
+        bloc.add(const BoosterPressed(BoosterKind.hint));
       case BoosterKind.extraShelf:
         if (progress.progress.extraShelfRemaining <= 0) return;
         await progress.spendExtraShelf();
@@ -310,9 +308,10 @@ class _ViewState extends State<_View> {
                           accent: look.accent,
                         ),
                       GoodsSortBoosterBar(
-                        freezes: progress.progress.hintsRemaining,
+                        freezes: state.freezesLeft,
                         shuffles: progress.progress.shufflesRemaining,
-                        hammers: progress.progress.autoSortRemaining,
+                        hammers: progress.progress.gems ~/
+                            ProgressProvider.hintGemCost,
                         extras: progress.progress.extraShelfRemaining,
                         onPressed: (id) {
                           final kind = _boosterFromId(id);

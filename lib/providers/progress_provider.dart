@@ -9,12 +9,26 @@ import '../services/iap_service.dart';
 import '../services/save_service.dart';
 
 class ProgressProvider extends ChangeNotifier {
+  static const int freezeCoinCost = 50;
+  static const int hintGemCost = 1;
+  static const int coinsFor3Stars = 20;
+  static const int coinsFor2Stars = 10;
+  static const int coinsFor1Star = 7;
+
   final SaveService saveService;
   final AdService adService;
   final IapService iapService;
 
   PlayerProgress progress = PlayerProgress.initial();
   bool ready = false;
+
+  static int coinsForStars(int stars) {
+    if (stars >= 3) return coinsFor3Stars;
+    if (stars == 2) return coinsFor2Stars;
+    return coinsFor1Star;
+  }
+
+  static int gemsForStars(int stars) => stars >= 3 ? 2 : 1;
 
   ProgressProvider({
     required this.saveService,
@@ -95,7 +109,7 @@ class ProgressProvider extends ChangeNotifier {
       levels[nextId] = next.copyWith(unlocked: true);
     }
 
-    final gemBonus = stars >= 3 ? 3 : 0;
+    final gemBonus = gemsForStars(stars);
     final starDelta = bestStars > existing.bestStars
         ? bestStars - existing.bestStars
         : 0;
@@ -131,6 +145,22 @@ class ProgressProvider extends ChangeNotifier {
         progress.copyWith(hintsRemaining: progress.hintsRemaining - 1);
     await _persist();
     notifyListeners();
+  }
+
+  Future<bool> spendFreezeCoins() async {
+    if (progress.coins < freezeCoinCost) return false;
+    progress = progress.copyWith(coins: progress.coins - freezeCoinCost);
+    await _persist();
+    notifyListeners();
+    return true;
+  }
+
+  Future<bool> spendHintGem() async {
+    if (progress.gems < hintGemCost) return false;
+    progress = progress.copyWith(gems: progress.gems - hintGemCost);
+    await _persist();
+    notifyListeners();
+    return true;
   }
 
   Future<void> spendShuffle() async {

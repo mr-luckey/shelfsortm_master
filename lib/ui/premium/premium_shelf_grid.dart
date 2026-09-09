@@ -50,6 +50,10 @@ class PremiumShelfGrid extends StatefulWidget {
   /// null the grid carries goods on its own.
   final BoardDragController? drag;
 
+  /// Hint guide: source front and empty target (null = no guide).
+  final BoardPos? hintFrom;
+  final BoardPos? hintTo;
+
   const PremiumShelfGrid({
     super.key,
     required this.layout,
@@ -59,6 +63,8 @@ class PremiumShelfGrid extends StatefulWidget {
     this.clearingShelves = const {},
     this.nextLayers = const [],
     this.drag,
+    this.hintFrom,
+    this.hintTo,
   });
 
   /// Cell size the board settles on inside [available] space (padding already
@@ -276,7 +282,8 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
   }
 
   void _syncTicker() {
-    if (_fx.busy) {
+    final needTick = _fx.busy || widget.hintFrom != null;
+    if (needTick) {
       if (!_ticker.isActive) {
         _last = Duration.zero;
         _ticker.start();
@@ -306,7 +313,7 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
     _last = elapsed;
     if (dt > 0 && dt <= 0.1) _fx.advance(dt);
     _repaint.ping();
-    if (!_fx.busy) _ticker.stop();
+    if (!_fx.busy && widget.hintFrom == null) _ticker.stop();
   }
 
   _Hit? _hitTest(Offset local) {
@@ -491,6 +498,8 @@ class _PremiumShelfGridState extends State<PremiumShelfGrid>
                       landing: _landingSlot,
                       wood: _woodLayer,
                       ghost: _ownsDrag ? _localUnclamped : null,
+                      hintFrom: widget.hintFrom,
+                      hintTo: widget.hintTo,
                       repaint: _painterRepaint!,
                     ),
                   ),
@@ -516,6 +525,8 @@ class _ShelfGridPainter extends CustomPainter {
   final BoardDragController drag;
   final BoardPos? Function() landing;
   final StaticLayer wood;
+  final BoardPos? hintFrom;
+  final BoardPos? hintTo;
 
   /// Set only when the grid carries the good itself.
   final Offset Function(Offset global)? ghost;
@@ -534,6 +545,8 @@ class _ShelfGridPainter extends CustomPainter {
     required Listenable repaint,
     this.cellBg,
     this.ghost,
+    this.hintFrom,
+    this.hintTo,
   }) : super(repaint: repaint);
 
   bool _has(int r, int c) => occupied.contains(_CellKey(r, c));
@@ -594,7 +607,87 @@ class _ShelfGridPainter extends CustomPainter {
       _paintBlasts(canvas, rect, cavity, data, sellT);
     }
 
+    _paintMoveHint(canvas, colWidth);
     _paintGhost(canvas, colWidth);
+  }
+
+  void _paintMoveHint(Canvas canvas, double colWidth) {
+    final from = hintFrom;
+    final to = hintTo;
+    if (from == null || to == null) return;
+
+    final pulse =
+        0.55 + 0.45 * math.sin(DateTime.now().millisecondsSinceEpoch / 220);
+
+    Offset? centerOf(BoardPos pos) {
+      for (final key in occupied) {
+        final data = cells[key];
+        if (data == null || data.shelfIndex != pos.shelfIndex) continue;
+        final rect = _cellRect(key, colWidth);
+        final edgeL = !_has(key.row, key.col - 1);
+        final edgeR = !_has(key.row, key.col + 1);
+        final edgeB = !_has(key.row + 1, key.col);
+        final cavity = cavityMetrics(
+          rect,
+          edgeL: edgeL,
+          edgeR: edgeR,
+          edgeB: edgeB,
+        );
+        final cx =
+            rect.left + cavity.left + slotCenter(pos.slotIndex, cavity.width);
+        final size = faceSize(rect, cavity.width);
+        final baseY = rect.top + cavity.floorY;
+        return Offset(cx, baseY - size * 0.35);
+      }
+      return null;
+    }
+
+    void ring(Offset c, Color color) {
+      final r = 16.0 * pulse;
+      canvas.drawCircle(
+        c,
+        r,
+        Paint()
+          ..color = color.withValues(alpha: 0.35)
+          ..style = PaintingStyle.fill,
+      );
+      canvas.drawCircle(
+        c,
+        r,
+        Paint()
+          ..color = color
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2.5,
+      );
+    }
+
+    final fromC = centerOf(from);
+    final toC = centerOf(to);
+    if (fromC != null) ring(fromC, const Color(0xFFFF9800));
+    if (toC != null) ring(toC, const Color(0xFF43A047));
+
+    if (fromC != null && toC != null) {
+      final paint = Paint()
+        ..color = Colors.white.withValues(alpha: 0.85)
+        ..strokeWidth = 2
+        ..style = PaintingStyle.stroke;
+      canvas.drawLine(fromC, toC, paint);
+    }
+
+    if (fromC != null) {
+      final bob = 4.0 * math.sin(DateTime.now().millisecondsSinceEpoch / 180);
+      final tp = TextPainter(
+          text: const TextSpan(
+            text: '\u{1F446}', // 👆
+            style: TextStyle(fontSize: 28),
+          ),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      tp.paint(
+        canvas,
+        Offset(fromC.dx - tp.width / 2, fromC.dy - tp.height - 2 + bob),
+      );
+    }
   }
 
   void _paintWood(Canvas canvas, Size size, double colWidth) {

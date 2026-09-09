@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../engine/match_engine.dart';
 import '../models/level_data.dart';
 
-enum BoosterKind { undo, freeze, shuffle, magnet, extraShelf }
+enum BoosterKind { undo, freeze, shuffle, magnet, hint, extraShelf }
 
 sealed class GameEvent extends Equatable {
   const GameEvent();
@@ -59,6 +59,10 @@ class GameRestarted extends GameEvent {
 
 class BannerCleared extends GameEvent {
   const BannerCleared();
+}
+
+class HintCleared extends GameEvent {
+  const HintCleared();
 }
 
 class MechanicTick extends GameEvent {

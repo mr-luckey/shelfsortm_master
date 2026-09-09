@@ -18,6 +18,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   Timer? _freezeTimer;
   Timer? _bannerTimer;
   Timer? _openTimer;
+  Timer? _hintTimer;
 
   /// One sale timer per box, keyed by shelf index.
   final Map<int, Timer> _saleTimers = {};
@@ -35,6 +36,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<PauseToggled>(_onPause);
     on<GameRestarted>(_onRestart);
     on<BannerCleared>(_onBannerCleared);
+    on<HintCleared>(_onHintCleared);
     on<ShelfWaveOpened>(_onShelfWaveOpened);
     on<ContinueAfterAd>(_onContinueAfterAd);
   }
@@ -64,6 +66,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     String? banner,
     int openingShelf = -1,
     bool clearBanner = false,
+    int? freezesLeft,
+    int? hintsLeft,
+    BoardPos? hintFrom,
+    BoardPos? hintTo,
+    bool clearHint = false,
+    bool resetBoosters = false,
   }) {
     final e = _engine!;
     final hints = e.mechanics.objectiveHints;
@@ -102,6 +110,14 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       maxCombo: e.maxCombo,
       mechanicVisual: _visuals(e),
       nextLayers: e.nextLayers,
+      freezesLeft: resetBoosters
+          ? GameState.freezesPerLevel
+          : (freezesLeft ?? state.freezesLeft),
+      hintsLeft: resetBoosters
+          ? GameState.hintsPerLevel
+          : (hintsLeft ?? state.hintsLeft),
+      hintFrom: clearHint ? null : (hintFrom ?? state.hintFrom),
+      hintTo: clearHint ? null : (hintTo ?? state.hintTo),
     );
   }
 
@@ -110,6 +126,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     _mechClock?.cancel();
     _freezeTimer?.cancel();
     _bannerTimer?.cancel();
+    _hintTimer?.cancel();
     _cancelSales();
     _engine = MatchEngine(level: event.level);
     if (event.midSave != null) {
@@ -117,7 +134,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         _engine!.loadSaveJson(event.midSave!);
       } catch (_) {}
     }
-    emit(_snap());
+    emit(_snap(resetBoosters: true, clearHint: true));
     _clock = Timer.periodic(const Duration(seconds: 1), (_) {
       add(const TimerTicked());
     });
@@ -134,7 +151,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     final beforeCombo = e.combo;
     final ok = e.tap(event.pos);
     if (!ok) {
-      emit(_snap());
+      emit(_snap(clearHint: true));
       return;
     }
     String? banner;
@@ -153,7 +170,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       banner = 'Combo x${e.combo}!';
       _flashBanner();
     }
-    emit(_snap(banner: banner));
+    emit(_snap(banner: banner, clearHint: true));
     _scheduleSales();
   }
 
@@ -164,7 +181,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     e.selected = null;
     final ok = e.move(event.from, event.to);
     if (!ok) {
-      emit(_snap(banner: 'Need an empty slot'));
+      emit(_snap(banner: 'Need an empty slot', clearHint: true));
       _flashBanner();
       return;
     }
@@ -181,7 +198,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       }
       _flashBanner();
     }
-    emit(_snap(banner: banner));
+    emit(_snap(banner: banner, clearHint: true));
     _scheduleSales();
   }
 
@@ -243,20 +260,29 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   void _onBooster(BoosterPressed event, Emitter<GameState> emit) {
     final e = _engine;
-    if (e == null) return;
+    if (e == null || e.status != GameStatus.playing) return;
+
     switch (event.kind) {
       case BoosterKind.undo:
         e.undo();
+        emit(_snap(banner: _boosterLabel(event.kind), clearHint: true));
       case BoosterKind.freeze:
+        if (state.freezesLeft <= 0) return;
         e.setFrozen(true);
         _freezeTimer?.cancel();
         _freezeTimer = Timer(const Duration(seconds: 10), () {
           _engine?.setFrozen(false);
           if (!isClosed) add(const BannerCleared());
         });
+        emit(_snap(
+          banner: _boosterLabel(event.kind),
+          freezesLeft: state.freezesLeft - 1,
+        ));
       case BoosterKind.shuffle:
         e.shuffleBoard();
+        emit(_snap(banner: _boosterLabel(event.kind), clearHint: true));
       case BoosterKind.magnet:
+        // Classic Hammer: remove one blocking front item.
         if (e.selected != null && e.itemAt(e.selected!) != null) {
           e.hammerRemove(e.selected!);
         } else {
@@ -274,10 +300,29 @@ class GameBloc extends Bloc<GameEvent, GameState> {
             }
           }
         }
+        emit(_snap(banner: _boosterLabel(event.kind), clearHint: true));
+      case BoosterKind.hint:
+        if (state.hintsLeft <= 0) return;
+        final move = e.findHintMove();
+        if (move == null) {
+          emit(_snap(banner: 'No move found'));
+          _flashBanner();
+          return;
+        }
+        emit(_snap(
+          banner: _boosterLabel(event.kind),
+          hintsLeft: state.hintsLeft - 1,
+          hintFrom: move.from,
+          hintTo: move.to,
+        ));
+        _hintTimer?.cancel();
+        _hintTimer = Timer(const Duration(seconds: 4), () {
+          if (!isClosed) add(const HintCleared());
+        });
       case BoosterKind.extraShelf:
         e.addExtraShelf();
+        emit(_snap(banner: _boosterLabel(event.kind), clearHint: true));
     }
-    emit(_snap(banner: _boosterLabel(event.kind)));
     _flashBanner();
     _scheduleSales();
   }
@@ -287,6 +332,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         BoosterKind.freeze => 'Frozen 10s!',
         BoosterKind.shuffle => 'Shuffled!',
         BoosterKind.magnet => 'Hammer!',
+        BoosterKind.hint => 'Follow the hand!',
         BoosterKind.extraShelf => 'Extra shelf!',
       };
 
@@ -299,9 +345,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     final level = _engine?.level;
     if (level == null) return;
     _freezeTimer?.cancel();
+    _hintTimer?.cancel();
     _cancelSales();
     _engine = MatchEngine(level: level);
-    emit(_snap());
+    emit(_snap(resetBoosters: true, clearHint: true));
   }
 
   void _onContinueAfterAd(ContinueAfterAd event, Emitter<GameState> emit) {
@@ -321,6 +368,11 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   void _onBannerCleared(BannerCleared event, Emitter<GameState> emit) {
     if (_engine == null) return;
     emit(_snap(clearBanner: true, openingShelf: -1));
+  }
+
+  void _onHintCleared(HintCleared event, Emitter<GameState> emit) {
+    if (_engine == null) return;
+    emit(_snap(clearHint: true));
   }
 
   void _flashBanner() {
@@ -346,6 +398,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     _mechClock?.cancel();
     _freezeTimer?.cancel();
     _bannerTimer?.cancel();
+    _hintTimer?.cancel();
     _cancelSales();
     _engine?.mechanics.dispose();
     return super.close();
