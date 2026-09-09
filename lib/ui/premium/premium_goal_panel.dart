@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/emoji_assets.dart';
@@ -21,8 +22,7 @@ class PremiumGoalPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final scale = (constraints.maxWidth / 280).clamp(0.85, 1.1);
-        final h = 70.0 * scale;
+        final h = 70.h;
 
         return SizedBox(
           height: h,
@@ -33,7 +33,7 @@ class PremiumGoalPanel extends StatelessWidget {
               // Crop out baked REWARD / gift on the right of the art.
               Positioned.fill(
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12 * scale),
+                  borderRadius: BorderRadius.circular(12.r),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     widthFactor: 0.78,
@@ -46,10 +46,10 @@ class PremiumGoalPanel extends StatelessWidget {
                       errorBuilder: (context, error, stack) => DecoratedBox(
                         decoration: BoxDecoration(
                           color: PremiumTokens.goalCream,
-                          borderRadius: BorderRadius.circular(14),
+                          borderRadius: BorderRadius.circular(14.r),
                           border: Border.all(
                             color: PremiumTokens.goalBorder,
-                            width: 2,
+                            width: 2.w,
                           ),
                         ),
                       ),
@@ -58,45 +58,40 @@ class PremiumGoalPanel extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 10 * scale,
-                top: -2 * scale,
+                left: 10.w,
+                top: -2.h,
                 child: Image.asset(
                   '$_ui/ribbon_goal.png',
-                  height: 22 * scale,
+                  height: 22.h,
                   fit: BoxFit.contain,
                   filterQuality: FilterQuality.medium,
                   errorBuilder: (context, error, stack) => Container(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 10 * scale,
-                      vertical: 2 * scale,
+                      horizontal: 10.w,
+                      vertical: 2.h,
                     ),
                     decoration: BoxDecoration(
                       color: const Color(0xFF2E7D32),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(4.r),
                     ),
                     child: Text(
                       'GOAL',
                       style: GoogleFonts.nunito(
                         color: Colors.white,
                         fontWeight: FontWeight.w900,
-                        fontSize: 10 * scale,
+                        fontSize: 10.sp,
                       ),
                     ),
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(
-                  8 * scale,
-                  16 * scale,
-                  8 * scale,
-                  4 * scale,
-                ),
+                padding: EdgeInsets.fromLTRB(8.w, 16.h, 8.w, 4.h),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: 48 * scale,
+                      width: 48.w,
                       child: Text(
                         goalText,
                         maxLines: 2,
@@ -104,7 +99,7 @@ class PremiumGoalPanel extends StatelessWidget {
                         style: GoogleFonts.nunito(
                           color: const Color(0xFF4A2E14),
                           fontWeight: FontWeight.w800,
-                          fontSize: 9.5 * scale,
+                          fontSize: 9.5.sp,
                           height: 1.1,
                         ),
                       ),
@@ -124,7 +119,6 @@ class PremiumGoalPanel extends StatelessWidget {
                                       child: _GoalChip(
                                         type: g.type,
                                         remaining: g.remaining,
-                                        scale: scale,
                                       ),
                                     ),
                                   ),
@@ -148,17 +142,15 @@ class PremiumGoalPanel extends StatelessWidget {
 class _GoalChip extends StatelessWidget {
   final String type;
   final int remaining;
-  final double scale;
 
   const _GoalChip({
     required this.type,
     required this.remaining,
-    required this.scale,
   });
 
   @override
   Widget build(BuildContext context) {
-    final icon = 34.0 * scale;
+    final icon = 34.w;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
@@ -172,28 +164,28 @@ class _GoalChip extends StatelessWidget {
             '?',
             style: GoogleFonts.nunito(
               fontWeight: FontWeight.w900,
-              fontSize: 18 * scale,
+              fontSize: 18.sp,
             ),
           ),
         ),
-        SizedBox(height: 1 * scale),
+        SizedBox(height: 1.h),
         Container(
-          constraints: BoxConstraints(minWidth: 15 * scale),
+          constraints: BoxConstraints(minWidth: 15.w),
           padding: EdgeInsets.symmetric(
-            horizontal: 4 * scale,
-            vertical: 0.5 * scale,
+            horizontal: 4.w,
+            vertical: 0.5.h,
           ),
           decoration: BoxDecoration(
             color: const Color(0xFFFFF3C4),
             shape: BoxShape.circle,
-            border: Border.all(color: const Color(0xFFD4B56A), width: 1),
+            border: Border.all(color: const Color(0xFFD4B56A), width: 1.w),
           ),
           child: Text(
             '$remaining',
             textAlign: TextAlign.center,
             style: GoogleFonts.nunito(
               fontWeight: FontWeight.w900,
-              fontSize: 9 * scale,
+              fontSize: 9.sp,
               color: const Color(0xFF4A2E14),
               height: 1.1,
             ),

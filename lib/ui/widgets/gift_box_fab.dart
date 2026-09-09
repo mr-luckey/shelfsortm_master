@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/progress_provider.dart';
 import '../../services/ad_service.dart';
+import '../../services/analytics_service.dart';
 import '../../services/gift_loot.dart';
 import '../meta/meta_chrome.dart';
 import '../meta/praise_burst.dart';
@@ -97,9 +101,30 @@ class _GiftBoxFabState extends State<GiftBoxFab>
     if (!mounted) return;
 
     if (outcome == RewardedAdOutcome.earned) {
+      final analytics = context.read<AnalyticsService>();
+      unawaited(
+        analytics.logRewardedAdCompleted(
+          placement: 'gift_box',
+          source: widget.pool.name,
+        ),
+      );
       final loot = GiftLootTables.roll(widget.pool);
       if (widget.pool == GiftLootPool.meta) {
         await progress.applyMetaGiftLoot(loot);
+      } else {
+        unawaited(
+          analytics.logRewardClaimed(
+            rewardType: switch (loot) {
+              CoinsLoot() => 'coins',
+              GemsLoot() => 'gems',
+              DoubleCoinsLoot() => 'double_coins',
+              GameplayHintLoot() => 'hint',
+              GameplayFreezeLoot() => 'freeze',
+              GameplayTimeLoot() => 'extra_time',
+            },
+            source: 'gift_box',
+          ),
+        );
       }
       if (mounted) {
         await widget.onLoot?.call(loot);
@@ -124,6 +149,8 @@ class _GiftBoxFabState extends State<GiftBoxFab>
       return const SizedBox.shrink();
     }
 
+    final s = widget.size.w;
+
     return ScaleTransition(
       scale: _scale,
       child: Material(
@@ -132,32 +159,32 @@ class _GiftBoxFabState extends State<GiftBoxFab>
           onTap: _busy ? null : _onTap,
           customBorder: const CircleBorder(),
           child: SizedBox(
-            width: widget.size,
-            height: widget.size,
+            width: s,
+            height: s,
             child: Stack(
               alignment: Alignment.center,
               children: [
                 Image.asset(
                   '${PremiumTokens.uiRoot}/gift_box.png',
-                  width: widget.size,
-                  height: widget.size,
+                  width: s,
+                  height: s,
                   fit: BoxFit.contain,
                   filterQuality: FilterQuality.medium,
                 ),
                 if (_busy)
                   Container(
-                    width: widget.size,
-                    height: widget.size,
+                    width: s,
+                    height: s,
                     decoration: BoxDecoration(
                       color: Colors.black45,
-                      borderRadius: BorderRadius.circular(widget.size / 4),
+                      borderRadius: BorderRadius.circular((widget.size / 4).r),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: SizedBox(
-                        width: 22,
-                        height: 22,
+                        width: 22.w,
+                        height: 22.w,
                         child: CircularProgressIndicator(
-                          strokeWidth: 2.4,
+                          strokeWidth: 2.4.w,
                           color: Colors.white,
                         ),
                       ),
@@ -178,7 +205,7 @@ Future<void> showGiftRewardPopup(BuildContext context, GiftLoot loot) {
     barrierDismissible: true,
     builder: (ctx) {
       return MetaWoodCard(
-        padding: const EdgeInsets.fromLTRB(20, 22, 20, 16),
+        padding: EdgeInsets.fromLTRB(20.w, 22.h, 20.w, 16.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -187,22 +214,22 @@ Future<void> showGiftRewardPopup(BuildContext context, GiftLoot loot) {
               style: GoogleFonts.nunito(
                 color: MetaChrome.gold,
                 fontWeight: FontWeight.w900,
-                fontSize: 22,
+                fontSize: 22.sp,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             _GiftRewardVisual(loot: loot),
-            const SizedBox(height: 14),
+            SizedBox(height: 14.h),
             Text(
               loot.label,
               textAlign: TextAlign.center,
               style: GoogleFonts.nunito(
                 color: MetaChrome.cream,
                 fontWeight: FontWeight.w800,
-                fontSize: 20,
+                fontSize: 20.sp,
               ),
             ),
-            const SizedBox(height: 18),
+            SizedBox(height: 18.h),
             MetaPrimaryButton(
               label: 'Collect',
               onPressed: () => Navigator.of(ctx).pop(),
@@ -232,8 +259,8 @@ class _GiftRewardVisual extends StatelessWidget {
     if (asset != null) {
       return Image.asset(
         asset,
-        width: 72,
-        height: 72,
+        width: 72.w,
+        height: 72.w,
         fit: BoxFit.contain,
         filterQuality: FilterQuality.medium,
         errorBuilder: (context, error, stack) => Icon(
@@ -242,7 +269,7 @@ class _GiftRewardVisual extends StatelessWidget {
             GemsLoot() => Icons.diamond,
             _ => Icons.card_giftcard_rounded,
           },
-          size: 64,
+          size: 64.sp,
           color: MetaChrome.gold,
         ),
       );
@@ -254,6 +281,6 @@ class _GiftRewardVisual extends StatelessWidget {
       _ => (Icons.card_giftcard_rounded, MetaChrome.gold),
     };
 
-    return Icon(icon, size: 72, color: color);
+    return Icon(icon, size: 72.sp, color: color);
   }
 }

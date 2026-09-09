@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../meta/meta_chrome.dart';
@@ -30,7 +31,7 @@ class CurrencyHud extends StatelessWidget {
           value: coins,
           compact: compact,
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8.w),
         _Chip(
           asset: '${PremiumTokens.uiRoot}/gem.png',
           fallbackIcon: Icons.diamond_rounded,
@@ -60,17 +61,17 @@ class _Chip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final h = compact ? 28.0 : 34.0;
+    final h = compact ? 28.h : 34.h;
     return Container(
       height: h,
       padding: EdgeInsets.only(
-        left: 4,
-        right: compact ? 8 : 10,
+        left: 4.w,
+        right: compact ? 8.w : 10.w,
       ),
       decoration: BoxDecoration(
         color: const Color(0xEE2A1608),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: MetaChrome.brass, width: 1.2),
+        borderRadius: BorderRadius.circular(20.r),
+        border: Border.all(color: MetaChrome.brass, width: 1.2.w),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.3),
@@ -83,17 +84,17 @@ class _Chip extends StatelessWidget {
         children: [
           Image.asset(
             asset,
-            width: compact ? 18 : 22,
-            height: compact ? 18 : 22,
+            width: compact ? 18.w : 22.w,
+            height: compact ? 18.w : 22.w,
             errorBuilder: (context, error, stack) =>
-                Icon(fallbackIcon, color: color, size: compact ? 16 : 18),
+                Icon(fallbackIcon, color: color, size: compact ? 16.sp : 18.sp),
           ),
-          const SizedBox(width: 4),
+          SizedBox(width: 4.w),
           Text(
             _fmt(value),
             style: GoogleFonts.nunito(
               fontWeight: FontWeight.w900,
-              fontSize: compact ? 13 : 15,
+              fontSize: compact ? 13.sp : 15.sp,
               color: MetaChrome.cream,
             ),
           ),
@@ -140,8 +141,8 @@ class AppLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.asset(
       assetPath,
-      width: size,
-      height: size,
+      width: size.w,
+      height: size.w,
       fit: BoxFit.contain,
       filterQuality: FilterQuality.high,
     );
@@ -166,10 +167,11 @@ class MiaAvatar extends StatelessWidget {
       'celebrating' => 'partyingface',
       _ => 'grinningface',
     };
+    final s = size.w;
 
     return Container(
-      width: size,
-      height: size,
+      width: s,
+      height: s,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: const LinearGradient(
@@ -184,14 +186,14 @@ class MiaAvatar extends StatelessWidget {
             offset: const Offset(0, 4),
           ),
         ],
-        border: Border.all(color: MetaChrome.cream, width: 3),
+        border: Border.all(color: MetaChrome.cream, width: 3.w),
       ),
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          EmojiImage(type: 'grinningface', size: size * 0.45),
-          EmojiImage(type: face, size: size * 0.18),
+          EmojiImage(type: 'grinningface', size: s * 0.45),
+          EmojiImage(type: face, size: s * 0.18),
         ],
       ),
     ).animate().fadeIn(duration: 400.ms).scale(begin: const Offset(0.8, 0.8));

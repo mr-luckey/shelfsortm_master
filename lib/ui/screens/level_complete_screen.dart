@@ -2,6 +2,7 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,6 @@ import '../meta/meta_chrome.dart';
 import '../premium/premium_gameplay_screen.dart';
 import '../premium/premium_tokens.dart';
 import '../widgets/ad_banner_widget.dart';
-import '../widgets/common_widgets.dart';
 import '../widgets/gift_box_fab.dart';
 import '../../services/gift_loot.dart';
 
@@ -124,12 +124,12 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
               ),
             SafeArea(
               child: Padding(
-                padding: const EdgeInsets.all(24),
+                padding: EdgeInsets.all(24.w),
                 child: Column(
                   children: [
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
                     _CompletedLevelBadge(levelId: widget.levelId),
-                    const SizedBox(height: 14),
+                    SizedBox(height: 14.h),
                     MetaTitle(
                       widget.won
                           ? (widget.daily
@@ -140,7 +140,7 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                     ).animate().fadeIn().slideY(begin: 0.15),
                     if (!widget.won && widget.loseReason != null)
                       Padding(
-                        padding: const EdgeInsets.only(top: 8),
+                        padding: EdgeInsets.only(top: 8.h),
                         child: Text(
                           widget.loseReason!,
                           style: GoogleFonts.nunito(
@@ -149,29 +149,29 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                           ),
                         ),
                       ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     if (widget.won)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(3, (i) {
                           final earned = i < widget.stars;
                           return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 6),
+                            padding: EdgeInsets.symmetric(horizontal: 6.w),
                             child: earned
                                 ? Image.asset(
                                     MetaChrome.starBadgeAsset,
-                                    width: 52,
-                                    height: 52,
+                                    width: 52.w,
+                                    height: 52.w,
                                     errorBuilder: (context, error, stack) =>
-                                        const Icon(
+                                        Icon(
                                       Icons.star_rounded,
-                                      size: 52,
+                                      size: 52.sp,
                                       color: MetaChrome.gold,
                                     ),
                                   )
                                 : Icon(
                                     Icons.star_outline_rounded,
-                                    size: 52,
+                                    size: 52.sp,
                                     color: MetaChrome.cream.withValues(
                                       alpha: 0.35,
                                     ),
@@ -182,7 +182,7 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                               .fadeIn();
                         }),
                       ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
                     MetaWoodCard(
                       child: Column(
                         children: [
@@ -197,27 +197,27 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                             ),
                           ),
                           if (widget.won) ...[
-                            const SizedBox(height: 10),
+                            SizedBox(height: 10.h),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.asset(
                                   '${PremiumTokens.uiRoot}/coin.webp',
-                                  width: 26,
-                                  height: 26,
+                                  width: 26.w,
+                                  height: 26.w,
                                   errorBuilder: (context, error, stack) =>
                                       const Icon(
                                     Icons.monetization_on,
                                     color: MetaChrome.gold,
                                   ),
                                 ),
-                                const SizedBox(width: 6),
+                                SizedBox(width: 6.w),
                                 BlocBuilder<_CoinsCubit, int>(
                                   builder: (context, shownCoins) {
                                     return Text(
                                       '+$shownCoins',
                                       style: GoogleFonts.nunito(
-                                        fontSize: 28,
+                                        fontSize: 28.sp,
                                         fontWeight: FontWeight.w900,
                                         color: MetaChrome.gold,
                                       ),
@@ -225,22 +225,22 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                                   },
                                 ),
                                 if (widget.gems > 0) ...[
-                                  const SizedBox(width: 18),
+                                  SizedBox(width: 18.w),
                                   Image.asset(
                                     '${PremiumTokens.uiRoot}/gem.webp',
-                                    width: 26,
-                                    height: 26,
+                                    width: 26.w,
+                                    height: 26.w,
                                     errorBuilder: (context, error, stack) =>
                                         const Icon(
                                       Icons.diamond,
                                       color: PremiumTokens.gemMagenta,
                                     ),
                                   ),
-                                  const SizedBox(width: 6),
+                                  SizedBox(width: 6.w),
                                   Text(
                                     '+${widget.gems}',
                                     style: GoogleFonts.nunito(
-                                      fontSize: 28,
+                                      fontSize: 28.sp,
                                       fontWeight: FontWeight.w900,
                                       color: PremiumTokens.gemMagenta,
                                     ),
@@ -265,7 +265,7 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                               await progress.addCoins(widget.coins);
                             },
                           ),
-                          const SizedBox(height: 4),
+                          SizedBox(height: 4.h),
                           Consumer2<AdService, ProgressProvider>(
                             builder: (context, ads, progress, _) {
                               if (!ads.adsUiEnabled ||
@@ -297,7 +297,7 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                           });
                         },
                       ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
                     MetaSecondaryButton(
                       label: widget.won ? 'Replay' : 'Try Again',
                       onPressed: () {
@@ -348,8 +348,8 @@ class _CompletedLevelBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const w = 96.0;
-    const h = 110.0;
+    final w = 96.w;
+    final h = 110.h;
     return SizedBox(
       width: w,
       height: h,
@@ -364,7 +364,7 @@ class _CompletedLevelBadge extends StatelessWidget {
             filterQuality: FilterQuality.medium,
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 8, bottom: 16),
+            padding: EdgeInsets.only(top: 8.h, bottom: 16.h),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -373,7 +373,7 @@ class _CompletedLevelBadge extends StatelessWidget {
                   style: GoogleFonts.nunito(
                     color: Colors.white,
                     fontWeight: FontWeight.w800,
-                    fontSize: 11,
+                    fontSize: 11.sp,
                     letterSpacing: 0.6,
                     height: 1,
                     shadows: const [
@@ -386,7 +386,7 @@ class _CompletedLevelBadge extends StatelessWidget {
                   style: GoogleFonts.nunito(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
-                    fontSize: 28,
+                    fontSize: 28.sp,
                     height: 1,
                     shadows: const [
                       Shadow(color: Colors.black87, blurRadius: 3),

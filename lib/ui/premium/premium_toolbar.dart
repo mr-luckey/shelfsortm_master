@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../bloc/audio_cubit.dart';
@@ -40,7 +41,7 @@ class PremiumBoosterRail extends StatelessWidget {
           costColor: PremiumTokens.coinGold,
           onTap: onFreeze ?? () {},
         ),
-        const SizedBox(width: 6),
+        SizedBox(width: 6.w),
         _BoosterBtn(
           icon: Icons.lightbulb_rounded,
           color: PremiumTokens.hintOrange,
@@ -128,21 +129,21 @@ class _BoosterBtnState extends State<_BoosterBtn> {
                     children: [
                       Image.asset(
                         widget.costAsset,
-                        width: 12,
-                        height: 12,
+                        width: 12.w,
+                        height: 12.w,
                         fit: BoxFit.contain,
                         errorBuilder: (_, __, ___) => Icon(
                           widget.costFallbackIcon,
                           color: widget.costColor,
-                          size: 12,
+                          size: 12.sp,
                         ),
                       ),
-                      const SizedBox(width: 2),
+                      SizedBox(width: 2.w),
                       Text(
                         '${widget.cost}',
                         style: GoogleFonts.nunito(
                           fontWeight: FontWeight.w900,
-                          fontSize: 10,
+                          fontSize: 10.sp,
                           color: Colors.white,
                           height: 1,
                           shadows: const [
@@ -152,15 +153,15 @@ class _BoosterBtnState extends State<_BoosterBtn> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 2),
+                  SizedBox(height: 2.h),
                   Stack(
                     clipBehavior: Clip.none,
                     children: [
                       Container(
-                        width: 44,
-                        height: 44,
+                        width: 44.w,
+                        height: 44.w,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12.r),
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
@@ -172,25 +173,35 @@ class _BoosterBtnState extends State<_BoosterBtn> {
                           ),
                           border: Border.all(
                             color: const Color(0xFFE8C9A0),
-                            width: 1.5,
+                            width: 1.5.w,
                           ),
-                          boxShadow: PremiumTokens.glossyShadow(y: 3, blur: 6),
+                          boxShadow: PremiumTokens.glossyShadow(
+                            y: 3.h,
+                            blur: 6.h,
+                          ),
                         ),
-                        child: Icon(widget.icon, color: Colors.white, size: 22),
+                        child: Icon(
+                          widget.icon,
+                          color: Colors.white,
+                          size: 22.sp,
+                        ),
                       ),
                       Positioned(
-                        right: -4,
-                        top: -4,
+                        right: -4.w,
+                        top: -4.h,
                         child: Container(
-                          constraints: const BoxConstraints(minWidth: 18),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 4,
-                            vertical: 1,
+                          constraints: BoxConstraints(minWidth: 18.w),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 4.w,
+                            vertical: 1.h,
                           ),
                           decoration: BoxDecoration(
                             color: PremiumTokens.badgeRed,
-                            borderRadius: BorderRadius.circular(9),
-                            border: Border.all(color: Colors.white, width: 1.4),
+                            borderRadius: BorderRadius.circular(9.r),
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 1.4.w,
+                            ),
                           ),
                           child: Text(
                             '${widget.count}',
@@ -198,7 +209,7 @@ class _BoosterBtnState extends State<_BoosterBtn> {
                             style: GoogleFonts.nunito(
                               color: Colors.white,
                               fontWeight: FontWeight.w900,
-                              fontSize: 9,
+                              fontSize: 9.sp,
                             ),
                           ),
                         )
@@ -211,12 +222,12 @@ class _BoosterBtnState extends State<_BoosterBtn> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 2),
+                  SizedBox(height: 2.h),
                   Text(
                     widget.label,
                     style: GoogleFonts.nunito(
                       fontWeight: FontWeight.w900,
-                      fontSize: 8,
+                      fontSize: 8.sp,
                       color: Colors.white,
                       shadows: const [
                         Shadow(color: Colors.black54, blurRadius: 3),

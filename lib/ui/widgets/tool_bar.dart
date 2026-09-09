@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../app/theme/app_colors.dart';
 
@@ -29,15 +30,15 @@ class ToolBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 14),
+      padding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 14.h),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 16,
-            offset: const Offset(0, -4),
+            blurRadius: 16.r,
+            offset: Offset(0, -4.h),
           ),
         ],
       ),
@@ -101,9 +102,9 @@ class _ToolBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(16.r),
       child: SizedBox(
-        width: 64,
+        width: 64.w,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -111,8 +112,8 @@ class _ToolBtn extends StatelessWidget {
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  width: 48,
-                  height: 48,
+                  width: 48.w,
+                  height: 48.w,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
@@ -120,31 +121,31 @@ class _ToolBtn extends StatelessWidget {
                         color.withValues(alpha: 0.05),
                       ],
                     ),
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(14.r),
                     border: Border.all(color: color.withValues(alpha: 0.35)),
                   ),
-                  child: Icon(icon, color: color, size: 26),
+                  child: Icon(icon, color: color, size: 26.sp),
                 ),
                 if (count != null)
                   Positioned(
-                    right: -4,
-                    top: -4,
+                    right: -4.w,
+                    top: -4.h,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 1,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 5.w,
+                        vertical: 1.h,
                       ),
                       decoration: BoxDecoration(
                         color: count! > 0
                             ? AppColors.primary
                             : AppColors.textLight,
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: Text(
                         '$count',
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 11,
+                          fontSize: 11.sp,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
@@ -152,11 +153,11 @@ class _ToolBtn extends StatelessWidget {
                   ),
               ],
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4.h),
             Text(
               label,
-              style: const TextStyle(
-                fontSize: 11,
+              style: TextStyle(
+                fontSize: 11.sp,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textLight,
               ),

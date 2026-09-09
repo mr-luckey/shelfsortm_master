@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../app/theme/goods_sort_theme.dart';
 import '../../models/item.dart';
@@ -50,12 +51,12 @@ class GoodsEmoji extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white,
-              border: Border.all(color: ring, width: onShelf ? 2.5 : 3.6),
+              border: Border.all(color: ring, width: onShelf ? 2.5.w : 3.6.w),
               boxShadow: [
                 BoxShadow(
                   color: ring.withValues(alpha: 0.35),
-                  blurRadius: lifting ? 10 : 4,
-                  offset: Offset(0, lifting ? 5 : 2),
+                  blurRadius: lifting ? 10.r : 4.r,
+                  offset: Offset(0, lifting ? 5.h : 2.h),
                 ),
               ],
             ),
@@ -80,7 +81,7 @@ class GoodsEmoji extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: ring,
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 1.2),
+                  border: Border.all(color: Colors.white, width: 1.2.w),
                 ),
                 child: Text(
                   _typeGlyph(item.type),
@@ -100,7 +101,7 @@ class GoodsEmoji extends StatelessWidget {
     if (lifting && !onShelf) {
       body = body
           .animate(onPlay: (c) => c.repeat(reverse: true))
-          .moveY(begin: 0, end: -8, duration: 360.ms, curve: Curves.easeOut);
+          .moveY(begin: 0, end: -8.h, duration: 360.ms, curve: Curves.easeOut);
     }
     if (celebrating) {
       body = body
@@ -147,11 +148,11 @@ class MatchBurst extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: List.generate(5, (i) {
-          return EmojiImage(type: 'sparkles', size: 14 + (i % 2) * 6)
+          return EmojiImage(type: 'sparkles', size: 14.w + (i % 2) * 6.w)
               .animate()
               .move(
                 begin: Offset.zero,
-                end: Offset((i - 2) * 18.0, -20 - i * 6.0),
+                end: Offset((i - 2) * 18.w, -20.h - i * 6.h),
                 duration: 500.ms,
                 curve: Curves.easeOut,
               )

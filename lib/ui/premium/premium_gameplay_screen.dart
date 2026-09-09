@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../bloc/game_bloc.dart';
@@ -18,6 +21,7 @@ import '../../providers/progress_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../services/ad_service.dart';
 import '../../bloc/audio_cubit.dart';
+import '../../services/analytics_service.dart';
 import '../../services/gift_loot.dart';
 import '../../services/save_service.dart';
 import '../meta/praise_burst.dart';
@@ -91,16 +95,47 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
         ? LevelRepository.instance.dailyChallenge(DateTime.now())
         : LevelRepository.instance.getLevel(widget.levelId);
     context.read<GameBloc>().add(GameStarted(level));
+    unawaited(
+      context.read<AnalyticsService>().logLevelStarted(
+        levelNumber: widget.levelId,
+        difficulty: level.difficulty,
+        source: widget.daily ? 'daily' : 'campaign',
+      ),
+    );
   }
 
   Future<void> _finish(BuildContext context, GameState state) async {
     final progress = context.read<ProgressProvider>();
+    final analytics = context.read<AnalyticsService>();
     await context.read<SaveService>().clearMidLevel();
     final stars = state.stars;
     final coins = ProgressProvider.coinsForStars(stars);
     final gems = (!widget.daily && state.status == GameStatus.won)
         ? ProgressProvider.gemsForStars(stars)
         : 0;
+    final timeSeconds = (state.level?.timeLimit ?? 0) - state.timeLeft;
+    final difficulty = state.level?.difficulty;
+    if (state.status == GameStatus.won) {
+      unawaited(
+        analytics.logLevelCompleted(
+          levelNumber: widget.levelId,
+          difficulty: difficulty,
+          moves: state.moves,
+          timeSeconds: timeSeconds < 0 ? 0 : timeSeconds,
+          source: widget.daily ? 'daily' : 'campaign',
+        ),
+      );
+    } else {
+      unawaited(
+        analytics.logLevelFailed(
+          levelNumber: widget.levelId,
+          difficulty: difficulty,
+          moves: state.moves,
+          timeSeconds: timeSeconds < 0 ? 0 : timeSeconds,
+          source: widget.daily ? 'daily' : 'campaign',
+        ),
+      );
+    }
     if (widget.daily) {
       await progress.completeDailyChallenge(coins: 80 + coins);
     } else if (state.status == GameStatus.won) {
@@ -137,10 +172,15 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
 
   Future<void> _watchAdContinue(BuildContext context, GameState state) async {
     final isTime = state.status == GameStatus.lostTime;
-    final ok = await context.read<AdService>().showRewarded(
-          isTime ? RewardType.hint : RewardType.extraShelf,
-        );
+    final type = isTime ? RewardType.hint : RewardType.extraShelf;
+    final ok = await context.read<AdService>().showRewarded(type);
     if (!ok || !context.mounted) return;
+    unawaited(
+      context.read<AnalyticsService>().logRewardedAdCompleted(
+        placement: context.read<AdService>().placementForReward(type),
+        source: 'continue',
+      ),
+    );
     context.read<GameplayUiCubit>().hideLoseOffer();
     context.read<GameBloc>().add(ContinueAfterAd(extraTime: isTime));
   }
@@ -151,20 +191,20 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
       builder: (ctx) {
         return Container(
           width: double.infinity,
-          padding: const EdgeInsets.fromLTRB(20, 22, 20, 18),
+          padding: EdgeInsets.fromLTRB(20.w, 22.h, 20.w, 18.h),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
+            borderRadius: BorderRadius.circular(22.r),
             gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [Color(0xFF5A3418), Color(0xFF2A1608)],
             ),
-            border: Border.all(color: const Color(0xFFE8C45A), width: 1.8),
+            border: Border.all(color: const Color(0xFFE8C45A), width: 1.8.w),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.45),
-                blurRadius: 24,
-                offset: const Offset(0, 10),
+                blurRadius: 24.h,
+                offset: Offset(0, 10.h),
               ),
             ],
           ),
@@ -176,16 +216,16 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
+                    Text(
                       'Settings',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color(0xFFF7E6C8),
+                        color: const Color(0xFFF7E6C8),
                         fontWeight: FontWeight.w900,
-                        fontSize: 22,
+                        fontSize: 22.sp,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
                       title: const Text(
@@ -222,7 +262,7 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                       activeThumbColor: const Color(0xFFE8C45A),
                       onChanged: settings.setHaptics,
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     SizedBox(
                       width: double.infinity,
                       child: TextButton(
@@ -230,10 +270,10 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                           context.read<AudioCubit>().playButton();
                           Navigator.pop(ctx);
                         },
-                        child: const Text(
+                        child: Text(
                           'Close',
                           style: TextStyle(
-                            color: Color(0xFFE8C45A),
+                            color: const Color(0xFFE8C45A),
                             fontWeight: FontWeight.w800,
                           ),
                         ),
@@ -270,6 +310,12 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
         bloc.add(const BoosterPressed(BoosterKind.magnet));
       case BoosterKind.hint:
         bloc.add(const BoosterPressed(BoosterKind.hint));
+        unawaited(
+          context.read<AnalyticsService>().logHintUsed(
+            levelNumber: widget.levelId,
+            source: 'booster',
+          ),
+        );
       case BoosterKind.extraShelf:
         if (progress.progress.extraShelfRemaining <= 0) return;
         await progress.spendExtraShelf();
@@ -418,7 +464,7 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                       ),
                       if (state.ready)
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 10, 8, 2),
+                          padding: EdgeInsets.fromLTRB(8.w, 10.h, 8.w, 2.h),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -435,7 +481,7 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                                   },
                                 ),
                               ),
-                              const SizedBox(width: 8),
+                              SizedBox(width: 8.w),
                               BlocSelector<
                                   GameBloc,
                                   GameState,
@@ -492,8 +538,8 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                   ).animate().fadeIn(duration: 350.ms),
                 ),
                 Positioned(
-                  right: 16,
-                  bottom: PremiumTokens.bannerAdHeight + 16,
+                  right: 16.w,
+                  bottom: PremiumTokens.bannerAdHeight + 16.h,
                   child: GiftBoxFab(
                     pool: GiftLootPool.gameplay,
                     onLoot: (loot) async {
@@ -532,8 +578,26 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                           .read<GameBloc>()
                           .add(const GameRestarted());
                     },
-                    onQuit: () => Navigator.pop(context),
-                    onHome: () => Navigator.pop(context),
+                    onQuit: () {
+                      unawaited(
+                        context.read<AnalyticsService>().logLevelAbandoned(
+                          levelNumber: widget.levelId,
+                          difficulty: state.level?.difficulty,
+                          source: 'pause_quit',
+                        ),
+                      );
+                      Navigator.pop(context);
+                    },
+                    onHome: () {
+                      unawaited(
+                        context.read<AnalyticsService>().logLevelAbandoned(
+                          levelNumber: widget.levelId,
+                          difficulty: state.level?.difficulty,
+                          source: 'pause_home',
+                        ),
+                      );
+                      Navigator.pop(context);
+                    },
                     onSettings: () => _showPauseSettings(context),
                   ),
                 if (uiState.praise != null)
@@ -707,9 +771,6 @@ class _HeldGoodPainter extends CustomPainter {
   final FaceImages faces;
   final GlobalKey overlay;
 
-  /// Size the carried good is drawn at, a little larger than on the shelf.
-  static const double goodSize = 62;
-
   _HeldGoodPainter({
     required this.drag,
     required this.faces,
@@ -726,6 +787,8 @@ class _HeldGoodPainter extends CustomPainter {
     final box = overlay.currentContext?.findRenderObject() as RenderBox?;
     if (box == null || !box.hasSize) return;
 
+    // Size the carried good a little larger than on the shelf.
+    final goodSize = 62.w;
     final local = box.globalToLocal(drag.finger.value);
     // Lifted goods hang just above the finger so the shelf stays visible.
     final center = Offset(local.dx, local.dy - goodSize * 0.22);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -15,12 +16,12 @@ abstract final class GoodsSortLayout {
   static const cabinetFrame = Color(0xFF5D4037);
   static const boosterBar = Color(0xFF3E2723);
 
-  static const headerHeight = 56.0;
-  static const progressHeight = 8.0;
-  static const boosterBarHeight = 76.0;
-  static const shelfRowHeight = 100.0;
-  static const plankHeight = 12.0;
-  static const itemSizeOnShelf = 56.0;
+  static double get headerHeight => 56.h;
+  static double get progressHeight => 8.h;
+  static double get boosterBarHeight => 76.h;
+  static double get shelfRowHeight => 100.h;
+  static double get plankHeight => 12.h;
+  static double get itemSizeOnShelf => 56.w;
 
   static BoxDecoration get screenBg => const BoxDecoration(
         gradient: LinearGradient(
@@ -69,7 +70,7 @@ class GoodsSortTopBar extends StatelessWidget {
     return SizedBox(
       height: GoodsSortLayout.headerHeight,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
         child: Row(
           children: [
             _RoundIconButton(
@@ -78,59 +79,59 @@ class GoodsSortTopBar extends StatelessWidget {
               bg: Colors.white.withValues(alpha: 0.95),
               iconColor: GoodsSortLayout.cabinetFrame,
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+              padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 7.h),
               decoration: BoxDecoration(
                 gradient: GoodsSortTheme.playGradient,
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(18.r),
                 boxShadow: [
                   BoxShadow(
                     color: GoodsSortTheme.playGreen.withValues(alpha: 0.35),
-                    blurRadius: 6,
-                    offset: const Offset(0, 2),
+                    blurRadius: 6.h,
+                    offset: Offset(0, 2.h),
                   ),
                 ],
               ),
               child: Text(
                 levelText,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                 ),
               ),
             ),
             const Spacer(),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 7.h),
               decoration: BoxDecoration(
                 color: timerBg,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: timerBorder, width: 2),
+                borderRadius: BorderRadius.circular(20.r),
+                border: Border.all(color: timerBorder, width: 2.w),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
                     frozen ? Icons.ac_unit : Icons.timer_outlined,
-                    size: 18,
+                    size: 18.sp,
                     color: GoodsSortLayout.cabinetFrame,
                   ),
-                  const SizedBox(width: 5),
+                  SizedBox(width: 5.w),
                   Text(
                     timeText,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w900,
-                      fontSize: 18,
-                      color: Color(0xFF3E2723),
+                      fontSize: 18.sp,
+                      color: const Color(0xFF3E2723),
                       letterSpacing: 0.5,
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(width: 6),
+            SizedBox(width: 6.w),
             _RoundIconButton(
               icon: Icons.home_rounded,
               onTap: onBack,
@@ -168,9 +169,9 @@ class _RoundIconButton extends StatelessWidget {
         onTap: onTap,
         customBorder: const CircleBorder(),
         child: SizedBox(
-          width: 40,
-          height: 40,
-          child: Icon(icon, size: 22, color: iconColor),
+          width: 40.w,
+          height: 40.w,
+          child: Icon(icon, size: 22.sp, color: iconColor),
         ),
       ),
     );
@@ -185,9 +186,9 @@ class GoodsSortProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(14, 0, 14, 6),
+      padding: EdgeInsets.fromLTRB(14.w, 0, 14.w, 6.h),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(99),
+        borderRadius: BorderRadius.circular(99.r),
         child: SizedBox(
           height: GoodsSortLayout.progressHeight,
           child: Stack(
@@ -236,17 +237,17 @@ class GoodsSortBoosterBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: GoodsSortLayout.boosterBarHeight,
-      margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+      margin: EdgeInsets.fromLTRB(8.w, 0, 8.w, 8.h),
+      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 8.h),
       decoration: BoxDecoration(
         color: GoodsSortLayout.boosterBar,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFF6D4C41), width: 1.5),
+        borderRadius: BorderRadius.circular(20.r),
+        border: Border.all(color: const Color(0xFF6D4C41), width: 1.5.w),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.25),
-            blurRadius: 10,
-            offset: const Offset(0, -2),
+            blurRadius: 10.h,
+            offset: Offset(0, -2.h),
           ),
         ],
       ),
@@ -310,31 +311,34 @@ class _BoosterBtn extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Container(
-            width: 48,
-            height: 48,
+            width: 48.w,
+            height: 48.w,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: color.withValues(alpha: 0.22),
-              border: Border.all(color: color.withValues(alpha: 0.85), width: 2),
+              border: Border.all(
+                color: color.withValues(alpha: 0.85),
+                width: 2.w,
+              ),
             ),
-            child: Icon(icon, color: color, size: 24),
+            child: Icon(icon, color: color, size: 24.sp),
           ),
           if (count != null)
             Positioned(
-              right: -2,
-              top: -2,
+              right: -2.w,
+              top: -2.h,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
                 decoration: BoxDecoration(
                   color: count! > 0 ? GoodsSortTheme.playGreen : Colors.grey,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.white, width: 1.2),
+                  borderRadius: BorderRadius.circular(10.r),
+                  border: Border.all(color: Colors.white, width: 1.2.w),
                 ),
                 child: Text(
                   '$count',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 9,
+                    fontSize: 9.sp,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -368,20 +372,20 @@ class GoodsSortPauseOverlay extends StatelessWidget {
       color: Colors.black.withValues(alpha: 0.62),
       child: MetaPopupScope(
         child: Container(
-          padding: const EdgeInsets.fromLTRB(20, 22, 20, 18),
+          padding: EdgeInsets.fromLTRB(20.w, 22.h, 20.w, 18.h),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
+            borderRadius: BorderRadius.circular(22.r),
             gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [Color(0xFF5A3418), Color(0xFF2A1608)],
             ),
-            border: Border.all(color: const Color(0xFFE8C45A), width: 1.8),
+            border: Border.all(color: const Color(0xFFE8C45A), width: 1.8.w),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.45),
-                blurRadius: 24,
-                offset: const Offset(0, 10),
+                blurRadius: 24.h,
+                offset: Offset(0, 10.h),
               ),
             ],
           ),
@@ -389,49 +393,55 @@ class GoodsSortPauseOverlay extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 56,
-                height: 56,
+                width: 56.w,
+                height: 56.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: const Color(0xFF2A1608),
-                  border: Border.all(color: const Color(0xFFE8C45A), width: 1.5),
+                  border: Border.all(
+                    color: const Color(0xFFE8C45A),
+                    width: 1.5.w,
+                  ),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.pause_rounded,
-                  color: Color(0xFFE8C45A),
-                  size: 32,
+                  color: const Color(0xFFE8C45A),
+                  size: 32.sp,
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               Text(
                 'Paused',
                 style: GoogleFonts.fredoka(
-                  fontSize: 28,
+                  fontSize: 28.sp,
                   fontWeight: FontWeight.w700,
                   color: const Color(0xFFF7E6C8),
                 ),
               ),
-              const SizedBox(height: 6),
+              SizedBox(height: 6.h),
               Text(
                 'Take a breath — shelves can wait',
                 style: GoogleFonts.nunito(
                   fontWeight: FontWeight.w700,
-                  fontSize: 13,
+                  fontSize: 13.sp,
                   color: const Color(0xFFF7E6C8).withValues(alpha: 0.75),
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               SizedBox(
                 width: double.infinity,
-                height: 50,
+                height: 50.h,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF2E7D32),
                     foregroundColor: Colors.white,
                     elevation: 6,
-                    side: const BorderSide(color: Color(0xFFE8C45A), width: 1.4),
+                    side: BorderSide(
+                      color: const Color(0xFFE8C45A),
+                      width: 1.4.w,
+                    ),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(14.r),
                     ),
                   ),
                   onPressed: () {
@@ -444,12 +454,12 @@ class GoodsSortPauseOverlay extends StatelessWidget {
                     'Continue',
                     style: GoogleFonts.nunito(
                       fontWeight: FontWeight.w900,
-                      fontSize: 17,
+                      fontSize: 17.sp,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.h),
               _PauseAction(
                 icon: Icons.refresh_rounded,
                 label: 'Restart',
@@ -488,7 +498,7 @@ class _PauseAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 4),
+      padding: EdgeInsets.only(top: 4.h),
       child: SizedBox(
         width: double.infinity,
         child: TextButton.icon(
@@ -498,12 +508,12 @@ class _PauseAction extends StatelessWidget {
             } catch (_) {}
             onTap();
           },
-          icon: Icon(icon, color: const Color(0xFFE8C45A), size: 20),
+          icon: Icon(icon, color: const Color(0xFFE8C45A), size: 20.sp),
           label: Text(
             label,
             style: GoogleFonts.nunito(
               fontWeight: FontWeight.w800,
-              fontSize: 15,
+              fontSize: 15.sp,
               color: const Color(0xFFF7E6C8),
             ),
           ),
@@ -532,33 +542,32 @@ class GoodsSortLoseOverlay extends StatelessWidget {
       color: Colors.black54,
       alignment: Alignment.bottomCenter,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 360),
+        constraints: BoxConstraints(maxWidth: 360.w),
         child: Container(
           width: double.infinity,
-          margin: const EdgeInsets.all(16),
-          padding: const EdgeInsets.all(20),
+          margin: EdgeInsets.all(16.w),
+          padding: EdgeInsets.all(20.w),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(24.r),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 isTime ? "Time's Up!" : 'No Space Left!',
-                style:
-                    const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.w900),
               ),
               if (adsOnline) ...[
-                const SizedBox(height: 12),
+                SizedBox(height: 12.h),
                 Image.asset(
                   '${PremiumTokens.uiRoot}/gift_box.png',
-                  width: 72,
-                  height: 72,
+                  width: 72.w,
+                  height: 72.w,
                   fit: BoxFit.contain,
                   filterQuality: FilterQuality.medium,
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 Text(
                   isTime
                       ? '+60 seconds to keep sorting'
@@ -567,7 +576,7 @@ class GoodsSortLoseOverlay extends StatelessWidget {
                   style: const TextStyle(color: Color(0xFF757575)),
                 ),
               ],
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Row(
                 children: [
                   Expanded(
@@ -582,7 +591,7 @@ class GoodsSortLoseOverlay extends StatelessWidget {
                     ),
                   ),
                   if (adsOnline) ...[
-                    const SizedBox(width: 10),
+                    SizedBox(width: 10.w),
                     Expanded(
                       flex: 2,
                       child: ElevatedButton(
@@ -618,9 +627,9 @@ class GoodsSortCupboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+      margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(22.r),
         gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -633,19 +642,19 @@ class GoodsSortCupboard extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.28),
-            blurRadius: 14,
-            offset: const Offset(0, 6),
+            blurRadius: 14.h,
+            offset: Offset(0, 6.h),
           ),
         ],
       ),
       child: ClipRRect(
         clipBehavior: Clip.none,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20.r),
         child: Column(
           children: [
             // Crown molding
             Container(
-              height: 16,
+              height: 16.h,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -658,20 +667,20 @@ class GoodsSortCupboard extends StatelessWidget {
               ),
               child: Center(
                 child: Container(
-                  height: 4,
-                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                  height: 4.h,
+                  margin: EdgeInsets.symmetric(horizontal: 24.w),
                   decoration: BoxDecoration(
                     color: Colors.black.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(2),
+                    borderRadius: BorderRadius.circular(2.r),
                   ),
                 ),
               ),
             ),
             Expanded(
               child: Container(
-                margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                margin: EdgeInsets.fromLTRB(10.w, 0, 10.w, 10.h),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.r),
                   gradient: const LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -683,20 +692,20 @@ class GoodsSortCupboard extends StatelessWidget {
                   ),
                   border: Border.all(
                     color: const Color(0xFF8D6E63).withValues(alpha: 0.55),
-                    width: 2,
+                    width: 2.w,
                   ),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.18),
-                      blurRadius: 6,
-                      offset: const Offset(0, 3),
+                      blurRadius: 6.h,
+                      offset: Offset(0, 3.h),
                       spreadRadius: -2,
                     ),
                   ],
                 ),
                 child: ClipRRect(
                   clipBehavior: Clip.none,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                   child: child,
                 ),
               ),

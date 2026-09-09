@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../bloc/audio_cubit.dart';
@@ -110,7 +111,7 @@ class LevelsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    padding: EdgeInsets.symmetric(horizontal: 4.w),
                     child: Row(
                       children: [
                         IconButton(
@@ -123,18 +124,18 @@ class LevelsScreen extends StatelessWidget {
                             color: MetaChrome.cream,
                           ),
                         ),
-                        const Expanded(
+                        Expanded(
                           child: Text(
                             'Levels',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: MetaChrome.cream,
                               fontWeight: FontWeight.w800,
-                              fontSize: 18,
+                              fontSize: 18.sp,
                             ),
                           ),
                         ),
-                        const SizedBox(width: 48),
+                        SizedBox(width: 48.w),
                       ],
                     ),
                   ),
@@ -144,7 +145,7 @@ class LevelsScreen extends StatelessWidget {
                       cacheExtent: 400,
                       itemBuilder: (context, index) {
                         if (index == _entries.length) {
-                          return const SizedBox(height: 24);
+                          return SizedBox(height: 24.h);
                         }
                         final entry = _entries[index];
                         return switch (entry) {
@@ -167,13 +168,13 @@ class LevelsScreen extends StatelessWidget {
 
   static Widget _sectionTitle(String title) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
+      padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 10.h),
       child: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           color: MetaChrome.gold,
           fontWeight: FontWeight.w900,
-          fontSize: 18,
+          fontSize: 18.sp,
         ),
       ),
     );
@@ -185,11 +186,11 @@ class LevelsScreen extends StatelessWidget {
     PlayerProgress p,
   ) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
+      padding: EdgeInsets.fromLTRB(12.w, 0, 12.w, 10.h),
       child: Row(
         children: [
           for (var i = 0; i < _cols; i++) ...[
-            if (i > 0) const SizedBox(width: 10),
+            if (i > 0) SizedBox(width: 10.w),
             Expanded(
               child: AspectRatio(
                 aspectRatio: 0.88,
@@ -251,23 +252,23 @@ class _LevelShieldTile extends StatelessWidget {
               filterQuality: FilterQuality.medium,
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 4, bottom: 10),
+              padding: EdgeInsets.only(top: 4.h, bottom: 10.h),
               child: unlocked
                   ? Text(
                       '$levelId',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w900,
-                        fontSize: levelId >= 1000 ? 11 : 15,
+                        fontSize: (levelId >= 1000 ? 11 : 15).sp,
                         shadows: const [
                           Shadow(color: Colors.black87, blurRadius: 2),
                         ],
                       ),
                     )
-                  : const Icon(
+                  : Icon(
                       Icons.lock_rounded,
                       color: Colors.white,
-                      size: 18,
+                      size: 18.sp,
                     ),
             ),
           ],

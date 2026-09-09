@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
@@ -5,6 +7,7 @@ import '../config/test_flags.dart';
 import '../data/level_repository.dart';
 import '../models/player_progress.dart';
 import '../services/ad_service.dart';
+import '../services/analytics_service.dart';
 import '../services/gift_loot.dart';
 import '../services/iap_service.dart';
 import '../services/save_service.dart';
@@ -19,6 +22,7 @@ class ProgressProvider extends ChangeNotifier {
   final SaveService saveService;
   final AdService adService;
   final IapService iapService;
+  final AnalyticsService? analytics;
 
   PlayerProgress progress = PlayerProgress.initial();
   bool ready = false;
@@ -35,6 +39,7 @@ class ProgressProvider extends ChangeNotifier {
     required this.saveService,
     required this.adService,
     required this.iapService,
+    this.analytics,
   });
 
   Future<void> init() async {
@@ -220,7 +225,22 @@ class ProgressProvider extends ChangeNotifier {
   Future<bool> watchAdForTool(RewardType type) async {
     final ok = await adService.showRewarded(type);
     if (!ok) return false;
-    return grantToolReward(type);
+    unawaited(
+      analytics?.logRewardedAdCompleted(
+        placement: adService.placementForReward(type),
+        source: 'tool_reward',
+      ),
+    );
+    final granted = await grantToolReward(type);
+    if (granted) {
+      unawaited(
+        analytics?.logRewardClaimed(
+          rewardType: type.name,
+          source: 'tool_reward',
+        ),
+      );
+    }
+    return granted;
   }
 
   Future<int> claimDailyReward() async {
@@ -266,6 +286,9 @@ class ProgressProvider extends ChangeNotifier {
     );
     await _persist();
     notifyListeners();
+    unawaited(
+      analytics?.logDailyRewardClaimed(day: day, source: 'daily_rewards'),
+    );
     return day;
   }
 
@@ -367,6 +390,19 @@ class ProgressProvider extends ChangeNotifier {
       case GameplayTimeLoot():
         break;
     }
+    unawaited(
+      analytics?.logRewardClaimed(
+        rewardType: switch (loot) {
+          CoinsLoot() => 'coins',
+          GemsLoot() => 'gems',
+          DoubleCoinsLoot() => 'double_coins',
+          GameplayHintLoot() => 'hint',
+          GameplayFreezeLoot() => 'freeze',
+          GameplayTimeLoot() => 'extra_time',
+        },
+        source: 'gift_box',
+      ),
+    );
   }
 
   Future<void> setPlayerName(String name) async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -85,7 +86,7 @@ class MetaTitle extends StatelessWidget {
       text,
       textAlign: TextAlign.center,
       style: GoogleFonts.fredoka(
-        fontSize: size,
+        fontSize: size.sp,
         fontWeight: FontWeight.w700,
         color: MetaChrome.cream,
         shadows: const [
@@ -108,7 +109,7 @@ class MetaSubtitle extends StatelessWidget {
       textAlign: TextAlign.center,
       style: GoogleFonts.nunito(
         fontWeight: FontWeight.w700,
-        fontSize: 14,
+        fontSize: 14.sp,
         color: MetaChrome.cream.withValues(alpha: 0.85),
       ),
     );
@@ -118,13 +119,13 @@ class MetaSubtitle extends StatelessWidget {
 /// Wood plank card / panel.
 class MetaWoodCard extends StatelessWidget {
   final Widget child;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
 
   const MetaWoodCard({
     super.key,
     required this.child,
-    this.padding = const EdgeInsets.all(16),
+    this.padding,
     this.margin,
   });
 
@@ -133,7 +134,7 @@ class MetaWoodCard extends StatelessWidget {
     return Container(
       margin: margin,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(18.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.35),
@@ -143,7 +144,7 @@ class MetaWoodCard extends StatelessWidget {
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(18.r),
         child: Stack(
           children: [
             Positioned.fill(
@@ -159,12 +160,15 @@ class MetaWoodCard extends StatelessWidget {
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   color: const Color(0xCC3A2410),
-                  border: Border.all(color: MetaChrome.brass, width: 1.5),
-                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: MetaChrome.brass, width: 1.5.w),
+                  borderRadius: BorderRadius.circular(18.r),
                 ),
               ),
             ),
-            Padding(padding: padding, child: child),
+            Padding(
+              padding: padding ?? EdgeInsets.all(16.w),
+              child: child,
+            ),
           ],
         ),
       ),
@@ -188,7 +192,7 @@ class MetaPrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 52,
+      height: 52.h,
       child: ElevatedButton(
         onPressed: onPressed == null
             ? null
@@ -202,12 +206,12 @@ class MetaPrimaryButton extends StatelessWidget {
           elevation: 6,
           shadowColor: color.withValues(alpha: 0.45),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-            side: const BorderSide(color: MetaChrome.gold, width: 1.5),
+            borderRadius: BorderRadius.circular(16.r),
+            side: BorderSide(color: MetaChrome.gold, width: 1.5.w),
           ),
           textStyle: GoogleFonts.nunito(
             fontWeight: FontWeight.w900,
-            fontSize: 17,
+            fontSize: 17.sp,
           ),
         ),
         child: Text(label),
@@ -230,7 +234,7 @@ class MetaSecondaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 48,
+      height: 48.h,
       child: OutlinedButton(
         onPressed: onPressed == null
             ? null
@@ -240,13 +244,13 @@ class MetaSecondaryButton extends StatelessWidget {
               },
         style: OutlinedButton.styleFrom(
           foregroundColor: MetaChrome.cream,
-          side: const BorderSide(color: MetaChrome.gold, width: 1.5),
+          side: BorderSide(color: MetaChrome.gold, width: 1.5.w),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(14.r),
           ),
           textStyle: GoogleFonts.nunito(
             fontWeight: FontWeight.w800,
-            fontSize: 15,
+            fontSize: 15.sp,
           ),
         ),
         child: Text(label),
@@ -277,12 +281,12 @@ class MetaPlayButton extends StatelessWidget {
         children: [
           Image.asset(
             MetaChrome.playBtnAsset,
-            width: 112,
-            height: 112,
+            width: 112.w,
+            height: 112.w,
             fit: BoxFit.contain,
             errorBuilder: (context, error, stack) => Container(
-              width: 112,
-              height: 112,
+              width: 112.w,
+              height: 112.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: const LinearGradient(
@@ -290,22 +294,22 @@ class MetaPlayButton extends StatelessWidget {
                   end: Alignment.bottomRight,
                   colors: [Color(0xFFE8C45A), Color(0xFF8A5A10)],
                 ),
-                border: Border.all(color: MetaChrome.cream, width: 3),
+                border: Border.all(color: MetaChrome.cream, width: 3.w),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.play_arrow_rounded,
-                color: Color(0xFF2A1608),
-                size: 64,
+                color: const Color(0xFF2A1608),
+                size: 64.sp,
               ),
             ),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6.h),
           Text(
             label,
             style: GoogleFonts.nunito(
               color: MetaChrome.cream,
               fontWeight: FontWeight.w900,
-              fontSize: 20,
+              fontSize: 20.sp,
               letterSpacing: 2,
               shadows: const [
                 Shadow(color: Colors.black87, blurRadius: 4),
@@ -349,8 +353,8 @@ class MetaBottomNav extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: MetaChrome.navWood,
-        border: const Border(
-          top: BorderSide(color: MetaChrome.brass, width: 1.5),
+        border: Border(
+          top: BorderSide(color: MetaChrome.brass, width: 1.5.w),
         ),
         boxShadow: [
           BoxShadow(
@@ -363,7 +367,7 @@ class MetaBottomNav extends StatelessWidget {
       child: SafeArea(
         top: false,
         child: SizedBox(
-          height: 62,
+          height: 62.h,
           child: Row(
             children: [
               for (var i = 0; i < _items.length; i++)
@@ -378,16 +382,16 @@ class MetaBottomNav extends StatelessWidget {
                       children: [
                         Icon(
                           _items[i].$1,
-                          size: 24,
+                          size: 24.sp,
                           color: i == index
                               ? MetaChrome.gold
                               : MetaChrome.cream.withValues(alpha: 0.55),
                         ),
-                        const SizedBox(height: 2),
+                        SizedBox(height: 2.h),
                         Text(
                           _items[i].$2,
                           style: GoogleFonts.nunito(
-                            fontSize: 10,
+                            fontSize: 10.sp,
                             fontWeight: FontWeight.w800,
                             color: i == index
                                 ? MetaChrome.gold

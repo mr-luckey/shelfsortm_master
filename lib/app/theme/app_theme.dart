@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
@@ -36,7 +37,7 @@ class AppTheme {
         elevation: 0,
         centerTitle: true,
         titleTextStyle: GoogleFonts.fredoka(
-          fontSize: 22,
+          fontSize: 22.sp,
           fontWeight: FontWeight.w600,
           color: AppColors.textDark,
         ),
@@ -53,7 +54,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(16),
           ),
           textStyle: GoogleFonts.nunito(
-            fontSize: 18,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w800,
           ),
         ),
@@ -70,20 +71,20 @@ class AppTheme {
   }
 
   static TextStyle get logoStyle => GoogleFonts.fredoka(
-        fontSize: 36,
+        fontSize: 36.sp,
         fontWeight: FontWeight.w700,
         color: AppColors.primary,
         letterSpacing: 0.5,
       );
 
   static TextStyle get headerStyle => GoogleFonts.fredoka(
-        fontSize: 24,
+        fontSize: 24.sp,
         fontWeight: FontWeight.w600,
         color: AppColors.textDark,
       );
 
   static TextStyle get bodyStyle => GoogleFonts.nunito(
-        fontSize: 16,
+        fontSize: 16.sp,
         fontWeight: FontWeight.w600,
         color: AppColors.textDark,
       );

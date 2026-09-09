@@ -1,0 +1,238 @@
+PRIVACY POLICY
+Goods Sort: Match Puzzle 3D
+Developer / Publisher: AppWare Tech
+Package name: com.appwaretech.goods.sort.match.puzzle3d
+Contact: contact@appwaretech.com
+Effective date: September 9, 2026
+Last updated: September 9, 2026
+
+This Privacy Policy explains how AppWare Tech ("we", "us", or "our") collects, uses, shares, and protects information when you use our mobile application "Goods Sort: Match Puzzle 3D" (the "App") on Google Play.
+
+This Policy is intended to help you understand our practices and to support Google Play Console requirements, including the User Data policy and the Data safety section. By downloading or using the App, you agree to this Privacy Policy. If you do not agree, please do not use the App.
+
+
+1. WHO WE ARE
+
+App name: Goods Sort: Match Puzzle 3D
+Developer: AppWare Tech
+Support / privacy contact email: contact@appwaretech.com
+
+For any privacy questions, data requests, or concerns, email us at contact@appwaretech.com.
+
+
+2. SCOPE
+
+This Policy applies to the Android version of the App distributed on Google Play. It covers information processed by:
+- the App itself;
+- Google services used in the App (including Firebase Analytics, Google AdMob, and Google Play Billing), where applicable.
+
+
+3. INFORMATION WE COLLECT
+
+We do not require you to create an account, and we do not ask for your name, email address, phone number, or postal address to play the game.
+
+Depending on how you use the App and your device settings, the following categories of data may be processed:
+
+3.1 App activity
+- Gameplay events (for example: level started, level completed, level failed, level abandoned, hint used, rewards claimed, notification-related events, rewarded ad completion).
+- In-app interactions used to understand feature usage and improve the App.
+
+3.2 App info and performance
+- Diagnostic and performance-related information that may be collected by analytics or advertising SDKs (for example crash-related or performance signals, where provided by the SDK).
+
+3.3 Device or other IDs
+- Device identifiers and advertising identifiers that may be accessed by Google Firebase Analytics and/or Google AdMob (for example Android advertising ID / device identifiers used for analytics, ads, fraud prevention, and attribution), subject to your device and Google settings.
+
+3.4 Approximate location (derived)
+- Approximate location may be inferred by Google services from IP address for analytics, advertising, and fraud prevention. The App does not request GPS / precise location permission.
+
+3.5 Purchase / financial-related information (via Google Play)
+- If you make in-app purchases, payment is processed by Google Play. We do not receive your full payment card details. We may receive purchase status, product identifiers, and related transaction confirmation needed to deliver the purchased items.
+
+3.6 Local data stored on your device
+- Game progress, settings, coins/boosters state, and notification scheduling markers may be stored locally on your device (for example using on-device storage such as SharedPreferences).
+- Local notifications are scheduled on your device. Notification content is driven from App assets and does not require an account or cloud login.
+
+3.7 Permissions the App may use
+- Internet access: to load ads (when online), analytics, and in-app purchase validation.
+- Notifications permission: to show local reminders / engagement notifications.
+- Alarm / exact alarm related permissions (where required by the OS): to schedule timed local notifications.
+- Vibration: for optional haptic feedback.
+
+We do not intentionally collect: contacts, photos, videos, microphone audio, SMS, calendar, precise GPS location, or files from your device storage for gameplay.
+
+
+4. HOW WE USE INFORMATION
+
+We use the information described above to:
+- operate and provide the App and its features;
+- save progress and settings on your device;
+- deliver and measure advertisements (including rewarded ads);
+- process and fulfill in-app purchases through Google Play;
+- analyze App usage and improve gameplay, stability, and performance;
+- schedule and show local notifications;
+- detect abuse, fraud, and invalid traffic;
+- comply with legal obligations and Google Play policies;
+- respond to support and privacy requests sent to contact@appwaretech.com.
+
+
+5. HOW WE SHARE INFORMATION
+
+We do not sell your personal information.
+
+We may share information with service providers and platforms that help us run the App:
+
+5.1 Google LLC / Google Play services
+- Firebase Analytics (usage analytics)
+- Google AdMob (advertising)
+- Google Play Billing (in-app purchases)
+
+These Google services may collect and process data according to Google's own policies. Please review:
+- Google Privacy Policy: https://policies.google.com/privacy
+- How Google uses data from apps: https://policies.google.com/technologies/partner-sites
+- AdMob / advertising controls also depend on your device settings (for example ad personalization / reset advertising ID).
+
+5.2 Legal / safety
+We may disclose information if required by law, regulation, legal process, or to protect the rights, safety, and integrity of users, the App, or AppWare Tech.
+
+5.3 Business transfers
+If we are involved in a merger, acquisition, financing, or sale of assets, information related to the App may be transferred as part of that transaction, subject to this Policy or a successor policy.
+
+
+6. ADS AND AD IDENTIFIERS
+
+The App uses Google AdMob to show ads (for example banner, interstitial, and/or rewarded ads). Ads are requested only when the device is online.
+
+Advertising partners may use advertising identifiers and similar technologies to:
+- serve ads;
+- measure ad performance;
+- limit ad frequency;
+- detect fraud / invalid traffic;
+- personalize ads where allowed by law and your settings.
+
+You can reset or limit your advertising ID in your Android settings. Options vary by device and Android version.
+
+
+7. ANALYTICS
+
+The App uses Firebase Analytics to understand how the game is used (levels, rewards, ads, notifications, and similar events). Analytics helps us improve the App. Analytics collection occurs through Google Firebase and is subject to Google's privacy practices.
+
+
+8. IN-APP PURCHASES
+
+Purchases are handled by Google Play. Google processes payment information under Google's terms and privacy policy. We use purchase confirmation data only to unlock or deliver the purchased content/features in the App.
+
+
+9. LOCAL NOTIFICATIONS
+
+The App may schedule local notifications on your device (for example reminders to return to the game). These notifications are generated on-device and do not require creating an account. You can disable notifications in your device system settings. On Android 13+, the App may ask for notification permission.
+
+
+10. CHILDREN'S PRIVACY
+
+The App is a casual puzzle game intended for a general audience. We do not knowingly collect personal information from children for the purpose of selling data or creating personal profiles independent of gameplay, advertising, and analytics described in this Policy.
+
+If you are a parent or guardian and believe a child has provided personal information to us that should be removed, contact us at contact@appwaretech.com and we will take reasonable steps to review and address the request.
+
+If you declare the App as Designed for Families / children's audience in Play Console, you must also configure ads and SDKs accordingly (for example child-directed treatment / limited ads). Keep this Policy and your Play Console Data safety answers aligned with that declaration.
+
+
+11. DATA RETENTION
+
+- Local game progress and settings remain on your device until you clear App data, uninstall the App, or otherwise delete local storage.
+- Analytics and advertising data retained by Google are kept according to Google's retention practices and your settings.
+- Emails you send to contact@appwaretech.com are retained as needed to respond to your request and for legitimate business / legal records.
+
+
+12. DATA SECURITY
+
+We take reasonable technical and organizational measures to protect information. Data transmitted to Google services is generally protected in transit using encryption (HTTPS/TLS) provided by those services.
+
+No method of transmission or storage is 100% secure. We cannot guarantee absolute security.
+
+
+13. YOUR RIGHTS AND CHOICES
+
+Depending on your location (for example EEA/UK, California, and other regions), you may have rights to:
+- request access to personal information we hold about you;
+- request correction or deletion;
+- object to or restrict certain processing;
+- withdraw consent where processing is based on consent;
+- lodge a complaint with a supervisory authority.
+
+Because the App does not use a mandatory account system, much gameplay data exists only on your device. You can:
+- clear App storage in Android settings;
+- uninstall the App;
+- reset your advertising ID / change ad personalization settings;
+- disable notifications in system settings;
+- email privacy requests to contact@appwaretech.com.
+
+We will respond to verifiable requests within a reasonable time.
+
+
+14. DATA DELETION REQUESTS (GOOGLE PLAY ALIGNED)
+
+The App does not require account creation to play.
+
+To delete data associated with your use of the App:
+1) On your device: Settings > Apps > Goods Sort: Match Puzzle 3D > Storage > Clear data (wording may vary by device), and/or uninstall the App.
+2) For data that may be associated with analytics/ads identifiers held by us or our processors, or for any support correspondence, email: contact@appwaretech.com
+   Subject line suggestion: "Data Deletion Request - Goods Sort: Match Puzzle 3D"
+   Include: your Android advertising ID (if available), approximate dates of use, and any purchase order number from Google Play if relevant.
+
+We do not need you to reinstall the App to request deletion by email.
+
+Note: Google may independently retain certain analytics, advertising, and purchase records under Google's policies. We cannot delete data solely controlled by Google on your behalf beyond what Google's tools and policies allow.
+
+
+15. INTERNATIONAL TRANSFERS
+
+Your information may be processed on servers located outside your country of residence (including by Google). Where required, such transfers are handled under applicable safeguards used by those providers.
+
+
+16. THIRD-PARTY LINKS AND OTHER APPS
+
+Ads or links may direct you to third-party content or apps. We are not responsible for the privacy practices of third parties. Review their policies before providing information to them.
+
+
+17. CHANGES TO THIS POLICY
+
+We may update this Privacy Policy from time to time. The "Last updated" date at the top will change when we do. Continued use of the App after an update means you accept the revised Policy. For material changes, we may provide additional notice in the App or on the page hosting this Policy.
+
+
+18. GOOGLE PLAY DATA SAFETY SUMMARY (FOR CONSOLE ALIGNMENT)
+
+Declare in Play Console consistently with this Policy. Typical declarations for this App:
+
+Collected / may be collected:
+- App activity (app interactions / gameplay analytics)
+- Device or other IDs (advertising / analytics identifiers)
+- App info and performance (diagnostics / performance, if collected by SDKs)
+- Approximate location (may be derived by Google services from IP; not precise GPS)
+- Purchase history / purchase status related to in-app products (via Google Play)
+
+Shared:
+- Data may be shared with Google for analytics and advertising (AdMob / Firebase / Play services) as described above.
+
+Security practices:
+- Data encrypted in transit: Yes (via HTTPS/TLS for network services)
+- Users can request deletion: Yes (device clear data/uninstall + email contact@appwaretech.com)
+
+Account creation:
+- App does not require account creation.
+
+Always re-check SDK documentation before submitting the Data safety form so declarations match the exact SDKs and versions in your release build.
+
+
+19. CONTACT
+
+Privacy and support contact:
+Email: contact@appwaretech.com
+Developer: AppWare Tech
+App: Goods Sort: Match Puzzle 3D
+Package: com.appwaretech.goods.sort.match.puzzle3d
+
+For privacy requests, write to contact@appwaretech.com and we will help as promptly as reasonably possible.
+
+
+END OF PRIVACY POLICY

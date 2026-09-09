@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// Floating praise burst shown after matches (Nice / Great / Awesome…).
@@ -18,7 +19,7 @@ class PraiseBurst extends StatelessWidget {
         child: Text(
           label,
           style: GoogleFonts.fredoka(
-            fontSize: 42,
+            fontSize: 42.sp,
             fontWeight: FontWeight.w700,
             color: const Color(0xFFFFE082),
             shadows: const [
@@ -36,7 +37,7 @@ class PraiseBurst extends StatelessWidget {
               curve: Curves.easeOutBack,
             )
             .then()
-            .moveY(begin: 0, end: -36, duration: 500.ms, curve: Curves.easeOut)
+            .moveY(begin: 0, end: -36.h, duration: 500.ms, curve: Curves.easeOut)
             .fadeOut(duration: 420.ms),
       ),
     );
@@ -47,25 +48,27 @@ class PraiseBurst extends StatelessWidget {
 class MetaPopupScope extends StatelessWidget {
   final Widget child;
   final double maxWidth;
-  final EdgeInsets margin;
+  final EdgeInsets? margin;
 
   const MetaPopupScope({
     super.key,
     required this.child,
     this.maxWidth = 360,
-    this.margin = const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+    this.margin,
   });
 
   @override
   Widget build(BuildContext context) {
+    final resolvedMargin =
+        margin ?? EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h);
     final w = MediaQuery.sizeOf(context).width;
     return Center(
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxWidth: maxWidth.clamp(0, w - margin.horizontal),
+          maxWidth: maxWidth.w.clamp(0, w - resolvedMargin.horizontal),
           maxHeight: MediaQuery.sizeOf(context).height * 0.86,
         ),
-        child: Padding(padding: margin, child: child),
+        child: Padding(padding: resolvedMargin, child: child),
       ),
     );
   }

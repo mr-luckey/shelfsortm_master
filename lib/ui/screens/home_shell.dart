@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -51,7 +52,7 @@ class _HomeShellState extends State<HomeShell> {
               child: Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                    padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 16.h),
                     child: Column(
                       children: [
                         _TopBar(
@@ -73,15 +74,15 @@ class _HomeShellState extends State<HomeShell> {
                             .scale(begin: const Offset(0.94, 0.94)),
                         const Spacer(flex: 2),
                         Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 8,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 20.w,
+                            vertical: 8.h,
                           ),
                           decoration: BoxDecoration(
                             color: const Color(0xEE2A1608),
-                            borderRadius: BorderRadius.circular(22),
+                            borderRadius: BorderRadius.circular(22.r),
                             border: Border.all(
-                                color: MetaChrome.gold, width: 1.5),
+                                color: MetaChrome.gold, width: 1.5.w),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withValues(alpha: 0.35),
@@ -95,17 +96,17 @@ class _HomeShellState extends State<HomeShell> {
                             style: GoogleFonts.nunito(
                               color: MetaChrome.gold,
                               fontWeight: FontWeight.w900,
-                              fontSize: 18,
+                              fontSize: 18.sp,
                               letterSpacing: 1.4,
                             ),
                           ),
                         ).animate().fadeIn(delay: 140.ms),
-                        const SizedBox(height: 18),
+                        SizedBox(height: 18.h),
                         GlowPlayButton(
                           onPressed: () =>
                               launchLevel(context, levelId: level),
                         ),
-                        const SizedBox(height: 14),
+                        SizedBox(height: 14.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -115,7 +116,7 @@ class _HomeShellState extends State<HomeShell> {
                               fallback: Icons.star_rounded,
                               label: '${p.totalStars} Stars',
                             ),
-                            const SizedBox(width: 10),
+                            SizedBox(width: 10.w),
                             _StatPill(
                               fallback: Icons.emoji_events_rounded,
                               label: '${_clears(p)} Clears',
@@ -141,7 +142,7 @@ class _HomeShellState extends State<HomeShell> {
                                 },
                               ),
                             ),
-                            const SizedBox(width: 12),
+                            SizedBox(width: 12.w),
                             Expanded(
                               child: _HubTile(
                                 icon: Icons.headphones_rounded,
@@ -163,15 +164,15 @@ class _HomeShellState extends State<HomeShell> {
                             .animate()
                             .fadeIn(delay: 240.ms)
                             .slideY(begin: 0.08),
-                        const SizedBox(height: 8),
+                        SizedBox(height: 8.h),
                         const AdBannerWidget(placement: 'home'),
                       ],
                     ),
                   ),
-                  const Positioned(
-                    right: 12,
-                    bottom: 70,
-                    child: GiftBoxFab(pool: GiftLootPool.meta),
+                  Positioned(
+                    right: 12.w,
+                    bottom: 70.h,
+                    child: const GiftBoxFab(pool: GiftLootPool.meta),
                   ),
                 ],
               ),
@@ -207,11 +208,11 @@ class _TopBar extends StatelessWidget {
             onProfile();
           },
           child: MetaWoodCard(
-            padding: const EdgeInsets.all(10),
-            child: const Icon(
+            padding: EdgeInsets.all(10.w),
+            child: Icon(
               Icons.person_rounded,
               color: MetaChrome.gold,
-              size: 22,
+              size: 22.sp,
             ),
           ),
         ),
@@ -236,10 +237,10 @@ class _StatPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
       decoration: BoxDecoration(
         color: const Color(0xEE2A1608),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(14.r),
         border: Border.all(color: MetaChrome.brass.withValues(alpha: 0.75)),
       ),
       child: Row(
@@ -248,19 +249,19 @@ class _StatPill extends StatelessWidget {
           if (asset != null)
             Image.asset(
               asset!,
-              width: 18,
-              height: 18,
+              width: 18.w,
+              height: 18.w,
               errorBuilder: (context, error, stack) =>
-                  Icon(fallback, size: 18, color: MetaChrome.gold),
+                  Icon(fallback, size: 18.sp, color: MetaChrome.gold),
             )
           else
-            Icon(fallback, size: 18, color: MetaChrome.gold),
-          const SizedBox(width: 6),
+            Icon(fallback, size: 18.sp, color: MetaChrome.gold),
+          SizedBox(width: 6.w),
           Text(
             label,
             style: GoogleFonts.nunito(
               fontWeight: FontWeight.w800,
-              fontSize: 12,
+              fontSize: 12.sp,
               color: MetaChrome.cream,
             ),
           ),
@@ -294,7 +295,7 @@ class _HubTile extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(18.r),
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -304,7 +305,7 @@ class _HubTile extends StatelessWidget {
               Color(0xFF1A0E06),
             ],
           ),
-          border: Border.all(color: accent, width: 1.8),
+          border: Border.all(color: accent, width: 1.8.w),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.4),
@@ -316,11 +317,11 @@ class _HubTile extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              right: -18,
-              top: -18,
+              right: -18.w,
+              top: -18.h,
               child: Container(
-                width: 72,
-                height: 72,
+                width: 72.w,
+                height: 72.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: accent.withValues(alpha: 0.12),
@@ -328,11 +329,11 @@ class _HubTile extends StatelessWidget {
               ),
             ),
             Positioned(
-              left: -12,
-              bottom: -20,
+              left: -12.w,
+              bottom: -20.h,
               child: Container(
-                width: 56,
-                height: 56,
+                width: 56.w,
+                height: 56.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: MetaChrome.cream.withValues(alpha: 0.06),
@@ -340,40 +341,40 @@ class _HubTile extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+              padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 36,
-                    height: 36,
+                    width: 36.w,
+                    height: 36.w,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10.r),
                       color: accent.withValues(alpha: 0.18),
                       border: Border.all(
                         color: accent.withValues(alpha: 0.85),
-                        width: 1.4,
+                        width: 1.4.w,
                       ),
                     ),
                     alignment: Alignment.center,
-                    child: Icon(icon, color: accent, size: 20),
+                    child: Icon(icon, color: accent, size: 20.sp),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   Text(
                     label,
                     style: GoogleFonts.fredoka(
                       fontWeight: FontWeight.w700,
-                      fontSize: 17,
+                      fontSize: 17.sp,
                       color: MetaChrome.cream,
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  SizedBox(height: 2.h),
                   Text(
                     subtitle,
                     style: GoogleFonts.nunito(
                       fontWeight: FontWeight.w700,
-                      fontSize: 11,
+                      fontSize: 11.sp,
                       color: MetaChrome.cream.withValues(alpha: 0.7),
                     ),
                   ),

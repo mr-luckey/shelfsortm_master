@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../app/theme/app_colors.dart';
 import '../../engine/match_engine.dart';
@@ -59,8 +60,8 @@ class CabinetShelf extends StatelessWidget {
               borderRadius: BorderRadius.circular(12 * scale),
               border: Border.all(color: Colors.white54),
             ),
-            child: const Center(
-              child: Icon(Icons.check_circle, color: Colors.white70, size: 28),
+            child: Center(
+              child: Icon(Icons.check_circle, color: Colors.white70, size: 28.sp),
             ),
           ),
         ),
@@ -192,8 +193,8 @@ class CabinetShelf extends StatelessWidget {
               ),
             if (celebrating && !opening)
               Positioned(
-                top: 4,
-                right: 4,
+                top: 4.h,
+                right: 4.w,
                 child: MatchBurst(color: look.accent, size: 50 * scale),
               ),
           ],

@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../bloc/audio_cubit.dart';
+import '../../services/analytics_service.dart';
+import '../../services/local_notification_service.dart';
 import '../meta/meta_chrome.dart';
 import '../widgets/common_widgets.dart';
 import 'home_shell.dart';
@@ -19,7 +24,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) context.read<AudioCubit>().startMusic();
+      if (!mounted) return;
+      context.read<AudioCubit>().startMusic();
+      unawaited(_scheduleNotifications());
     });
     Future.delayed(const Duration(milliseconds: 2600), () {
       if (!mounted) return;
@@ -32,6 +39,17 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       );
     });
+  }
+
+  Future<void> _scheduleNotifications() async {
+    final notifications = context.read<LocalNotificationService>();
+    final analytics = context.read<AnalyticsService>();
+    final count = await notifications.scheduleNotifications();
+    if (count > 0) {
+      unawaited(
+        analytics.logNotificationScheduled(count: count, source: 'launch'),
+      );
+    }
   }
 
   @override
@@ -47,12 +65,12 @@ class _SplashScreenState extends State<SplashScreen> {
                   .slideY(begin: 0.18, duration: 650.ms, curve: Curves.easeOut)
                   .fadeIn()
                   .scale(begin: const Offset(0.92, 0.92)),
-              const SizedBox(height: 36),
+              SizedBox(height: 36.h),
               SizedBox(
-                width: 30,
-                height: 30,
+                width: 30.w,
+                height: 30.w,
                 child: CircularProgressIndicator(
-                  strokeWidth: 3,
+                  strokeWidth: 3.w,
                   color: MetaChrome.gold,
                 ),
               ).animate().fadeIn(delay: 700.ms),

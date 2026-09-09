@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../models/item.dart';
 import 'goods_emoji.dart';
@@ -21,29 +22,29 @@ class ConveyorBeltRow extends StatelessWidget {
   Widget build(BuildContext context) {
     if (belt.isEmpty) return const SizedBox.shrink();
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(14.r),
         gradient: LinearGradient(
           colors: [
             const Color(0xFF78909C).withValues(alpha: 0.85),
             const Color(0xFF546E7A).withValues(alpha: 0.95),
           ],
         ),
-        border: Border.all(color: Colors.white54, width: 1.5),
+        border: Border.all(color: Colors.white54, width: 1.5.w),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.25),
-            blurRadius: 6,
-            offset: const Offset(0, 3),
+            blurRadius: 6.r,
+            offset: Offset(0, 3.h),
           ),
         ],
       ),
       child: Row(
         children: [
-          Icon(Icons.linear_scale, color: accent.color, size: 18),
-          const SizedBox(width: 6),
+          Icon(Icons.linear_scale, color: accent.color, size: 18.sp),
+          SizedBox(width: 6.w),
           Expanded(
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -51,15 +52,15 @@ class ConveyorBeltRow extends StatelessWidget {
                 children: List.generate(belt.length, (i) {
                   final item = belt[i];
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    padding: EdgeInsets.symmetric(horizontal: 4.w),
                     child: GestureDetector(
                       onTap: item != null ? () => onPick?.call(i) : null,
                       child: Container(
-                        width: 52,
-                        height: 58,
+                        width: 52.w,
+                        height: 58.h,
                         alignment: Alignment.bottomCenter,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(10.r),
                           color: Colors.black26,
                           border: Border.all(
                             color: item != null
@@ -71,7 +72,7 @@ class ConveyorBeltRow extends StatelessWidget {
                             ? null
                             : GoodsEmoji(
                                 item: item,
-                                size: 40,
+                                size: 40.w,
                                 onShelf: true,
                               ),
                       ),
@@ -86,7 +87,7 @@ class ConveyorBeltRow extends StatelessWidget {
               ),
             ),
           ),
-          const Icon(Icons.arrow_forward_rounded, color: Colors.white70, size: 16),
+          Icon(Icons.arrow_forward_rounded, color: Colors.white70, size: 16.sp),
         ],
       ),
     );
@@ -117,15 +118,16 @@ class MovingTrayBar extends StatelessWidget {
       builder: (context, constraints) {
         final trayW = constraints.maxWidth * 0.55;
         final left = (constraints.maxWidth - trayW) * position;
+        final edge = 8.w;
         return SizedBox(
-          height: 56,
+          height: 56.h,
           child: Stack(
             children: [
               Positioned.fill(
                 child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 12),
+                  margin: EdgeInsets.symmetric(horizontal: 12.w),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     color: Colors.black.withValues(alpha: 0.15),
                   ),
                 ),
@@ -133,24 +135,24 @@ class MovingTrayBar extends StatelessWidget {
               AnimatedPositioned(
                 duration: const Duration(milliseconds: 80),
                 curve: Curves.linear,
-                left: left.clamp(8.0, constraints.maxWidth - trayW - 8),
-                top: 4,
+                left: left.clamp(edge, constraints.maxWidth - trayW - edge),
+                top: 4.h,
                 width: trayW,
-                height: 48,
+                height: 48.h,
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     gradient: LinearGradient(
                       colors: [
                         accent.withValues(alpha: 0.85),
                         accent.withValues(alpha: 0.65),
                       ],
                     ),
-                    border: Border.all(color: Colors.white70, width: 2),
+                    border: Border.all(color: Colors.white70, width: 2.w),
                     boxShadow: [
                       BoxShadow(
                         color: accent.withValues(alpha: 0.4),
-                        blurRadius: 8,
+                        blurRadius: 8.r,
                       ),
                     ],
                   ),
@@ -159,10 +161,10 @@ class MovingTrayBar extends StatelessWidget {
                     children: List.generate(
                       slotCount,
                       (_) => Container(
-                        width: 28,
-                        height: 28,
+                        width: 28.w,
+                        height: 28.w,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.r),
                           border: Border.all(color: Colors.white54),
                           color: Colors.white.withValues(alpha: 0.15),
                         ),
@@ -203,13 +205,13 @@ class ShelfDividerBar extends StatelessWidget {
             return Stack(
               children: [
                 Positioned(
-                  left: c.maxWidth * frac - 2,
+                  left: c.maxWidth * frac - 2.w,
                   top: 0,
                   bottom: 0,
                   child: Container(
-                    width: 4,
+                    width: 4.w,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(2),
+                      borderRadius: BorderRadius.circular(2.r),
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
@@ -221,7 +223,7 @@ class ShelfDividerBar extends StatelessWidget {
                       boxShadow: [
                         BoxShadow(
                           color: color.withValues(alpha: 0.5),
-                          blurRadius: 6,
+                          blurRadius: 6.r,
                         ),
                       ],
                     ),
@@ -253,7 +255,7 @@ class SetsProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final done = totalSets <= 0 ? 0.0 : 1 - (setsLeft / totalSets).clamp(0, 1);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -262,28 +264,28 @@ class SetsProgressBar extends StatelessWidget {
             children: [
               Text(
                 'Sets left: $setsLeft',
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w800,
-                  fontSize: 12,
-                  color: Color(0xFF5D4037),
+                  fontSize: 12.sp,
+                  color: const Color(0xFF5D4037),
                 ),
               ),
               Text(
                 '${(done * 100).round()}%',
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
-                  fontSize: 11,
+                  fontSize: 11.sp,
                   color: accent,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           ClipRRect(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.r),
             child: LinearProgressIndicator(
               value: done.toDouble(),
-              minHeight: 8,
+              minHeight: 8.h,
               backgroundColor: Colors.brown.shade100,
               valueColor: AlwaysStoppedAnimation<Color>(accent),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'goods_emoji.dart';
 
@@ -37,10 +38,10 @@ class StoreBackground extends StatelessWidget {
           child: CustomPaint(painter: _FloorPainter()),
         ),
         Positioned(
-          top: 60,
+          top: 60.h,
           left: 0,
           right: 0,
-          height: 140,
+          height: 140.h,
           child: Opacity(
             opacity: 0.35,
             child: Row(
@@ -72,11 +73,11 @@ class StoreBackground extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 48,
-          right: 20,
+          top: 48.h,
+          right: 20.w,
           child: Opacity(
             opacity: 0.12,
-            child: EmojiImage(type: moodType, size: 64),
+            child: EmojiImage(type: moodType, size: 64.w),
           ),
         ),
       ],
@@ -96,10 +97,10 @@ class _BackShelf extends StatelessWidget {
       tone / 4,
     )!;
     return Container(
-      width: 72,
-      height: 90,
+      width: 72.w,
+      height: 90.h,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -108,8 +109,8 @@ class _BackShelf extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.15),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
+            blurRadius: 8.r,
+            offset: Offset(0, 4.h),
           ),
         ],
       ),
@@ -118,7 +119,7 @@ class _BackShelf extends StatelessWidget {
         children: List.generate(
           3,
           (i) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2),
+            padding: EdgeInsets.symmetric(vertical: 2.h),
             child: EmojiImage(
               type: const [
                 'hamburger',
@@ -126,7 +127,7 @@ class _BackShelf extends StatelessWidget {
                 'grinningface',
                 'airplane',
               ][(tone + i) % 4],
-              size: 16,
+              size: 16.w,
             ),
           ),
         ),
@@ -141,7 +142,7 @@ class _FloorPainter extends CustomPainter {
     final horizon = size.height * 0.72;
     final paint = Paint()
       ..color = Colors.white.withValues(alpha: 0.12)
-      ..strokeWidth = 1.2;
+      ..strokeWidth = 1.2.w;
 
     for (var i = 0; i < 8; i++) {
       final y = horizon + (size.height - horizon) * (i / 8);
@@ -150,7 +151,7 @@ class _FloorPainter extends CustomPainter {
     for (var i = -4; i <= 4; i++) {
       canvas.drawLine(
         Offset(size.width / 2, horizon),
-        Offset(size.width / 2 + i * 48, size.height),
+        Offset(size.width / 2 + i * 48.w, size.height),
         paint,
       );
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../app/theme/app_colors.dart';
 import '../../providers/progress_provider.dart';
@@ -46,15 +47,15 @@ class _TutorialOverlayState extends State<TutorialOverlay> {
           final current = steps[step];
           return Dialog(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(24.r),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding: EdgeInsets.all(24.w),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const MiaAvatar(size: 72, mood: 'thinking'),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
                   Text(
                     'Step ${step + 1} / 5',
                     style: const TextStyle(
@@ -62,15 +63,15 @@ class _TutorialOverlayState extends State<TutorialOverlay> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Text(
                     current.$1,
-                    style: const TextStyle(
-                      fontSize: 22,
+                    style: TextStyle(
+                      fontSize: 22.sp,
                       fontWeight: FontWeight.w900,
                     ),
                   ).animate().fadeIn(),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   Text(
                     current.$2,
                     textAlign: TextAlign.center,
@@ -79,7 +80,7 @@ class _TutorialOverlayState extends State<TutorialOverlay> {
                       height: 1.4,
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   Row(
                     children: [
                       if (step > 0)

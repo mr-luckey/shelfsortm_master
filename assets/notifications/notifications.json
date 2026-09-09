@@ -1,0 +1,24 @@
+{
+  "notifications": [
+    {
+      "id": "daily_001",
+      "title": "Your shelves need sorting!",
+      "body": "Jump back into ShelfSort Master for a quick puzzle."
+    },
+    {
+      "id": "daily_002",
+      "title": "Ready for another challenge?",
+      "body": "A new shelf puzzle is waiting for you."
+    },
+    {
+      "id": "daily_003",
+      "title": "A few minutes is all it takes",
+      "body": "Come back and clear one more level."
+    },
+    {
+      "id": "daily_004",
+      "title": "Your streak is waiting",
+      "body": "Pick up where you left off in ShelfSort Master."
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -30,22 +31,21 @@ class DailyRewardsScreen extends StatelessWidget {
         return MetaBackdrop(
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(20.w),
               child: Column(
                 children: [
                   const MetaTitle('Daily Rewards', size: 26)
                       .animate()
                       .fadeIn(),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.h),
                   MetaSubtitle('Streak Day $day / 7'),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   Expanded(
                     child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10.h,
+                        crossAxisSpacing: 10.w,
                         childAspectRatio: 0.82,
                       ),
                       itemCount: 7,
@@ -54,7 +54,7 @@ class DailyRewardsScreen extends StatelessWidget {
                         final claimed = p.claimedRewardDays.contains(d);
                         final current = d == day;
                         return MetaWoodCard(
-                          padding: const EdgeInsets.all(8),
+                          padding: EdgeInsets.all(8.w),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -67,34 +67,34 @@ class DailyRewardsScreen extends StatelessWidget {
                                       : MetaChrome.cream,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4.h),
                               Image.asset(
                                 '${PremiumTokens.uiRoot}/gift_reward.png',
-                                width: 28,
-                                height: 28,
+                                width: 28.w,
+                                height: 28.w,
                                 errorBuilder: (context, error, stack) =>
                                     const Icon(
                                   Icons.card_giftcard,
                                   color: MetaChrome.gold,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4.h),
                               Text(
                                 rewards[i],
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.nunito(
-                                  fontSize: 10,
+                                  fontSize: 10.sp,
                                   fontWeight: FontWeight.w700,
                                   color: MetaChrome.cream.withValues(alpha: 0.9),
                                 ),
                               ),
                               if (claimed)
-                                const Icon(
+                                Icon(
                                   Icons.check_circle,
-                                  color: Color(0xFF81C784),
-                                  size: 16,
+                                  color: const Color(0xFF81C784),
+                                  size: 16.sp,
                                 ),
                             ],
                           ),

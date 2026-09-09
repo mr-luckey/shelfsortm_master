@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,7 @@ class ShopScreen extends StatelessWidget {
         return MetaBackdrop(
           child: SafeArea(
             child: ListView(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.w),
               children: [
                 Row(
                   children: [
@@ -27,11 +28,11 @@ class ShopScreen extends StatelessWidget {
                     CurrencyHud(coins: p.coins, gems: p.gems),
                   ],
                 ).animate().fadeIn(),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 MetaSubtitle(
                   'Earn first, pay for comfort — never paywalled levels.',
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12.h),
                 MetaSecondaryButton(
                   label: 'Restore Purchases',
                   onPressed: () async {
@@ -45,11 +46,11 @@ class ShopScreen extends StatelessWidget {
                     );
                   },
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 ...IapService.products.map((product) {
                   final owned = product.removeAds && p.removeAds;
                   return MetaWoodCard(
-                    margin: const EdgeInsets.only(bottom: 12),
+                    margin: EdgeInsets.only(bottom: 12.h),
                     child: Row(
                       children: [
                         Expanded(
@@ -60,23 +61,23 @@ class ShopScreen extends StatelessWidget {
                                 product.title,
                                 style: GoogleFonts.nunito(
                                   fontWeight: FontWeight.w900,
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                   color: MetaChrome.cream,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4.h),
                               Text(
                                 product.description,
                                 style: GoogleFonts.nunito(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 12,
+                                  fontSize: 12.sp,
                                   color: MetaChrome.cream.withValues(alpha: 0.75),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(width: 8),
+                        SizedBox(width: 8.w),
                         if (owned)
                           Text(
                             'Owned',
@@ -87,17 +88,17 @@ class ShopScreen extends StatelessWidget {
                           )
                         else
                           SizedBox(
-                            height: 40,
+                            height: 40.h,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF2E7D32),
                                 foregroundColor: Colors.white,
-                                side: const BorderSide(
+                                side: BorderSide(
                                   color: MetaChrome.gold,
-                                  width: 1.2,
+                                  width: 1.2.w,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(12.r),
                                 ),
                               ),
                               onPressed: () async {
@@ -121,16 +122,16 @@ class ShopScreen extends StatelessWidget {
                     ),
                   ).animate().fadeIn().slideY(begin: 0.04);
                 }),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 Text(
                   'Cosmetics',
                   style: GoogleFonts.nunito(
                     fontWeight: FontWeight.w900,
-                    fontSize: 18,
+                    fontSize: 18.sp,
                     color: MetaChrome.cream,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 _CosmeticTile(
                   title: 'Golden Oak Shelf',
                   costLabel: '500 Coins',
@@ -183,7 +184,7 @@ class _CosmeticTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MetaWoodCard(
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: EdgeInsets.only(bottom: 10.h),
       child: Row(
         children: [
           Expanded(
@@ -201,7 +202,7 @@ class _CosmeticTile extends StatelessWidget {
                   costLabel,
                   style: GoogleFonts.nunito(
                     fontWeight: FontWeight.w700,
-                    fontSize: 12,
+                    fontSize: 12.sp,
                     color: MetaChrome.gold,
                   ),
                 ),

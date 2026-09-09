@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// Design tokens from reference screenshot (Level 36) — sole UI source of truth.
 abstract final class PremiumTokens {
@@ -44,13 +45,13 @@ abstract final class PremiumTokens {
   static const carpetBlue = Color(0xFF3A5F9E);
   static const windowGlow = Color(0xFF7BA3D4);
 
-  static const hudHeight = 88.0;
-  static const goalHeight = 70.0;
+  static double get hudHeight => 88.h;
+  static double get goalHeight => 70.h;
   /// Reserved strip under the board for a banner ad.
   static const bannerAdHeight = 54.0;
-  static const cupboardRadius = 16.0;
-  static const frameWidth = 12.0;
-  static const dividerWidth = 5.0;
+  static double get cupboardRadius => 16.r;
+  static double get frameWidth => 12.w;
+  static double get dividerWidth => 5.w;
 
   static const assetRoot = 'assets/images/premium';
   static const toyRoot = '$assetRoot/toys';

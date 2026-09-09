@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../engine/mechanics/mechanic_ids.dart';
@@ -91,32 +92,32 @@ class MechanicTutorialSheet extends StatelessWidget {
     final body = pair?.$2 ?? 'Something new appeared on this level!';
 
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
       child: Padding(
-        padding: const EdgeInsets.all(22),
+        padding: EdgeInsets.all(22.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: const EdgeInsets.all(12),
+              padding: EdgeInsets.all(12.w),
               decoration: BoxDecoration(
                 color: const Color(0xFFFF6B35).withValues(alpha: 0.15),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.auto_awesome, color: Color(0xFFFF6B35), size: 32),
+              child: Icon(Icons.auto_awesome, color: const Color(0xFFFF6B35), size: 32.sp),
             ),
-            const SizedBox(height: 14),
+            SizedBox(height: 14.h),
             Text(
               title,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w900),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Text(
               body,
               textAlign: TextAlign.center,
               style: const TextStyle(fontWeight: FontWeight.w600, height: 1.4),
             ),
-            const SizedBox(height: 18),
+            SizedBox(height: 18.h),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(

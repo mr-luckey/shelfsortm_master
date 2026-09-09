@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../bloc/asmr_cubit.dart';
 import '../../bloc/audio_cubit.dart';
@@ -24,10 +25,10 @@ class AsmrModeScreen extends StatefulWidget {
   const AsmrModeScreen({super.key});
 
   static const double baseRowHeight = 58;
-  static const double colWidth = 150; // fallback; live width is responsive
+  static double get colWidth => 150.w; // fallback; live width is responsive
   static const int spotsPerCell = 3;
   static const int plateCount = 3;
-  static const double plateBandHeight = 110;
+  static double get plateBandHeight => 110.h;
   static const int minBoxesPerRow = 5;
   static const int maxBoxesPerRow = 6;
 
@@ -611,7 +612,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   }
 
   _Hit? _hitTestBox(Offset local) {
-    final gridTop = AsmrModeScreen.plateBandHeight + 8;
+    final gridTop = AsmrModeScreen.plateBandHeight + 8.h;
     final gridLocal = Offset(local.dx, local.dy - gridTop);
     if (gridLocal.dy < 0) return null;
     if (_boardSize == Size.zero || _rowHeight <= 0 || _colWidth <= 0) {
@@ -644,8 +645,8 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     if (local.dy < 0 || local.dy > AsmrModeScreen.plateBandHeight) return null;
     final w = _boardSize.width;
     if (w <= 0) return null;
-    const pad = 2.0;
-    const gap = 10.0;
+    final pad = 2.w;
+    final gap = 10.w;
     final plateW =
         (w - pad * 2 - gap * (AsmrModeScreen.plateCount - 1)) /
         AsmrModeScreen.plateCount;
@@ -685,7 +686,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
 
   _Hit? _snapDropHit(Offset local) {
     if (_boardSize == Size.zero || _rowCount <= 0 || _colWidth <= 0) return null;
-    final gridTop = AsmrModeScreen.plateBandHeight + 8;
+    final gridTop = AsmrModeScreen.plateBandHeight + 8.h;
     final gridY = local.dy - gridTop;
     if (gridY < 0) return null;
 
@@ -857,7 +858,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
 
   @override
   Widget build(BuildContext context) {
-    const sidePad = 12.0;
+    final sidePad = 12.w;
 
     return BlocProvider<AsmrCubit>.value(
       value: _cubit,
@@ -877,7 +878,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                   fit: StackFit.expand,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(sidePad, 56, sidePad, 70),
+                      padding: EdgeInsets.fromLTRB(sidePad, 56.h, sidePad, 70.h),
                       child: LayoutBuilder(
                         builder: (context, constraints) {
                           _boardSize = Size(
@@ -888,7 +889,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                             120.0,
                             constraints.maxHeight -
                                 AsmrModeScreen.plateBandHeight -
-                                8,
+                                8.h,
                           );
                           _layoutBoard(constraints.maxWidth, gridH);
                           for (var r = 0; r < _rowCount; r++) {
@@ -924,13 +925,13 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(height: 8),
+                                    SizedBox(height: 8.h),
                                     Expanded(
                                       child: DecoratedBox(
                                         decoration: BoxDecoration(
                                           color: const Color(0xBB141414),
                                           borderRadius:
-                                              BorderRadius.circular(18),
+                                              BorderRadius.circular(18.r),
                                           border: Border.all(
                                             color: Colors.white
                                                 .withValues(alpha: 0.12),
@@ -938,7 +939,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                                         ),
                                         child: ClipRRect(
                                           borderRadius:
-                                              BorderRadius.circular(18),
+                                              BorderRadius.circular(18.r),
                                           child: RepaintBoundary(
                                             child: CustomPaint(
                                               size: Size(
@@ -995,12 +996,12 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                       ),
                     ),
                     Positioned(
-                      top: 4,
+                      top: 4.h,
                       left: 0,
                       right: 0,
                       child: Row(
                         children: [
-                          const SizedBox(width: 48),
+                          SizedBox(width: 48.w),
                           Expanded(
                             child: BlocBuilder<AsmrCubit, AsmrState>(
                               buildWhen: (p, c) => p.score != c.score,
@@ -1008,16 +1009,16 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                                 return Text(
                                   '${state.score}',
                                   textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Color(0xFFF7E6C8),
+                                  style: TextStyle(
+                                    color: const Color(0xFFF7E6C8),
                                     fontWeight: FontWeight.w900,
-                                    fontSize: 42,
+                                    fontSize: 42.sp,
                                     height: 1,
                                     shadows: [
                                       Shadow(
-                                        color: Color(0xEE2A1608),
-                                        blurRadius: 8,
-                                        offset: Offset(0, 2),
+                                        color: const Color(0xEE2A1608),
+                                        blurRadius: 8.r,
+                                        offset: Offset(0, 2.h),
                                       ),
                                     ],
                                   ),
@@ -1033,24 +1034,24 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                             },
                             style: IconButton.styleFrom(
                               backgroundColor: const Color(0xEE2A1608),
-                              side: const BorderSide(
-                                color: Color(0xFFB8860B),
-                                width: 1.4,
+                              side: BorderSide(
+                                color: const Color(0xFFB8860B),
+                                width: 1.4.w,
                               ),
                             ),
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.pause_rounded,
-                              color: Color(0xFFF7E6C8),
-                              size: 26,
+                              color: const Color(0xFFF7E6C8),
+                              size: 26.sp,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const Positioned(
-                      right: 16,
-                      bottom: 70,
-                      child: GiftBoxFab(pool: GiftLootPool.meta),
+                    Positioned(
+                      right: 16.w,
+                      bottom: 70.h,
+                      child: const GiftBoxFab(pool: GiftLootPool.meta),
                     ),
                     const Positioned(
                       left: 0,
@@ -1124,7 +1125,7 @@ void _paintFloatingPoints(
 ) {
   final c = t.clamp(0.0, 1.0);
   if (c <= 0 || c >= 1) return;
-  final rise = 36.0 * Curves.easeOutCubic.transform(c);
+  final rise = 36.h * Curves.easeOutCubic.transform(c);
   final opacity = c < 0.15
       ? c / 0.15
       : (c > 0.65 ? ((1 - c) / 0.35).clamp(0.0, 1.0) : 1.0);
@@ -1134,13 +1135,13 @@ void _paintFloatingPoints(
       style: TextStyle(
         color: Color.fromRGBO(255, 220, 90, opacity),
         fontWeight: FontWeight.w900,
-        fontSize: 28,
+        fontSize: 28.sp,
         height: 1,
         shadows: [
           Shadow(
             color: Color.fromRGBO(0, 0, 0, 0.65 * opacity),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
+            blurRadius: 6.r,
+            offset: Offset(0, 2.h),
           ),
         ],
       ),
@@ -1176,7 +1177,7 @@ class _HeldOverlayPainter extends CustomPainter {
     if (held == null) return;
     final img = faceImages[held.emoji];
     if (img == null) return;
-    const side = 48.0;
+    final side = 48.w;
     paintImage(
       canvas: canvas,
       rect: Rect.fromCenter(center: held.finger, width: side, height: side),
@@ -1204,8 +1205,8 @@ class _AsmrPlateBlastPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    const pad = 2.0;
-    const gap = 10.0;
+    final pad = 2.w;
+    final gap = 10.w;
     final n = plates.length;
     final trayW = (size.width - pad * 2 - gap * (n - 1)) / n;
     final trayH = plateBandHeight;
@@ -1266,8 +1267,8 @@ class _AsmrPlatesPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    const pad = 2.0;
-    const gap = 10.0;
+    final pad = 2.w;
+    final gap = 10.w;
     final n = plates.length;
     final trayW = (size.width - pad * 2 - gap * (n - 1)) / n;
     final trayH = size.height;
@@ -1288,17 +1289,17 @@ class _AsmrPlatesPainter extends CustomPainter {
         canvas.drawRRect(
           RRect.fromRectAndRadius(
             Rect.fromLTWH(
-              surface.left - 2,
+              surface.left - 2.w,
               surface.surfaceY - trayH * 0.62,
-              surface.width + 4,
+              surface.width + 4.w,
               trayH * 0.7,
             ),
-            const Radius.circular(10),
+            Radius.circular(10.r),
           ),
           Paint()
             ..color = tint.withValues(alpha: 0.55)
             ..style = PaintingStyle.stroke
-            ..strokeWidth = 2.2,
+            ..strokeWidth = 2.2.w,
         );
       }
 

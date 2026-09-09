@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
                     child: Material(
                       type: MaterialType.transparency,
                       child: ListView(
-                        padding: const EdgeInsets.all(20),
+                        padding: EdgeInsets.all(20.w),
                         children: [
                           Align(
                             alignment: Alignment.centerLeft,
@@ -47,21 +48,21 @@ class ProfileScreen extends StatelessWidget {
                               .animate()
                               .fadeIn()
                               .scale(begin: const Offset(0.9, 0.9)),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12.h),
                           Center(
                             child: Text(
                               p.playerName,
                               style: GoogleFonts.nunito(
-                                fontSize: 22,
+                                fontSize: 22.sp,
                                 fontWeight: FontWeight.w900,
                                 color: MetaChrome.cream,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8.h),
                           Center(
                               child: CurrencyHud(coins: p.coins, gems: p.gems)),
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8.h),
                           Center(
                             child: Text(
                               'Stars: ${p.totalStars}  •  Level ${p.currentLevel}',
@@ -72,7 +73,7 @@ class ProfileScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          SizedBox(height: 20.h),
                           MetaWoodCard(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +81,7 @@ class ProfileScreen extends StatelessWidget {
                                 Text(
                                   'Settings',
                                   style: GoogleFonts.nunito(
-                                    fontSize: 18,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.w900,
                                     color: MetaChrome.gold,
                                   ),
@@ -141,7 +142,7 @@ class ProfileScreen extends StatelessWidget {
           : Text(
               subtitle,
               style: GoogleFonts.nunito(
-                fontSize: 12,
+                fontSize: 12.sp,
                 color: MetaChrome.cream.withValues(alpha: 0.7),
               ),
             ),

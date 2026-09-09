@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -36,11 +37,10 @@ class PremiumHudBar extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final w = constraints.maxWidth;
-        final scale = (w / 390).clamp(0.82, 1.08);
-        final padH = 8.0 * scale;
-        final plankH = 48.0 * scale;
-        final timerSize = 78.0 * scale;
-        final totalH = timerSize + 10 * scale;
+        final padH = 8.w;
+        final plankH = 48.h;
+        final timerSize = 78.w;
+        final totalH = timerSize + 10.h;
         final sideW = (w - padH * 2 - timerSize) / 2;
 
         return SizedBox(
@@ -81,13 +81,13 @@ class PremiumHudBar extends StatelessWidget {
                           width: sideW,
                           child: Padding(
                             padding: EdgeInsets.only(
-                              left: 6 * scale,
-                              right: 4 * scale,
+                              left: 6.w,
+                              right: 4.w,
                             ),
                             child: Row(
                               children: [
                                 _PauseBtn(
-                                  size: 34 * scale,
+                                  size: 34.h,
                                   onTap: () {
                                     try {
                                       context.read<AudioCubit>().playButton();
@@ -97,11 +97,10 @@ class PremiumHudBar extends StatelessWidget {
                                     onPause?.call();
                                   },
                                 ),
-                                SizedBox(width: 5 * scale),
+                                SizedBox(width: 5.w),
                                 Expanded(
                                   child: _CoinsPill(
                                     value: _fmt(coins),
-                                    scale: scale,
                                     onPlus: onAddCoins,
                                   ),
                                 ),
@@ -121,12 +120,12 @@ class PremiumHudBar extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: Padding(
-                    padding: EdgeInsets.only(right: padH + 4 * scale),
+                    padding: EdgeInsets.only(right: padH + 4.w),
                     child: SizedBox(
                       width: sideW,
                       child: Align(
                         alignment: Alignment.centerRight,
-                        child: _LevelBadge(level: level, scale: scale),
+                        child: _LevelBadge(level: level),
                       ),
                     ),
                   ),
@@ -139,7 +138,6 @@ class PremiumHudBar extends StatelessWidget {
                     timeLeft: timeLeft,
                     timeLimit: timeLimit,
                     frozen: frozen,
-                    scale: scale,
                   ),
                 ),
               ],
@@ -241,30 +239,28 @@ class _PauseBtnPainter extends CustomPainter {
 
 class _CoinsPill extends StatelessWidget {
   final String value;
-  final double scale;
   final VoidCallback? onPlus;
 
   const _CoinsPill({
     required this.value,
-    required this.scale,
     this.onPlus,
   });
 
   @override
   Widget build(BuildContext context) {
-    final h = 30.0 * scale;
+    final h = 30.h;
     return Container(
       height: h,
-      padding: EdgeInsets.only(left: 3 * scale, right: 3 * scale),
+      padding: EdgeInsets.only(left: 3.w, right: 3.w),
       decoration: BoxDecoration(
         color: const Color(0xFF2A1608).withValues(alpha: 0.88),
         borderRadius: BorderRadius.circular(h / 2),
-        border: Border.all(color: const Color(0xFFE0B84A), width: 1.6 * scale),
+        border: Border.all(color: const Color(0xFFE0B84A), width: 1.6.w),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.35),
-            blurRadius: 3,
-            offset: const Offset(0, 1),
+            blurRadius: 3.h,
+            offset: Offset(0, 1.h),
           ),
         ],
       ),
@@ -272,16 +268,16 @@ class _CoinsPill extends StatelessWidget {
         children: [
           Image.asset(
             '${PremiumTokens.uiRoot}/coin.png',
-            width: 22 * scale,
-            height: 22 * scale,
+            width: 22.w,
+            height: 22.w,
             fit: BoxFit.contain,
             errorBuilder: (_, __, ___) => Icon(
               Icons.monetization_on,
               color: PremiumTokens.coinGold,
-              size: 20 * scale,
+              size: 20.sp,
             ),
           ),
-          SizedBox(width: 3 * scale),
+          SizedBox(width: 3.w),
           Expanded(
             child: Text(
               value,
@@ -290,7 +286,7 @@ class _CoinsPill extends StatelessWidget {
               style: GoogleFonts.nunito(
                 color: Colors.white,
                 fontWeight: FontWeight.w900,
-                fontSize: 12 * scale,
+                fontSize: 12.sp,
                 height: 1.1,
                 shadows: const [
                   Shadow(color: Colors.black54, blurRadius: 2),
@@ -304,8 +300,8 @@ class _CoinsPill extends StatelessWidget {
               onPlus?.call();
             },
             child: Container(
-              width: 20 * scale,
-              height: 20 * scale,
+              width: 20.w,
+              height: 20.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: const LinearGradient(
@@ -317,12 +313,12 @@ class _CoinsPill extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.3),
-                    blurRadius: 2,
-                    offset: const Offset(0, 1),
+                    blurRadius: 2.h,
+                    offset: Offset(0, 1.h),
                   ),
                 ],
               ),
-              child: Icon(Icons.add, color: Colors.white, size: 14 * scale),
+              child: Icon(Icons.add, color: Colors.white, size: 14.sp),
             ),
           ),
         ],
@@ -333,14 +329,13 @@ class _CoinsPill extends StatelessWidget {
 
 class _LevelBadge extends StatelessWidget {
   final int level;
-  final double scale;
 
-  const _LevelBadge({required this.level, required this.scale});
+  const _LevelBadge({required this.level});
 
   @override
   Widget build(BuildContext context) {
-    final w = 56.0 * scale;
-    final h = 64.0 * scale;
+    final w = 56.w;
+    final h = 64.h;
     return SizedBox(
       width: w,
       height: h,
@@ -358,13 +353,13 @@ class _LevelBadge extends StatelessWidget {
               height: h * 0.85,
               decoration: BoxDecoration(
                 color: const Color(0xFF3A2410),
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: const Color(0xFFE0B84A), width: 2),
+                borderRadius: BorderRadius.circular(10.r),
+                border: Border.all(color: const Color(0xFFE0B84A), width: 2.w),
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 6 * scale, bottom: 10 * scale),
+            padding: EdgeInsets.only(top: 6.h, bottom: 10.h),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -373,7 +368,7 @@ class _LevelBadge extends StatelessWidget {
                   style: GoogleFonts.nunito(
                     color: Colors.white,
                     fontWeight: FontWeight.w800,
-                    fontSize: 8 * scale,
+                    fontSize: 8.sp,
                     letterSpacing: 0.6,
                     height: 1,
                     shadows: const [
@@ -381,13 +376,13 @@ class _LevelBadge extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 1 * scale),
+                SizedBox(height: 1.h),
                 Text(
                   '$level',
                   style: GoogleFonts.nunito(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
-                    fontSize: 20 * scale,
+                    fontSize: 20.sp,
                     height: 1,
                     shadows: const [
                       Shadow(color: Colors.black87, blurRadius: 3),
@@ -408,14 +403,12 @@ class _TimerRing extends StatelessWidget {
   final int timeLeft;
   final int timeLimit;
   final bool frozen;
-  final double scale;
 
   const _TimerRing({
     required this.size,
     required this.timeLeft,
     required this.timeLimit,
     required this.frozen,
-    required this.scale,
   });
 
   @override
@@ -452,22 +445,22 @@ class _TimerRing extends StatelessWidget {
             children: [
               Image.asset(
                 '${PremiumTokens.uiRoot}/hourglass.png',
-                width: 16 * scale,
-                height: 22 * scale,
+                width: 16.w,
+                height: 22.h,
                 fit: BoxFit.contain,
                 errorBuilder: (_, __, ___) => Icon(
                   Icons.hourglass_bottom,
                   color: const Color(0xFFE0B84A),
-                  size: 16 * scale,
+                  size: 16.sp,
                 ),
               ),
-              SizedBox(height: 1 * scale),
+              SizedBox(height: 1.h),
               Text(
                 text,
                 style: GoogleFonts.nunito(
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
-                  fontSize: 13 * scale,
+                  fontSize: 13.sp,
                   height: 1,
                   shadows: const [
                     Shadow(color: Colors.black87, blurRadius: 3),

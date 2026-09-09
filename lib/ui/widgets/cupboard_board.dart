@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../engine/match_engine.dart';
 import '../../models/shelf.dart';
@@ -42,16 +43,16 @@ class CupboardBoard extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(6, 6, 6, 8),
+      padding: EdgeInsets.fromLTRB(6.w, 6.h, 6.w, 8.h),
       child: Column(
         children: [
           for (var r = 0; r < layout.length; r++)
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(
-                  bottom: r < layout.length - 1 ? 6 : 0,
-                  left: spice == LevelSpice.staggered && r.isOdd ? 8 : 0,
-                  right: spice == LevelSpice.staggered && r.isEven ? 8 : 0,
+                  bottom: r < layout.length - 1 ? 6.h : 0,
+                  left: spice == LevelSpice.staggered && r.isOdd ? 8.w : 0,
+                  right: spice == LevelSpice.staggered && r.isEven ? 8.w : 0,
                 ),
                 child: LayoutBuilder(
                   builder: (context, rowConstraints) {
