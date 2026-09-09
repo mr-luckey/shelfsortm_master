@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../bloc/audio_cubit.dart';
@@ -43,24 +42,11 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const MiaAvatar(size: 120, mood: 'happy')
+              const AppLogo(size: 220)
                   .animate()
-                  .slideY(begin: 0.25, duration: 650.ms, curve: Curves.easeOut)
-                  .fadeIn(),
-              const SizedBox(height: 20),
-              const MetaTitle('ShelfSort Master', size: 34)
-                  .animate()
-                  .fadeIn(delay: 280.ms)
+                  .slideY(begin: 0.18, duration: 650.ms, curve: Curves.easeOut)
+                  .fadeIn()
                   .scale(begin: const Offset(0.92, 0.92)),
-              const SizedBox(height: 8),
-              Text(
-                'Sort · Match · Master the shelves',
-                style: GoogleFonts.nunito(
-                  color: MetaChrome.cream.withValues(alpha: 0.9),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 15,
-                ),
-              ).animate().fadeIn(delay: 480.ms),
               const SizedBox(height: 36),
               SizedBox(
                 width: 30,

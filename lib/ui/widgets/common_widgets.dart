@@ -128,6 +128,26 @@ class GlowPlayButton extends StatelessWidget {
   }
 }
 
+/// Official app logo asset used on splash, home, and brand surfaces.
+class AppLogo extends StatelessWidget {
+  final double size;
+
+  const AppLogo({super.key, this.size = 160});
+
+  static const assetPath = 'assets/images/brand/app_logo.png';
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      assetPath,
+      width: size,
+      height: size,
+      fit: BoxFit.contain,
+      filterQuality: FilterQuality.high,
+    );
+  }
+}
+
 class MiaAvatar extends StatelessWidget {
   final double size;
   final String mood; // happy, excited, thinking, celebrating

@@ -62,13 +62,10 @@ class _HomeShellState extends State<HomeShell> {
                       },
                     ).animate().fadeIn(duration: 350.ms),
                     const Spacer(flex: 2),
-                    const MetaTitle('ShelfSort Master', size: 32)
+                    const AppLogo(size: 180)
                         .animate()
-                        .fadeIn(delay: 60.ms),
-                    const SizedBox(height: 6),
-                    const MetaSubtitle('Sort · Match · Master')
-                        .animate()
-                        .fadeIn(delay: 100.ms),
+                        .fadeIn(delay: 60.ms)
+                        .scale(begin: const Offset(0.94, 0.94)),
                     const Spacer(flex: 2),
                     Container(
                       padding: const EdgeInsets.symmetric(
