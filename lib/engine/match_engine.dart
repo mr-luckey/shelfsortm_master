@@ -496,6 +496,13 @@ class MatchEngine {
     status = GameStatus.playing;
   }
 
+  /// Mid-level gift reward: add seconds while still playing.
+  void addBonusTime(int seconds) {
+    if (status != GameStatus.playing && status != GameStatus.paused) return;
+    if (seconds <= 0) return;
+    timeLeft += seconds;
+  }
+
   /// Goods Puzzle: watch ad for extra shelf when board locked.
   void continueWithExtraShelf() {
     if (status != GameStatus.lostSpace) return;

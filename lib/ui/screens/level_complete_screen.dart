@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
+import '../../bloc/audio_cubit.dart';
 import '../../data/level_repository.dart';
 import '../../providers/progress_provider.dart';
 import '../../services/ad_service.dart';
-import '../../bloc/audio_cubit.dart';
 import '../meta/meta_chrome.dart';
 import '../premium/premium_gameplay_screen.dart';
 import '../premium/premium_tokens.dart';
+import '../widgets/ad_banner_widget.dart';
 import '../widgets/common_widgets.dart';
 import '../widgets/gift_box_fab.dart';
+import '../../services/gift_loot.dart';
 
 class LevelCompleteScreen extends StatefulWidget {
   final int levelId;
@@ -54,8 +57,11 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final audio = context.read<AudioCubit>();
+      final ads = context.read<AdService>();
       audio.startMusic();
+      ads.preloadInterstitial(placement: 'after_level');
       if (widget.won) {
+        ads.preloadRewarded(placement: 'gift_box');
         audio.playWhoosh();
         _confetti.play();
         _animateCoins();
@@ -63,6 +69,15 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
         audio.playInvalid();
       }
     });
+  }
+
+  Future<void> _leaveWithInterstitial(VoidCallback navigate) async {
+    final ads = context.read<AdService>();
+    if (ads.adsUiEnabled && !ads.isFullScreenShowing) {
+      await ads.showInterstitial(placement: 'after_level');
+    }
+    if (!mounted) return;
+    navigate();
   }
 
   Future<void> _animateCoins() async {
@@ -113,10 +128,7 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 12),
-                    MiaAvatar(
-                      size: 96,
-                      mood: widget.won ? 'celebrating' : 'thinking',
-                    ),
+                    _CompletedLevelBadge(levelId: widget.levelId),
                     const SizedBox(height: 14),
                     MetaTitle(
                       widget.won
@@ -246,31 +258,28 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                         children: [
                           GiftBoxFab(
                             size: 72,
-                            onPressed: () async {
-                              final ok = await context
-                                  .read<ProgressProvider>()
-                                  .watchAdForTool(RewardType.doubleCoins);
-                              if (ok && mounted) {
-                                await context
-                                    .read<ProgressProvider>()
-                                    .addCoins(widget.coins);
-                                if (!mounted) return;
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('2x coins claimed!'),
-                                    behavior: SnackBarBehavior.floating,
-                                  ),
-                                );
-                              }
+                            pool: GiftLootPool.doubleCoins,
+                            onLoot: (loot) async {
+                              if (loot is! DoubleCoinsLoot) return;
+                              final progress = context.read<ProgressProvider>();
+                              await progress.addCoins(widget.coins);
                             },
                           ),
                           const SizedBox(height: 4),
-                          Text(
-                            'Watch ad for 2x coins',
-                            style: GoogleFonts.nunito(
-                              fontWeight: FontWeight.w800,
-                              color: MetaChrome.gold,
-                            ),
+                          Consumer2<AdService, ProgressProvider>(
+                            builder: (context, ads, progress, _) {
+                              if (!ads.adsUiEnabled ||
+                                  progress.progress.removeAds) {
+                                return const SizedBox.shrink();
+                              }
+                              return Text(
+                                'Tap twice for 2x coins',
+                                style: GoogleFonts.nunito(
+                                  fontWeight: FontWeight.w800,
+                                  color: MetaChrome.gold,
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -278,32 +287,38 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                       MetaPrimaryButton(
                         label: 'Next Level',
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (_) =>
-                                  PremiumGameplayScreen(levelId: next),
-                            ),
-                          );
+                          _leaveWithInterstitial(() {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    PremiumGameplayScreen(levelId: next),
+                              ),
+                            );
+                          });
                         },
                       ),
                     const SizedBox(height: 10),
                     MetaSecondaryButton(
                       label: widget.won ? 'Replay' : 'Try Again',
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (_) => PremiumGameplayScreen(
-                              levelId: widget.levelId,
-                              daily: widget.daily,
+                        _leaveWithInterstitial(() {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (_) => PremiumGameplayScreen(
+                                levelId: widget.levelId,
+                                daily: widget.daily,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        });
                       },
                     ),
                     TextButton(
                       onPressed: () {
                         context.read<AudioCubit>().playButton();
-                        Navigator.of(context).popUntil((r) => r.isFirst);
+                        _leaveWithInterstitial(() {
+                          Navigator.of(context).popUntil((r) => r.isFirst);
+                        });
                       },
                       child: Text(
                         'Home',
@@ -313,6 +328,7 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
                         ),
                       ),
                     ),
+                    const AdBannerWidget(placement: 'result'),
                   ],
                 ),
               ),
@@ -320,6 +336,67 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> {
           ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _CompletedLevelBadge extends StatelessWidget {
+  final int levelId;
+
+  const _CompletedLevelBadge({required this.levelId});
+
+  @override
+  Widget build(BuildContext context) {
+    const w = 96.0;
+    const h = 110.0;
+    return SizedBox(
+      width: w,
+      height: h,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Image.asset(
+            '${PremiumTokens.uiRoot}/level_shield.png',
+            width: w,
+            height: h,
+            fit: BoxFit.contain,
+            filterQuality: FilterQuality.medium,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8, bottom: 16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'LEVEL',
+                  style: GoogleFonts.nunito(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 11,
+                    letterSpacing: 0.6,
+                    height: 1,
+                    shadows: const [
+                      Shadow(color: Colors.black87, blurRadius: 2),
+                    ],
+                  ),
+                ),
+                Text(
+                  '$levelId',
+                  style: GoogleFonts.nunito(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 28,
+                    height: 1,
+                    shadows: const [
+                      Shadow(color: Colors.black87, blurRadius: 3),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

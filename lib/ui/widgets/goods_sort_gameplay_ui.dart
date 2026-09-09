@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../app/theme/goods_sort_theme.dart';
 import '../../bloc/audio_cubit.dart';
+import '../../services/ad_service.dart';
 import '../meta/praise_burst.dart';
 import '../premium/premium_tokens.dart';
 
@@ -526,6 +527,7 @@ class GoodsSortLoseOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final adsOnline = context.watch<AdService>().adsUiEnabled;
     return Container(
       color: Colors.black54,
       alignment: Alignment.bottomCenter,
@@ -547,22 +549,24 @@ class GoodsSortLoseOverlay extends StatelessWidget {
                 style:
                     const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
               ),
-              const SizedBox(height: 12),
-              Image.asset(
-                '${PremiumTokens.uiRoot}/gift_box.png',
-                width: 72,
-                height: 72,
-                fit: BoxFit.contain,
-                filterQuality: FilterQuality.medium,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                isTime
-                    ? '+60 seconds to keep sorting'
-                    : 'Add a shelf to continue',
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Color(0xFF757575)),
-              ),
+              if (adsOnline) ...[
+                const SizedBox(height: 12),
+                Image.asset(
+                  '${PremiumTokens.uiRoot}/gift_box.png',
+                  width: 72,
+                  height: 72,
+                  fit: BoxFit.contain,
+                  filterQuality: FilterQuality.medium,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  isTime
+                      ? '+60 seconds to keep sorting'
+                      : 'Add a shelf to continue',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Color(0xFF757575)),
+                ),
+              ],
               const SizedBox(height: 16),
               Row(
                 children: [
@@ -577,23 +581,25 @@ class GoodsSortLoseOverlay extends StatelessWidget {
                       child: const Text('Quit'),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    flex: 2,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: GoodsSortTheme.playGreen,
-                        foregroundColor: Colors.white,
+                  if (adsOnline) ...[
+                    const SizedBox(width: 10),
+                    Expanded(
+                      flex: 2,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: GoodsSortTheme.playGreen,
+                          foregroundColor: Colors.white,
+                        ),
+                        onPressed: () {
+                          try {
+                            context.read<AudioCubit>().playButton();
+                          } catch (_) {}
+                          onWatchAd();
+                        },
+                        child: const Text('Watch Ad'),
                       ),
-                      onPressed: () {
-                        try {
-                          context.read<AudioCubit>().playButton();
-                        } catch (_) {}
-                        onWatchAd();
-                      },
-                      child: const Text('Watch Ad'),
                     ),
-                  ),
+                  ],
                 ],
               ),
             ],

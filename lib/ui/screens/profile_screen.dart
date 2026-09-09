@@ -7,6 +7,7 @@ import '../../providers/progress_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../bloc/audio_cubit.dart';
 import '../meta/meta_chrome.dart';
+import '../widgets/ad_banner_widget.dart';
 import '../widgets/common_widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -21,86 +22,97 @@ class ProfileScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           body: MetaBackdrop(
             child: SafeArea(
-              child: Material(
-                type: MaterialType.transparency,
-                child: ListView(
-                  padding: const EdgeInsets.all(20),
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: IconButton(
-                        onPressed: () {
-                          context.read<AudioCubit>().playButton();
-                          Navigator.of(context).maybePop();
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: MetaChrome.cream,
-                        ),
-                      ),
-                    ),
-                    const Center(child: AppLogo(size: 120))
-                        .animate()
-                        .fadeIn()
-                        .scale(begin: const Offset(0.9, 0.9)),
-                    const SizedBox(height: 12),
-                    Center(
-                      child: Text(
-                        p.playerName,
-                        style: GoogleFonts.nunito(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w900,
-                          color: MetaChrome.cream,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Center(child: CurrencyHud(coins: p.coins, gems: p.gems)),
-                    const SizedBox(height: 8),
-                    Center(
-                      child: Text(
-                        'Stars: ${p.totalStars}  •  Level ${p.currentLevel}',
-                        style: GoogleFonts.nunito(
-                          fontWeight: FontWeight.w700,
-                          color: MetaChrome.cream.withValues(alpha: 0.8),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    MetaWoodCard(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: ListView(
+                        padding: const EdgeInsets.all(20),
                         children: [
-                          Text(
-                            'Settings',
-                            style: GoogleFonts.nunito(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w900,
-                              color: MetaChrome.gold,
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: IconButton(
+                              onPressed: () {
+                                context.read<AudioCubit>().playButton();
+                                Navigator.of(context).maybePop();
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                color: MetaChrome.cream,
+                              ),
                             ),
                           ),
-                          _toggle(
-                            'Sound Effects',
-                            settings.sfx,
-                            settings.setSfx,
+                          const Center(child: AppLogo(size: 120))
+                              .animate()
+                              .fadeIn()
+                              .scale(begin: const Offset(0.9, 0.9)),
+                          const SizedBox(height: 12),
+                          Center(
+                            child: Text(
+                              p.playerName,
+                              style: GoogleFonts.nunito(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w900,
+                                color: MetaChrome.cream,
+                              ),
+                            ),
                           ),
-                          _toggle('Music', settings.music, settings.setMusic),
-                          _toggle(
-                            'ASMR Mode',
-                            settings.asmr,
-                            settings.setAsmr,
-                            subtitle: 'Richer haptics & louder feedback',
+                          const SizedBox(height: 8),
+                          Center(
+                              child: CurrencyHud(coins: p.coins, gems: p.gems)),
+                          const SizedBox(height: 8),
+                          Center(
+                            child: Text(
+                              'Stars: ${p.totalStars}  •  Level ${p.currentLevel}',
+                              style: GoogleFonts.nunito(
+                                fontWeight: FontWeight.w700,
+                                color:
+                                    MetaChrome.cream.withValues(alpha: 0.8),
+                              ),
+                            ),
                           ),
-                          _toggle(
-                            'Haptics',
-                            settings.haptics,
-                            settings.setHaptics,
+                          const SizedBox(height: 20),
+                          MetaWoodCard(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Settings',
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w900,
+                                    color: MetaChrome.gold,
+                                  ),
+                                ),
+                                _toggle(
+                                  'Sound Effects',
+                                  settings.sfx,
+                                  settings.setSfx,
+                                ),
+                                _toggle(
+                                    'Music', settings.music, settings.setMusic),
+                                _toggle(
+                                  'ASMR Mode',
+                                  settings.asmr,
+                                  settings.setAsmr,
+                                  subtitle:
+                                      'Richer haptics & louder feedback',
+                                ),
+                                _toggle(
+                                  'Haptics',
+                                  settings.haptics,
+                                  settings.setHaptics,
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  const AdBannerWidget(placement: 'profile'),
+                ],
               ),
             ),
           ),

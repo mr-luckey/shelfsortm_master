@@ -38,7 +38,7 @@ Future<void> main() async {
       child: MultiProvider(
         providers: [
           Provider.value(value: save),
-          Provider.value(value: ads),
+          ChangeNotifierProvider<AdService>.value(value: ads),
           Provider.value(value: iap),
           ChangeNotifierProvider.value(value: progress),
           ChangeNotifierProvider(create: (_) => SettingsProvider(audio)),

@@ -85,3 +85,14 @@ class ContinueAfterAd extends GameEvent {
   @override
   List<Object?> get props => [extraTime];
 }
+
+/// In-level gift-box reward after a rewarded ad.
+enum GiftBoosterKind { hint, freeze, extraTime }
+
+class GiftBoosterGranted extends GameEvent {
+  final GiftBoosterKind kind;
+  final int extraSeconds;
+  const GiftBoosterGranted(this.kind, {this.extraSeconds = 30});
+  @override
+  List<Object?> get props => [kind, extraSeconds];
+}

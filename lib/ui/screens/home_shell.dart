@@ -10,7 +10,10 @@ import '../../providers/progress_provider.dart';
 import '../../bloc/audio_cubit.dart';
 import '../meta/meta_chrome.dart';
 import '../premium/premium_tokens.dart';
+import '../widgets/ad_banner_widget.dart';
 import '../widgets/common_widgets.dart';
+import '../widgets/gift_box_fab.dart';
+import '../../services/gift_loot.dart';
 import 'asmr_mode_screen.dart';
 import 'level_intro_sheet.dart';
 import 'levels_screen.dart';
@@ -45,116 +48,132 @@ class _HomeShellState extends State<HomeShell> {
 
           return MetaBackdrop(
             child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                child: Column(
-                  children: [
-                    _TopBar(
-                      coins: p.coins,
-                      gems: p.gems,
-                      onProfile: () {
-                        context.read<AudioCubit>().playButton();
-                        Navigator.of(context).push(
-                          MaterialPageRoute<void>(
-                            builder: (_) => const ProfileScreen(),
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                    child: Column(
+                      children: [
+                        _TopBar(
+                          coins: p.coins,
+                          gems: p.gems,
+                          onProfile: () {
+                            context.read<AudioCubit>().playButton();
+                            Navigator.of(context).push(
+                              MaterialPageRoute<void>(
+                                builder: (_) => const ProfileScreen(),
+                              ),
+                            );
+                          },
+                        ).animate().fadeIn(duration: 350.ms),
+                        const Spacer(flex: 2),
+                        const AppLogo(size: 180)
+                            .animate()
+                            .fadeIn(delay: 60.ms)
+                            .scale(begin: const Offset(0.94, 0.94)),
+                        const Spacer(flex: 2),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 8,
                           ),
-                        );
-                      },
-                    ).animate().fadeIn(duration: 350.ms),
-                    const Spacer(flex: 2),
-                    const AppLogo(size: 180)
-                        .animate()
-                        .fadeIn(delay: 60.ms)
-                        .scale(begin: const Offset(0.94, 0.94)),
-                    const Spacer(flex: 2),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xEE2A1608),
-                        borderRadius: BorderRadius.circular(22),
-                        border: Border.all(color: MetaChrome.gold, width: 1.5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.35),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
+                          decoration: BoxDecoration(
+                            color: const Color(0xEE2A1608),
+                            borderRadius: BorderRadius.circular(22),
+                            border: Border.all(
+                                color: MetaChrome.gold, width: 1.5),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.35),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: Text(
-                        'LEVEL $level',
-                        style: GoogleFonts.nunito(
-                          color: MetaChrome.gold,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 18,
-                          letterSpacing: 1.4,
+                          child: Text(
+                            'LEVEL $level',
+                            style: GoogleFonts.nunito(
+                              color: MetaChrome.gold,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18,
+                              letterSpacing: 1.4,
+                            ),
+                          ),
+                        ).animate().fadeIn(delay: 140.ms),
+                        const SizedBox(height: 18),
+                        GlowPlayButton(
+                          onPressed: () =>
+                              launchLevel(context, levelId: level),
                         ),
-                      ),
-                    ).animate().fadeIn(delay: 140.ms),
-                    const SizedBox(height: 18),
-                    GlowPlayButton(
-                      onPressed: () => launchLevel(context, levelId: level),
+                        const SizedBox(height: 14),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _StatPill(
+                              asset:
+                                  '${PremiumTokens.uiRoot}/meta_star_badge.png',
+                              fallback: Icons.star_rounded,
+                              label: '${p.totalStars} Stars',
+                            ),
+                            const SizedBox(width: 10),
+                            _StatPill(
+                              fallback: Icons.emoji_events_rounded,
+                              label: '${_clears(p)} Clears',
+                            ),
+                          ],
+                        ).animate().fadeIn(delay: 200.ms),
+                        const Spacer(flex: 2),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _HubTile(
+                                icon: Icons.grid_view_rounded,
+                                label: 'Levels',
+                                subtitle: 'Pick a stage',
+                                accent: MetaChrome.gold,
+                                onTap: () {
+                                  context.read<AudioCubit>().playButton();
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute<void>(
+                                      builder: (_) => const LevelsScreen(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: _HubTile(
+                                icon: Icons.headphones_rounded,
+                                label: 'ASMR',
+                                subtitle: 'Calm & sort',
+                                accent: const Color(0xFFD4A84B),
+                                onTap: () {
+                                  context.read<AudioCubit>().playButton();
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute<void>(
+                                      builder: (_) => const AsmrModeScreen(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        )
+                            .animate()
+                            .fadeIn(delay: 240.ms)
+                            .slideY(begin: 0.08),
+                        const SizedBox(height: 8),
+                        const AdBannerWidget(placement: 'home'),
+                      ],
                     ),
-                    const SizedBox(height: 14),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _StatPill(
-                          asset: '${PremiumTokens.uiRoot}/meta_star_badge.png',
-                          fallback: Icons.star_rounded,
-                          label: '${p.totalStars} Stars',
-                        ),
-                        const SizedBox(width: 10),
-                        _StatPill(
-                          fallback: Icons.emoji_events_rounded,
-                          label: '${_clears(p)} Clears',
-                        ),
-                      ],
-                    ).animate().fadeIn(delay: 200.ms),
-                    const Spacer(flex: 2),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _HubTile(
-                            icon: Icons.grid_view_rounded,
-                            label: 'Levels',
-                            subtitle: 'Pick a stage',
-                            accent: MetaChrome.gold,
-                            onTap: () {
-                              context.read<AudioCubit>().playButton();
-                              Navigator.of(context).push(
-                                MaterialPageRoute<void>(
-                                  builder: (_) => const LevelsScreen(),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _HubTile(
-                            icon: Icons.headphones_rounded,
-                            label: 'ASMR',
-                            subtitle: 'Calm & sort',
-                            accent: const Color(0xFFD4A84B),
-                            onTap: () {
-                              context.read<AudioCubit>().playButton();
-                              Navigator.of(context).push(
-                                MaterialPageRoute<void>(
-                                  builder: (_) => const AsmrModeScreen(),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ).animate().fadeIn(delay: 240.ms).slideY(begin: 0.08),
-                    const SizedBox(height: 8),
-                  ],
-                ),
+                  ),
+                  const Positioned(
+                    right: 12,
+                    bottom: 70,
+                    child: GiftBoxFab(pool: GiftLootPool.meta),
+                  ),
+                ],
               ),
             ),
           );

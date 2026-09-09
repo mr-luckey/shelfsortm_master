@@ -5,6 +5,7 @@ import '../config/test_flags.dart';
 import '../data/level_repository.dart';
 import '../models/player_progress.dart';
 import '../services/ad_service.dart';
+import '../services/gift_loot.dart';
 import '../services/iap_service.dart';
 import '../services/save_service.dart';
 
@@ -190,9 +191,8 @@ class ProgressProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> watchAdForTool(RewardType type) async {
-    final ok = await adService.showRewarded(type);
-    if (!ok) return false;
+  /// Grant a tool after a rewarded ad completed. Does not show an ad.
+  Future<bool> grantToolReward(RewardType type) async {
     switch (type) {
       case RewardType.hint:
         progress =
@@ -215,6 +215,12 @@ class ProgressProvider extends ChangeNotifier {
     await _persist();
     notifyListeners();
     return true;
+  }
+
+  Future<bool> watchAdForTool(RewardType type) async {
+    final ok = await adService.showRewarded(type);
+    if (!ok) return false;
+    return grantToolReward(type);
   }
 
   Future<int> claimDailyReward() async {
@@ -335,9 +341,32 @@ class ProgressProvider extends ChangeNotifier {
   }
 
   Future<void> addCoins(int amount) async {
+    if (amount <= 0) return;
     progress = progress.copyWith(coins: progress.coins + amount);
     await _persist();
     notifyListeners();
+  }
+
+  Future<void> addGems(int amount) async {
+    if (amount <= 0) return;
+    progress = progress.copyWith(gems: progress.gems + amount);
+    await _persist();
+    notifyListeners();
+  }
+
+  /// Apply home/ASMR gift-box loot after a rewarded ad.
+  Future<void> applyMetaGiftLoot(GiftLoot loot) async {
+    switch (loot) {
+      case CoinsLoot(:final amount):
+        await addCoins(amount);
+      case GemsLoot(:final amount):
+        await addGems(amount);
+      case DoubleCoinsLoot():
+      case GameplayHintLoot():
+      case GameplayFreezeLoot():
+      case GameplayTimeLoot():
+        break;
+    }
   }
 
   Future<void> setPlayerName(String name) async {

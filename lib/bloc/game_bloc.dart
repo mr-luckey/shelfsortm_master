@@ -39,6 +39,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<HintCleared>(_onHintCleared);
     on<ShelfWaveOpened>(_onShelfWaveOpened);
     on<ContinueAfterAd>(_onContinueAfterAd);
+    on<GiftBoosterGranted>(_onGiftBoosterGranted);
   }
 
   MatchEngine? get engine => _engine;
@@ -362,6 +363,33 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       e.continueWithExtraShelf();
     }
     emit(_snap(banner: 'Keep sorting!'));
+    _flashBanner();
+  }
+
+  void _onGiftBoosterGranted(
+    GiftBoosterGranted event,
+    Emitter<GameState> emit,
+  ) {
+    final e = _engine;
+    if (e == null) return;
+    if (e.status != GameStatus.playing && e.status != GameStatus.paused) {
+      return;
+    }
+    switch (event.kind) {
+      case GiftBoosterKind.hint:
+        emit(_snap(
+          hintsLeft: state.hintsLeft + 1,
+          banner: '+1 Hint!',
+        ));
+      case GiftBoosterKind.freeze:
+        emit(_snap(
+          freezesLeft: state.freezesLeft + 1,
+          banner: '+1 Freeze!',
+        ));
+      case GiftBoosterKind.extraTime:
+        e.addBonusTime(event.extraSeconds);
+        emit(_snap(banner: '+${event.extraSeconds}s!'));
+    }
     _flashBanner();
   }
 

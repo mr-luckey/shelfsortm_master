@@ -18,9 +18,11 @@ import '../../providers/progress_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../services/ad_service.dart';
 import '../../bloc/audio_cubit.dart';
+import '../../services/gift_loot.dart';
 import '../../services/save_service.dart';
 import '../meta/praise_burst.dart';
 import '../screens/level_complete_screen.dart';
+import '../widgets/ad_banner_widget.dart';
 import '../widgets/gift_box_fab.dart';
 import '../widgets/goods_sort_gameplay_ui.dart';
 import 'board_drag.dart';
@@ -485,14 +487,36 @@ class _PremiumPlayViewState extends State<_PremiumPlayView> {
                               ),
                       ),
                       // Room for a banner ad under the board.
-                      const SizedBox(height: PremiumTokens.bannerAdHeight),
+                      const AdBannerWidget(placement: 'game'),
                     ],
                   ).animate().fadeIn(duration: 350.ms),
                 ),
                 Positioned(
                   right: 16,
                   bottom: PremiumTokens.bannerAdHeight + 16,
-                  child: const GiftBoxFab(),
+                  child: GiftBoxFab(
+                    pool: GiftLootPool.gameplay,
+                    onLoot: (loot) async {
+                      final bloc = context.read<GameBloc>();
+                      switch (loot) {
+                        case GameplayHintLoot():
+                          bloc.add(const GiftBoosterGranted(
+                            GiftBoosterKind.hint,
+                          ));
+                        case GameplayFreezeLoot():
+                          bloc.add(const GiftBoosterGranted(
+                            GiftBoosterKind.freeze,
+                          ));
+                        case GameplayTimeLoot(:final seconds):
+                          bloc.add(GiftBoosterGranted(
+                            GiftBoosterKind.extraTime,
+                            extraSeconds: seconds,
+                          ));
+                        default:
+                          break;
+                      }
+                    },
+                  ),
                 ),
                 if (paused)
                   GoodsSortPauseOverlay(

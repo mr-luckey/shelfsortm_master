@@ -13,7 +13,11 @@ import '../meta/praise_burst.dart';
 import '../premium/premium_goods_fx.dart';
 import '../premium/premium_tray_plank.dart';
 import '../widgets/emoji_assets.dart';
+import '../widgets/ad_banner_widget.dart';
 import '../widgets/gift_box_fab.dart';
+import '../../services/ad_service.dart';
+import '../../services/gift_loot.dart';
+import '../widgets/goods_sort_gameplay_ui.dart';
 
 /// Dual ASMR: scrolling match-3 boxes + top goal trays (gameplay-style planks).
 class AsmrModeScreen extends StatefulWidget {
@@ -114,6 +118,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   _HeldFace? _held;
   Size _boardSize = Size.zero;
   double _rowHeight = AsmrModeScreen.baseRowHeight;
+  bool _paused = false;
 
   static const double _baseSpeed = 44.0;
   static const double _sellDuration = 0.80;
@@ -132,6 +137,53 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
 
   void _syncScores() =>
       _cubit.setScores(boxes: _boxClears, plates: _plateClears);
+
+  void _setPaused(bool value) {
+    if (_paused == value) return;
+    setState(() => _paused = value);
+    if (value) {
+      _held = null;
+      _repaint();
+      context.read<AdService>().preloadInterstitial(placement: 'after_session');
+    }
+  }
+
+  Future<void> _leaveWithInterstitial() async {
+    final ads = context.read<AdService>();
+    if (ads.adsUiEnabled && !ads.isFullScreenShowing) {
+      await ads.showInterstitial(placement: 'after_session');
+    }
+    if (!mounted) return;
+    Navigator.of(context).pop();
+  }
+
+  void _restartGame() {
+    _boxClears = 0;
+    _plateClears = 0;
+    _cells.clear();
+    _touched.clear();
+    _selling.clear();
+    _held = null;
+    _bag.clear();
+    _refillNonce = 0;
+    _last = Duration.zero;
+    final rng = math.Random();
+    _pool.shuffle(rng);
+    for (var i = 0; i < AsmrModeScreen.plateCount; i++) {
+      _plates[i] = _Plate(target: _pool[i % _pool.length]);
+    }
+    _dedupePlateTargets();
+    _refillBag(forceTargets: true);
+    for (var r = 0; r < math.max(_rowCount, 3); r++) {
+      for (var c = 0; c < _boxesPerRow; c++) {
+        _slotsFor(_CellKey(r, c));
+      }
+    }
+    _ensureMinMatchOnBoard();
+    _syncScores();
+    setState(() => _paused = false);
+    _repaint();
+  }
 
   @override
   void initState() {
@@ -429,8 +481,9 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     final canon = _canon(key.row, key.col);
     final existing = _cells[canon];
     if (existing != null) {
-      // Repair any empty box that slipped through.
-      if (existing.every((s) => s == null)) {
+      // Keep empty cubbies while carrying so the free slot stays droppable.
+      // Refill only when idle (never-empty board rule).
+      if (existing.every((s) => s == null) && _held == null) {
         _cells[canon] = _generateEasySlots(canon.row, canon.col,
             nonce: ++_refillNonce);
         return _cells[canon]!;
@@ -515,6 +568,10 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   }
 
   void _onTick(Duration elapsed) {
+    if (_paused) {
+      _last = elapsed;
+      return;
+    }
     if (_last == Duration.zero) {
       _last = elapsed;
       return;
@@ -614,16 +671,16 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
     return null;
   }
 
-  /// Where a released good lands on the scrolling boxes (gameplay-style).
+  /// Where a released good lands — nearest empty spot to the finger.
   _Hit? _resolveBoxDrop(Offset local) {
+    final snapped = _snapDropHit(local);
+    if (snapped != null) return snapped;
+    // Fallback: finger over a cubby that still has room.
     final hit = _hitTestBox(local);
-    if (hit != null) {
-      final dest = _asmrDropSlot(hit.slots, hit.slot);
-      if (dest != null) {
-        return _Hit(key: hit.key, slot: dest, slots: hit.slots);
-      }
-    }
-    return _snapDropHit(local);
+    if (hit == null) return null;
+    final dest = _asmrDropSlot(hit.slots, hit.slot);
+    if (dest == null) return null;
+    return _Hit(key: hit.key, slot: dest, slots: hit.slots);
   }
 
   _Hit? _snapDropHit(Offset local) {
@@ -701,7 +758,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   }
 
   void _onPointerDown(Offset local) {
-    if (_held != null) return;
+    if (_paused || _held != null) return;
     // Only pick from moving boxes (not from plates).
     final hit = _hitTestBox(local);
     if (hit == null) return;
@@ -721,6 +778,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   }
 
   void _onPointerMove(Offset local) {
+    if (_paused) return;
     final held = _held;
     if (held == null) return;
     held.finger = local;
@@ -737,6 +795,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   }
 
   void _onPointerUp(Offset local) {
+    if (_paused) return;
     final held = _held;
     if (held == null) return;
 
@@ -818,7 +877,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                   fit: StackFit.expand,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(sidePad, 56, sidePad, 12),
+                      padding: const EdgeInsets.fromLTRB(sidePad, 56, sidePad, 70),
                       child: LayoutBuilder(
                         builder: (context, constraints) {
                           _boardSize = Size(
@@ -895,6 +954,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                                                 selling: _selling,
                                                 cubbyBgOf: () => _cubbyBg,
                                                 faceImages: _faceImages,
+                                                holdingOf: () => _held != null,
                                                 repaint: _frame,
                                               ),
                                             ),
@@ -938,33 +998,65 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                       top: 4,
                       left: 0,
                       right: 0,
-                      child: BlocBuilder<AsmrCubit, AsmrState>(
-                        buildWhen: (p, c) => p.score != c.score,
-                        builder: (context, state) {
-                          return Text(
-                            '${state.score}',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Color(0xFFF7E6C8),
-                              fontWeight: FontWeight.w900,
-                              fontSize: 42,
-                              height: 1,
-                              shadows: [
-                                Shadow(
-                                  color: Color(0xEE2A1608),
-                                  blurRadius: 8,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 48),
+                          Expanded(
+                            child: BlocBuilder<AsmrCubit, AsmrState>(
+                              buildWhen: (p, c) => p.score != c.score,
+                              builder: (context, state) {
+                                return Text(
+                                  '${state.score}',
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Color(0xFFF7E6C8),
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 42,
+                                    height: 1,
+                                    shadows: [
+                                      Shadow(
+                                        color: Color(0xEE2A1608),
+                                        blurRadius: 8,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
+                          ),
+                          IconButton(
+                            tooltip: 'Pause',
+                            onPressed: () {
+                              context.read<AudioCubit>().playButton();
+                              _setPaused(true);
+                            },
+                            style: IconButton.styleFrom(
+                              backgroundColor: const Color(0xEE2A1608),
+                              side: const BorderSide(
+                                color: Color(0xFFB8860B),
+                                width: 1.4,
+                              ),
+                            ),
+                            icon: const Icon(
+                              Icons.pause_rounded,
+                              color: Color(0xFFF7E6C8),
+                              size: 26,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const Positioned(
                       right: 16,
-                      bottom: 16,
-                      child: GiftBoxFab(),
+                      bottom: 70,
+                      child: GiftBoxFab(pool: GiftLootPool.meta),
+                    ),
+                    const Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: AdBannerWidget(placement: 'game'),
                     ),
                     BlocBuilder<AsmrCubit, AsmrState>(
                       buildWhen: (p, c) =>
@@ -980,6 +1072,15 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                         );
                       },
                     ),
+                    if (_paused)
+                      Positioned.fill(
+                        child: GoodsSortPauseOverlay(
+                          onResume: () => _setPaused(false),
+                          onRestart: _restartGame,
+                          onQuit: _leaveWithInterstitial,
+                          onHome: _leaveWithInterstitial,
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -1277,6 +1378,7 @@ class _AsmrMovingGridPainter extends CustomPainter {
   final Map<_CellKey, _SellAnim> selling;
   final ui.Image? Function() cubbyBgOf;
   final Map<String, ui.Image> faceImages;
+  final bool Function() holdingOf;
 
   _AsmrMovingGridPainter({
     required this.rowHeight,
@@ -1287,6 +1389,7 @@ class _AsmrMovingGridPainter extends CustomPainter {
     this.selling = const {},
     required this.cubbyBgOf,
     this.faceImages = const {},
+    required this.holdingOf,
     Listenable? repaint,
   }) : super(repaint: repaint);
 
@@ -1338,8 +1441,15 @@ class _AsmrMovingGridPainter extends CustomPainter {
         final sell = selling[key];
         final slots = cells[key] ??
             List<String?>.filled(AsmrModeScreen.spotsPerCell, null);
+        final showEmptyGlow = holdingOf() && sell == null;
 
-        _paintSlots(canvas, rect, slots, sellT: sell?.t ?? 1);
+        _paintSlots(
+          canvas,
+          rect,
+          slots,
+          sellT: sell?.t ?? 1,
+          showEmptyGlow: showEmptyGlow,
+        );
         if (sell != null) {
           if (scoredKeys.add(key)) {
             scorePops.add((center: rect.center, t: sell.t));
@@ -1391,6 +1501,7 @@ class _AsmrMovingGridPainter extends CustomPainter {
     Rect rect,
     List<String?> slots, {
     double sellT = 1,
+    bool showEmptyGlow = false,
   }) {
     final selling = sellT < 1;
     final side = math.min(rect.height * 0.58, 34.0);
@@ -1399,10 +1510,26 @@ class _AsmrMovingGridPainter extends CustomPainter {
     final startX = rect.center.dx - totalW / 2;
 
     for (var i = 0; i < slots.length; i++) {
+      final cx = startX + slotW * (i + 0.5);
       final emoji = slots[i];
-      if (emoji == null) continue;
+      if (emoji == null) {
+        if (showEmptyGlow) {
+          canvas.drawOval(
+            Rect.fromCenter(
+              center: Offset(cx, rect.center.dy + side * 0.28),
+              width: slotW * 0.78,
+              height: slotW * 0.28,
+            ),
+            Paint()
+              ..color = const Color(0xFF66BB6A).withValues(alpha: 0.55)
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 2,
+          );
+        }
+        continue;
+      }
       var dest = Rect.fromCenter(
-        center: Offset(startX + slotW * (i + 0.5), rect.center.dy),
+        center: Offset(cx, rect.center.dy),
         width: side,
         height: side,
       );

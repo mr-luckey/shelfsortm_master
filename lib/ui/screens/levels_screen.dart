@@ -6,6 +6,7 @@ import '../../models/player_progress.dart';
 import '../../providers/progress_provider.dart';
 import '../meta/meta_chrome.dart';
 import '../premium/premium_tokens.dart';
+import '../widgets/ad_banner_widget.dart';
 import 'level_intro_sheet.dart';
 
 class _LevelSection {
@@ -18,19 +19,28 @@ class _LevelSection {
     required this.startLevel,
     required this.endLevel,
   });
-
-  int get count => endLevel - startLevel + 1;
-
-  List<int> get levelIds => [
-        for (var id = startLevel; id <= endLevel; id++) id,
-      ];
 }
 
-/// Level select: named sections of 50 levels each, 5 containers per row.
+sealed class _ListEntry {
+  const _ListEntry();
+}
+
+class _TitleEntry extends _ListEntry {
+  final String title;
+  const _TitleEntry(this.title);
+}
+
+class _LevelsRowEntry extends _ListEntry {
+  final List<int> levelIds;
+  const _LevelsRowEntry(this.levelIds);
+}
+
+/// Level select: named sections of 50 levels each, 5 shields per row.
 class LevelsScreen extends StatelessWidget {
   const LevelsScreen({super.key});
 
   static const _perSection = 50;
+  static const _cols = 5;
 
   static const _titles = [
     'Easy',
@@ -57,7 +67,7 @@ class LevelsScreen extends StatelessWidget {
     'Omega',
   ];
 
-  static final List<_LevelSection> sections = _buildSections();
+  static final List<_ListEntry> _entries = _buildEntries();
 
   static List<_LevelSection> _buildSections() {
     final total = PlayerProgress.totalLevels;
@@ -70,6 +80,20 @@ class LevelsScreen extends StatelessWidget {
       out.add(_LevelSection(title: title, startLevel: start, endLevel: end));
       start = end + 1;
       i++;
+    }
+    return out;
+  }
+
+  static List<_ListEntry> _buildEntries() {
+    final out = <_ListEntry>[];
+    for (final section in _buildSections()) {
+      out.add(_TitleEntry(section.title));
+      for (var id = section.startLevel; id <= section.endLevel; id += _cols) {
+        final end = (id + _cols - 1).clamp(id, section.endLevel);
+        out.add(_LevelsRowEntry([
+          for (var n = id; n <= end; n++) n,
+        ]));
+      }
     }
     return out;
   }
@@ -115,16 +139,23 @@ class LevelsScreen extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: CustomScrollView(
-                      slivers: [
-                        for (final section in sections) ...[
-                          _sectionTitle(section.title),
-                          _levelGrid(section.levelIds, p),
-                        ],
-                        const SliverToBoxAdapter(child: SizedBox(height: 24)),
-                      ],
+                    child: ListView.builder(
+                      itemCount: _entries.length + 1,
+                      cacheExtent: 400,
+                      itemBuilder: (context, index) {
+                        if (index == _entries.length) {
+                          return const SizedBox(height: 24);
+                        }
+                        final entry = _entries[index];
+                        return switch (entry) {
+                          _TitleEntry(:final title) => _sectionTitle(title),
+                          _LevelsRowEntry(:final levelIds) =>
+                            _levelsRow(context, levelIds, p),
+                        };
+                      },
                     ),
                   ),
+                  const AdBannerWidget(placement: 'levels'),
                 ],
               ),
             ),
@@ -135,44 +166,44 @@ class LevelsScreen extends StatelessWidget {
   }
 
   static Widget _sectionTitle(String title) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
-        child: Text(
-          title,
-          style: const TextStyle(
-            color: MetaChrome.gold,
-            fontWeight: FontWeight.w900,
-            fontSize: 18,
-          ),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
+      child: Text(
+        title,
+        style: const TextStyle(
+          color: MetaChrome.gold,
+          fontWeight: FontWeight.w900,
+          fontSize: 18,
         ),
       ),
     );
   }
 
-  static Widget _levelGrid(List<int> ids, PlayerProgress p) {
-    return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      sliver: SliverGrid(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 5,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          childAspectRatio: 1,
-        ),
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            final id = ids[index];
-            final lp = p.levelOf(id);
-            return _LevelContainer(
-              levelId: id,
-              progress: lp,
-              isCurrent: id == p.currentLevel,
-              onTap: () => _openLevel(context, p, id),
-            );
-          },
-          childCount: ids.length,
-        ),
+  static Widget _levelsRow(
+    BuildContext context,
+    List<int> levelIds,
+    PlayerProgress p,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
+      child: Row(
+        children: [
+          for (var i = 0; i < _cols; i++) ...[
+            if (i > 0) const SizedBox(width: 10),
+            Expanded(
+              child: AspectRatio(
+                aspectRatio: 0.88,
+                child: i < levelIds.length
+                    ? _LevelShieldTile(
+                        levelId: levelIds[i],
+                        unlocked: p.levelOf(levelIds[i]).unlocked,
+                        onTap: () => _openLevel(context, p, levelIds[i]),
+                      )
+                    : const SizedBox.shrink(),
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }
@@ -194,67 +225,53 @@ class LevelsScreen extends StatelessWidget {
   }
 }
 
-class _LevelContainer extends StatelessWidget {
+class _LevelShieldTile extends StatelessWidget {
   final int levelId;
-  final LevelProgress progress;
-  final bool isCurrent;
+  final bool unlocked;
   final VoidCallback onTap;
 
-  const _LevelContainer({
+  const _LevelShieldTile({
     required this.levelId,
-    required this.progress,
-    required this.isCurrent,
+    required this.unlocked,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final unlocked = progress.unlocked;
-
-    final Color face;
-    final Color ring;
-    final Color textColor;
-    if (!unlocked) {
-      face = const Color(0xFF5C4030);
-      ring = const Color(0xFF3E2723);
-      textColor = Colors.white54;
-    } else if (isCurrent) {
-      face = PremiumTokens.hudBlue;
-      ring = MetaChrome.cream;
-      textColor = Colors.white;
-    } else if (progress.bestStars >= 3) {
-      face = PremiumTokens.coinGold;
-      ring = MetaChrome.brass;
-      textColor = PremiumTokens.woodDark;
-    } else {
-      face = const Color(0xEE2A1608);
-      ring = MetaChrome.brass;
-      textColor = MetaChrome.cream;
-    }
-
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: face,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: ring, width: isCurrent ? 2 : 1.5),
+      child: Opacity(
+        opacity: unlocked ? 1 : 0.55,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.asset(
+              '${PremiumTokens.uiRoot}/level_shield.png',
+              fit: BoxFit.contain,
+              filterQuality: FilterQuality.medium,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4, bottom: 10),
+              child: unlocked
+                  ? Text(
+                      '$levelId',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        fontSize: levelId >= 1000 ? 11 : 15,
+                        shadows: const [
+                          Shadow(color: Colors.black87, blurRadius: 2),
+                        ],
+                      ),
+                    )
+                  : const Icon(
+                      Icons.lock_rounded,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+            ),
+          ],
         ),
-        alignment: Alignment.center,
-        child: unlocked
-            ? Text(
-                '$levelId',
-                style: TextStyle(
-                  color: textColor,
-                  fontWeight: FontWeight.w900,
-                  fontSize: levelId >= 1000 ? 12 : 15,
-                ),
-              )
-            : Icon(
-                Icons.lock_rounded,
-                color: textColor,
-                size: 20,
-              ),
       ),
     );
   }
