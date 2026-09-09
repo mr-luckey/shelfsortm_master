@@ -5,12 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AsmrState extends Equatable {
   final int boxClears;
   final int plateClears;
+  final int score;
   final String? praise;
   final int praiseSeq;
 
   const AsmrState({
     this.boxClears = 0,
     this.plateClears = 0,
+    this.score = 0,
     this.praise,
     this.praiseSeq = 0,
   });
@@ -18,6 +20,7 @@ class AsmrState extends Equatable {
   AsmrState copyWith({
     int? boxClears,
     int? plateClears,
+    int? score,
     String? praise,
     bool clearPraise = false,
     int? praiseSeq,
@@ -25,21 +28,31 @@ class AsmrState extends Equatable {
     return AsmrState(
       boxClears: boxClears ?? this.boxClears,
       plateClears: plateClears ?? this.plateClears,
+      score: score ?? this.score,
       praise: clearPraise ? null : (praise ?? this.praise),
       praiseSeq: praiseSeq ?? this.praiseSeq,
     );
   }
 
   @override
-  List<Object?> get props => [boxClears, plateClears, praise, praiseSeq];
+  List<Object?> get props =>
+      [boxClears, plateClears, score, praise, praiseSeq];
 }
 
 class AsmrCubit extends Cubit<AsmrState> {
   AsmrCubit() : super(const AsmrState());
 
+  static const int boxPoints = 100;
+  static const int trayPoints = 50;
+
   void setScores({required int boxes, required int plates}) {
-    if (state.boxClears == boxes && state.plateClears == plates) return;
-    emit(state.copyWith(boxClears: boxes, plateClears: plates));
+    final score = boxes * boxPoints + plates * trayPoints;
+    if (state.boxClears == boxes &&
+        state.plateClears == plates &&
+        state.score == score) {
+      return;
+    }
+    emit(state.copyWith(boxClears: boxes, plateClears: plates, score: score));
   }
 
   void showPraise(String label) {

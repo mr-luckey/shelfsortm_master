@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import '../../providers/progress_provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../bloc/audio_cubit.dart';
-import '../../services/iap_service.dart';
 import '../meta/meta_chrome.dart';
 import '../widgets/common_widgets.dart';
 
@@ -40,7 +39,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const MiaAvatar(size: 88, mood: 'happy')
+                    const Center(child: AppLogo(size: 120))
                         .animate()
                         .fadeIn()
                         .scale(begin: const Offset(0.9, 0.9)),
@@ -96,98 +95,6 @@ class ProfileScreen extends StatelessWidget {
                             'Haptics',
                             settings.haptics,
                             settings.setHaptics,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    MetaWoodCard(
-                      child: Column(
-                        children: [
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              'Restore Purchases',
-                              style: GoogleFonts.nunito(
-                                fontWeight: FontWeight.w800,
-                                color: MetaChrome.cream,
-                              ),
-                            ),
-                            trailing: const Icon(
-                              Icons.restore,
-                              color: MetaChrome.gold,
-                            ),
-                            onTap: () async {
-                              context.read<AudioCubit>().playButton();
-                              await IapService().restorePurchases();
-                              if (!context.mounted) return;
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Purchases restored (stub)'),
-                                  behavior: SnackBarBehavior.floating,
-                                ),
-                              );
-                            },
-                          ),
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              'Privacy Policy',
-                              style: GoogleFonts.nunito(
-                                fontWeight: FontWeight.w800,
-                                color: MetaChrome.cream,
-                              ),
-                            ),
-                            onTap: () {
-                              context.read<AudioCubit>().playButton();
-                              showDialog(
-                                context: context,
-                                builder: (c) => AlertDialog(
-                                  backgroundColor: const Color(0xFF3A2410),
-                                  title: Text(
-                                    'Privacy Policy',
-                                    style: GoogleFonts.nunito(
-                                      color: MetaChrome.cream,
-                                      fontWeight: FontWeight.w900,
-                                    ),
-                                  ),
-                                  content: Text(
-                                    'ShelfSort Master stores progress locally. '
-                                    'No PII is collected beyond Play Store requirements. '
-                                    'Ads/IAP use Google services when enabled.',
-                                    style: GoogleFonts.nunito(
-                                      color: MetaChrome.cream,
-                                    ),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(c),
-                                      child: const Text(
-                                        'OK',
-                                        style: TextStyle(color: MetaChrome.gold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              'Version',
-                              style: GoogleFonts.nunito(
-                                fontWeight: FontWeight.w800,
-                                color: MetaChrome.cream,
-                              ),
-                            ),
-                            trailing: Text(
-                              '1.0.0+1',
-                              style: GoogleFonts.nunito(
-                                color: MetaChrome.gold,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
                           ),
                         ],
                       ),

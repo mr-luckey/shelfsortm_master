@@ -14,7 +14,7 @@ class AudioState extends Equatable {
     this.sfx = true,
     this.music = true,
     this.haptics = true,
-    this.asmrMode = false,
+    this.asmrMode = true,
     this.ready = false,
   });
 

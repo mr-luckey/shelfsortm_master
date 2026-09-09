@@ -322,13 +322,8 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
   }
 
   String _pickType(math.Random rng) {
-    // Prefer types still under the on-screen cap.
     for (var i = 0; i < 20; i++) {
-      final t = _takeFromBag(
-        prefer: i < 3 && _plateTargets.isNotEmpty
-            ? _plateTargets.elementAt(rng.nextInt(_plateTargets.length))
-            : null,
-      );
+      final t = _takeFromBag();
       if (_countTypeInBoxes(t) < _maxSameOnScreen) return t;
     }
     return _pool[rng.nextInt(_pool.length)];
@@ -823,7 +818,7 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                   fit: StackFit.expand,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(sidePad, 44, sidePad, 12),
+                      padding: const EdgeInsets.fromLTRB(sidePad, 56, sidePad, 12),
                       child: LayoutBuilder(
                         builder: (context, constraints) {
                           _boardSize = Size(
@@ -900,8 +895,6 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                                                 selling: _selling,
                                                 cubbyBgOf: () => _cubbyBg,
                                                 faceImages: _faceImages,
-                                                plateTargets: _plateTargets,
-                                                tintFor: _tintFor,
                                                 repaint: _frame,
                                               ),
                                             ),
@@ -943,48 +936,27 @@ class _AsmrModeScreenState extends State<AsmrModeScreen>
                     ),
                     Positioned(
                       top: 4,
-                      left: 4,
-                      child: IconButton(
-                        tooltip: 'Close',
-                        onPressed: () {
-                          context.read<AudioCubit>().setAsmrMode(false);
-                          context.read<AudioCubit>().playButton();
-                          Navigator.of(context).pop();
-                        },
-                        style: IconButton.styleFrom(
-                          backgroundColor: const Color(0xEE2A1608),
-                          side: const BorderSide(
-                            color: Color(0xFFB8860B),
-                            width: 1.4,
-                          ),
-                        ),
-                        icon: const Icon(
-                          Icons.close_rounded,
-                          color: Color(0xFFF7E6C8),
-                          size: 26,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 10,
-                      right: 12,
+                      left: 0,
+                      right: 0,
                       child: BlocBuilder<AsmrCubit, AsmrState>(
-                        buildWhen: (p, c) =>
-                            p.boxClears != c.boxClears ||
-                            p.plateClears != c.plateClears,
+                        buildWhen: (p, c) => p.score != c.score,
                         builder: (context, state) {
-                          return Row(
-                            children: [
-                              _ScoreChip(
-                                label: 'Trays',
-                                value: state.plateClears,
-                              ),
-                              const SizedBox(width: 8),
-                              _ScoreChip(
-                                label: 'Boxes',
-                                value: state.boxClears,
-                              ),
-                            ],
+                          return Text(
+                            '${state.score}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Color(0xFFF7E6C8),
+                              fontWeight: FontWeight.w900,
+                              fontSize: 42,
+                              height: 1,
+                              shadows: [
+                                Shadow(
+                                  color: Color(0xEE2A1608),
+                                  blurRadius: 8,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
                           );
                         },
                       ),
@@ -1043,30 +1015,41 @@ class _AsmrBackdrop extends StatelessWidget {
   }
 }
 
-class _ScoreChip extends StatelessWidget {
-  final String label;
-  final int value;
-  const _ScoreChip({required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-        color: const Color(0xEE2A1608),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFB8860B), width: 1.2),
+void _paintFloatingPoints(
+  Canvas canvas,
+  Offset center,
+  int points,
+  double t,
+) {
+  final c = t.clamp(0.0, 1.0);
+  if (c <= 0 || c >= 1) return;
+  final rise = 36.0 * Curves.easeOutCubic.transform(c);
+  final opacity = c < 0.15
+      ? c / 0.15
+      : (c > 0.65 ? ((1 - c) / 0.35).clamp(0.0, 1.0) : 1.0);
+  final tp = TextPainter(
+    text: TextSpan(
+      text: '+$points',
+      style: TextStyle(
+        color: Color.fromRGBO(255, 220, 90, opacity),
+        fontWeight: FontWeight.w900,
+        fontSize: 28,
+        height: 1,
+        shadows: [
+          Shadow(
+            color: Color.fromRGBO(0, 0, 0, 0.65 * opacity),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      child: Text(
-        '$label $value',
-        style: const TextStyle(
-          color: Color(0xFFF7E6C8),
-          fontWeight: FontWeight.w800,
-          fontSize: 12,
-        ),
-      ),
-    );
-  }
+    ),
+    textDirection: ui.TextDirection.ltr,
+  )..layout();
+  tp.paint(
+    canvas,
+    Offset(center.dx - tp.width / 2, center.dy - rise - tp.height),
+  );
 }
 
 class _Hit {
@@ -1153,6 +1136,12 @@ class _AsmrPlateBlastPainter extends CustomPainter {
           seed: Object.hash(i, s, filled),
         );
       }
+      _paintFloatingPoints(
+        canvas,
+        Offset(left + trayW / 2, rect.center.dy),
+        AsmrCubit.trayPoints,
+        p.burstT,
+      );
     }
   }
 
@@ -1288,8 +1277,6 @@ class _AsmrMovingGridPainter extends CustomPainter {
   final Map<_CellKey, _SellAnim> selling;
   final ui.Image? Function() cubbyBgOf;
   final Map<String, ui.Image> faceImages;
-  final Set<String> plateTargets;
-  final Color Function(String) tintFor;
 
   _AsmrMovingGridPainter({
     required this.rowHeight,
@@ -1300,8 +1287,6 @@ class _AsmrMovingGridPainter extends CustomPainter {
     this.selling = const {},
     required this.cubbyBgOf,
     this.faceImages = const {},
-    this.plateTargets = const {},
-    required this.tintFor,
     Listenable? repaint,
   }) : super(repaint: repaint);
 
@@ -1322,6 +1307,8 @@ class _AsmrMovingGridPainter extends CustomPainter {
       double t,
       int seed,
     })>[];
+    final scorePops = <({Offset center, double t})>[];
+    final scoredKeys = <_CellKey>{};
 
     for (var r = 0; r < rows; r++) {
       final top = r * rowHeight;
@@ -1352,23 +1339,11 @@ class _AsmrMovingGridPainter extends CustomPainter {
         final slots = cells[key] ??
             List<String?>.filled(AsmrModeScreen.spotsPerCell, null);
 
-        // Glow boxes that hold a plate-target item.
-        final hasTarget = slots.any((s) => s != null && plateTargets.contains(s));
-        if (hasTarget && sell == null) {
-          final target = slots.firstWhere(
-            (s) => s != null && plateTargets.contains(s),
-          )!;
-          canvas.drawRRect(
-            RRect.fromRectAndRadius(rect.deflate(2), const Radius.circular(8)),
-            Paint()
-              ..color = tintFor(target).withValues(alpha: 0.28)
-              ..style = PaintingStyle.stroke
-              ..strokeWidth = 2.2,
-          );
-        }
-
         _paintSlots(canvas, rect, slots, sellT: sell?.t ?? 1);
         if (sell != null) {
+          if (scoredKeys.add(key)) {
+            scorePops.add((center: rect.center, t: sell.t));
+          }
           final side = math.min(rect.height * 0.58, 34.0);
           final totalW = rect.width * 0.88;
           final slotW = totalW / AsmrModeScreen.spotsPerCell;
@@ -1405,6 +1380,9 @@ class _AsmrMovingGridPainter extends CustomPainter {
         image: b.image,
         seed: b.seed,
       );
+    }
+    for (final pop in scorePops) {
+      _paintFloatingPoints(canvas, pop.center, AsmrCubit.boxPoints, pop.t);
     }
   }
 
@@ -1446,16 +1424,6 @@ class _AsmrMovingGridPainter extends CustomPainter {
         fit: BoxFit.contain,
         filterQuality: FilterQuality.medium,
       );
-      if (!selling && plateTargets.contains(emoji)) {
-        canvas.drawCircle(
-          dest.center,
-          dest.shortestSide * 0.55,
-          Paint()
-            ..color = tintFor(emoji).withValues(alpha: 0.35)
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = 2,
-        );
-      }
     }
   }
 
