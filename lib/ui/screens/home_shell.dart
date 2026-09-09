@@ -124,6 +124,8 @@ class _HomeShellState extends State<HomeShell> {
                           child: _HubTile(
                             icon: Icons.grid_view_rounded,
                             label: 'Levels',
+                            subtitle: 'Pick a stage',
+                            accent: MetaChrome.gold,
                             onTap: () {
                               context.read<AudioCubit>().playButton();
                               Navigator.of(context).push(
@@ -134,11 +136,13 @@ class _HomeShellState extends State<HomeShell> {
                             },
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: _HubTile(
                             icon: Icons.headphones_rounded,
                             label: 'ASMR',
+                            subtitle: 'Calm & sort',
+                            accent: const Color(0xFFD4A84B),
                             onTap: () {
                               context.read<AudioCubit>().playButton();
                               Navigator.of(context).push(
@@ -253,11 +257,15 @@ class _StatPill extends StatelessWidget {
 class _HubTile extends StatelessWidget {
   final IconData icon;
   final String label;
+  final String subtitle;
+  final Color accent;
   final VoidCallback onTap;
 
   const _HubTile({
     required this.icon,
     required this.label,
+    required this.subtitle,
+    required this.accent,
     required this.onTap,
   });
 
@@ -268,18 +276,92 @@ class _HubTile extends StatelessWidget {
         HapticFeedback.selectionClick();
         onTap();
       },
-      child: MetaWoodCard(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-        child: Column(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF4A2E16),
+              Color(0xFF2A1608),
+              Color(0xFF1A0E06),
+            ],
+          ),
+          border: Border.all(color: accent, width: 1.8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.4),
+              blurRadius: 12,
+              offset: const Offset(0, 5),
+            ),
+          ],
+        ),
+        child: Stack(
           children: [
-            Icon(icon, color: MetaChrome.gold, size: 28),
-            const SizedBox(height: 6),
-            Text(
-              label,
-              style: GoogleFonts.nunito(
-                fontWeight: FontWeight.w900,
-                fontSize: 14,
-                color: MetaChrome.cream,
+            Positioned(
+              right: -18,
+              top: -18,
+              child: Container(
+                width: 72,
+                height: 72,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: accent.withValues(alpha: 0.12),
+                ),
+              ),
+            ),
+            Positioned(
+              left: -12,
+              bottom: -20,
+              child: Container(
+                width: 56,
+                height: 56,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: MetaChrome.cream.withValues(alpha: 0.06),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: accent.withValues(alpha: 0.18),
+                      border: Border.all(
+                        color: accent.withValues(alpha: 0.85),
+                        width: 1.4,
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                    child: Icon(icon, color: accent, size: 20),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    label,
+                    style: GoogleFonts.fredoka(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 17,
+                      color: MetaChrome.cream,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: GoogleFonts.nunito(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 11,
+                      color: MetaChrome.cream.withValues(alpha: 0.7),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
